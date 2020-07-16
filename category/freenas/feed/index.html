@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>freenas &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/freenas/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Thu, 29 Aug 2019 20:03:56 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.2</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>freenas &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>De-virtualizing and migrating FreeNAS</title>
+		<link>https://blog.kroy.io/2017/01/14/de-virtualizing-freenas/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=de-virtualizing-freenas</link>
+					<comments>https://blog.kroy.io/2017/01/14/de-virtualizing-freenas/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Sun, 15 Jan 2017 01:59:00 +0000</pubDate>
+				<category><![CDATA[freenas]]></category>
+		<category><![CDATA[SysAdmin]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/01/14/de-virtualizing-freenas/</guid>
+
+					<description><![CDATA[Since I began my HomeLab journey, I&#8217;ve virtualized and de-virtualized FreeNAS a few times. FreeNAS has backup and restore functionality, so it should be easy right? Where it was highly&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&#038;title=De-virtualizing%20and%20migrating%20FreeNAS" data-a2a-url="https://blog.kroy.io/2017/01/14/de-virtualizing-freenas/" data-a2a-title="De-virtualizing and migrating FreeNAS"></a></p>
+<p>Since I began my <a href="/the_homelab_mutation/">HomeLab journey</a>, I&#8217;ve virtualized and de-virtualized FreeNAS a few times. FreeNAS has backup and restore functionality, so it should be easy right?</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Where it was highly discouraged before, virtualized FreeNAS has been officially supported for a number of versions now. The caveat is that you pass through the storage controller using VT-d, so FreeNAS can access the hard drives directly instead of through some virtual layer.</p>
+
+
+
+<p>Unfortunately, I always found this to be less than performant. I&#8217;ve never been able to pin down the problem, but with virtualized FreeNAS, my drives and network are always <em>INCREDIBLY</em> slow, despite following all the best practices and tweaks.</p>
+
+
+
+<p>This was a VMotion of a VM after <strong>SIX HOURS</strong>.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/WhenFreenasGoesBadVMotion-1024x163.png" alt="" class="wp-image-266" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreenasGoesBadVMotion-1024x163.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreenasGoesBadVMotion-300x48.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreenasGoesBadVMotion-768x122.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreenasGoesBadVMotion-1600x254.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreenasGoesBadVMotion.png 1742w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>That was the final straw. It was time to bare-metal my FreeNAS install again. I was expecting <em>MONSTER</em> performance after my <a href="/growing-from-baby-to-giant/">storage rebuild</a>, but it was taking 6+ hours to VMotion a 60 gigabyte VM and not even get to 50%.</p>
+
+
+
+<h4 id="learningfrommymistakes">Learning from my mistakes</h4>
+
+
+
+<p>Each time I&#8217;ve migrated FreeNAS before, rather than try and keep the same configuration, I just installed fresh and reconfigured everything from scratch. My storage config is reasonably simple, so getting back up and running usually only takes a few minutes.</p>
+
+
+
+<p>One thing I learned from these migrations is that it&#8217;s VERY easy to lose the contents of the iSCSI ZVOL. I think it was a test of the FreeNAS 10 Beta that insisted on formatting the ZVOL instead of just using the existing one. I don&#8217;t necessarily think I lost anything important, but I was left annoyed after that. Admittedly, it&#8217;s a beta or I might have just clicked an option incorrectly.</p>
+
+
+
+<p>For safety&#8217;s sake, after that experience, I started VMotioning my VMs from iSCSI to NFS temporarily when I was re-doing my storage, since I knew the actual underlying ZPOOL is always safe. But with craptacular VMotion speeds like I was seeing, it was going take the better part of a month to complete that process.</p>
+
+
+
+<h4 id="backingupandrestoring">Backing up and Restoring</h4>
+
+
+
+<p>When I discovered the following options in the FreeNAS menu, I figured my migration from virtualized to bare-metal was going to be an easy one.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/backuprestore.png" alt="" class="wp-image-268" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/backuprestore.png 898w, https://blog.kroy.io/wp-content/uploads/2019/08/backuprestore-300x201.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/backuprestore-768x514.png 768w" sizes="(max-width: 898px) 100vw, 898px" /></figure>
+
+
+
+<p>My confidence was enhanced as I had just done something similar while moving my Unifi Controller from a VM to a physical CloudKey. Moving the controller took a grand total of about 20 seconds of uploading and downloading, so I was hoping FreeNAS would be the same.</p>
+
+
+
+<h4 id="murphyslaw">Murphy&#8217;s Law</h4>
+
+
+
+<p>Simple plan right?</p>
+
+
+
+<ol><li>Backup FreeNAS</li><li>Reinstall FreeNAS on bare-metal</li><li>Restore FreeNAS</li><li>Profit??</li></ol>
+
+
+
+<p>Nothing is <em>EVER</em> that simple for me. My grandfather was a Murphy and I seem to live and die by that particular &#8220;law&#8221;.</p>
+
+
+
+<p>Upon rebooting after the install, I was presented with a message that said <code>getty repeating too quickly on port</code>:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/WhenFreeNASGoesBad-1024x501.png" alt="" class="wp-image-269" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASGoesBad-1024x501.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASGoesBad-300x147.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASGoesBad-768x375.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASGoesBad-1600x782.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASGoesBad.png 1741w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>That screen was scrolling and repeating faster than I could read it. And the server didn&#8217;t have any network access.</p>
+
+
+
+<p>A quick keystroke to change TTYs and I was logged into my FreeNAS system. After some poking around, it appeared none of the the other FreeNAS services, like the web interface, were running. The culprit was the lack of networking.</p>
+
+
+
+<p>The problem was that my network interfaces changed. Instead of &#8220;vmx0/vmx1&#8221;, which are virtual devices provided by ESXi, I had &#8220;ix0/igb0&#8221;, which are the physical Intel gigabit and 10 gigabit ports on that server.</p>
+
+
+
+<p>The spot on the console menu where it was displaying the <code>getty repeating</code> error is where normally FreeNAS displays the IP address. Because the server didn&#8217;t have any network access, there was nothing to display, so the Console menu was crashing and restarting over and over again.</p>
+
+
+
+<h4 id="thesimplefix">The &#8220;Simple&#8221; Fix</h4>
+
+
+
+<p>Not having network access seems like it should be a simple fix right? All I really needed to do is get the Console setup menu to to stop crashing so I could reconfigure the network interfaces.</p>
+
+
+
+<p>It&#8217;s FreeBSD, so putting manual network information in <code>/etc/rc.conf</code> should be a quick solution? Nope, FreeNAS was overwriting that. Manually setting up the network interface should have been an option too:</p>
+
+
+
+<p><code>ifconfig ix0 ip 10.0.1.10</code></p>
+
+
+
+<p>No dice there either. Sure, the networking worked and I was then able to <code>ssh</code> into the server, but the menu was still crashing.</p>
+
+
+
+<p>As I learned after some more research, the Console menu is just a Python script. This script, instead of reading from the underlying FreeBSD system, accesses all data from the internal database.</p>
+
+
+
+<p>Now I know just enough about Python to be dangerous, so I wasted about an hour trying to figure out how to short circuit the &#8220;Configure network interfaces&#8221; menu option. I believe I got reasonably close to a solution there, but then I crashed my system by corrupting the system database.</p>
+
+
+
+<h4 id="theactualsimplefix">The actual simple fix</h4>
+
+
+
+<p>At that point, I was getting a little nervous. I hadn&#8217;t migrated off ANY of the VMs on the iSCSI ZVOL and there was no way I could risk wiping it. And I had wasted enough time that I didn&#8217;t want to just give up and reboot into the ESX instance on that server.</p>
+
+
+
+<p>After some reading, I realized FreeNAS stored its config in an SQLite3 database, and the original backup file I downloaded was a copy of that database.</p>
+
+
+
+<p>So I downloaded an SQLite database browser on the laptop, and pointed it at the backup file (of course making a copy of the file first!).</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/WhenFreeNASgoesBadSolution-1-1024x549.png" alt="" class="wp-image-270" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASgoesBadSolution-1-1024x549.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASgoesBadSolution-1-300x161.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASgoesBadSolution-1-768x412.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASgoesBadSolution-1-1600x857.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/WhenFreeNASgoesBadSolution-1.png 1741w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And there it was. The only place in the whole database that mentioned vmx0/vmx1. So I changed those two database columns to my new interface names.</p>
+
+
+
+<p>There&#8217;s a great thing about FreeNAS in case you weren&#8217;t aware. It makes snapshots of the root filesystem, so if you made a change or update and it breaks something, you can start up the old system just by selecting an option in the boot menu.</p>
+
+
+
+<p>So instead of re-installing FreeNAS to get back to a workable state, I rebooted again, choosing the initial install boot snapshot. Once it was up, restored the now-edited backup file one more time.</p>
+
+
+
+<h3 id="success">SUCCESS</h3>
+
+
+
+<p>FreeNAS started up, with all of my configuration options in place. From poking around, nothing else seemed to be broken, other than it was still trying to load the VMWare client.</p>
+
+
+
+<p>Best of all, my VMotions and file copies were fast again. <em>REALLY</em> fast :</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/fastnetwork.png" alt="" class="wp-image-271" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/fastnetwork.png 546w, https://blog.kroy.io/wp-content/uploads/2019/08/fastnetwork-300x102.png 300w" sizes="(max-width: 546px) 100vw, 546px" /></figure>
+
+
+
+<p>After this migration I still have a virtualized FreeNAS instance, but it&#8217;s only my backup array.</p>
+
+
+
+<h5 id="postmortem">Post-mortem</h5>
+
+
+
+<p>It&#8217;s hard for me to believe this should be acceptable behavior in the backup/restore process. But I reported this over at the FreeNAS forums &#8212; which, btw, they are as friendly as ever &#8212; and was essentially told I was wrong.</p>
+
+
+
+<p>Had I just directly edited my backup database to begin with, I could have saved myself a few hours. The install and migration would have been less than a 10 minute process.</p>
+
+
+
+<p>The backup and restore process of limited utility if you ever had to replace failed hardware and weren&#8217;t using identical components. It&#8217;s a bit silly that the console menu actually crashes, instead of doing something useful like say &#8220;Hey, I see your network interfaces are invalid, why don&#8217;t you hit #1 to set one up&#8221;.</p>
+
+
+
+<p>Of course this is in FreeNAS 9.3.1 and I know that 10 is around the corner. Maybe the final FreeNAS 10 will be better.</p>
+
+
+
+<p>In any case, hopefully this will save someone some time in the future.</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&amp;linkname=De-virtualizing%20and%20migrating%20FreeNAS" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F14%2Fde-virtualizing-freenas%2F&#038;title=De-virtualizing%20and%20migrating%20FreeNAS" data-a2a-url="https://blog.kroy.io/2017/01/14/de-virtualizing-freenas/" data-a2a-title="De-virtualizing and migrating FreeNAS"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2017/01/14/de-virtualizing-freenas/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">14</post-id>	</item>
+	</channel>
+</rss>

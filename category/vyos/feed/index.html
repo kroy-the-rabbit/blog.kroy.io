@@ -1,0 +1,3800 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>VyOS &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/vyos/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Tue, 30 Jun 2020 01:43:02 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.2</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>VyOS &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>VyOS from Scratch &#8211; Edition 1</title>
+		<link>https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=vyos-from-scratch-edition-1</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 04 May 2020 05:28:47 +0000</pubDate>
+				<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[vyos]]></category>
+		<category><![CDATA[vyosfromscratch]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=593</guid>
+
+					<description><![CDATA[As a VyOS evangelist, maintainer, and more, I&#8217;ve been meaning to write a simple series of &#8220;how-to&#8221; guides for VyOS for a while. Sure, there are plenty of guides out&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&#038;title=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" data-a2a-url="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/" data-a2a-title="VyOS from Scratch – Edition 1"></a></p>
+<hr class="wp-block-separator"/>
+
+
+
+<p>As a VyOS evangelist, maintainer, and more, I&#8217;ve been meaning to write a simple series of &#8220;how-to&#8221; guides for VyOS for a while.  Sure, there are plenty of guides out there, but I think a lot of them fall short in demonstrating WHY you are entering specific commands.  </p>
+
+
+
+<p>VyOS is capable, but it&#8217;s much more helpful if you can fully understand what it&#8217;s doing.  </p>
+
+
+
+<p>This initial guide will walk through the basic setup steps in replacing something like pfSense or some other consumer router with a simple and secure system running VyOS.  </p>
+
+
+
+<p>This is also going to be a very very long post, so buckle in!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Who is this For</h2>
+
+
+
+<p>Anybody that wants to use VyOS of course!  </p>
+
+
+
+<p>The nice thing about running VyOS is that if you set up it, and understand <strong><em>WHAT</em></strong> it&#8217;s doing, then you&#8217;ve actually learned something about networking.  </p>
+
+
+
+<p>Does something like pfSense work?  </p>
+
+
+
+<p>Sure, but it also doesn&#8217;t teach you much about what&#8217;s actually going on.  And the knowledge learned in VyOS will easily translate to almost any other vendor like Cisco, Arista, and more.  At that point, the concepts are the same, you are just learning the different dialects. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Environment</h2>
+
+
+
+<p>VyOS really doesn&#8217;t take much in resources.  </p>
+
+
+
+<p>8GB of storage and 2-4GB of RAM will be overkill for most basic setups.  </p>
+
+
+
+<p>CPU-wise, even small Pentium Silver CPUs can handle gigabit and beyond, even over VPN .  Anything like an i3/i5 or a Xeon won&#8217;t break a sweat except in all but the most demanding scenarios.</p>
+
+
+
+<p>If you virtualize, it can be helpful to set up a test environment.  This could consist of a simple:</p>
+
+
+
+<ul><li>WAN Network.  For testing this could be your existing LAN network.</li><li>A new &#8220;LAN&#8221; Network. For testing this could just be a separate port group or bridge, and it wouldn&#8217;t even need an uplink.</li><li>A simple VM with a GUI (or without), to run some testing. </li></ul>
+
+
+
+<p>If virtualization isn&#8217;t an option, VyOS can run on almost any device that is x86_64.  I&#8217;ve run it on everything from:</p>
+
+
+
+<ul><li>NUCs with single NICs and USB/USB-C NICs.</li><li><a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/" target="_blank" rel="noreferrer noopener">WYSE 5070/3040 Thin Clients</a>.</li><li>A variety of Dells, including R710s/R620s/R630s.</li><li>Anything Supermicro from 1U to 4U devices.</li></ul>
+
+
+
+<p>Finally, for this guide, I&#8217;ll be working with two NICs.  </p>
+
+
+
+<p>One is a WAN, connected to my current LAN.  I&#8217;ll be creating a &#8220;network inside a network&#8221;.  The second will be our new &#8220;LAN&#8221;.  This is separate from my existing LAN so I can pretend like it&#8217;s a second private network.  These interfaces can be anything:</p>
+
+
+
+<ul><li>Physical NICs.</li><li>VLANs.</li><li>Virtual NICs from ESXi, Proxmox, etc.</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Install</h1>
+
+
+
+<p>The first step is to grab yourself a copy of the installer ISO.  </p>
+
+
+
+<p>Most people will want the <a href="https://www.vyos.io/rolling-release/" target="_blank" rel="noreferrer noopener">Rolling Release</a>.  You can also build it yourself, via the <a href="https://docs.vyos.io/en/latest/contributing/build-vyos.html" target="_blank" rel="noreferrer noopener">Docker image</a>, which is helpful if there are some extra packages you want to add.</p>
+
+
+
+<p>If you want access to the LTS version, it requires self-building (an easy process), contributing, or a subscription. I <a href="https://blog.vyos.io/vyos-access-subscriptions-for-documentation" target="_blank" rel="noreferrer noopener">highly recommend contributing</a>, as even writing or cleaning up some documentation will get you access to the LTS prebuilt versions.  </p>
+
+
+
+<p>You can also support and get access via <a href="https://www.patreon.com/vyos" target="_blank" rel="noreferrer noopener">Patreon</a> or <a href="https://www.buymeacoffee.com/kUa78LT" target="_blank" rel="noreferrer noopener">BuyMeACoffee</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Note that for these guides, I will be using a recent version of rolling.  This is important as some configuration nodes have changed locations and format between 1.3+ and the existing LTS versions (DHCP and IPv6 RAs are two things that come to mind).</p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Rolling Stability</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+It&#8217;s important to note that the rolling releases are generally completely stable.  I would say 95% of them or more are functional without any major bugs.</p>
+<p>Every once in a while, some broken functionality is pushed, but it is almost always fixed quickly. A broken upgrade is not a show-stopper and it is trivial to boot back into the working version with the built-in <a href="https://docs.vyos.io/en/latest/image-mgmt.html" target="_blank" rel="noopener noreferrer">Image Management</a>.</p>
+<p>I have no issues running rolling releases in many production locations.<br />
+</div></div>
+
+
+
+<h2>Install Steps</h2>
+
+
+
+<p>Installation is trivial:</p>
+
+
+
+<ul><li>Burn ISO to CD/DVD/USB stick, or boot ISO via remote management (iDrac, iLo, IPMI)</li><li>Login with <code><em>vyos</em></code>/<code><em>vyos</em></code></li><li>Type <code><em>install image</em></code></li><li>Answer the install steps</li><li>Reboot and remove installation media</li></ul>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#cc8700;border-radius:3px"><div class="su-box-title" style="background-color:#ffba00;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Installation Gotchas</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<ul>
+<li> The installer ISO is a fully functional VyOS image.  That means if you skip the <em>install image</em> step, you can configure the system, and it will work as intended&#8230; until you reboot.  Don&#8217;t be me.  Make sure to install if you want a permanent installation.
+<li> Some systems that lack a serial port get stuck on a black screen on the installer ISO.  The simple fix is to edit the grub boot option line and remove the <em>console=ttyS0,115200</em> option from the kernel boot arguments.  Then just boot with <em>CTRL-X</em> as directed.
+</ul>
+</div></div>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-2.png" alt="" class="wp-image-609" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-2.png 720w, https://blog.kroy.io/wp-content/uploads/2020/04/image-2-300x168.png 300w" sizes="(max-width: 720px) 100vw, 720px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-1.png" alt="" class="wp-image-608" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-1.png 726w, https://blog.kroy.io/wp-content/uploads/2020/04/image-1-300x165.png 300w" sizes="(max-width: 726px) 100vw, 726px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Basic Configuration</h1>
+
+
+
+<p>Once installed, you&#8217;ll be staring at the login screen.  Login with <code>vyos</code> and the password you set up during install:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image.png" alt="" class="wp-image-607" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image.png 723w, https://blog.kroy.io/wp-content/uploads/2020/04/image-300x169.png 300w" sizes="(max-width: 723px) 100vw, 723px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Decision Time!</h3>
+
+
+
+<p>Before you go any further, you need to make a decision.  You need to pick out the subnet (or later subnets) where your network will live.  Or, if you are converting over your existing network, just reuse it.</p>
+
+
+
+<p>These should be <a href="https://en.wikipedia.org/wiki/Private_network">RFC1918 addresses</a>.  You generally want a /24, which is 254 usable addresses.</p>
+
+
+
+<p>So, there are three main groups of these private addresses you can choose from:</p>
+
+
+
+<ul><li><code>10.X.Y.1-254</code>, where <code>X</code> and <code>Y</code> are any number between 0 and 255.  For the last number, 0 would be your &#8220;network&#8221; address, and 255 would be your broadcast address.  You could then assign all your hosts to 1-254.</li><li><code>172.X.Y.1-254</code>, in this case <code>X</code> would be between 16 and 31, and <code>Y</code> could be 0 to 255. </li><li><code>192.168.X.1-254</code>, where <code>X</code> is between 0 and 255.  </li></ul>
+
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Subnetting Pro-tips</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<p>Many routers around the world off-the-shelf use a subnet like 10.0.0.0/24 or 192.168.0.0/24.</p>
+<p>
+While you can use these subnets, future-you will hate yourself if you ever want to access your network remotely or access other networks when both sides are using the same subnet.
+</p>
+<p>
+I would highly recommend:
+<ul>
+ 	<li>Choose a subnet away from the norm.  For example, 10.32.47.0/24.</li>
+ 	<li>If you want to plan ahead and are planning to break things out on VLANs, use a subnet like 10.32.X.0/24.  That way, in the future, X can represent your VLAN number, and you can do a summary route like 10.32.0.0/16.  I&#8217;ll be showing some examples of where this can be used later on in this post.</ul>
+</p>
+</div></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Configuring the LAN and Remote access</h3>
+
+
+
+<p>After the subnet is chosen, the first step is to get the router on the LAN and accessible via SSH.  This makes it much easier to configure, as you are no longer tethered to a keyboard/monitor, VM console, can copy/paste, etc.  </p>
+
+
+
+<h4>LAN IP</h4>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter configure mode</li><li>Add address to the correct interface</li><li>Commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The first step is to enter configure mode.  This allows you to make changes to the system configuration.  Type <code>configure</code>.  VyOS also supports shortcuts and tab completion, so typing <code>conf</code> or <code>conf&lt;TAB&gt;</code> will do the same thing.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-5.png" alt="" class="wp-image-626" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-5.png 336w, https://blog.kroy.io/wp-content/uploads/2020/04/image-5-300x121.png 300w" sizes="(max-width: 336px) 100vw, 336px" /></figure>
+
+
+
+<p>The prompt will change to include <code>#</code>, and the <code>[edit]</code> line will appear to designate that you are in configure mode.</p>
+
+
+
+<p>Next, you need to add your LAN IP.  You can check your interfaces by typing <code>run show interfaces</code>.  This tells VyOS to show all the interfaces in operational mode (the mode you were in before you typed <code>conf</code>).</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-4.png" alt="" class="wp-image-625" width="580" height="98" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-4.png 600w, https://blog.kroy.io/wp-content/uploads/2020/04/image-4-300x51.png 300w" sizes="(max-width: 580px) 100vw, 580px" /></figure>
+
+
+
+<p>In my case, <code>eth1</code> is attached to my LAN here.  I&#8217;m going to use the subnet from above, <code>10.32.0.0/24</code>.  I prefer to use <code>.1</code> for my routers, but you can use any IP in that range.</p>
+
+
+
+<p>There are two methods to assign it once in <code>conf</code> mode.  Either with the full path, or by drilling-down.</p>
+
+
+
+<p>Full path:</p>
+
+
+
+<pre class="wp-block-code"><code>configure
+set interfaces ethernet eth1 address 10.32.0.1/24
+set interfaces ethernet eth1 description LAN
+commit
+save</code></pre>
+
+
+
+<p>Drill down:</p>
+
+
+
+<pre class="wp-block-code"><code>configure
+edit interfaces ethernet eth1
+set address 10.32.0.1/24
+set description LAN
+commit
+save</code></pre>
+
+
+
+<p>Committing makes the configuration active, and saving saves it to disk so it will persist on a reboot.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-18-1024x225.png" alt="" class="wp-image-657" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-18-1024x225.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-300x66.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-768x169.png 768w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-1536x337.png 1536w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-2048x450.png 2048w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Or:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-19-1024x293.png" alt="" class="wp-image-658" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-19-1024x293.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19-300x86.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19-768x220.png 768w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19-1536x439.png 1536w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19.png 1994w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>You can show your work with <code>show interfaces</code> and <code>run show interfaces</code></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-20-1024x693.png" alt="" class="wp-image-659" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-20-1024x693.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/04/image-20-300x203.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-20-768x520.png 768w, https://blog.kroy.io/wp-content/uploads/2020/04/image-20.png 1034w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h4>Set up DHCP</h4>
+
+
+
+<p>Now that that router has a LAN IP, it&#8217;s time to connect your laptop/desktop/etc up to it.  </p>
+
+
+
+<p>You can assign it a static IP in the chosen subnet (<code>10.32.0.10/24</code> for example), but I imagine you are also going to want to assign a DHCP range for automatic configuration of clients.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter configure mode</li><li>Set up DHCP ranges</li><li>commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Let&#8217;s talk about the following config.  </p>
+
+
+
+<p>We are going to make two DHCP ranges, and leave some holes.  This would allow us to assign the IP addresses between <code>.2</code> and <code>.49</code> for static or other uses, as well as <code>.126-199</code> and <code>.251-254</code>.</p>
+
+
+
+<p>While this is a non-standard usage, it demonstrates the capabilities. Many people would just have a single range. </p>
+
+
+
+<pre class="wp-block-code"><code>set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 0 start 10.32.0.50
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 0 stop 10.32.0.125
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 1 start 10.32.0.200
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 1 stop 10.32.0.250</code></pre>
+
+
+
+<p>Some other important config options follow.   </p>
+
+
+
+<p>You want to tell the DHCP server to hand out the router&#8217;s IP address as the default gateway and DNS.  This will make it so (eventually), your LAN devices will have DNS and routing to the Internet:</p>
+
+
+
+<pre class="wp-block-code"><code>set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 dns-server 10.32.0.1
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 default-router 10.32.0.1</code></pre>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#ccaaaa;border-radius:3px"><div class="su-box-title" style="background-color:#ffdddd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">DNS Alert</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<p>This would also be the place to insert something like your pi-hole or active directory DNS server.  In the above example, your pi-hole/ADDNS address or addresses would be where the dns-server option is. </p>
+</div></div>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-8.png" alt="" class="wp-image-630" width="580" height="230" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-8.png 781w, https://blog.kroy.io/wp-content/uploads/2020/04/image-8-300x119.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-8-768x305.png 768w" sizes="(max-width: 580px) 100vw, 580px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-10.png" alt="" class="wp-image-632" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-10.png 760w, https://blog.kroy.io/wp-content/uploads/2020/04/image-10-300x82.png 300w" sizes="(max-width: 760px) 100vw, 760px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>SSH</h4>
+
+
+
+<p>The final step before we can access the router over SSH is to actually enable SSH:</p>
+
+
+
+<pre class="wp-block-code"><code>set service ssh port 22
+commit
+save</code></pre>
+
+
+
+<p>At this point you ought to be able to hook up a LAN client, and verify that you have an IP, gateway, and DNS.  </p>
+
+
+
+<p>This is a fairly stock Debian VM I set up.  As you can see, my IP is in one of my DHCP ranges, and my DNS and default route are the router&#8217;s IP. </p>
+
+
+
+<p>This is on Linux, but the same thing could be confirmed on Windows or MacOS:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-16.png" alt="" class="wp-image-640" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-16.png 736w, https://blog.kroy.io/wp-content/uploads/2020/04/image-16-300x192.png 300w" sizes="(max-width: 736px) 100vw, 736px" /></figure>
+
+
+
+<p>From there, you should be able to ssh into the router with the username <code>vyos</code> and password you set up during install:<br></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-13.png" alt="" class="wp-image-637" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-13.png 541w, https://blog.kroy.io/wp-content/uploads/2020/04/image-13-300x106.png 300w" sizes="(max-width: 541px) 100vw, 541px" /></figure>
+
+
+
+<p>And typing <code>show configuration</code> (in op mode), should show you the work done so far.  VyOS also comes with a few defaults, like NTP servers configured.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-14.png" alt="" class="wp-image-638" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-14.png 414w, https://blog.kroy.io/wp-content/uploads/2020/04/image-14-125x300.png 125w" sizes="(max-width: 414px) 100vw, 414px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>NAT &amp; DNS</h1>
+
+
+
+<h3>NAT</h3>
+
+
+
+<p>The next important duty for a router and firewall is to be able to NAT.  NAT allows all your private LAN devices to access the Internet.  </p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Information Dump</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+Back when the Internet started, every device had a unique IP address. </p>
+<p>Unfortunately, because of the numbering scheme used, there are only 4.2 billion of these address, at least in IPv4, and the transition to IPv6 is far from complete.</p>
+<p>Because of this, every device on your network needs to be able to &#8220;pretend&#8221; that it is your router to access the Internet.  Your router keeps track of which requests belong to which device.  </p>
+<p>Source NAT is what allows you to do this.</p>
+<p>This is also where the above mentioned &#8220;summary route&#8221; can come into play.  Instead of creating three separate NAT rules for 10.32.1.0/24, 10.32.2.0/24, and 10.32.3.0/24, you can create a single rule for 10.32.0.0/16.<br />
+</div></div>
+
+
+
+<p>For this setup, it&#8217;s important to identify which network interface will eventually be your WAN interface, even though it&#8217;s not configured yet.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>As before, enter configuration mode.</li><li>Set up a source NAT rule to target our LAN or LAN subnets.</li><li>Define the outgoing WAN interface on the rule.</li><li>Set the translation type of the rule to <code>masquerade</code>. </li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The type of NAT we will be using is called <code>SOURCE NAT</code>.  This type of NAT is going to have three components:</p>
+
+
+
+<ul><li>Target all traffic from our LAN or LANs&#8230;</li><li>&#8230; when the traffic is going out to the Internet through this outgoing interface&#8230;</li><li>&#8230; Change the IP address from the LAN IP to the WAN IP</li></ul>
+
+
+
+<p>To do this:</p>
+
+
+
+<pre class="wp-block-code"><code>set nat source rule 100 source address '10.32.0.0/24'
+set nat source rule 100 outbound-interface 'eth0'
+set nat source rule 100 translation address masquerade
+commit
+save</code></pre>
+
+
+
+<p>In the above example, the <code>100</code> is an arbitrary number (between 1-9999).  The <code>eth0</code> is my eventual WAN interface.  <code>masquerade</code> translates the internal LAN IP to your public WAN IP.  </p>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-21.png" alt="" class="wp-image-660" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-21.png 962w, https://blog.kroy.io/wp-content/uploads/2020/04/image-21-300x240.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-21-768x613.png 768w" sizes="(max-width: 962px) 100vw, 962px" /></figure>
+
+
+
+<p>Once we set up our WAN interface, we&#8217;ll be able to type <code>show nat source rules</code> in op mode, or <code>run show nat source rules</code> in conf mode to run the op mode command, it will be clear what&#8217;s happening.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>DNS</h3>
+
+
+
+<p>The next step is to set up our VyOS instance as for DNS.  This will allow you to use local DNS and caching instead of your ISP&#8217;s, but also eventually will allow you run custom DNS and hosts. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter config mode</li><li>Set the DNS Listen Address</li><li>Set the subnets we are allowing from</li><li>Set the cache size to 0</li><li>commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<pre class="wp-block-code"><code>set service dns forwarding listen-address '10.32.0.1'
+set service dns forwarding allow-from '10.32.0.0/24'
+set service dns forwarding cache-size '0'
+commit
+save</code></pre>
+
+
+
+<p>As mentioned, this accomplishes three things.  </p>
+
+
+
+<ul><li>It tells VyOS to listen for DNS requests on its LAN IP, <code>10.32.0.1</code>.  </li><li>It limits requests from your LAN subnet.  </li><li>Finally, it sets the cache size to 0.  This is good to start out with to make sure everything is working, but later you can bump it up to speed up multiple requests for the same sites. </li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#ccaaaa;border-radius:3px"><div class="su-box-title" style="background-color:#ffdddd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Opportunity Alert</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+This is another opportunity to use the &#8220;summary&#8221; route that I&#8217;ve mentioned a few times.  </p>
+<p>Instead of allowing &#8220;10.32.0.0/24&#8221;, you would allow &#8220;10.32.0.0/16&#8221;.  This would ensure that as you add VLANs and subnets, your DNS will just work without adding a long list of /24s.<br />
+</div></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-22.png" alt="" class="wp-image-678" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-22.png 508w, https://blog.kroy.io/wp-content/uploads/2020/04/image-22-300x125.png 300w" sizes="(max-width: 508px) 100vw, 508px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>DNS Forwarding</h4>
+
+
+
+<p>There is one more consideration to be made.  As configured, your DNS server will run in &#8220;recursor&#8221; mode.  This means it will take responsibility for fully resolving DNS on its own.  This may be a bad thing for a number of reasons:</p>
+
+
+
+<ul><li>It leaks your IP to potential undesirables.  </li><li>It&#8217;s almost always slower, as you don&#8217;t get to benefit from the caches of a large service like CloudFlare or Google.  </li></ul>
+
+
+
+<p>It&#8217;s quite simple to set up in forwarding mode, meaning when you make a DNS request, you end up asking an upstream resolver.  </p>
+
+
+
+<p>In the following example, we&#8217;ll be using CloudFlare and Google:</p>
+
+
+
+<pre class="wp-block-code"><code>set service dns forwarding name-server 1.1.1.1
+set service dns forwarding name-server 1.0.0.1
+set service dns forwarding name-server 8.8.8.8
+set service dns forwarding name-server 8.8.4.4
+commit
+save</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-23.png" alt="" class="wp-image-680" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-23.png 564w, https://blog.kroy.io/wp-content/uploads/2020/04/image-23-300x212.png 300w" sizes="(max-width: 564px) 100vw, 564px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>System DNS</h4>
+
+
+
+<p>One final step is to set the DNS for VyOS itself.  Everything we&#8217;ve done so far has just set up VyOS to be a DNS server for your clients.</p>
+
+
+
+<p>This will be the DNS that is used, for example, when you do a VyOS update, ping or traceroute from VyOS, etc.</p>
+
+
+
+<p>The easiest thing to do if you&#8217;ve been following this guide, is just to use the DNS server you set up above:</p>
+
+
+
+<pre class="wp-block-code"><code>set system name-server 10.32.0.1
+commit
+save</code></pre>
+
+
+
+<p>This is also another spot where if you wanted to use Google, CloudFlare, or AD-DNS, you could plug in that IP:</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-13.png" alt="" class="wp-image-779" width="760" height="276" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-13.png 760w, https://blog.kroy.io/wp-content/uploads/2020/05/image-13-300x109.png 300w" sizes="(max-width: 760px) 100vw, 760px" /></figure>
+
+
+
+<p>Alternatively, you call tell VyOS to use the DNS servers that it received from your WAN DHCP server with:</p>
+
+
+
+<pre class="wp-block-code"><code>set system name-servers-dhcp eth0</code></pre>
+
+
+
+<p></p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Firewall</h1>
+
+
+
+<p>If you&#8217;ve made it this far, congrats!  We are almost there! </p>
+
+
+
+<p>This section will cover the creation of a zone-based firewall, which is far superior to the default method of attaching firewalls to interfaces.  </p>
+
+
+
+<p>The reason it is superior is simple.  It&#8217;s a bit more hassle to set up, but it&#8217;s far easier to manage on an ongoing basis, plus, you start thinking about firewalling as flows of information from interface to interface.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter configuration mode</li><li>Create a firewall to allow all LAN traffic.</li><li>Create firewall to allow all LAN traffic to access VyOS itself.</li><li>Create a firewall to protect the router itself from WAN.</li><li>Create a firewall to protect LAN devices from WAN.</li><li>Commit</li><li>Create LOCAL/LAN zones.</li><li>Assign appropriate interfaces to zones.</li><li>Commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>For as complex as firewalling seems, it&#8217;s actually pretty simple when you break it down.  </p>
+
+
+
+<p>A firewall tracks connection &#8220;states&#8221; to determine what is and is not allowed.  This is where packets are originating and going to, ports involved, types of traffic like TCP/UDP/ICMP, and more.  </p>
+
+
+
+<p>We are going to build a very simple firewall that assumes that we want to block everything externally, and allow everything from LAN.</p>
+
+
+
+<p>So let&#8217;s dig right into it.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>LAN</h2>
+
+
+
+<p>First, create a firewall that will allow our LAN to access everything. This is a setup that would mimic what most consumer routers do:</p>
+
+
+
+<pre class="wp-block-code"><code>conf
+set firewall name LAN-WAN default-action accept
+set firewall name LAN-LOCAL default-action accept
+commit
+save</code></pre>
+
+
+
+<p>The <code>LAN-WAN</code> and the <code>LAN-LOCAL</code> can be arbitrarily named anything.  I use this naming scheme because as mentioned above, it&#8217;s better to think about firewalls as controlling the flow of information through the router, and these names are self-documenting.</p>
+
+
+
+<p><code>LOCAL</code> is a specific VyOS designation that means &#8220;this router&#8221;.  When you are attaching the firewall in the zones, LOCAL will be what you use to control traffic destined to the firewall itself.  </p>
+
+
+
+<p>As should be obvious, we are just allowing everything.  But you can set whatever rules you wanted.  <code>LAN-WAN</code> would generally remain pretty open as it would be uncommon to block your own access to the Internet, but <code>LAN-LOCAL</code> might contain rules to maybe allow only specific devices access to manage the VyOS router.</p>
+
+
+
+<p>Also note that we are just creating the firewalls here.  They don&#8217;t become active until you attach them to the zones.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-24.png" alt="" class="wp-image-740" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-24.png 894w, https://blog.kroy.io/wp-content/uploads/2020/04/image-24-300x126.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-24-768x323.png 768w" sizes="(max-width: 894px) 100vw, 894px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>LOCAL</h2>
+
+
+
+<p>As mentioned, the <code>LOCAL</code> zone is traffic destined for the VyOS router itself.  </p>
+
+
+
+<p>In most cases, it will have a similar ruleset to the LAN one above, as most people want their router to have full access to the Internet and their LAN devices:</p>
+
+
+
+<pre class="wp-block-code"><code>conf
+set firewall name LOCAL-WAN default-action accept
+set firewall name LOCAL-LAN default-action accept
+commit
+save</code></pre>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Food for Thought</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<p>While I might be getting a little ahead of myself here, it&#8217;s important to note that you could use the same firewall instead of creating four different firewalls as we&#8217;ve done here.  The firewalls are just attached to interfaces or zones by names, so there&#8217;s nothing really stopping you from creating a single firewall and attaching it to four different places.</p>
+<p>As a bit of a pro-tip though, I would recommend not doing this.  Eventually you&#8217;ll want them broken out, and it&#8217;s far more of a hassle to do it later than to just do it during initial setup.<br />
+</div></div>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-26.png" alt="" class="wp-image-743" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-26.png 988w, https://blog.kroy.io/wp-content/uploads/2020/04/image-26-300x85.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-26-768x218.png 768w" sizes="(max-width: 988px) 100vw, 988px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>WAN</h2>
+
+
+
+<p>The <code>WAN</code> zone is where we are actually going to do most of our work.  </p>
+
+
+
+<p>The basic goal here will be two things.  To block all access to the router itself, and to provide basic setup and template for future things like port forwarding to our LAN.  </p>
+
+
+
+<p>When you start moving data to and from the Internet, that&#8217;s when you need to start worrying about the state tracking I mentioned before.  </p>
+
+
+
+<p>For both LOCAL and LAN traffic, we&#8217;ll be setting up what&#8217;s known as a &#8220;stateful firewall&#8221;.  </p>
+
+
+
+<p>In stateful firewalling, there are three main states to worry about:</p>
+
+
+
+<ul><li>New &#8211; Traffic in a <code>NEW</code> state is the first packet from a destination to a source.  Allowing or denying this packet ultimately determines whether the traffic will be allowed.</li><li>Established &#8211; Once traffic from <code>NEW</code> has been allowed, the subsequent packets are marked as <code>ESTABLISHED</code>.  This is essentially traffic that has already been allowed by other rules.  This is another basic requirement for a working stateful firewall.</li><li>Related &#8211; This means that this is traffic that is somehow related to already allowed traffic.  Also required.</li></ul>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">A note about rule numbers</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+As with the NAT rule numbers, the rule numbers you use for firewall are arbitrary.</p>
+<p>With that said, it doesn&#8217;t mean you shouldn&#8217;t plan ahead a bit:</p>
+<ul>
+<li>Rules are processed numerically, so for fastest firewalling and routing, you definitely want your ESTABLISHED/RELATED rule at the top.  That ensures that existing traffic, which is going to be the bulk of the traffic your firewall processes, only has to look at a single rule.</li>
+<li>Leave yourself some gaps for future rules.  You&#8217;ll appreciate it later if you want to insert a new rule before an existing one, though you can always rename and move around.</li>
+</div></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>WAN-LOCAL</h3>
+
+
+
+<p>As mentioned, the <code>WAN-LOCAL</code> firewall is traffic destined for the VyOS router itself.  In the future, this will be where you allow traffic, say to your WireGuard port for VPN.</p>
+
+
+
+<p>The first rule we want to build is to allow all <code>ESTABLISHED</code> and <code>RELATED</code> traffic.  So we&#8217;ll:</p>
+
+
+
+<ul><li>Create the WAN-LOCAL firewall.  </li><li>Set the default policy on the firewall to drop everything.  </li><li>Create a rule to accept specific traffic for rule.</li><li>Set the match for the rule to our established and related states.</li><li>Set a description for ease of use later.</li></ul>
+
+
+
+<p></p>
+
+
+
+<pre class="wp-block-code"><code>set firewall name WAN-LOCAL default-action drop
+set firewall name WAN-LOCAL rule 5 action accept
+set firewall name WAN-LOCAL rule 5 state established enable
+set firewall name WAN-LOCAL rule 5 state related enable
+set firewall name WAN-LOCAL rule 5 description "Allow EST/Related Traffic"
+commit
+save</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-1024x660.png" alt="" class="wp-image-753" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-1024x660.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-300x193.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-768x495.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image.png 1232w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The next rule we want on is to allow ICMP.  Many people like to block this, but not me.  I&#8217;ll defer to <a href="http://shouldiblockicmp.com/">ShouldIBlockICMP.com</a> on this.</p>
+
+
+
+<ul><li>Create a new rule matching ICMP</li><li>Match the state of <code>NEW</code>. This is what actually matches the unknown traffic to allow</li><li>Allow the traffic</li><li>Commit and save</li></ul>
+
+
+
+<pre class="wp-block-code"><code>set firewall name WAN-LOCAL rule 20 protocol icmp
+set firewall name WAN-LOCAL rule 20 state new enable
+set firewall name WAN-LOCAL rule 20 action accept
+commit
+save</code></pre>
+
+
+
+<p>And you can see that the firewall is created (but still not attached to any interfaces), by doing the <code>op mode</code> command <code>show interfaces</code>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-1-1024x900.png" alt="" class="wp-image-759" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-1-1024x900.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-1-300x264.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-1-768x675.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-1.png 1176w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3>WAN-LAN</h3>
+
+
+
+<p>For now, the <code>WAN-LAN</code> firewall is identical to the <code>WAN-LOCAL</code>.  In the future, this is where you will allow your port forward rules, or other traffic you want to send to your LAN devices, so it&#8217;s helpful to break it out beforehand.</p>
+
+
+
+<p>As before, we create the firewall, set it to drop by default, allowed EST/RELATED, and allow ICMP, which won&#8217;t do anything now, but could be helpful in the future:</p>
+
+
+
+<pre class="wp-block-code"><code>set firewall name WAN-LAN default-action drop
+set firewall name WAN-LAN rule 5 action accept
+set firewall name WAN-LAN rule 5 state established enable
+set firewall name WAN-LAN rule 5 state related enable
+set firewall name WAN-LAN rule 5 description "Allow EST/Related Traffic"
+set firewall name WAN-LAN rule 20 protocol icmp
+set firewall name WAN-LAN rule 20 state new enable
+set firewall name WAN-LAN rule 20 action accept</code></pre>
+
+
+
+<p>Don&#8217;t forget you can dive down into levels as in the following example:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-2.png" alt="" class="wp-image-760" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-2.png 1002w, https://blog.kroy.io/wp-content/uploads/2020/05/image-2-300x201.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-2-768x515.png 768w" sizes="(max-width: 1002px) 100vw, 1002px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Finally!  We have our firewalls set up and ready to deploy.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>WAN and Zones</h1>
+
+
+
+<p>If you&#8217;ve been paying attention, we still don&#8217;t have one <em>VERY</em> important piece to this puzzle. We still don&#8217;t have WAN access!</p>
+
+
+
+<p>Of course I did this to protect your router during the initial setup phase.  Until you have firewalls ready to deploy, you probably don&#8217;t want to be kicking your brand new VyOS install out on the open Internet.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Zones</h2>
+
+
+
+<p>Zones are easily one of my favorite parts of VyOS, and something that in my opinion, puts it lightyears ahead of other firewall solutions.</p>
+
+
+
+<p>Especially as your firewalling needs grow, zones just make it so <em>EASY</em>.  As I sort of touched on, zones are a bit more work initially, but save you <em>MUCH</em> more time in the future.</p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#ccaaaa;border-radius:3px"><div class="su-box-title" style="background-color:#ffdddd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Lockout Alert</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+Be careful and pay attention here.  </p>
+<p>If you mistype something and are still configuring VyOS over SSH, you can potentially lock yourself out.<br />
+</div></div>
+
+
+
+<p>The naming scheme as I&#8217;ve outlined above should be helpful here when creating our firewall zones.  It basically says <code>FROMZONE-&gt;TOZONE</code></p>
+
+
+
+<p>So let&#8217;s run through the whole thing.  </p>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Set the default action for the zone.  This should always be drop to cover yourself in case you miss something.</li><li>Apply the &#8220;For traffic from X zone to current zone, attach Y firewall&#8221;</li><li>Add the interfaces that are part of this zone</li><li>Repeat for all zones</li><li>commit</li><li>save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So what does this look like for the LAN:</p>
+
+
+
+<ul><li>In this example we are working on the LAN zone</li><li>We drop everything by default</li><li>We assign the <code>WAN-LAN</code> firewall to traffic from any interface in the below <code>WAN</code> zone</li><li>Similarly for the <code>LOCAL-LAN</code>.  This is traffic from the VyOS instance itself to LAN hosts.</li><li>We put <code>eth1</code> in our LAN zone.</li></ul>
+
+
+
+<pre class="wp-block-code"><code>set zone-policy zone LAN default-action drop
+set zone-policy zone LAN from WAN firewall name WAN-LAN
+set zone-policy zone LAN from LOCAL firewall name LOCAL-LAN
+set zone-policy zone LAN interface eth1
+
+
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Repeat all steps for the <code>LOCAL</code> zone.  The major difference here is the <code>local-zone</code> designation.  As I&#8217;ve mentioned a few times, <code>LOCAL</code> is a special designation that means &#8220;this firewall&#8221;, so you don&#8217;t attach interfaces:</p>
+
+
+
+<pre class="wp-block-code"><code>set zone-policy zone LOCAL local-zone
+set zone-policy zone LOCAL from LAN firewall name LAN-LOCAL
+set zone-policy zone LOCAL from WAN firewall name WAN-LOCAL
+set zone-policy zone LOCAL default-action drop
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Finally, the WAN zone is basically the same as the LAN zone. The only major change you should notice is that I just changed the firewall names and interface name:</p>
+
+
+
+<pre class="wp-block-code"><code>set zone-policy zone WAN from LAN firewall name LAN-WAN
+set zone-policy zone WAN from LOCAL firewall name LOCAL-WAN
+set zone-policy zone WAN interface eth0
+set zone-policy zone WAN default-action drop</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-4-1024x676.png" alt="" class="wp-image-766" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-4-1024x676.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-4-300x198.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-4-768x507.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-4.png 1176w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>If you were like me, you might have tried committing between steps.  Unfortunately, if you don&#8217;t set up everything at once, you&#8217;ll quickly discover that zones are interdependent on one another.  This happens because I&#8217;ve created the LAN zone, but the referenced WAN and LOCAL zones don&#8217;t exist yet.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-3-1024x528.png" alt="" class="wp-image-765" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-3-1024x528.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-3-300x155.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-3-768x396.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-3.png 1168w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Show your work</h3>
+
+
+
+<p>Hopefully, if you&#8217;ve done everything correctly, you should see all your zone policies set up under the <code>op mode</code> command <code>run show zone-policy</code>.  This view should make it obvious which traffic is flowing through what firewall:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-6-838x1024.png" alt="" class="wp-image-768" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-6-838x1024.png 838w, https://blog.kroy.io/wp-content/uploads/2020/05/image-6-245x300.png 245w, https://blog.kroy.io/wp-content/uploads/2020/05/image-6-768x939.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-6.png 872w" sizes="(max-width: 838px) 100vw, 838px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>WAN Setup</h2>
+
+
+
+<p>Finally, here we are.  </p>
+
+
+
+<p>Setting up your WAN. If you&#8217;ve made it this far, congrats.  You are basically 1 or 2 commands away from having a working router and firewall!</p>
+
+
+
+<p>There are multiple ways to get a WAN address.  For simplicity&#8217;s sake, I&#8217;ll just cover two of them here, static and DHCP assignment.  For something like PPPoE, you&#8217;ll need a few more steps.</p>
+
+
+
+<h3>DHCP Assignment</h3>
+
+
+
+<p>DHCP is when your router asks your ISP&#8217;s servers for what it should use for its IP address and routing information.  This is accomplished with one simple command (well, four if you add a description to the interface, and commit and save):</p>
+
+
+
+<pre class="wp-block-code"><code>set interfaces ethernet eth0 address dhcp
+set interfaces ethernet eth0 description WAN
+commit
+save</code></pre>
+
+
+
+<p>You can verify that the setup is complete with the <code>op mode</code> commands <code>run show interfaces</code> and <code>run show ip route</code>.  (I have some debug variables set, so ignore the extra output:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-8-988x1024.png" alt="" class="wp-image-773" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-8-988x1024.png 988w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8-290x300.png 290w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8-768x796.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8-1482x1536.png 1482w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8.png 1490w" sizes="(max-width: 988px) 100vw, 988px" /></figure>
+
+
+
+<p>In the above output, <code>10.21.21.57</code> is the IP address I was assigned via DHCP.  The <code>show ip route</code> verifies that I have a default route.</p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Information Dump</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+Your &#8220;gateway&#8221; or default route, is the router your devices ask when they encounter an IP address that they don&#8217;t know how to get to.</p>
+<p>In the networking world, this is represented by <em>0.0.0.0/0</em>, which is a shortcut for <strong><em>the entire Internet</em></strong></p>
+<p>So in the above example, this VyOS knows how to talk directly to anything in the 10.21.21.0/24 or 10.32.0.0/24 subnets because they are directly connected.  Anything outside of that, it needs to ask 10.21.21.1 for a route to it.<br />
+</div></div>
+
+
+
+<h3>Static IP</h3>
+
+
+
+<p>Static IPs just skip the automatic configuration.  It&#8217;s up to your ISP how this is configured, but usually it&#8217;s an extra step, manually applying your default route.</p>
+
+
+
+<p>So to duplicate my above DHCP configuration:</p>
+
+
+
+<pre class="wp-block-code"><code>set interfaces ethernet eth0 address 10.21.21.57/24
+set protocols static route 0.0.0.0/0 next-hop 10.21.21.1
+commit
+save</code></pre>
+
+
+
+<p>As you can see in the following screenshot, I forgot the exact format, so I hit my <code>&lt;TAB&gt;</code> button to get hints:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-12-881x1024.png" alt="" class="wp-image-778" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-12-881x1024.png 881w, https://blog.kroy.io/wp-content/uploads/2020/05/image-12-258x300.png 258w, https://blog.kroy.io/wp-content/uploads/2020/05/image-12-768x893.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-12.png 1106w" sizes="(max-width: 881px) 100vw, 881px" /></figure>
+
+
+
+<h3>Check your work</h3>
+
+
+
+<p>Assuming nothing has gone wrong, you should be able to verify everything with the <code>op mode</code> command <code>ping</code>.  So let&#8217;s hit Google with 4 pings:</p>
+
+
+
+<p><code>run ping www.google.com count 4</code></p>
+
+
+
+<p>If all goes well, you should see a response:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-9-1024x264.png" alt="" class="wp-image-774" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-9-1024x264.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-9-300x77.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-9-768x198.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-9.png 1290w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Conclusion</h1>
+
+
+
+<p>So wow, this post turned into a bit of a novel.  Hopefully if you&#8217;ve made it this far, your LAN clients now have accessible Internet. From a client, you should be able to ping google:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-14-1024x402.png" alt="" class="wp-image-783" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-14-1024x402.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-14-300x118.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-14-768x302.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-14.png 1416w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Obviously there are a lot of basic topics I haven&#8217;t covered yet.  But I wanted to lay out and explain the basic setup first.  </p>
+
+
+
+<p>Future editions will feature:</p>
+
+
+
+<ul><li>Port Forwarding.</li><li>Hairpin NAT (this goes hand-in-hand with the first).</li><li>VPNs, especially WireGuard</li><li>How routing works when you have VPNs.</li><li>Some potential hardening tactics.</li><li>Other advanced topics like BGP/OSPF.</li></ul>
+
+
+
+<p>Cheers!</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&amp;linkname=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2020%2F05%2F04%2Fvyos-from-scratch-edition-1%2F&#038;title=VyOS%20from%20Scratch%20%E2%80%93%20Edition%201" data-a2a-url="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/" data-a2a-title="VyOS from Scratch – Edition 1"></a></p>]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">593</post-id>	</item>
+		<item>
+		<title>A Baby WYSE, the 3040</title>
+		<link>https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-baby-wyse-the-dell-3040</link>
+					<comments>https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/#comments</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Fri, 17 Jan 2020 17:30:58 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[dell]]></category>
+		<category><![CDATA[wireguard]]></category>
+		<category><![CDATA[wysebaby]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=539</guid>
+
+					<description><![CDATA[Ever since my successful adventure with the WYSE J5005, I fell in love with these little thin clients. So when the opportunity arose to pick up a baby one for&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&#038;title=A%20Baby%20WYSE%2C%20the%203040" data-a2a-url="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/" data-a2a-title="A Baby WYSE, the 3040"></a></p>
+<p>Ever since my successful adventure with the <a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">WYSE J5005</a>, I fell in love with these little thin clients.  So when the opportunity arose to pick up a baby one for $30, I pounced on it.</p>
+
+
+
+
+
+<h2>The Path to Another WYSE</h2>
+
+
+
+<p>I love my <a href="https://amzn.to/2tjOisW">WYSE 5070</a>.  That little box is so much power stuffed into a tiny little form factor.  And as I outlined in my <a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">last review</a>, it sips power, averaging about 7.5 watts under normal load.</p>
+
+
+
+<p>Although I initially threw <a href="https://vyos.io/">VyOS</a> on it, I don&#8217;t really have a need for another dedicated router right now.  So the duties of the box shifted, and it became the charter member of a newly minted Proxmox cluster, where it&#8217;s actually running a backup routing VyOS instance:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/j5005-1024x443.png" alt="" class="wp-image-547" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/j5005-1024x443.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-300x130.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-768x332.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-1536x664.png 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-850x368.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005.png 1949w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>wyse5070 running primary DC, backup routing, and random Debian instance</figcaption></figure>
+
+
+
+<p>When the opportunity came to pick up a WYSE3040, I absolutely jumped on it.  Especially when it was less than a cost of a Raspberry Pi.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Dell WYSE 3040</h2>
+
+
+
+<p>So when I got the 3040, I didn&#8217;t realize how SMALL it would be.  I mean, this thing is downright <strong><em>TINY</em></strong>:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-1024x768.jpg" alt="" class="wp-image-542" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>I didn&#8217;t have a banana, so this is the size compared to an SSD.</figcaption></figure>
+
+
+
+<p>As pictured, the thing has a footprint that&#8217;s only slightly bigger than an SSD. </p>
+
+
+
+<p>Even at that size, it has a surprising amount of ports:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/image-5-1024x494.png" alt="" class="wp-image-552" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-5-1024x494.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5-300x145.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5-768x371.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5-850x410.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5.png 1481w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>headphone jack, usb2, usb3</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/image-4-1024x498.png" alt="" class="wp-image-551" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-4-1024x498.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4-300x146.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4-768x374.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4-850x414.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4.png 1519w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>power, dual displayport, USB2, ethernet</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Guts</h2>
+
+
+
+<p>I don&#8217;t know why, but I alway feel a driving <em>NEED</em> to open up my new toys.  It&#8217;s a disease. And this thing was no exception.</p>
+
+
+
+<p>With the bottom of the case off, it has an open spot for a WiFi card.  With the limited storage space in this sucker, at some point I&#8217;m going to research if I can drop an M2 SSD in there:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-1024x768.jpg" alt="" class="wp-image-541" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>bottom of case off</figcaption></figure>
+
+
+
+<p>Once the device is fully extricated from its case, there&#8217;s really not much to look at.  Just a huge heatsink that covers most of the top of the motherboard:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-1024x768.jpg" alt="" class="wp-image-540" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>fully out</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Specs</h2>
+
+
+
+<p>While the WYSE5070 is a powerhouse in a tiny form-factor, this 3040 is a bit more&#8230; modest. </p>
+
+
+
+<ul><li>Atom x5-Z8350 Processor</li><li>2GB of DDR3L RAM (soldered on)</li><li>8GB of eMMC (soldered on)</li><li>Gigabit Realtek NIC (RTL8111/8168/8411)</li></ul>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/image.png" alt="" class="wp-image-545" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image.png 896w, https://blog.kroy.io/wp-content/uploads/2020/01/image-300x173.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-768x442.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-850x490.png 850w" sizes="(max-width: 896px) 100vw, 896px" /><figcaption>system stats</figcaption></figure>
+
+
+
+<p>Like I said.  Pretty modest specs. And the small RAM and storage space somewhat limit the options.  The eMMC is particularly painful as that kind of flash is REALLY not designed for general usage.  I&#8217;ll probably end up using a SATA SSD over a sata-wire. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>VyOS</h2>
+
+
+
+<p>So one of the first things I usually do with a new device is toss VyOS on it.  I&#8217;m a huge VyOS enthustiast, evangelist, and as mentioned recently, now maintainer.</p>
+
+
+
+<p> Unfortunately on this device, the VyOS installer died on a black screen.  But during the course of doing this write-up, I took another look at it, and  discovered the reason for this. GRUB tries to pass the output to a non-existent serial port.  While I&#8217;ve had other devices that lacked serial ports that installer didn&#8217;t care about, on this one it refused to boot.  So I just had to edit the grub boot line to remove the serial information. </p>
+
+
+
+<p>Also, the 1.3 line of VyOS had a broken UEFI installer since release due to a change in Debian Buster, but I recently fixed that as well.  </p>
+
+
+
+<p>So expect a VyOS write-up on this forthwith.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Testing</h2>
+
+
+
+<p>For testing, I just installed Ubuntu 18.04 or 19.10 I think.  Whatever ISO I had stuck on a USB at the time. </p>
+
+
+
+<p>The space on the device is obviously a very real concern.  Not to mention, as I said, the eMMC probably wouldn&#8217;t stand up very long to even minor usage without some hacks.  2.1G available with a fairly minimal install + WireGuard.</p>
+
+
+
+<pre class="wp-block-code"><code>Filesystem      Size  Used Avail Use% Mounted on
+udev            909M     0  909M   0% /dev
+tmpfs           190M  1.4M  189M   1% /run
+/dev/mmcblk0p2  6.7G  4.2G  2.1G  68% /
+tmpfs           950M     0  950M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           950M     0  950M   0% /sys/fs/cgroup
+/dev/loop0       90M   90M     0 100% /snap/core/8268
+/dev/mmcblk0p1  511M  7.8M  504M   2% /boot/efi
+/dev/loop1       55M   55M     0 100% /snap/lxd/12211
+/dev/loop2       90M   90M     0 100% /snap/core/7917
+/dev/loop3       55M   55M     0 100% /snap/lxd/12631
+tmpfs           190M     0  190M   0% /run/user/1000
+</code></pre>
+
+
+
+<p>Obviously I could probably get that a lot leaner if I went with something like Alpine or Arch.</p>
+
+
+
+<p>A basic iperf3 to a different host on my network shows gigabit speeds:</p>
+
+
+
+<pre class="wp-block-code"><code>&#091;SUM]   0.00-10.00  sec  1.09 GBytes   934 Mbits/sec    0             sender
+&#091;SUM]   0.00-10.00  sec  1.08 GBytes   931 Mbits/sec                  receiver
+</code></pre>
+
+
+
+<p>with moderate CPU usage:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-1024x96.png" alt="" class="wp-image-556" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-1024x96.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-300x28.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-768x72.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-850x80.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg.png 1200w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>cpu usage during iperf3</figcaption></figure>
+
+
+
+<p>And firing up WireGuard and running an iperf3, show slightly less speed</p>
+
+
+
+<pre class="wp-block-code"><code>&#091;SUM]   0.00-10.00  sec   991 MBytes   831 Mbits/sec    0             sender
+&#091;SUM]   0.00-10.01  sec   988 MBytes   828 Mbits/sec                  receiver
+</code></pre>
+
+
+
+<p>And lots more CPU:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-1024x101.png" alt="" class="wp-image-557" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-1024x101.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-300x30.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-768x76.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-850x84.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg.png 1375w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>cpu usage during WireGuard iperf3</figcaption></figure>
+
+
+
+<p></p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Power Consumption</h2>
+
+
+
+<p>The power consumption is where this thing really shines.  Again, sorry for the potato pic, I just have a terrible time getting a decent picture of my kill-a-watt with a dying screen.  4.1 watts at idle:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/image-1-1024x779.png" alt="" class="wp-image-548" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-1-1024x779.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1-300x228.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1-768x584.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1-850x646.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1.png 1164w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>potato pic, idle power consumption 4.1 watts</figcaption></figure>
+
+
+
+<p>And 7.3 watts under WireGuard:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2020/01/image-2-1024x733.png" alt="" class="wp-image-549" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-2-1024x733.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2-300x215.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2-768x550.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2-850x608.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2.png 1266w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>potato pic, WireGuard at full speed, 7.3 watts</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>In all, this is a great little device for projects.  I might turn it into a DNS server or something.  For a lower speed network, I can also see it making a great little router.  I could see the CPU crumbling under heavy load that was coming from more than just a handful of streams.</p>
+
+
+
+<p>For the $30 I paid for it, it can definitely replace a Raspberry Pi for me.  And it will be even more useful if I can drop an M2 SSD into that WiFi slot.</p>
+
+
+
+<p></p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&amp;linkname=A%20Baby%20WYSE%2C%20the%203040" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2020%2F01%2F17%2Fthe-baby-wyse-the-dell-3040%2F&#038;title=A%20Baby%20WYSE%2C%20the%203040" data-a2a-url="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/" data-a2a-title="A Baby WYSE, the 3040"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/feed/</wfw:commentRss>
+			<slash:comments>4</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">539</post-id>	</item>
+		<item>
+		<title>The WYSE 5070, a perfect little VyOS device</title>
+		<link>https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-wyse-5070-a-perfect-little-vyos-device</link>
+					<comments>https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Sun, 08 Dec 2019 16:34:04 +0000</pubDate>
+				<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[dell]]></category>
+		<category><![CDATA[wireguard]]></category>
+		<category><![CDATA[wysebaby]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=497</guid>
+
+					<description><![CDATA[As a bit of a networking nerd, I&#8217;m always on the hunt for cheap and powerful hardware that I can toss VyOS on. The WYSE 5070 thin client is my&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&#038;title=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" data-a2a-url="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/" data-a2a-title="The WYSE 5070, a perfect little VyOS device"></a></p>
+<p>As a bit of a networking nerd, I&#8217;m always on the hunt for cheap and powerful hardware  that I can toss VyOS on.  The WYSE 5070 thin client is my latest find.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+
+
+<p>For a while now, I&#8217;ve been looking for a replacement to a <a href="https://amzn.to/350TPC0">Supermicro E200-9B</a> that I had an &#8220;accident&#8221; with.  By accident, I mean I killed the box by messing around on it with a FlashCat.  </p>
+
+
+
+<p>I wanted something that was similarly low power usage, and I wasn&#8217;t really looking to spend too much, especially since it was my own silliness that killed the last one.</p>
+
+
+
+<h2>The Hardware</h2>
+
+
+
+<p>After a bit of hunting, I found the Dell WYSE 5070.  </p>
+
+
+
+<p>This is a Intel Pentium Silver DDR4 platform based on the J5005.  There are two versions, the thin and the thick version, with the latter having room for a PCIe card.  I found some for $60 locally, but they can easily be found online for only a little more.  </p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-1024x768.jpg" alt="" class="wp-image-500" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0584-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>front</figcaption></figure>
+
+
+
+<p>The versions I bought were the thin version, which only have a single Realtek NIC.  But they have USB-C on the front, which means a second gigabit NIC can easily be added.  And as I&#8217;m running VyOS, Realtek NICs aren&#8217;t a problem at all.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-1024x768.jpg" alt="" class="wp-image-501" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0585-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>rear</figcaption></figure>
+
+
+
+<h4>The Goods</h4>
+
+
+
+<p>Inside, the version I have came with:</p>
+
+
+
+<ul><li>A single Realtek NIC.  This isn&#8217;t a problem for me because I have a managed switch for router-on-a-stick.</li><li>Three DisplayPorts</li><li>A variety of USB ports.  Don&#8217;t ask me about revisions as that USB naming scheme is a mess that I can&#8217;t be bothered to look up.  I do know there is a USB-C port at 5Gbps.  The other USB ports are blue, meaning better than USB2.0.</li><li>Serial port.  It would have been nice to turn this into a console redirection port for a sort of out-of-band access, but I couldn&#8217;t figure it out.</li><li>16GB eMMC storage.  I&#8217;m pretty sure I could just install straight to this, but for now I wanted to leave it intact in case I wanted to play with ThinOS. Though I do know that it&#8217;s generally recommended to skip eMMC storage for anything that might do lots of writes, like a firewall logging a bunch.</li><li>4GB of DDR4 RAM.  Officially these only support 8GB, but I added another 8GB for a total of 12GB.  <s>Apparently 16GB and even possible 32GB will work, which I have sticks for, but I haven&#8217;t had a chance to rearrange things to test.</s> Confirmed.  Currently running 32GB in it without an issue.</li><li>An M.2 storage slot.  I tossed a Crucial MX500 in here because eventually this thing might become a tiny VM Host. Plus, I got it cheap on Black Friday.</li></ul>
+
+
+
+<p>A peek inside and this thing is surprisingly expandable.  </p>
+
+
+
+<ul><li>Towards the left, you see the blue USB internal header that could be used for an internal USB drive.</li><li>The top has the unused M.2 WiFi slot.</li><li>Above the battery, you can see the PCIe header which would be populated if this was the thick version of the box.</li><li>And then of course the M.2 SSD and extra RAM that I added.</li></ul>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-1024x768.jpg" alt="" class="wp-image-502" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0587-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>the guts</figcaption></figure>
+
+
+
+<h4>Power Consumption</h4>
+
+
+
+<p>The idle power consumption on this device is amazing:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://i1.wp.com/blog.kroy.io/wp-content/uploads/2019/12/image.png?fit=640%2C628&amp;ssl=1" alt="" class="wp-image-505" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/image.png 1324w, https://blog.kroy.io/wp-content/uploads/2019/12/image-300x295.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/image-1024x1005.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/image-768x754.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/image-850x835.png 850w" sizes="(max-width: 1324px) 100vw, 1324px" /><figcaption>killawatt</figcaption></figure>
+
+
+
+<p>The highest usage I saw was during boot where it hit a whopping 15 watts.  Oh, and I&#8217;m dangling an additional SSD off a <a href="https://amzn.to/2RsiI5W">SATA wire</a> to use temporarily as a boot drive since I was doing other testing with this server, so that 5.7 watts includes this guy:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-1024x768.jpg" alt="" class="wp-image-506" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2019/12/IMG_0598-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>sata wire</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>VyOS</h2>
+
+
+
+<p>Installing VyOS is pretty standard.  In this case, I just used Etcher to put the latest <a href="https://downloads.vyos.io/?dir=rolling/current/amd64">VyOS Rolling ISO</a> on a USB, and ran through the quick install.  </p>
+
+
+
+<p>As mentioned above, I&#8217;m just doing a <a href="https://en.wikipedia.org/wiki/One-armed_router">router-on-a-stick</a> setup with the single onboard NIC, but I also tested out a <a href="https://amzn.to/2YoMABk">USB-C Gigabit Ethernet adapter</a> and it worked identically.</p>
+
+
+
+<h4>Config</h4>
+
+
+
+<p>The config I used was almost verbatim from the <a href="https://vyos.readthedocs.io/en/latest/quick-start.html">VyOS Quick Start Guide</a>, except I&#8217;m using VLANs and a static WAN IP. In my case, VLAN10 is the &#8220;WAN&#8221; and VLAN2222 is my test LAN here.  </p>
+
+
+
+<pre class="wp-block-code"><code>firewall {
+    all-ping enable
+    broadcast-ping disable
+    config-trap disable
+    ipv6-receive-redirects disable
+    ipv6-src-route disable
+    ip-src-route disable
+    log-martians enable
+    name OUTSIDE-IN {
+        default-action drop
+        rule 10 {
+            action accept
+            state {
+                established enable
+                related enable
+            }
+        }
+    }
+    name OUTSIDE-LOCAL {
+        default-action drop
+        rule 10 {
+            action accept
+            state {
+                established enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            icmp {
+                type-name echo-request
+            }
+            protocol icmp
+            state {
+                new enable
+            }
+        }
+        rule 30 {
+            action drop
+            destination {
+                port 22
+            }
+            protocol tcp
+            recent {
+                count 4
+                time 60
+            }
+            state {
+                new enable
+            }
+        }
+        rule 31 {
+            action accept
+            destination {
+                port 22
+            }
+            protocol tcp
+            state {
+                new enable
+            }
+        }
+    }
+    receive-redirects disable
+    send-redirects enable
+    source-validation disable
+    syn-cookies enable
+    twa-hazards-protection disable
+}
+interfaces {
+    ethernet eth0 {
+        duplex auto
+        hw-id 6c:2b:59:3c:f7:4e
+        smp-affinity auto
+        speed auto
+        vif 10 {
+            address 10.0.10.234/24
+            firewall {
+                in {
+                    name OUTSIDE-IN
+                }
+                local {
+                    name OUTSIDE-LOCAL
+                }
+            }
+        }
+        vif 2222 {
+            address 10.222.222.1/24
+        }
+    }
+    loopback lo {
+    }
+    wireguard wg0 {
+        address 10.172.24.60/24
+        peer edge {
+            allowed-ips 10.172.24.1/32
+            endpoint 10.0.10.1:2224
+            pubkey ****************
+        }
+    }
+}
+nat {
+    source {
+        rule 100 {
+            outbound-interface eth0.10
+            source {
+                address 10.222.222.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+protocols {
+    static {
+        route 0.0.0.0/0 {
+            next-hop 10.0.10.1 {
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name LAN {
+            subnet 10.222.222.0/24 {
+                default-router 10.222.222.1
+                dns-server 10.53.53.53
+                domain-name internal-network
+                lease 86400
+                range 0 {
+                    start 10.222.222.98
+                    stop 10.222.222.200
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}
+system {
+    config-management {
+        commit-revisions 100
+    }
+    console {
+        device ttyS0 {
+            speed 9600
+        }
+    }
+    host-name vyos
+    login {
+        user vyos {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+            level admin
+        }
+    }
+    name-server 10.53.53.53
+    ntp {
+        server 0.pool.ntp.org {
+        }
+        server 1.pool.ntp.org {
+        }
+        server 2.pool.ntp.org {
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level info
+            }
+            facility protocols {
+                level debug
+            }
+        }
+    }
+    time-zone UTC
+}
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Tests</h3>
+
+
+
+<p>I ran a number of different tests to try and show how this thing might perform in real world usage.  </p>
+
+
+
+<h4>Speedtest</h4>
+
+
+
+<p>The first test was just a normal speedtest.  If someone were going to install this for their primary firewall and router, this is probably the first thing they would do:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/speedtest.png" alt="" class="wp-image-513" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/speedtest.png 576w, https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-300x66.png 300w" sizes="(max-width: 576px) 100vw, 576px" /><figcaption>basically gigabit speedtest</figcaption></figure>
+
+
+
+<p>As I&#8217;ve mentioned a <a href="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/">few other times</a>, this is basically gigabit on my network.  And what was the CPU doing during this?</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-cpu-1024x215.png" alt="" class="wp-image-512" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-cpu-1024x215.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-cpu-300x63.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-cpu-768x161.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-cpu-850x179.png 850w, https://blog.kroy.io/wp-content/uploads/2019/12/speedtest-cpu.png 1446w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>70% on a single core with a speedtest</figcaption></figure>
+
+
+
+<p>With about ~70% usage on a single core out of four, this little J5005 doesn&#8217;t do too terribly.</p>
+
+
+
+<h4>File Copy &#8211; CIFS</h4>
+
+
+
+<p>For this test, I copied a single large file from a fileserver elsewhere on my network over an CIFS mounted share.</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/filecopy.png" alt="" class="wp-image-510" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/filecopy.png 933w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-300x89.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-768x227.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-850x251.png 850w" sizes="(max-width: 933px) 100vw, 933px" /><figcaption>copying at over 750Mbps</figcaption></figure>
+
+
+
+<p>97.2MB/s or 777Mbps is pretty admirable for a simple file copy.</p>
+
+
+
+<p>And the CPU usage on the WYSE 5070 during the copy:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-cpu-1024x143.png" alt="" class="wp-image-509" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-cpu-1024x143.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-cpu-300x42.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-cpu-768x107.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-cpu-850x118.png 850w, https://blog.kroy.io/wp-content/uploads/2019/12/filecopy-cpu.png 1529w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Again, with only 60% usage of a single core, I think that shows this thing has lots of room for growth.</p>
+
+
+
+<h4>Simple iperf3</h4>
+
+
+
+<p>A simple <code>iperf3</code> gives us gigabit performance:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyos:~$ iperf3 -c 10.0.10.1 -P2
+Connecting to host 10.0.10.1, port 5201
+[  4] local 10.0.10.234 port 32910 connected to 10.0.10.1 port 5201
+[  6] local 10.0.10.234 port 32912 connected to 10.0.10.1 port 5201
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  4]   0.00-1.00   sec  57.2 MBytes   480 Mbits/sec    0    209 KBytes
+[  6]   0.00-1.00   sec  56.9 MBytes   478 Mbits/sec    0    198 KBytes
+[SUM]   0.00-1.00   sec   114 MBytes   958 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   1.00-2.00   sec  55.9 MBytes   469 Mbits/sec    0    209 KBytes
+[  6]   1.00-2.00   sec  55.7 MBytes   467 Mbits/sec    0    198 KBytes
+[SUM]   1.00-2.00   sec   112 MBytes   936 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   2.00-3.00   sec  56.1 MBytes   471 Mbits/sec    0    209 KBytes
+[  6]   2.00-3.00   sec  56.1 MBytes   471 Mbits/sec    0    198 KBytes
+[SUM]   2.00-3.00   sec   112 MBytes   941 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   3.00-4.00   sec  55.7 MBytes   467 Mbits/sec    0    209 KBytes
+[  6]   3.00-4.00   sec  56.1 MBytes   471 Mbits/sec    0    223 KBytes
+[SUM]   3.00-4.00   sec   112 MBytes   938 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   4.00-5.00   sec  54.3 MBytes   456 Mbits/sec    1    228 KBytes
+[  6]   4.00-5.00   sec  58.2 MBytes   488 Mbits/sec    0    240 KBytes
+[SUM]   4.00-5.00   sec   113 MBytes   944 Mbits/sec    1
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   5.00-6.00   sec  54.7 MBytes   459 Mbits/sec    0    228 KBytes
+[  6]   5.00-6.00   sec  56.9 MBytes   477 Mbits/sec   45    240 KBytes
+[SUM]   5.00-6.00   sec   112 MBytes   936 Mbits/sec   45
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   6.00-7.00   sec  53.8 MBytes   451 Mbits/sec    0    228 KBytes
+[  6]   6.00-7.00   sec  57.7 MBytes   484 Mbits/sec    0    240 KBytes
+[SUM]   6.00-7.00   sec   111 MBytes   935 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   7.00-8.00   sec  54.2 MBytes   455 Mbits/sec    0    228 KBytes
+[  6]   7.00-8.00   sec  58.2 MBytes   488 Mbits/sec    0    240 KBytes
+[SUM]   7.00-8.00   sec   112 MBytes   942 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   8.00-9.00   sec  52.2 MBytes   438 Mbits/sec    0    230 KBytes
+[  6]   8.00-9.00   sec  59.8 MBytes   502 Mbits/sec    0    247 KBytes
+[SUM]   8.00-9.00   sec   112 MBytes   940 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   9.00-10.00  sec  51.7 MBytes   434 Mbits/sec    0    230 KBytes
+[  6]   9.00-10.00  sec  59.8 MBytes   501 Mbits/sec    0    247 KBytes
+[SUM]   9.00-10.00  sec   111 MBytes   935 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-10.00  sec   546 MBytes   458 Mbits/sec    1             sender
+[  4]   0.00-10.00  sec   545 MBytes   457 Mbits/sec                  receiver
+[  6]   0.00-10.00  sec   575 MBytes   483 Mbits/sec   45             sender
+[  6]   0.00-10.00  sec   574 MBytes   482 Mbits/sec                  receiver
+[SUM]   0.00-10.00  sec  1.09 GBytes   941 Mbits/sec   46             sender
+[SUM]   0.00-10.00  sec  1.09 GBytes   939 Mbits/sec                  receiver
+</code></pre>
+
+
+
+<p>And similar CPU usage to the other tests, 50% usage on a single core:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/iperf3-cpu-1024x157.png" alt="" class="wp-image-511" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/iperf3-cpu-1024x157.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/iperf3-cpu-300x46.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/iperf3-cpu-768x117.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/iperf3-cpu-850x130.png 850w, https://blog.kroy.io/wp-content/uploads/2019/12/iperf3-cpu.png 1518w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>50% usage on a single core</figcaption></figure>
+
+
+
+<h4>WireGuard</h4>
+
+
+
+<p>If you read through the config above, you&#8217;ll notice I dropped in the config for a WireGuard tunnel to my main router.</p>
+
+
+
+<p>Even though WireGuard isn&#8217;t 100% vetted yet, it&#8217;s enough that I believe it will be officially part of the Linux kernel soon.   And hopefully these results will demonstrate why:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyos:~$ iperf3 -c 10.172.24.1 -P2
+Connecting to host 10.172.24.1, port 5201
+[  4] local 10.172.24.60 port 36752 connected to 10.172.24.1 port 5201
+[  6] local 10.172.24.60 port 36754 connected to 10.172.24.1 port 5201
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  4]   0.00-1.00   sec  54.3 MBytes   456 Mbits/sec    0    281 KBytes
+[  6]   0.00-1.00   sec  53.9 MBytes   452 Mbits/sec    0    283 KBytes
+[SUM]   0.00-1.00   sec   108 MBytes   908 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   1.00-2.00   sec  53.5 MBytes   449 Mbits/sec    0    281 KBytes
+[  6]   1.00-2.00   sec  53.5 MBytes   449 Mbits/sec    0    283 KBytes
+[SUM]   1.00-2.00   sec   107 MBytes   898 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   2.00-3.00   sec  53.5 MBytes   449 Mbits/sec    0    293 KBytes
+[  6]   2.00-3.00   sec  53.5 MBytes   449 Mbits/sec    0    283 KBytes
+[SUM]   2.00-3.00   sec   107 MBytes   898 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   3.00-4.00   sec  53.7 MBytes   451 Mbits/sec    0    293 KBytes
+[  6]   3.00-4.00   sec  53.7 MBytes   450 Mbits/sec    0    283 KBytes
+[SUM]   3.00-4.00   sec   107 MBytes   901 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   4.00-5.00   sec  53.3 MBytes   447 Mbits/sec    0    293 KBytes
+[  6]   4.00-5.00   sec  53.4 MBytes   448 Mbits/sec    0    310 KBytes
+[SUM]   4.00-5.00   sec   107 MBytes   895 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   5.00-6.00   sec  53.3 MBytes   448 Mbits/sec    0    293 KBytes
+[  6]   5.00-6.00   sec  53.3 MBytes   447 Mbits/sec    0    310 KBytes
+[SUM]   5.00-6.00   sec   107 MBytes   895 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   6.00-7.00   sec  53.7 MBytes   451 Mbits/sec    0    293 KBytes
+[  6]   6.00-7.00   sec  53.6 MBytes   450 Mbits/sec    0    310 KBytes
+[SUM]   6.00-7.00   sec   107 MBytes   900 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   7.00-8.00   sec  53.0 MBytes   444 Mbits/sec    0    293 KBytes
+[  6]   7.00-8.00   sec  53.0 MBytes   444 Mbits/sec    0    310 KBytes
+[SUM]   7.00-8.00   sec   106 MBytes   889 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   8.00-9.00   sec  54.0 MBytes   453 Mbits/sec    0    415 KBytes
+[  6]   8.00-9.00   sec  53.8 MBytes   451 Mbits/sec    0    415 KBytes
+[SUM]   8.00-9.00   sec   108 MBytes   904 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[  4]   9.00-10.00  sec  53.5 MBytes   449 Mbits/sec    0    415 KBytes
+[  6]   9.00-10.00  sec  54.0 MBytes   453 Mbits/sec    0    415 KBytes
+[SUM]   9.00-10.00  sec   107 MBytes   902 Mbits/sec    0
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-10.00  sec   536 MBytes   450 Mbits/sec    0             sender
+[  4]   0.00-10.00  sec   535 MBytes   449 Mbits/sec                  receiver
+[  6]   0.00-10.00  sec   536 MBytes   449 Mbits/sec    0             sender
+[  6]   0.00-10.00  sec   534 MBytes   448 Mbits/sec                  receiver
+[SUM]   0.00-10.00  sec  1.05 GBytes   899 Mbits/sec    0             sender
+[SUM]   0.00-10.00  sec  1.04 GBytes   897 Mbits/sec                  receiver
+</code></pre>
+
+
+
+<p>Getting 900Mbps on a $60 thin client?  That&#8217;s pretty amazing in my book.  </p>
+
+
+
+<p>Finally we are stressing the CPU a bit, 60%, 35%, 25%, 25% on the various cores:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://blog.kroy.io/wp-content/uploads/2019/12/wireguard-cpu-1024x154.png" alt="" class="wp-image-514" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/wireguard-cpu-1024x154.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/wireguard-cpu-300x45.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/wireguard-cpu-768x116.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/wireguard-cpu-850x128.png 850w, https://blog.kroy.io/wp-content/uploads/2019/12/wireguard-cpu.png 1476w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>all core usage</figcaption></figure>
+
+
+
+<p>I think the screen on my kill-a-watt is dying as I&#8217;m having a heck of a time photographing it.  But this 12.7 watts is the power usage when testing WireGuard, which is about the most amount of stress I was able to put on this little server:</p>
+
+
+
+<figure class="wp-block-image size-large"><img src="https://i2.wp.com/blog.kroy.io/wp-content/uploads/2019/12/image-1.png?fit=640%2C529&amp;ssl=1" alt="" class="wp-image-515" srcset="https://blog.kroy.io/wp-content/uploads/2019/12/image-1.png 1394w, https://blog.kroy.io/wp-content/uploads/2019/12/image-1-300x248.png 300w, https://blog.kroy.io/wp-content/uploads/2019/12/image-1-1024x846.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/12/image-1-768x635.png 768w, https://blog.kroy.io/wp-content/uploads/2019/12/image-1-850x702.png 850w" sizes="(max-width: 1394px) 100vw, 1394px" /><figcaption>12.7 watts</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>It&#8217;s amazing that these things are going for only <strong><em>$60</em></strong>. Well, a bit more since I added the extra drive and RAM.  And this is for hardware that according to Dell, was manufactured in March of 2019.  Practically brand new!</p>
+
+
+
+<p>For the price and feature set, I would <em><strong>DEFINITELY</strong></em> recommend this device for anyone looking for a capable VyOS host.  I&#8217;m really tempted to try and source a thick version now so I can toss a 10 gigabit NIC in one and see how it performs.</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&amp;linkname=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2019%2F12%2F08%2Fthe-wyse-5070-a-perfect-little-vyos-device%2F&#038;title=The%20WYSE%205070%2C%20a%20perfect%20little%20VyOS%20device" data-a2a-url="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/" data-a2a-title="The WYSE 5070, a perfect little VyOS device"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">497</post-id>	</item>
+		<item>
+		<title>Battle of the Bare Metal Routers</title>
+		<link>https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=battle-of-the-bare-metal-routers</link>
+					<comments>https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 21 Nov 2019 20:32:30 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[pfsense]]></category>
+		<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=449</guid>
+
+					<description><![CDATA[Continuing from my previous post, I wanted to see how a variety of software routing and firewall platforms performed when put to the test on an equal playing field. As&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&#038;title=Battle%20of%20the%20Bare%20Metal%20Routers" data-a2a-url="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/" data-a2a-title="Battle of the Bare Metal Routers"></a></p>
+<p>Continuing from my <a href="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/">previous post</a>, I wanted to see how a variety of software routing and firewall platforms performed when put to the test on an equal playing field.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>As before, these tests were all run on my <a href="https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1521/">Xeon D-1521</a>. This server is running 10Gb links to the rest of my network via the onboard Intel X550/552 chipset, 32GB of RAM, and an SSD boot drive.</p>
+
+
+
+<p>The final results are <a href="#finalresults">HERE</a> if this is all TLDR.</p>
+
+
+
+<p>Here is the server dangling halfway out of the rack while I was doing these tests:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-1024x768.jpg" alt="" class="wp-image-359" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>Network Layout</h4>
+
+
+
+<p>The network layout is identical to virtual routing tests, though in this case, I just used DHCP to get the &#8220;WAN&#8221; address, since I wanted to test NAT performance too.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram.png" alt="" class="wp-image-37" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram.png 812w, https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram-300x291.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram-768x745.png 768w" sizes="(max-width: 812px) 100vw, 812px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Victims</h2>
+
+
+
+<p>For these tests, I wanted to avoid wasting time on duplicated results.  So for example, I&#8217;ll just be testing pfSense instead of pfSense and OPNSense.  Similarly just VyOS instead of Debian.  Also, based on feedback on my prior post, there were people that felt like I missed a few platforms.  So for these tests, the platforms will be:</p>
+
+
+
+<ul><li>VyOS 1.2.3</li><li>pfSense 2.4.4-p3</li><li>Sophos XG SFOS v17.5.8&nbsp;(not fully sure how the versioning works, but that was the ISO)</li><li>Untangle 14.2.2</li></ul>
+
+
+
+<p>The goal of these tests is to show how these platforms perform when installed bare metal to this D-1521.  So they will be configured mostly out of box in a basic WAN/LAN Firewall/Router setup.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>VyOS</h3>
+
+
+
+<p>I use a lot of VyOS, and I&#8217;m pretty familiar with how it performs.  It&#8217;s worth mentioning that I&#8217;m also a VyOS maintainer now. </p>
+
+
+
+<p>Basic Config:</p>
+
+
+
+<pre class="wp-block-code"><code>firewall {
+    name OUTSIDE-IN {
+        default-action drop
+        rule 10 {
+            action accept
+            state {
+                established enable
+                related enable
+            }
+        }
+    }
+    name OUTSIDE-LOCAL {
+        default-action drop
+        rule 10 {
+            action accept
+            state {
+                established enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            icmp {
+                type-name echo-request
+            }
+            protocol icmp
+            state {
+                new enable
+            }
+        }
+        rule 31 {
+            action accept
+            destination {
+                port 22
+            }
+            protocol tcp
+            state {
+                new enable
+            }
+        }
+    }
+}
+interfaces {
+    ethernet eth0 {
+        address dhcp
+        firewall {
+            in {
+                name OUTSIDE-IN
+            }
+            local {
+                name OUTSIDE-LOCAL
+            }
+        }
+    }
+    ethernet eth1 {
+        vif 2222 {
+            address 10.222.222.1/24
+        }
+        vif 2223 {
+            address 10.223.223.1/24
+        }
+    }
+    loopback lo {
+    }
+}
+nat {
+    source {
+        rule 10 {
+            outbound-interface eth0
+            source {
+                address 10.0.0.0/8
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name vlan2222 {
+            authoritative
+            subnet 10.222.222.0/24 {
+                default-router 10.222.222.1
+                dns-server 10.53.53.53
+                lease 1200
+                range 0 {
+                    start 10.222.222.10
+                    stop 10.222.222.100
+                }
+            }
+        }
+        shared-network-name vlan2223 {
+            authoritative
+            subnet 10.223.223.0/24 {
+                default-router 10.223.223.1
+                dns-server 10.53.53.53
+                lease 1200
+                range 0 {
+                    start 10.223.223.10
+                    stop 10.223.223.100
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}
+
+</code></pre>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>In this setup, the results were &#8220;basically 10Gb&#8221;, whether for inter-vlan or LAN-&gt;WAN with NAT.</p>
+
+
+
+<p><strong>Inter-vlan (9.19 Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-intervlan-simple.png" alt="" class="wp-image-450" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-intervlan-simple.png 593w, https://blog.kroy.io/wp-content/uploads/2019/11/vyos-intervlan-simple-300x21.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></figure>
+
+
+
+<p><strong>NAT (9.17 Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-simple.png" alt="" class="wp-image-451" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-simple.png 591w, https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-simple-300x22.png 300w" sizes="(max-width: 591px) 100vw, 591px" /></figure>
+
+
+
+<p>While I was testing it, I was curious to see if using a simple firewall was any different than using zone-based firewalls.  </p>
+
+
+
+<p>So adding the zone config:</p>
+
+
+
+<pre class="wp-block-code"><code>zone LAN {
+    default-action drop
+    from LOCAL {
+        firewall {
+            name LOCAL-LAN
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LAN
+        }
+    }
+    interface eth1.2222
+    interface eth1.2223
+}
+zone LOCAL {
+    from LAN {
+        firewall {
+            name LAN-LOCAL
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LOCAL
+        }
+    }
+    local-zone
+}
+zone WAN {
+    from LAN {
+        firewall {
+            name LAN-WAN
+        }
+    }
+    from LOCAL {
+        firewall {
+            name LOCAL-WAN
+        }
+    }
+    interface eth0
+}
+
+zone LAN {
+    default-action drop
+    from LOCAL {
+        firewall {
+            name LOCAL-LAN
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LAN
+        }
+    }
+    interface eth1.2222
+    interface eth1.2223
+}
+zone LOCAL {
+    from LAN {
+        firewall {
+            name LAN-LOCAL
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LOCAL
+        }
+    }
+    local-zone
+}
+zone WAN {
+    from LAN {
+        firewall {
+            name LAN-WAN
+        }
+    }
+    from LOCAL {
+        firewall {
+            name LOCAL-WAN
+        }
+    }
+    interface eth0
+}
+</code></pre>
+
+
+
+<p>The results were pretty much identical.</p>
+
+
+
+<p><strong>NAT zone firewall (9.12Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-zone.png" alt="" class="wp-image-452" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-zone.png 593w, https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-zone-300x25.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>pfSense</h3>
+
+
+
+<p>In my <a href="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/">previous post</a>, I caught a surprising amount of flak saying that my review of pfSense was somehow unfair and biased, despite feeling like I was <em>OVERLY</em> fair.  Hopefully the results here will vindicate me. </p>
+
+
+
+<p>With pfSense, I didn&#8217;t really make any changes beyond the stock install.  I added an <code>OPT</code> interface for the second LAN, and opened up the firewall rules for that interface.</p>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>First, I tested some inter-vlan routing with all hardware offload disabled.  This is a common troubleshooting step as virtual pfSense and a lot of network cards don&#8217;t properly support the functionality under FreeBSD.</p>
+
+
+
+<p><strong>Inter-vlan, disabled hardware offload (7.58Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-1024x56.png" alt="" class="wp-image-454" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-1024x56.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-300x16.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-768x42.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-850x47.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload.png 1202w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>But guess what.  All those hardware offloading checkboxes exist for a reason, and enabling it can have some dramatic results if the NICs actually support it (and the drivers aren&#8217;t broken).</p>
+
+
+
+<p><strong>Inter-vlan, hardware offload (9.19Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-1024x71.png" alt="" class="wp-image-455" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-1024x71.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-300x21.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-768x53.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-850x59.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload.png 1208w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>pfSense does slightly less better when it is NATing, though still pretty close to 10Gb.</p>
+
+
+
+<p><strong>NAT, hardware offload (8.71Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-1024x57.png" alt="" class="wp-image-456" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-1024x57.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-300x17.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-768x42.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-850x47.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT.png 1266w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Now this is where I need to eat some crow.  </p>
+
+
+
+<p>For literally <em>YEARS</em> I&#8217;ve been preaching that pfSense won&#8217;t go 10 gigabit.  As these results show, that was way wrong. Though in my defense, this was also a sentiment echoed by the pfSense devs themselves. But I’ll take my medicine and admit that I was wrong. <br></p>
+
+
+
+<p>I think are a few reasons that in my all extensive testing, I never saw 10Gb. </p>
+
+
+
+<ul><li>When I was running pfSense on bare metal (2.3.x and 2.4.0 beta days), the Xeon Ds were <em>REALLY</em> new.  To make a long story short, they were not very stable and I don&#8217;t think the drivers were fully compatible.  As the results show, enabling the hardware offload features can make a fairly large difference.</li><li>Ever since, every pfSense install I&#8217;ve done has generally been virtualized, either on KVM or ESXi.  As my prior post shows, it just doesn&#8217;t do well virtualized. </li></ul>
+
+
+
+<p>So yes, pfSense will do 10Gb assuming you have NICs that support hardware offload correctly.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Sophos XG</h3>
+
+
+
+<p>After my last post, a few people specifically mentioned that I should have done tests with Sophos XG.  </p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-1024x736.png" alt="" class="wp-image-457" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-1024x736.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-300x216.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-768x552.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-850x611.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard.png 1173w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I&#8217;m not going to lie.  Sophos XG is actually quite fancy looking.  It was enough with all the options and lack of familiarity, my head spun a bit trying to set it up.  </p>
+
+
+
+<p>My first impression wasn&#8217;t very good.  Sophos makes it VERY difficult to position the WAN/LAN where I wanted it. It wanted the first NIC port to be LAN or something like that.  I think I eventually had to just swap the VLANs on the switch the server is plugged into.  </p>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>I imagine if I used Sophos more, I would become more comfortable with it.  But for the few hours I had it spun up for testing, I felt a little like:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/ihave.jpg" alt="" class="wp-image-458" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/ihave.jpg 1004w, https://blog.kroy.io/wp-content/uploads/2019/11/ihave-300x169.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/11/ihave-768x432.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/11/ihave-850x478.jpg 850w" sizes="(max-width: 1004px) 100vw, 1004px" /><figcaption><a href="https://knowyourmeme.com/photos/234739-i-have-no-idea-what-im-doing">https://knowyourmeme.com/photos/234739-i-have-no-idea-what-im-doing</a></figcaption></figure>
+
+
+
+<p>I&#8217;m pretty sure I got all the security and stuff configured, and the results were pretty straightforward, full 10 gigabit.</p>
+
+
+
+<p><strong>Inter-vlan (9.27Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-intervlan.png" alt="" class="wp-image-459" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-intervlan.png 625w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-intervlan-300x27.png 300w" sizes="(max-width: 625px) 100vw, 625px" /></figure>
+
+
+
+<p><strong>NAT (9.24Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-nat.png" alt="" class="wp-image-460" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-nat.png 622w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-nat-300x25.png 300w" sizes="(max-width: 622px) 100vw, 622px" /></figure>
+
+
+
+<p>Outwardly, the results were marginally better than pfSense or VyOS, but I&#8217;m not sure I would want to use Sophos on a regular basis.  It was just confusing and non-intuitive.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Untangle</h3>
+
+
+
+<p>This was another suggestion in response to my last post.  As with Sophos, it&#8217;s another platform that I have basically no familiarity with.  </p>
+
+
+
+<p>It didn&#8217;t take much to get installed, and unlike Sophos, the initial interface configuration  was a breeze.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard.png" alt="" class="wp-image-461" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard.png 1002w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard-300x199.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard-768x510.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard-850x564.png 850w" sizes="(max-width: 1002px) 100vw, 1002px" /></figure>
+
+
+
+<p>I&#8217;m not going to lie, even though I&#8217;m completely a CLI junkie, using Untangle is <em>NICE</em>.  Everything was intuitive, and the various graphs and reporting make complete sense from the perspective of a new user.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces.png" alt="" class="wp-image-462" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces.png 1016w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces-300x202.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces-768x517.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces-850x572.png 850w" sizes="(max-width: 1016px) 100vw, 1016px" /></figure>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>Unfortunately, the performance was comparatively abysmal compared to the other platforms here.  NAT and inter-vlan results were identical.</p>
+
+
+
+<p>NAT/inter-vlan (2.7Gbps):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-nat.png" alt="" class="wp-image-463" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-nat.png 595w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-nat-300x23.png 300w" sizes="(max-width: 595px) 100vw, 595px" /></figure>
+
+
+
+<p>I have to believe there was some performance tuning I could do to get better performance, but I wasn&#8217;t able to track down anything specific.  </p>
+
+
+
+<p>Despite the lackluster performance, I really enjoyed setting up and playing with Untangle and it&#8217;s a platform I might use again in the future.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<a name="finalresults"></a>
+
+
+
+<h3>Final Results</h3>
+
+
+
+<p>In conclusion, most platforms came out fairly even.  The outlier was Untangle, but I suspect with some tuning it could be brought up to the level of the other platforms.</p>
+
+
+
+<table class="wp-block-table is-style-regular"><tbody><tr><th><strong>Router</strong></th><th><strong>Inter-vlan</strong></th><th><strong>NAT</strong></th></tr><tr><td>VyOS</td><td>9.19 Gbps</td><td>9.17 Gbps regular firewall<br>9.12 Gbps zone firewall</td></tr><tr><td>pfSense</td><td>9.19 Gbps hardware offload<br>7.58 Gbps no hardware offload</td><td>8.71 Gbps</td></tr><tr><td>Sophos XG</td><td>9.27 Gbps</td><td>9.24 Gbps</td></tr><tr><td>Untangle</td><td>2.70 Gbps</td><td>2.70 Gbps</td></tr></tbody></table>
+
+
+
+<p>The takeaway here is that almost any platform can be an extremely performant firewall and router.  I think with pfSense, the right hardware selection could potentially impact results if you are interested higher speeds.  Whereas with VyOS and probably the other two, the hardware selection would matter a bit less due to better driver support.</p>
+
+
+
+<p>As far as Untangle is concerned, it&#8217;s a platform I might be taking another crack at and see if I can figure out why the performance was so low.  Given that the tests were <em>IDENTICAL</em>, there was almost certainly some artificial limitation occurring somewhere.  </p>
+
+
+
+<p></p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&amp;linkname=Battle%20of%20the%20Bare%20Metal%20Routers" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2019%2F11%2F21%2Fbattle-of-the-bare-metal-routers%2F&#038;title=Battle%20of%20the%20Bare%20Metal%20Routers" data-a2a-url="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/" data-a2a-title="Battle of the Bare Metal Routers"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">449</post-id>	</item>
+		<item>
+		<title>Battle of the Virtual Routers</title>
+		<link>https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=battle-of-the-virtual-routers</link>
+					<comments>https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Fri, 23 Aug 2019 19:23:31 +0000</pubDate>
+				<category><![CDATA[Debian]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[pfsense]]></category>
+		<category><![CDATA[RouterOS]]></category>
+		<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2019/08/23/battle-of-the-virtual-routers/</guid>
+
+					<description><![CDATA[This is going to be a bit of a long post, so I&#8217;ll be brief in the intro. &#160; Over the last few years, I&#8217;ve become enamored with routing. &#160;As&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&#038;title=Battle%20of%20the%20Virtual%20Routers" data-a2a-url="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/" data-a2a-title="Battle of the Virtual Routers"></a></p>
+<p>This is going to be a bit of a long post, so I&#8217;ll be brief in the intro. &nbsp;</p>
+
+
+
+
+
+<p>Over the last few years, I&#8217;ve become enamored with routing. &nbsp;As part of that, I&#8217;ve spent a lot of time exploring the various virtual routing platforms, trying to eek out the best performance possible. &nbsp;So I decided to put them all head-to-head in a virtual setting and see how they fare. &nbsp;</p>
+
+
+
+<p>The victims:</p>
+
+
+
+<ul><li>pfSense 2.4.4-p3</li><li>OPNSense 19.7</li><li>VyOS 1.2.2</li><li>Mikrotik Cloud Hosted Router 6.45.3, unlimited license (CHR)</li><li>Just basic Debian Buster running FRR</li><li>All tests were done with <code>iperf3 -c IP -P2</code>. &nbsp;I tried a number of different combinations of window sizes, number of streams, etc, and everything was pretty close to equal. &nbsp;UDP obviously gave much bigger numbers, but I&#8217;m interested in TCP for right now. &nbsp;</li></ul>
+
+
+
+<p>For the purpose of testing and to make all things equal, pfSense and OPNSense will be running with NAT disabled and <code>pfctl -d</code>, to remove the potential slow-downs from packet inspection. &nbsp;The CHR, Debian, VyOS installs won&#8217;t have firewalls running.</p>
+
+
+
+<p>If you are just interested in the final results, they are <a href="/battle-of-the-virtual-routers/#finalresults_kvm">HERE</a>. &nbsp;Or maybe you&#8217;d like the results when I ran the test on ESXi <a href="/battle-of-the-virtual-routers/#finalresults_esxi">HERE</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="the-layout">The Layout</h2>
+
+
+
+<p>They say a picture tells a thousand words, so I think a simple network diagram should illustrate the setup:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram.png" alt="" class="wp-image-37" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram.png 812w, https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram-300x291.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram-768x745.png 768w" sizes="(max-width: 812px) 100vw, 812px" /></figure>
+
+
+
+<p>I&#8217;ll be replacing the firewall image in this picture with the various victims.</p>
+
+
+
+<p>I&#8217;ve got a <em>LOT</em> of routing going on in my network. &nbsp;At last count, I think I have at least 8 hops from one end of my network to the other, so OSPF simplifies adding new subnets behind various routers. &nbsp;In most cases, I don&#8217;t even bother to add default routes to new hosts as OSPF floods the default route from my edge device. &nbsp;</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="the-hardware">The Hardware</h2>
+
+
+
+<p>For these tests, I wanted to use KVM. &nbsp;The network stack on ESXi has been driving me crazy lately, so I was hoping KVM would give me some decent results. &nbsp;Proxmox makes this pretty trivial, so that&#8217;s what I set up.</p>
+
+
+
+<ul><li>Proxmox 6</li><li>rootonzfs on an SSD</li><li>64GB of RAM</li><li>D-1521, with Dual X550/552 10G-BaseT ports</li></ul>
+
+
+
+<p>This is a more-than-capable machine for these tests, though I will say I&#8217;ve gotten better results on my Broadwell E5.</p>
+
+
+
+<p>The networking config on the host is pretty simple. To further isolate things, I have two different ports running as Trunks. &nbsp;Proxmox networking goes over one, and the networking for this test lab goes out of the other.</p>
+
+
+
+<p>I did try using OVS, just to see if the results were any different, but they weren&#8217;t. &nbsp;So on Proxmox, the network config is pretty simple:</p>
+
+
+
+<pre class="wp-block-code"><code>auto lo
+    iface lo inet loopback
+
+    iface eno4 inet manual
+
+    auto ens2
+    iface eno2 inet manual
+
+    auto eno3
+    iface eno3 inet manual
+
+    auto vmbr0.3
+    iface vmbr0.3 inet static
+       address 10.3.1.84/24
+       gateway 10.3.1.1
+
+
+    auto vmbr0
+    iface vmbr0 inet manual
+        bridge_ports eno3
+        bridge_stp off
+        bridge_fd 0
+        bridge_vlan_aware yes
+
+    auto vmbr1
+    iface vmbr1 inet manual
+        bridge_ports ens2
+        bridge_stp off
+        bridge_fd 0
+        bridge_vlan_aware yes</code></pre>
+
+
+
+<p>All &nbsp;VMs are connected to <code>vmbr1</code>.</p>
+
+
+
+<p>The VMs should be fairly equal. &nbsp;CPU-wise, I&#8217;ve gone with 2c2t. &nbsp;RAM is 2GB, which is overkill for basically any of these</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="the-linux-crowd">The Linux crowd</h2>
+
+
+
+<p>The first batch of routers are all based on Linux. &nbsp;The VyOS version I used (1.2.2), is based on Debian Jessie with a modern 4.19 kernel and runs FRR. &nbsp;The CHR is based on an ancient 3.x Linux kernel. &nbsp;The plain Linux install will be the latest Debian Buster, with the repo version of FRR, 6.0.1.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="vyos">VyOS</h3>
+
+
+
+<p>As a contributor, I have access to the current VyOS <code>crux</code> version, 1.2.2. &nbsp;For routing, it uses FRR 7.0.1.</p>
+
+
+
+<h4 id="config">config</h4>
+
+
+
+<p>The config is painfully simple. &nbsp;Three interfaces, WAN/LAN/LAN2, OSPF, DHCP on the LAN interfaces (for ease of use) and enabling SSH.</p>
+
+
+
+<p>As initially mentioned, there&#8217;s been no firewall configured here. &nbsp;I&#8217;m only interested in pure routing performance.</p>
+
+
+
+<pre class="wp-block-code"><code>interfaces {
+         ethernet eth0 {
+             duplex auto
+             smp-affinity auto
+             speed auto
+             vif 500 {
+                 address 10.253.253.2/30
+             }
+             vif 2222 {
+                 address 10.222.222.1/24
+             }
+             vif 2223 {
+                 address 10.223.223.1/24
+             }
+         }
+         loopback lo {
+         }
+     }
+     protocols {
+         ospf {
+             area 0.0.0.0 {
+                 network 10.253.253.0/30
+             }
+             redistribute {
+                 connected {
+                     metric-type 2
+                 }
+             }
+         }
+     }
+     service {
+         dhcp-server {
+             shared-network-name VLAN2222 {
+                 subnet 10.222.222.0/24 {
+                     default-router 10.222.222.1
+                     dns-server 10.53.53.53
+                     range 0 {
+                         start 10.222.222.10
+                         stop 10.222.222.200
+                     }
+              }
+              shared-network-name VLAN2223 {
+                 subnet 10.223.223.0/24 {
+                     default-router 10.223.223.1
+                     dns-server 10.53.53.53
+                     range 0 {
+                         start 10.223.223.10
+                         stop 10.223.223.200
+                     }
+                 }
+             }
+         }
+         ssh {
+             port 22
+         }
+     }</code></pre>
+
+
+
+<h4 id="boottime">boot time</h4>
+
+
+
+<p>VyOS generally boots pretty quickly, at least with a simple config. &nbsp;37 seconds from starting the VM to routing packets. &nbsp;That&#8217;s also with the bootloader timeout. &nbsp;</p>
+
+
+
+<h4 id="iperf3results">iperf3 results</h4>
+
+
+
+<p>Here are the results of a simple iperf3 test. &nbsp;From <code>10.223.223.11</code> to <code>10.222.222.12</code> &nbsp;:</p>
+
+
+
+<pre class="wp-block-code"><code>     [ ID] Interval           Transfer     Bitrate
+     [  5]   0.00-10.04  sec  7.17 GBytes  6.14 Gbits/sec                  receiver
+     [  8]   0.00-10.04  sec  7.22 GBytes  6.18 Gbits/sec                  receiver
+     [SUM]   0.00-10.04  sec  14.4 GBytes  12.3 Gbits/sec                  receiver</code></pre>
+
+
+
+<p>I would be lying if I said I wasn&#8217;t at least a little bit disappointed with those results. &nbsp;Especially since the direct VM-&gt;VM on the same layer2 test shows quite a bit more performance:</p>
+
+
+
+<pre class="wp-block-code"><code>    [ ID] Interval           Transfer     Bitrate
+    [  5]   0.00-10.04  sec  11.8 GBytes  10.1 Gbits/sec                  receiver
+    [  8]   0.00-10.04  sec  11.7 GBytes  10.0 Gbits/sec                  receiver
+    [SUM]   0.00-10.04  sec  23.5 GBytes  20.1 Gbits/sec                  receiver</code></pre>
+
+
+
+<p>I guess it&#8217;s just the hardware. &nbsp;</p>
+
+
+
+<p>I have a few VyOS VMs on ESXi as my main intervlan routing devices on bigger hardware, and those are capable of 15-30Gbps routing between VMs on the same host depending on how busy the host is.</p>
+
+
+
+<h4 id="speedtest">speedtest</h4>
+
+
+
+<p>I have gigabit Internet, so I wanted to make sure results are at least close to what I would get natively. &nbsp;</p>
+
+
+
+<p>Given that this lab is behind a few routers, and my network is fairly busy at any point in time, these results are close enough to gigabit to count. &nbsp;</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/vyos-speedtest.png" alt="" class="wp-image-38" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/vyos-speedtest.png 830w, https://blog.kroy.io/wp-content/uploads/2019/08/vyos-speedtest-300x61.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/vyos-speedtest-768x157.png 768w" sizes="(max-width: 830px) 100vw, 830px" /></figure>
+
+
+
+<h4 id="cpuusage">CPU usage</h4>
+
+
+
+<p>I was curious what kind of CPU usage there would be under max routing load. &nbsp;Obviously adding a firewall would add to this a bit:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/vyos-cpuusage-speedtest-1024x596.png" alt="" class="wp-image-39" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/vyos-cpuusage-speedtest-1024x596.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/vyos-cpuusage-speedtest-300x175.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/vyos-cpuusage-speedtest-768x447.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/vyos-cpuusage-speedtest-850x495.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/vyos-cpuusage-speedtest.png 1142w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="debian-frr">Debian/FRR</h3>
+
+
+
+<p>The was just a plain Debian Buster install with FRR installed. &nbsp;Honestly, most of the results are throwaway, since they are largely identical to VyOS.</p>
+
+
+
+<h4 id="config">config</h4>
+
+
+
+<p>There isn&#8217;t much in the way of special config here. &nbsp;Enabling <code>net.ipv4.ip_forward = 1</code> in <code>/etc/sysctl.conf</code> is a must.</p>
+
+
+
+<p>Networking ( <code>/etc/network/interfaces</code> ):<br></p>
+
+
+
+<pre class="wp-block-code"><code># The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto ens18
+iface ens18
+
+
+auto vlan500
+iface vlan500
+  bridge-ports ens18.500
+  bridge-stp on
+  address 10.253.253.2/30
+  gateway 10.253.253.1
+  dns-nameservers 10.53.53.53
+
+
+auto vlan2222
+iface vlan2222
+  bridge-ports ens18.2222
+  bridge-stp on
+    address 10.222.222.1/24
+
+auto vlan2223
+iface vlan2223
+  bridge-ports ens18.2223
+  bridge-stp on
+    address 10.223.223.1/24</code></pre>
+
+
+
+<p>FRR ( <code>/etc/frr/frr.conf</code> ):</p>
+
+
+
+<pre class="wp-block-code"><code>frr version 6.0.2
+frr defaults traditional
+hostname ovs
+log syslog informational
+service integrated-vtysh-config
+!
+router ospf
+ redistribute connected
+ network 10.253.253.0/30 area 0
+!
+line vty</code></pre>
+
+
+
+<p>isc-dhcpd ( <code>/etc/dhcpd.conf</code> ):</p>
+
+
+
+<pre class="wp-block-code"><code>option domain-name-servers 10.53.53.53;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+subnet 10.222.222.0 netmask 255.255.255.0 {
+    range 10.222.222.10 10.222.222.200;
+    option routers 10.222.222.1;
+}
+
+subnet 10.223.223.0 netmask 255.255.255.0 {
+    range 10.223.223.10 10.223.223.200;
+    option routers 10.223.223.1;
+}</code></pre>
+
+
+
+<h4 id="boottime">boot time</h4>
+
+
+
+<p>This is the one metric that isn&#8217;t throwaway compared to VyOS. &nbsp;19 seconds from power-on to routing is FAST, and that&#8217;s with 5 seconds of grub time. &nbsp;This means if you are interested in super fast boot times, it&#8217;s probably worth your time learning how to set up a router/firewall on unadulterated Linux.</p>
+
+
+
+<h4 id="iperf3results">iperf3 results</h4>
+
+
+
+<p>As hinted at, the results are very similar to the VyOS results. &nbsp;Not surprising considering same kernel versions, both are FRR, etc.</p>
+
+
+
+<pre class="wp-block-code"><code> [ ID] Interval           Transfer     Bitrate
+ [  5]   0.00-10.04  sec  7.14 GBytes  6.11 Gbits/sec                  receiver
+ [  8]   0.00-10.04  sec  7.08 GBytes  6.06 Gbits/sec                  receiver
+ [SUM]   0.00-10.04  sec  14.2 GBytes  12.2 Gbits/sec                  receiver</code></pre>
+
+
+
+<h4 id="speedtest">speedtest</h4>
+
+
+
+<p>With these speedtest results, I must have found a rare moment when the rest of my network was mostly idle:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/frr-speedtest.png" alt="" class="wp-image-40" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/frr-speedtest.png 456w, https://blog.kroy.io/wp-content/uploads/2019/08/frr-speedtest-300x74.png 300w" sizes="(max-width: 456px) 100vw, 456px" /></figure>
+
+
+
+<h4 id="cpuusageduringheavyrouting">CPU usage during heavy routing</h4>
+
+
+
+<p>Again, similar and expected results:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/frr-cpuusage-speedtest-1024x625.png" alt="" class="wp-image-41" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/frr-cpuusage-speedtest-1024x625.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/frr-cpuusage-speedtest-300x183.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/frr-cpuusage-speedtest-768x469.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/frr-cpuusage-speedtest-850x519.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/frr-cpuusage-speedtest.png 1128w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>All in all, the differences between FRR and VyOS were pretty minimal. &nbsp;Despite the longer boot times, I would probably just &nbsp;use VyOS, for the CLI and ease of configuration.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="chr">CHR</h3>
+
+
+
+<p>I&#8217;m a heavy Mikrotik user otherwise (multiple RB4011s, CRS317, 326, hex, haps, etc), and CHRs are something I feel like should really perform well.</p>
+
+
+
+<p>This is where things started to get a bit funky. &nbsp;I&#8217;ll be honest here, the CHR results were the ones I was most interested in. &nbsp;I have <em>NEVER </em>been able to get decent routing results out of a CHR, I was hoping the proverbial &#8220;blank slate&#8221; would allow me to get the real picture.</p>
+
+
+
+<p>The VM was a freshly installed (via systemrescuecd), 6.45.3 CHR, unlocked with a purchased unlimited license. &nbsp;</p>
+
+
+
+<h4 id="config">config</h4>
+
+
+
+<p>The config here was painfully simple again. &nbsp;A few interfaces and DHCP servers.</p>
+
+
+
+<pre class="wp-block-code"><code>/interface ethernet 
+set [ find default-name=ether1 ] disable-running-check=no name=Trunk
+/interface vlan
+add interface=Trunk name=LAN vlan-id=2222
+add interface=Trunk name=LAN2 vlan-id=2223
+add interface=Trunk name=WAN vlan-id=500
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/ip pool
+add name=dhcp_pool0 ranges=10.222.222.2-10.222.222.254
+add name=dhcp_pool1 ranges=10.223.223.2-10.223.223.254
+/ip dhcp-server
+add address-pool=dhcp_pool0 disabled=no interface=LAN name=dhcp1
+add address-pool=dhcp_pool1 disabled=no interface=LAN2 name=dhcp2
+/routing ospf instance
+set [ find default=yes ] redistribute-connected=as-type-2 router-id=10.253.253.2
+/ip address
+add address=10.253.253.2/30 interface=WAN network=10.253.253.0
+add address=10.222.222.1/24 interface=LAN network=10.222.222.0
+add address=10.223.223.1/24 interface=LAN2 network=10.223.223.0
+/ip dhcp-server network
+add address=10.222.222.0/24 gateway=10.222.222.1
+add address=10.223.223.0/24 gateway=10.223.223.1
+/ip dns
+set servers=10.53.53.53
+/routing ospf network
+add area=backbone network=10.253.253.0/30
+/system clock
+set time-zone-name=America/Chicago</code></pre>
+
+
+
+<h4 id="boottime">boot time</h4>
+
+
+
+<p>Frankly, the boot time was really about the only decent thing about my CHR tests. &nbsp;12 seconds, which is in-line with the other Linux results, there&#8217;s just no 5 second timeout in grub to contend with here.</p>
+
+
+
+<h4 id="iperf3results">iperf3 results</h4>
+
+
+
+<p>These results really made me question my testing methodology. &nbsp;Abysmal is about all I can say about it:</p>
+
+
+
+<pre class="wp-block-code"><code>[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.04  sec  1.84 GBytes  1.58 Gbits/sec                  receiver
+[  8]   0.00-10.04  sec  1.67 GBytes  1.43 Gbits/sec                  receiver
+[SUM]   0.00-10.04  sec  3.51 GBytes  3.01 Gbits/sec                  receiver</code></pre>
+
+
+
+<p>I really spent a lot of time fighting these results. &nbsp;They felt way off. &nbsp;Some of the troubleshooting:</p>
+
+
+
+<ul><li>Messing with offload settings, both in the host and in the VM. &nbsp;</li><li>Using different NIC types. &nbsp;Maybe the CHR didn&#8217;t like virtio.</li><li>Using a Mellanox vs an Intel NIC. &nbsp;The results were the same whether between the same bridge on Proxmox, to another physical host over the 10Gb Trunk link, etc.</li><li>Changing around all the VM&#8217;s involved CPU cores, RAM, NIC types, anything else I could think of.</li></ul>
+
+
+
+<p>In the end, I couldn&#8217;t do anything to really change the results. &nbsp;They held pretty steady at 3Gbps.</p>
+
+
+
+<h4 id="speedtest">speedtest</h4>
+
+
+
+<p>As mentioned above, probably a throwaway test. &nbsp;I just happened to run this test when my network was a little bit busier.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/chr-speedtest.png" alt="" class="wp-image-42" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/chr-speedtest.png 804w, https://blog.kroy.io/wp-content/uploads/2019/08/chr-speedtest-300x63.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/chr-speedtest-768x162.png 768w" sizes="(max-width: 804px) 100vw, 804px" /></figure>
+
+
+
+<h4 id="cpuusage">cpu usage</h4>
+
+
+
+<p>Interestingly enough, the CPU usage on the CHR is quite a bit higher, despite also Linux. &nbsp;I&#8217;m guessing this is attributed to the fact that quite a few networking enhancements and optimizations have occurred in later Linux kernel versions + FRR.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/chr-cpuusage-speedtest-1024x477.png" alt="" class="wp-image-43" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/chr-cpuusage-speedtest-1024x477.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/chr-cpuusage-speedtest-300x140.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/chr-cpuusage-speedtest-768x358.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/chr-cpuusage-speedtest-850x396.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/chr-cpuusage-speedtest.png 2000w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I was <em>REALLY </em>disappointed with the Mikrotik results here. &nbsp;I know RouterOS is more than capable of going faster than those speeds, but I&#8217;m not sure what kind of tweaking it takes to get it. &nbsp;Maybe you need lots of sources and destinations. &nbsp;</p>
+
+
+
+<p>I know my RB4011 can do almost full 10Gb (unless you are on IPv6 grumble grumble), CCRs can do way more, so I don&#8217;t know why this thing is so slow. &nbsp;And it&#8217;s been like that every time I&#8217;ve tested it, whether on KVM or ESXi. &nbsp;</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="freebsd">FreeBSD</h2>
+
+
+
+<p>It definitely wouldn&#8217;t be a complete test without also testing two popular players in the FreeBSD world. &nbsp;OPNSense and pfSense.</p>
+
+
+
+<p>For these tests, a number of important configuration options were applied:</p>
+
+
+
+<ul><li>All hardware offload stuff disabled in the VMs.</li><li>Three VLAN interfaces, WAN/LAN/LAN2 as mapped out above.</li><li>FRR plugin installed.</li><li>NAT completely disabled.</li><li><code>pfctl -d</code> . &nbsp;While it didn&#8217;t really impact these tests, I wanted to make sure it was a level playing field.</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="pfsense">pfSense</h3>
+
+
+
+<p>I&#8217;ll be honest. &nbsp;I think these *Sense platforms aren&#8217;t really great routers. &nbsp;Can they route intervlan? &nbsp;Sure, but even with FRR somewhat native now, it&#8217;s just a pain and very clunky.</p>
+
+
+
+<p>With pfSense, I never actually did get FRR running. &nbsp;It starts, but it just doesn&#8217;t do anything. &nbsp;Not to mention the GUI for it absolutely sucks and is just a confusing mess. &nbsp;It doesn&#8217;t actually impact these tests, but I annoyingly had to create some static routes on my other routers to get everything working. &nbsp;</p>
+
+
+
+<h4 id="boottime">boot time</h4>
+
+
+
+<p>Not fast, 37 seconds with a few seconds at the bootloader. I&#8217;m also positive I&#8217;ve seen this take considerably longer when it&#8217;s not a basic config.</p>
+
+
+
+<h4 id="iperf3results">iperf3 results</h4>
+
+
+
+<p>Again these results made me question my testing methodogy a bit:</p>
+
+
+
+<pre class="wp-block-code"><code>[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.04  sec  1.04 GBytes   891 Mbits/sec                  receiver
+[  8]   0.00-10.04  sec  1.97 GBytes  1.68 Gbits/sec                  receiver
+[SUM]   0.00-10.04  sec  3.01 GBytes  2.57 Gbits/sec                  receiver  </code></pre>
+
+
+
+<p>It&#8217;s worth noting that I&#8217;ve personally seen about 6Gbps on decent hardware, with <code>pf</code> enabled, so I know some of this is due to to the hardware. &nbsp;But I also did try some troubleshooting:</p>
+
+
+
+<ul><li>A variety of tweaks on both the host and in the VM with hardware offloading</li><li>Using E1000 NICs. &nbsp;Yeah, that didn&#8217;t turn out too well</li></ul>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-speedtest-e1000.png" alt="" class="wp-image-44" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-speedtest-e1000.png 535w, https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-speedtest-e1000-300x57.png 300w" sizes="(max-width: 535px) 100vw, 535px" /></figure>
+
+
+
+<ul><li>Breaking out the VLANs on the host instead of in the VM, and passing in three individual NICs.</li></ul>
+
+
+
+<p>Nothing really made too much of a difference.</p>
+
+
+
+<h4 id="speedtest">speedtest</h4>
+
+
+
+<p>Welcome back to the land of <em>probably-not-very-useful-benchmarks</em>. &nbsp;As before, this easily represents gigabit; my network was just busy.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-speedtest.png" alt="" class="wp-image-45" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-speedtest.png 522w, https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-speedtest-300x64.png 300w" sizes="(max-width: 522px) 100vw, 522px" /></figure>
+
+
+
+<h4 id="cpuusageduringrouting">cpu usage during routing</h4>
+
+
+
+<p>These CPU results are more within line of the CHR results above. &nbsp;Meaning resource-wise, pfSense takes a bit more to route at high-ish (crappy) speeds. &nbsp;</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-cpuusage-speedtest-1024x522.png" alt="" class="wp-image-46" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-cpuusage-speedtest-1024x522.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-cpuusage-speedtest-300x153.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-cpuusage-speedtest-768x392.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-cpuusage-speedtest-850x433.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/pfsense-cpuusage-speedtest.png 1310w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="opnsense">OPNSense</h3>
+
+
+
+<p>For the most part, OPNSense and pfSense performed mostly identically, to the point where it&#8217;s almost not worth the posting the results. &nbsp;But I will.</p>
+
+
+
+<p>I will point out that I was able to get FRR going in about 20 seconds on OPNSense. &nbsp;Whereas on pfSense after hacking around with it for 20 minutes I still couldn&#8217;t get it running.</p>
+
+
+
+<p>I&#8217;ll also say that I like some things about the OPNSense UI and absolutely hate others. &nbsp;There are definitely some things buried in weird and unintuitive places. &nbsp;</p>
+
+
+
+<h4 id="boottime">boot time</h4>
+
+
+
+<p>At 34 seconds with 2 seconds of bootloader, this is a few seconds quicker than pfSense.</p>
+
+
+
+<h4 id="iperf3results">iperf3 results</h4>
+
+
+
+<p>Within the same range as pfSense, similarly disappointing:</p>
+
+
+
+<pre class="wp-block-code"><code>[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.03  sec  1.29 GBytes  1.10 Gbits/sec                  receiver
+[  8]   0.00-10.03  sec  1.80 GBytes  1.54 Gbits/sec                  receiver
+[SUM]   0.00-10.03  sec  3.09 GBytes  2.65 Gbits/sec                  receiver</code></pre>
+
+
+
+<h4 id="speedtest">speedtest</h4>
+
+
+
+<p>Yet another <em>basically-gigabit</em> screenshot:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-speedtest.png" alt="" class="wp-image-47" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-speedtest.png 752w, https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-speedtest-300x60.png 300w" sizes="(max-width: 752px) 100vw, 752px" /></figure>
+
+
+
+<h4 id="cpuduringrouting">cpu during routing</h4>
+
+
+
+<p>As with pfSense, the CPU definitely spikes and stays a bit higher during heavy routing. &nbsp;</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-cpuusage-speedtest-1024x467.png" alt="" class="wp-image-48" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-cpuusage-speedtest-1024x467.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-cpuusage-speedtest-300x137.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-cpuusage-speedtest-768x350.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-cpuusage-speedtest-850x388.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/opnsense-cpuusage-speedtest.png 2000w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p><a name="finalresults_kvm"></a></p>
+
+
+
+<h2 id="final-results">Final Results</h2>
+
+
+
+<p>After all these tests, it appears I&#8217;ll probably be sticking to VyOS or Debian for my routing needs. &nbsp;Mostly just for pure routing tasks, which is a lot of what I end up labbing up, &nbsp;Linux seems to do it a bit better.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><th>Router</th><th>Boot Time<sup>*</sup></th><th>Intervlan iperf3</th><th>WAN Speedtest<sup>**</sup></th></tr><tr><td>VyOS</td><td>37 seconds<sup>***</sup></td><td>12.3 Gbps</td><td>878Mbps down/918Mbps up</td></tr><tr><td>Debian/FRR</td><td>19 seconds</td><td>12.2 Gbps</td><td>957Mbps down/932Mbps up</td></tr><tr><td>CHR</td><td>12 seconds</td><td>3.01 Gbps</td><td>845Mbps down/868Mbps up</td></tr><tr><td>OPNSense</td><td>34 seconds</td><td>2.65 Gbps</td><td>888Mbps down/930Mbps up</td></tr><tr><td>pfSense</td><td>37 seconds</td><td>2.57 Gbps</td><td>874Mbps down/896Mbps up</td></tr></tbody></table></figure>
+
+
+
+<ul><li>* boot times all include bootloader waits. &nbsp;Linux-based was usually about 5 seconds (except CHR). &nbsp;FreeBSD-based is 2 seconds.</li><li>** All results are within a margin of error that says &#8220;<em>gigabit-capable</em>&#8220;. &nbsp;My network was somewhat busy at the time I ran the speedtests, not to mention this lab is buried behind two other different routers.</li><li>*** I&#8217;ve seen VyOS take considerably longer once more complex configurations are applied. Upwards of a minute or more. &nbsp;</li></ul>
+
+
+
+<p>As mentioned, I&#8217;ve seen pfSense run up to 6-7Gbps. &nbsp;So the slow speeds on pfSense and OPNSense here are almost certainly due to the host. &nbsp;Along the same line, my VyOS routers that run on my E5-2540v4 can route at 30Gbps or faster, so the 12Gbps observed here is slow. &nbsp;</p>
+
+
+
+<p>As far as the CHR is concerned, I&#8217;m not sure. &nbsp;I&#8217;ve done extensive testing with them, and even with the unlimited license, I&#8217;ve never see very good performance out of them, at least not without 100 hosts behind them. &nbsp;</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="the-esxi-mutation">The ESXi Mutation</h2>
+
+
+
+<p>So before I close this up, I decided to spin up one more set of tests on ESXi. &nbsp;The painfully low pfSense and CHR numbers made me really believe that there was an incompatibility somewhere. &nbsp;Maybe &nbsp;CHR and pfSense just really don&#8217;t like the virtio drivers.</p>
+
+
+
+<p>I also only tested VyOS, CHR, and pfSense, since the Debian and OPNSense numbers were largely duplicative.</p>
+
+
+
+<p><!--kg-card-begin: html--><a name="finalresults_esxi"></a><!--kg-card-end: html--><!--kg-card-begin: html--></p>
+
+
+
+<figure class="wp-block-table"><table class=""><tbody><tr><th>Router</th><th>Boot Time</th><th>Intervlan iperf3</th></tr><tr><td>VyOS</td><td>32 seconds</td><td>17.3 Gbps</td></tr><tr><td>CHR</td><td>17 seconds</td><td>7.63 Gbps</td></tr><tr><td>pfSense</td><td>33 seconds</td><td>5.61 Gbps</td></tr></tbody></table></figure>
+
+
+
+<p>As far as boot times are concerned, the shorter times are caused by being on faster storage, though I don&#8217;t know why the CHR decided to be an outlier. &nbsp;</p>
+
+
+
+<p>For VyOS, the slightly increased number tracks with my expectations due to CPU and memory bandwidth. &nbsp;My ESXi server is an E5-2640v4, which runs circles around a D-1521. &nbsp;</p>
+
+
+
+<p>For the CHR and pfSense, I wouldn&#8217;t expect the numbers to be over double just due to the platform change, so I have to believe it&#8217;s mostly due to some driver situation.</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&amp;linkname=Battle%20of%20the%20Virtual%20Routers" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2019%2F08%2F23%2Fbattle-of-the-virtual-routers%2F&#038;title=Battle%20of%20the%20Virtual%20Routers" data-a2a-url="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/" data-a2a-title="Battle of the Virtual Routers"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">33</post-id>	</item>
+		<item>
+		<title>Let&#8217;s Play with Routing &#8211; Part 1</title>
+		<link>https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=lets-run-with-routing-part-1</link>
+					<comments>https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 15 Nov 2018 02:25:58 +0000</pubDate>
+				<category><![CDATA[Networking]]></category>
+		<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2018/11/14/lets-run-with-routing-part-1/</guid>
+
+					<description><![CDATA[In this series of posts, we&#8217;ll be working through building a routing lab-within-a-lab featuring VyOS. &#160;If you are unfamiliar with VyOS, you can read more about it here. Over the&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&#038;title=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" data-a2a-url="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/" data-a2a-title="Let’s Play with Routing – Part 1"></a></p>
+<p>In this series of posts, we&#8217;ll be working through building a routing lab-within-a-lab featuring VyOS. &nbsp;If you are unfamiliar with VyOS, you can read more about it <a href="https://wiki.vyos.net/wiki/User_Guide">here</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Over the last few months, I&#8217;ve switched all the routing for my homelab to virtual VyOS instances. &nbsp;The main reason was to really get my hands dirty with some more advanced routing concepts. &nbsp;</p>
+
+
+
+<p>As I have multiple hypervisors, this configuration creates a different routing VM on each hypervisor for redundancy and backup. &nbsp;This setup allows me to do a number of things:</p>
+
+
+
+<ul><li>Wire-speed routing at 10Gb without noisy and power-hungry switches. &nbsp;Now I just use cheap basic managed switches (specifically the CRS317).</li><li>30Gbps or higher routing between VMs on the same host.</li><li>Ultimate redundancy and backup for both IPv4 and IPv6.</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>First Goal</p>
+
+
+
+<p>Our first goal &nbsp;will be to configure a simple router+LAN setup that would mimic most home designs. &nbsp;For now, we&#8217;ll be skipping the firewall and just worrying about routing. &nbsp;The pieces:</p>
+
+
+
+<ul><li>Edge routing VM. &nbsp;This is the edge device of our little routing lab. &nbsp;A simple VyOS instance with two interfaces. &nbsp;One on your existing network to act as the &#8220;WAN&#8221;, and a second interface to be the routing &#8220;LAN&#8221;. &nbsp;Since it&#8217;s virtualized, you could also mimic this with a single interface and a &#8220;trunk&#8221; port. &nbsp;</li><li>A simple Debian/CentOS/etc VM to act as a client on our LAN. &nbsp;It makes it easy to run traceroutes, MTRs, speed tests, and whatever other routing validation we can imagine. &nbsp;You could even move an existing Windows VM or Linux install just by changing the port group the VM uses.</li></ul>
+
+
+
+<p>There are a few requirements before we get started:</p>
+
+
+
+<ul><li>A hypervisor where you can easily set up &#8220;virtual switches&#8221;. &nbsp;I&#8217;m using ESXi.</li><li>A Debian/CentOS/LiveCD VM to be our test &#8220;client&#8221;. &nbsp;I install a GUI so I can use Chrome to run speedtests or verify Internet connectivity. Again, any existing VM can temporarily be used for this with a simple port group/network migration.</li><li>The VyOS ISO. &nbsp;At the time of this writing, I prefer the latest <a href="https://downloads.vyos.io/?dir=testing/1.2.0-rc7">RC7</a> as it has FRR for the routing suite.</li><li>Maybe 5-10GB of RAM and 5-10GB of disk space. </li><li>The ability to create a static route on your main firewall/router. &nbsp;We could do NAT, but the goal here is pure routing. &nbsp;</li><li>A /24 subnet (or smaller/bigger), that&#8217;s not in use otherwise in your network. &nbsp;I will be using <code>10.222.222.0/24</code></li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="letsgo">Let&#8217;s Go!</h2>
+
+
+
+<p>The first thing you will want to do is create a new virtual switch to use as our new LAN. &nbsp;It doesn&#8217;t need any uplinks or external connectivity. &nbsp;With ESXi, you would first create a new vSwitch and remove the uplink from it. &nbsp;</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-2-1.png" alt="" class="wp-image-85" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1.png 711w, https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1-300x141.png 300w" sizes="(max-width: 711px) 100vw, 711px" /></figure>
+
+
+
+<p>And then create a new Port group and select the vSwitch you just created (with vCenter this can be done in one step).</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png" alt="" class="wp-image-87" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png 710w, https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1-300x114.png 300w" sizes="(max-width: 710px) 100vw, 710px" /></figure>
+
+
+
+<p>Once that&#8217;s done, we create our Edge VM. &nbsp;This will be a VyOS instance where we will run things like our DHCP server for the new LAN. &nbsp;In a real setup, this VM or physical box would be connected to your ISP, do firewalling/NAT, etc:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-4.png" alt="" class="wp-image-88" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-4.png 938w, https://blog.kroy.io/wp-content/uploads/2019/08/image-4-300x190.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-4-768x486.png 768w" sizes="(max-width: 938px) 100vw, 938px" /></figure>
+
+
+
+<p>A few of the important things follow. &nbsp;VyOS doesn&#8217;t need much memory or disk, and at least for RAM, 1GB is probably overkill. &nbsp;2GB of disk is the new minimum for VyOS. The ISO that I mounted is <code>vyos-1.2.0-rc7-amd64.iso</code>, but I&#8217;d grab the latest version that&#8217;s available.</p>
+
+
+
+<p>For networking, my &#8220;Network Adaptor #1&#8221; is hooked to my existing LAN. &nbsp;The new network adaptor is connected to the new LAN that is going to be used for testing. &nbsp;These should both be VMXNET3 for best performance. </p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-5.png" alt="" class="wp-image-89" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-5.png 936w, https://blog.kroy.io/wp-content/uploads/2019/08/image-5-300x254.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-5-768x650.png 768w" sizes="(max-width: 936px) 100vw, 936px" /></figure>
+
+
+
+<p>It&#8217;s important to note that everything with VyOS is done at the CLI (that&#8217;s generally fairly intuitive). &nbsp;There is no GUI to access, so initially you&#8217;ll have to access it entirely through your hypervisor console. &nbsp;SSH access can be configured once you have networking set up.</p>
+
+
+
+<p>The first thing to check before you start up the VM is whether ESXi changed around your network interfaces for you. &nbsp;It did for me:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-10.png" alt="" class="wp-image-90" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-10.png 822w, https://blog.kroy.io/wp-content/uploads/2019/08/image-10-300x41.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-10-768x106.png 768w" sizes="(max-width: 822px) 100vw, 822px" /></figure>
+
+
+
+<p>I want my &#8220;WAN&#8221; to be the first network interface in the VM, and the <code>RouteLAB-LAN</code> to be the second one. &nbsp;Easy enough to switch them back:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-11.png" alt="" class="wp-image-91" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-11.png 818w, https://blog.kroy.io/wp-content/uploads/2019/08/image-11-300x37.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-11-768x95.png 768w" sizes="(max-width: 818px) 100vw, 818px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="edgevm">Edge VM</h3>
+
+
+
+<p>With the edge VM created, it&#8217;s time to get VyOS installed. &nbsp;Boot it up and log in at the console with <code>vyos</code> / <code>vyos</code> as the username and password. Entering <code>install image</code> will begin the installation.</p>
+
+
+
+<p>You should be able to accept the defaults:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png" alt="" class="wp-image-92" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/image-6-300x174.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-6-768x446.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/image-6.png 1201w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Name the image, and choose a password. &nbsp;VyOS uses squashfs images, so if an install goes badly, usually you can roll back to the last working copy:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png" alt="" class="wp-image-93" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/image-7-300x176.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-7-768x452.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/image-7.png 1285w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And after grub is installed, you should reboot to boot into your new system:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png" alt="" class="wp-image-94" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/image-9-300x60.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-9-768x153.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/image-9.png 1229w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3 id="edgevmpart2">Edge VM part 2</h3>
+
+
+
+<p>Before you can go any further, you need to decide on a static IP for your new VM. &nbsp;This will be an IP on your existing network. &nbsp;If we were doing NAT or dynamic routing, you could probably just use your existing DHCP, but at least for now, we want static routing. &nbsp;</p>
+
+
+
+<p>My config looks like:</p>
+
+
+
+<ul><li>Existing LAN IP Range: <code>10.0.1.0/24</code></li><li>VyOS Edge IP: <code>10.0.1.222</code></li><li>LAN Gateway (my existing firewall): <code>10.0.1.1</code></li><li>DNS servers: <code>8.8.8.8, 1.1.1.1</code></li></ul>
+
+
+
+<p>For the <code>RouteLAB-LAN</code>:</p>
+
+
+
+<ul><li>VyOS Edge IP: <code>10.222.222.1/24</code>, this will be the gateway for the hosts on the <code>RouteLAB-LAN</code></li><li>DHCP Server running the range of <code>10.222.222.100-200</code></li><li>DNS servers: <code>8.8.8.8, 1.1.1.1</code></li></ul>
+
+
+
+<p>You also have to tell your existing network how it will reach your new <code>RouteLAB-LAN</code></p>
+
+
+
+<p>This also means on your existing firewall/router, you need a new static route. &nbsp;The route will be the destination network of <code>10.222.222.0/24</code> with the gateway/next-hop of <code>10.0.1.222</code>. &nbsp;How to do this is dependent on your router/firewall. &nbsp;With something like pfSense, you might use <a href="https://www.netgate.com/docs/pfsense/book/routing/static-routes.html">these</a><a> </a>instructions.</p>
+
+
+
+<h3 id="edgevmconfig">Edge VM config</h3>
+
+
+
+<p>The config we are setting up is VERY simple and involves no firewalling, which obviously would be a requirement in real usage. But it is just enough to get our VM online.</p>
+
+
+
+<pre class="wp-block-code"><code>configure
+set interfaces ethernet eth0 address '10.0.1.222/24'
+set interfaces ethernet eth0 description 'WAN'
+set interfaces ethernet eth1 address '10.222.222.1/24'
+set interfaces ethernet eth1 description 'RouteLab-LAN'
+set protocols static route 0.0.0.0/0 next-hop 10.0.1.1
+set service ssh port '22'
+set system name-server 8.8.8.8
+set system name-server 1.1.1.1
+commit
+save
+exit</code></pre>
+
+
+
+<p>Hopefully it should be fairly self-explanatory:</p>
+
+
+
+<ul><li>Enter configure mode.</li><li>Set the IP on your existing network and a description for the interface. &nbsp;This is the IP on your existing LAN for this device. This is <code>eth0</code>.</li><li>Set the IP on our <code>RouteLAB-LAN</code> and the description for the interface. &nbsp;This is <code>eth1</code>.</li><li>Set a static route for <code>0.0.0.0/0</code>. &nbsp;This is like setting the gateway address; it tells your VM how to get to the Internet and the rest of your network.</li><li>Turn on SSH. &nbsp;You will then be able to access this VM over SSH with the username <code>vyos</code> and the password you set up earlier. &nbsp;There are settings available to use a different port, username, rate-limit, or even key-based authentication. &nbsp;</li><li>Sets the DNS servers for the VM. &nbsp;Not strictly needed, but nice if you want Internet access on this VM.</li><li><code>commit</code> activates the config. &nbsp;</li><li><code>save</code> saves the config so it will persist through a reboot.</li><li>Exit configure mode.</li></ul>
+
+
+
+<p>At this point you should be able to ping/ssh the existing LAN address from anywhere on your network. &nbsp;Pinging the <code>10.222.222.1</code> address successfully will also tell you that the static route is working. &nbsp;If something isn&#8217;t working, there are a few possibilities:</p>
+
+
+
+<ul><li>Your static route isn&#8217;t setup correctly. &nbsp;In my above config, this would mean I am able to ping <code>10.0.1.222</code> but not <code>10.222.222.1</code> from other hosts on my LAN</li><li>Your firewall is restricting something</li><li>If pings to both addresses work, but the Edge VM doesn&#8217;t have access to the Internet in general (like pinging <code>8.8.8.8</code>), it&#8217;s probably because you need to adjust your outbound NAT. &nbsp;In pfSense you&#8217;d want to switch from <a href="https://www.netgate.com/docs/pfsense/nat/outbound-nat.html">Automatic to Hybrid or Manual Outbound NAT</a> and allow <code>10.222.222.0/24</code>. &nbsp;We technically aren&#8217;t going to need Internet access for this project, but it&#8217;s nice when your Client VM is able to access the wide-Internet.</li></ul>
+
+
+
+<h3 id="edgevmconfigpart2">Edge VM config part 2</h3>
+
+
+
+<p>The final piece to this part of the project is getting DHCP working for our <code>RouteLAB-LAN</code>.</p>
+
+
+
+<pre class="wp-block-code"><code>configure
+set service dhcp-server shared-network-name RouteLAB-LAN authoritative
+set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 default-router 10.222.222.1
+set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 dns-server 8.8.8.8
+set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 dns-server 1.1.1.1
+set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 lease 86400
+set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 range 0 start 10.222.222.100
+set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 range 0 stop 10.222.222.200
+commit
+save
+exit</code></pre>
+
+
+
+<p>Again, this config should be fairly self-explanatory:</p>
+
+
+
+<ul><li>Enter configure mode.</li><li>Set up this DHCP server as authoritative.</li><li>Name this VM&#8217;s <code>10.222.222.1</code> IP as the default gateway for the subnet.</li><li>Set up a few different name-servers.</li><li>Set our lease length to a day.</li><li>Set our range of addresses from clients will grab addresses.</li><li>commit and save.</li><li>Exit configure mode.</li></ul>
+
+
+
+<p>Now if you change the port group on your Client VM (and possible disable and re-enable the network interface from within the VM):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-12.png" alt="" class="wp-image-95" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-12.png 838w, https://blog.kroy.io/wp-content/uploads/2019/08/image-12-300x143.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-12-768x366.png 768w" sizes="(max-width: 838px) 100vw, 838px" /></figure>
+
+
+
+<p>You should see your client VM pop up in the DHCP leases on the Edge VM with a <code>show dhcp server leases</code>:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyos:~$ show dhcp server leases
+IP address      Hardware address    Lease expiration     Pool          Client Name
+--------------  ------------------  -------------------  ------------  -------------
+10.222.222.100  00:50:56:9d:74:42   2018/11/15 16:28:08  RouteLAB-LAN  debian
+</code></pre>
+
+
+
+<p>And in my case, I&#8217;m able to ping the <code>10.222.222.100</code> address from the rest of my network, and vise-versa.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="endofpart1">End of Part 1</h1>
+
+
+
+<p>If you&#8217;ve made it this far, you now have a basic &#8220;lab within a lab&#8221; running. &nbsp;What this demonstrates is how to use a static route to avoid using the dreaded double-NAT. &nbsp;If you set up some firewall rules, and you plug an interface into your ISP modem or device, you could use this VM as the router for your entire network.</p>
+
+
+
+<p>In part 2, we&#8217;ll work on setting up some redundancy and dynamic routing within our tiny little lab.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-13.png" alt="" class="wp-image-96" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-13.png 645w, https://blog.kroy.io/wp-content/uploads/2019/08/image-13-300x179.png 300w" sizes="(max-width: 645px) 100vw, 645px" /></figure>
+
+
+
+<p>Coming soon&#8230;</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&amp;linkname=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F&#038;title=Let%E2%80%99s%20Play%20with%20Routing%20%E2%80%93%20Part%201" data-a2a-url="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/" data-a2a-title="Let’s Play with Routing – Part 1"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">31</post-id>	</item>
+	</channel>
+</rss>

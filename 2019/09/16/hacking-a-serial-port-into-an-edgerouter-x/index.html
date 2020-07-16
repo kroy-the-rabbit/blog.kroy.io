@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="UTF-8"><title>Hacking a serial port into an EdgeRouter X – blog.kroy.io</title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="dns-prefetch" href="//s.w.org"><script type="text/javascript" data-cfasync="false">
+	var em_version         = '6.1.0';
+	var em_track_user      = true;
+	var em_no_track_reason = '';
+	
+	var disableStr = 'ga-disable-UA-89722449-1';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+
+	if ( 'undefined' === typeof gaOptout ) {
+		function gaOptout() {
+			__gaTrackerOptout();
+		}
+	}
+	
+	if ( em_track_user ) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
+		__gaTracker('set', 'forceSSL', true);
+		__gaTracker('send','pageview');
+		__gaTracker( function() { window.ga = __gaTracker; } );
+	} else {
+		console.log( "" );
+		(function() {
+			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+			var noopfn = function() {
+				return null;
+			};
+			var noopnullfn = function() {
+				return null;
+			};
+			var Tracker = function() {
+				return null;
+			};
+			var p = Tracker.prototype;
+			p.get = noopfn;
+			p.set = noopfn;
+			p.send = noopfn;
+			var __gaTracker = function() {
+				var len = arguments.length;
+				if ( len === 0 ) {
+					return;
+				}
+				var f = arguments[len-1];
+				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + em_no_track_reason );
+					return;
+				}
+				try {
+					f.hitCallback();
+				} catch (ex) {
+
+				}
+			};
+			__gaTracker.create = function() {
+				return new Tracker();
+			};
+			__gaTracker.getByName = noopnullfn;
+			__gaTracker.getAll = function() {
+				return [];
+			};
+			__gaTracker.remove = noopfn;
+			window['__gaTracker'] = __gaTracker;
+			window.ga = __gaTracker;		})();
+		}
+</script><style type="text/css" media="all">
+.wpautoterms-footer{background-color:#ffffff;text-align:center;}
+.wpautoterms-footer a{color:#000000;font-family:Arial, sans-serif;font-size:14px;}
+.wpautoterms-footer .separator{color:#cccccc;font-family:Arial, sans-serif;font-size:14px;}</style><link rel="stylesheet" id="wp-block-library-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/style.min.css" media="all"><style id="wp-block-library-inline-css">
+.has-text-align-justify{text-align:justify;}
+</style><link rel="stylesheet" id="wp-block-library-theme-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/theme.min.css" media="all"><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="addtoany-css" href="https://blog.kroy.io/wp-content/plugins/add-to-any/addtoany.min.css" media="all"><style id="addtoany-inline-css">
+@media screen and (max-width:980px){
+.a2a_floating_style.a2a_vertical_style{display:none;}
+}
+</style><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script>
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js"></script><script src="https://blog.kroy.io/wp-content/plugins/add-to-any/addtoany.min.js"></script><script data-cfasync="false">
+window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};
+(function(d,s,a,b){a=d.createElement(s);b=d.getElementsByTagName(s)[0];a.async=1;a.src="https://static.addtoany.com/menu/page.js";b.parentNode.insertBefore(a,b);})(document,"script");
+</script><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-311 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left comments-open si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+
+
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+	<header id="masthead" class="site-header" role="banner" itemtype="https://schema.org/WPHeader" itemscope="itemscope"><div id="sinatra-header">
+		<div id="sinatra-header-inner">
+	
+<div class="si-container si-header-container">
+
+	
+<div class="sinatra-logo si-header-element" itemtype="https://schema.org/Organization" itemscope="itemscope">
+	<div class="logo-inner"><span class="site-title" itemprop="name">
+						<a href="https://blog.kroy.io/" rel="home" itemprop="url">
+							blog.kroy.io
+						</a>
+					</span><p class="site-description" itemprop="description">
+						computers, tech, and whatever other random stuff crosses my mind.
+					</p></div></div>
+
+<nav class="site-navigation main-navigation sinatra-primary-nav sinatra-nav si-header-element" role="navigation" itemtype="https://schema.org/SiteNavigationElement" itemscope="itemscope" aria-label="Site Navigation"><ul class="sinatra-primary-nav"><li><a href="https://blog.kroy.io/"><span>Home</span></a></li></ul></nav><div class="si-header-widgets si-header-element sinatra-widget-location-right"><div class="si-header-widget__search si-header-widget sinatra-hide-mobile-tablet"><div class="si-widget-wrapper">
+<div aria-haspopup="true">
+	<a href="#" class="si-search">
+		<i class="si-icon si-search"></i>
+	</a>
+
+	<div class="si-search-simple si-search-container dropdown-item">
+		<form role="search" aria-label="Site Search" method="get" class="si-search-form" action="https://blog.kroy.io/">
+
+			<label class="si-form-label">
+				<span class="screen-reader-text">Search for:</span>
+				<input type="search" class="si-input-search" placeholder="Search" value="" name="s" autocomplete="off"></label>
+
+			
+			<button type="submit" class="sinatra-animate-arrow right-arrow" aria-hidden="true" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="18px" viewbox="0 0 30 18" enable-background="new 0 0 30 18" xml:space="preserve"><path class="arrow-handle" d="M2.511,9.007l7.185-7.221c0.407-0.409,0.407-1.071,0-1.48s-1.068-0.409-1.476,0L0.306,8.259 c-0.408,0.41-0.408,1.072,0,1.481l7.914,7.952c0.407,0.408,1.068,0.408,1.476,0s0.407-1.07,0-1.479L2.511,9.007z"></path><path class="arrow-bar" fill-rule="evenodd" clip-rule="evenodd" d="M1,8h28.001c0.551,0,1,0.448,1,1c0,0.553-0.449,1-1,1H1c-0.553,0-1-0.447-1-1
+					                            C0,8.448,0.447,8,1,8z"></path></svg></button>
+		</form>
+	</div>
+</div>
+</div></div></div>
+	<span class="si-header-element si-mobile-nav">
+				<button class="si-hamburger hamburger--spin si-hamburger-sinatra-primary-nav" aria-label="Menu" aria-controls="sinatra-primary-nav" type="button">
+
+			
+			<span class="hamburger-box">
+				<span class="hamburger-inner"></span>
+			</span>
+
+		</button>
+			</span>
+
+</div>	</div>
+	</div>
+		
+<div class="page-header si-has-breadcrumbs">
+
+	
+	
+	<div class="si-container si-breadcrumbs"><nav role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs" itemprop="breadcrumb"><ul class="trail-items" itemscope itemtype="http://schema.org/BreadcrumbList"><meta name="numberOfItems" content="5"><meta name="itemListOrder" content="Ascending"><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-begin"><a href="https://blog.kroy.io/" rel="home" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2019/" itemprop="item"><span itemprop="name">2019</span></a><meta itemprop="position" content="2"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2019/09/" itemprop="item"><span itemprop="name">September</span></a><meta itemprop="position" content="3"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2019/09/16/" itemprop="item"><span itemprop="name">16</span></a><meta itemprop="position" content="4"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-end"><span><span itemprop="name">Hacking a serial port into an EdgeRouter X</span></span><meta itemprop="position" content="5"></li></ul></nav></div>
+</div>
+	</header><div id="main" class="site-main">
+
+		
+<div class="si-container">
+
+	<div id="primary" class="content-area">
+
+		
+		<main id="content" class="site-content" role="main" itemscope itemtype="http://schema.org/Blog"><article id="post-311" class="sinatra-article post-311 post type-post status-publish format-standard has-post-thumbnail hentry category-hardware-hacks category-networking category-routing" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="post-category">
+
+	<span class="cat-links"><span class="screen-reader-text">Posted in</span><span><a href="https://blog.kroy.io/category/hardware-hacks/" rel="category tag">Hardware Hacks</a> <a href="https://blog.kroy.io/category/networking/" rel="category tag">Networking</a> <a href="https://blog.kroy.io/category/routing/" rel="category tag">Routing</a></span></span>
+</div>
+
+<header class="entry-header"><h1 class="entry-title" itemprop="headline">
+		Hacking a serial port into an EdgeRouter X	</h1>
+
+</header><div class="entry-meta"><div class="entry-meta-elements">		<span class="post-author">
+			<span class="posted-by vcard author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+				<span class="screen-reader-text">Posted by</span>
+
+				
+				<span>
+										By 					<a class="url fn n" title="View all posts by Kroy" href="https://blog.kroy.io/author/kroy3348/" rel="author" itemprop="url">
+						<span class="author-name" itemprop="name">Kroy</span>
+					</a>
+				</span>
+			</span>
+		</span>
+		<span class="posted-on">September 16, 2019</span><span class="comments-link"><a href="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/#respond" class="comments-link">No Comments</a></span></div></div><div class="post-thumb entry-media thumbnail"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-1024x768.jpg" class="attachment-large size-large wp-post-image" alt="erxguts+ttlusb"></div>
+<div class="entry-content si-entry" itemprop="text">
+	<div class="addtoany_share_save_container addtoany_content addtoany_content_top"><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" data-a2a-title="Hacking a serial port into an EdgeRouter X"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div>
+<p>Although I’m not a huge fan of Ubiquiti stuff, some of the EdgeRouters hold a special place in my heart.  <br></p>
+
+
+
+<p>The CLI isn’t terrible, mostly like the VyOS CLI that I love, and for a very minimal price, you get a tiny PoE powered device that can handle almost 1Gbps routing.  Not to mention now these things can run <a href="https://www.wireguard.com/">WireGuard</a>, which is a huge bonus.  </p>
+
+
+
+<hr class="wp-block-separator"><p>A huge downside for me is that the ERX doesn’t ship with an external serial port.  Especially in my complex network, it can be a huge pain to get a device on a specific preconfigured subnet for initial configuration.  Not to mention that if I happened to misconfigure something, I end up losing access and need to factory reset the device.  </p>
+
+
+
+<p>Fortunately, the ERX does ship with exposed UART TTL pins, so adding a serial port should be a simple task.</p>
+
+
+
+<hr class="wp-block-separator"><h2>The Build</h2>
+
+
+
+<p>The only part I needed was a <a href="https://amzn.to/2FC2CiL">USB to TTL adaptor</a>, often used for Arduinos.  Apparently this one has a fake FT232 chipset in it, so it can be troublesome to use in Windows.  Fortunately all I use are Macs and Linux desktops, so that wasn’t an issue.</p>
+
+
+
+<p>I had some leftover jumper cables from some Raspberry Pi machinations. Thankfully, Amazon shipped it overnight.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-1024x768.jpg" alt="erxguts+ttlusb" class="wp-image-313" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>This was never going to be a pretty build, and I needed to figure out a spot on the case where the USB->TTL adapter could fit, but not block the case from closing.  </p>
+
+
+
+<p>So enter the electrical tape:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/MVx3Htp-1024x768.jpg" alt="hacky" class="wp-image-314" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/MVx3Htp-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/09/MVx3Htp-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/09/MVx3Htp-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/09/MVx3Htp-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>And a nice hole from a power drill:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/IdDxUn9.jpg" alt="" class="wp-image-316" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/IdDxUn9.jpg 728w,https://blog.kroy.io/wp-content/uploads/2019/09/IdDxUn9-300x225.jpg 300w" sizes="(max-width: 728px) 100vw, 728px"></figure><p>Slightly less nice after opening it up a bit to fit the USB connection:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/stWHZSs-768x1024.jpg" alt="" class="wp-image-315" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/stWHZSs-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/09/stWHZSs-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2019/09/stWHZSs-300x400.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/09/stWHZSs-850x1133.jpg 850w" sizes="(max-width: 768px) 100vw, 768px"></figure><p>Making it ugly and permanent with some hot glue:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/b051fa1c-7197-4bf8-92c9-1369f6f2fa1e-1024x741.png" alt="" class="wp-image-319" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/b051fa1c-7197-4bf8-92c9-1369f6f2fa1e-1024x741.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/09/b051fa1c-7197-4bf8-92c9-1369f6f2fa1e-300x217.png 300w,https://blog.kroy.io/wp-content/uploads/2019/09/b051fa1c-7197-4bf8-92c9-1369f6f2fa1e-768x556.png 768w,https://blog.kroy.io/wp-content/uploads/2019/09/b051fa1c-7197-4bf8-92c9-1369f6f2fa1e-850x615.png 850w,https://blog.kroy.io/wp-content/uploads/2019/09/b051fa1c-7197-4bf8-92c9-1369f6f2fa1e.png 1236w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><hr class="wp-block-separator"><h2>Finishing it up</h2>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/Skuhcom-1024x768.jpg" alt="" class="wp-image-317" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/Skuhcom-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/09/Skuhcom-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/09/Skuhcom-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/09/Skuhcom-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>Before sealing up the, I decided to actually test it out.  It took me far too long to figure out that the ERX used a non-standard serial speed of 57600. </p>
+
+
+
+<p>screen <code>/dev/tty.usbserial-A50285BI 57600</code></p>
+
+
+
+<p>After that, I was off to the races:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/image-5.png" alt="" class="wp-image-320" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/image-5.png 797w,https://blog.kroy.io/wp-content/uploads/2019/09/image-5-300x189.png 300w,https://blog.kroy.io/wp-content/uploads/2019/09/image-5-768x485.png 768w" sizes="(max-width: 797px) 100vw, 797px"></figure><p>And when it’s all closed up, it doesn’t even look horrible!</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog.kroy.io/wp-content/uploads/2019/09/Pk5AOT7-1024x768.jpg" alt="" class="wp-image-318" srcset="https://blog.kroy.io/wp-content/uploads/2019/09/Pk5AOT7-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/09/Pk5AOT7-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/09/Pk5AOT7-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/09/Pk5AOT7-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" data-a2a-title="Hacking a serial port into an EdgeRouter X"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div></div>
+
+
+
+
+<div class="entry-footer">
+
+	<span class="last-updated">Last updated on June 6, 2020</span>
+</div>
+
+
+<section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
+		<img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75"></div>
+
+	<div class="author-box-meta">
+		<h4 class="author-box-title">
+							<a href="https://blog.kroy.io/author/kroy3348/" class="url fn n" rel="author" itemprop="url">
+				Kroy	
+				</a>
+						</h4>
+
+		
+		
+		<div class="author-box-content" itemprop="description">
+			sometimes hacker of things and other things...		</div>
+
+		
+<div class="more-posts-button">
+	<a href="https://blog.kroy.io/author/kroy3348/" class="si-btn btn-text-1" role="button"><span>View All Posts</span></a>
+</div>
+	</div>
+
+</section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
+
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2019/09/13/10-gigabit-inter-vlan-with-a-mikrotik-rb4011/" rel="prev"><div class="nav-content"><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2019/09/IMG_0332-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="10 gigabit inter-VLAN with a Mikrotik RB4011" itemprop="image"><span>10 gigabit inter-VLAN with a Mikrotik RB4011</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1518/" rel="next"><div class="nav-content"><span>The Great Rack Migration – D1518</span> <img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-1-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="The Great Rack Migration – D1518" itemprop="image"></div></a></div>
+</section></article><section id="comments" class="comments-area"><div class="comments-title-wrapper center-text">
+		<h3 class="comments-title">
+			Comments		</h3>
+
+					<p class="no-comments">No comments yet. Why don’t you start the discussion?</p>
+			</div>
+
+	<ol class="comment-list"></ol><div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://blog.kroy.io/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-textarea"><textarea name="comment" id="comment" cols="44" rows="8" class="textarea-comment" placeholder="Write a comment…" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required="required"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required="required"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200"></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><span class="sinatra-submit-form-button"><input name="submit" type="submit" id="comment-submit" class="si-btn primary-button" value="Post Comment"></span> <input type="hidden" name="comment_post_ID" value="311" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p></form>	</div>
+	
+</section></main></div>
+
+	
+<aside id="secondary" class="widget-area si-sidebar-container" itemtype="http://schema.org/WPSideBar" itemscope="itemscope" role="complementary"><div class="si-sidebar-inner">
+		
+				<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">		<h4 class="widget-title">Recent Posts</h4>		<ul><li>
+					<a href="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/">VyOS from Scratch – Edition 1</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/">A Baby WYSE, the 3040</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">The WYSE 5070, a perfect little VyOS device</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/">Battle of the Bare Metal Routers</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/10/28/migrating-a-efi-linux-install-to-a-new-server/">Migrating an EFI Linux Install to a new Server</a>
+									</li>
+					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>		<ul><li><a href="https://blog.kroy.io/2020/05/">May 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/01/">January 2020</a></li>
+	<li><a href="https://blog.kroy.io/2019/12/">December 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/11/">November 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/10/">October 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/09/">September 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/08/">August 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/01/">January 2019</a></li>
+	<li><a href="https://blog.kroy.io/2018/11/">November 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/07/">July 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/05/">May 2018</a></li>
+	<li><a href="https://blog.kroy.io/2017/12/">December 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/08/">August 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/07/">July 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/06/">June 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/05/">May 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/04/">April 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/03/">March 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/02/">February 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/01/">January 2017</a></li>
+		</ul></div><div id="categories-2" class="si-sidebar-widget si-widget si-entry widget widget_categories"><h4 class="widget-title">Categories</h4>		<ul><li class="cat-item cat-item-12"><a href="https://blog.kroy.io/category/ceph/">ceph</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.kroy.io/category/debian/">Debian</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.kroy.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.kroy.io/category/virtualization/esxi/">ESXi</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.kroy.io/category/freenas/">freenas</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="https://blog.kroy.io/category/hardware/">Hardware</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://blog.kroy.io/category/hardware-hacks/">Hardware Hacks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.kroy.io/category/homelab/">HomeLab</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.kroy.io/category/mediaserver/">mediaserver</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.kroy.io/category/mikrotik/">mikrotik</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.kroy.io/category/networking/">Networking</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://blog.kroy.io/category/nucnucnuc/">nucnucnuc</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.kroy.io/category/pfsense/">pfsense</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.kroy.io/category/proxmox/">proxmox</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://blog.kroy.io/category/virtualization/proxmox-virtualization/">Proxmox</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.kroy.io/category/routing/" title="Stuff about routing">Routing</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.kroy.io/category/rtlsdr/">RTLSDR</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://blog.kroy.io/category/storage/">Storage</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.kroy.io/category/sysadmin/">SysAdmin</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.kroy.io/category/virtualization/">Virtualization</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://blog.kroy.io/category/vyos/">VyOS</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.kroy.io/category/zfs/">ZFS</a>
+</li>
+		</ul></div><div id="meta-2" class="si-sidebar-widget si-widget si-entry widget widget_meta"><h4 class="widget-title">Meta</h4>			<ul><li><a href="https://blog.kroy.io/wp-login.php">Log in</a></li>
+			<li><a href="https://blog.kroy.io/feed/">Entries feed</a></li>
+			<li><a href="https://blog.kroy.io/comments/feed/">Comments feed</a></li>
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>			</ul></div><div id="custom_html-2" class="widget_text si-sidebar-widget si-widget si-entry widget widget_custom_html"><div class="textwidget custom-html-widget"><div id="amzn-assoc-ad-96eac8be-1743-4b44-98e2-f274484e1cac"></div><script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=96eac8be-1743-4b44-98e2-f274484e1cac"></script></div></div>
+			</div>
+
+</aside></div>
+
+		
+	</div>
+	
+	
+			<footer id="colophon" class="site-footer" role="contentinfo" itemtype="http://schema.org/WPFooter" itemscope="itemscope"><div id="sinatra-copyright" class="contained-separator">
+	<div class="si-container">
+		<div class="si-flex-row">
+
+			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2020 — blog.kroy.io. All rights reserved. <a href="https://sinatrawp.com/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
+			<div class="col-xs-12 center-xs col-md flex-basis-auto end-md"></div>
+
+		</div>
+	</div>
+</div>
+
+		</footer></div>
+
+<a href="#" id="si-scroll-top" class="si-smooth-scroll" title="Scroll to Top">
+	<span class="si-scroll-icon" aria-hidden="true">
+		<i class="si-icon si-chevron-up top-icon"></i>
+		<i class="si-icon si-chevron-up"></i>
+	</span>
+	<span class="screen-reader-text">Scroll to Top</span>
+</a>
+<div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style" style="right:0px;top:100px;background-color:transparent;"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2019%2F09%2F16%2Fhacking-a-serial-port-into-an-edgerouter-x%2F&linkname=Hacking%20a%20serial%20port%20into%20an%20EdgeRouter%20X" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js"></script><script>
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"273c5609c8","responsive-breakpoint":"960","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js"></script><script>
+	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202028.js" async="async" defer></script><script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:8.7',blog:'166765678',post:'311',tz:'-5',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'clickTrackerInit', '166765678', '311' ]);
+</script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
+		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>
+</div>
+</body></html>

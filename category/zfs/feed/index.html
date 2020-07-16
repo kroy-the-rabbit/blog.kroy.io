@@ -1,0 +1,1474 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>ZFS &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/zfs/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Thu, 29 Aug 2019 20:11:33 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.2</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>ZFS &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>Building a ZFS on Linux Fileserver</title>
+		<link>https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=building-a-zfs-on-linux-fileserver</link>
+					<comments>https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Tue, 17 Jul 2018 04:54:00 +0000</pubDate>
+				<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/</guid>
+
+					<description><![CDATA[After my recent migration back to ZFS on Linux, I decided to roll my own GUI for server reporting/management. Unfortunately, as referenced in the above linked post, I recently picked&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&#038;title=Building%20a%20ZFS%20on%20Linux%20Fileserver" data-a2a-url="https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/" data-a2a-title="Building a ZFS on Linux Fileserver"></a></p>
+<p>After my <a href="/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/">recent migration</a> back to ZFS on Linux, I decided to roll my own GUI for server reporting/management.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Unfortunately, as referenced in the above linked post, I recently picked up some 10TB Seagate drives that refuse to be stable in any ZFS array, except on Linux.  It&#8217;s worth mentioning that running them on Linux seems to be the fix, as they&#8217;ve been 100% stable for weeks now.</p>
+
+
+
+<p>While I was a VERY early adopter of ZFS on Linux, in recent years I&#8217;ve avoided it.  I think part of the reason is the lack of a GUI.</p>
+
+
+
+<p>While I don&#8217;t need or want a GUI for configuration, for reporting it&#8217;s more than helpful.  Scanning lines and lines of text for things like smart status is absolutely no fun.</p>
+
+
+
+<p>I&#8217;ve tried OMV, but I really wasn&#8217;t a fan of the interface.  It ultimately represents a lot of bloat and most of it I don&#8217;t have much use for.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="thecore">The Core</h1>
+
+
+
+<p>At the core of the new system is Debian Stretch.  I initially tried Ubuntu 18.04, but I found NFS on Ubuntu has a problem.  I believe locking to be broken, as I was having problems with Gitlab that has otherwise been running flawlessly over NFS under FreeNAS, OMV, OmniOS CE, and finally bare Debian.  There were also other strange locking issues (with ESXi) that I wasn&#8217;t able to resolve until switching to Debian (which I guess OMV is).</p>
+
+
+
+<p>Other than that, the software stack is simple:</p>
+
+
+
+<ul><li>Debian Stretch with backports.  Needed because the ZFS version on Stretch is ancient (.0.6.5).  Backports gets version .0.7.9-3.</li><li>zfs-zed.  Again from backports.  Allows notification of ZFS events (drive failures, scrubs, etc).</li><li><a href="https://github.com/jimsalterjrs/sanoid">sanoid/syncoid</a>.  Simple method of setting up automatic ZFS snapshot management and replication.</li><li>NFS.  Pretty straightforward.  Despite using NFS for YEARS, I never really understood NFSv4.  I finally took the opportunity to learn how the <code>fsid</code> works.</li><li>Samba.  Again, straightforward.  I mainly use this for ISOs exports to Supermicro IPMIs and Time Machine.</li><li>smartmontools.  Smart monitoring for the connected drives.</li><li>Glaces.  This is a great system monitor that has a wonderful web-based API, needed for tapping into for reporting.</li><li>LIO for iSCSI.  iSCSI on Linux is&#8230; annoying, for reasons I&#8217;ll mention in a few lines.</li><li>PHP7.2 (from a PPA), Smarty (php templating system), nginx, and a nice template from <a href="https://bootstrapmade.com/">Bootstrapmade</a>.  Despite any abilities with code, I am completely unable to make something look appealing.</li></ul>
+
+
+
+<p>I don&#8217;t really have a problem with configuring any of this from the command-line.  Most of the things represent a handful of lines of configuration at most.</p>
+
+
+
+<p>LIO is simple enough to use, but it took me some time to figure out WHICH iSCSI implementation I should actually be using.  There are a number of iSCSI implementations on Debian and they are all active and available. The other ones  are mostly maintained for backwards compatibility I think.</p>
+
+
+
+<p>The interface for LIO is targetcli, which has a distinct DOS-like feel.  It also supports things like tab-completion, which is helpful if you&#8217;ve never used it before:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/lio-1.png" alt="" class="wp-image-63" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/lio-1.png 836w, https://blog.kroy.io/wp-content/uploads/2019/08/lio-1-300x214.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/lio-1-768x548.png 768w" sizes="(max-width: 836px) 100vw, 836px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="thegui">The GUI</h1>
+
+
+
+<p>I&#8217;ve tried (successfully and unsuccessfully) to make web GUIs for server management and reporting in the past.  It&#8217;s usually not a lot of fun.  The hacks required to pull data from the variety of sources generally just makes for super ugly code.  For this project,  I discovered Glances.</p>
+
+
+
+<p>If you&#8217;ve never used Glances before, at its core, it&#8217;s almost just a &#8220;top/htop&#8221; replacement.  But it also provides a nice web interface that is capable of spitting out JSON.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/glances-1024x134.png" alt="" class="wp-image-64" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/glances-1024x134.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/glances-300x39.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/glances-768x101.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/glances-850x112.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/glances.png 1790w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Of course, this makes it disgustingly easy to create a web application that is capable of pulling all manner of statistics.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/glances_api-1024x79.png" alt="" class="wp-image-65" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/glances_api-1024x79.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_api-300x23.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_api-768x60.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_api-850x66.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_api.png 1792w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>That means with a few lines of JQuery,</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/glances_js_api.png" alt="" class="wp-image-66" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/glances_js_api.png 879w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_js_api-300x230.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_js_api-768x588.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/glances_js_api-850x651.png 850w" sizes="(max-width: 879px) 100vw, 879px" /></figure>
+
+
+
+<p>and using that nice template I mentioned, voilà, a simple dashboard:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/dashboard_10gb-1024x698.png" alt="" class="wp-image-67" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_10gb-1024x698.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_10gb-300x204.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_10gb-768x523.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_10gb-850x579.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_10gb.png 1312w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/dashboard_cpu-1-1024x689.png" alt="" class="wp-image-68" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_cpu-1-1024x689.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_cpu-1-300x202.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_cpu-1-768x517.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_cpu-1-850x572.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/dashboard_cpu-1.png 1423w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 id="disks">Disks</h3>
+
+
+
+<p>A big reason for buildling this application is to easily monitor smart stats and disk health.  Which is something else glances doesn&#8217;t cover.  I imagine there&#8217;s a plugin available for it, but it&#8217;s easy enough to pull and parse smartctl output:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/drives-1024x767.png" alt="" class="wp-image-69" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/drives-1024x767.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/drives-300x225.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/drives-768x576.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/drives-850x637.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/drives.png 1461w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 id="zfs">ZFS</h3>
+
+
+
+<p>Anything ZFS related is outside of the scope of glances.  I did check around for a third-party plugin a bit, but was unable to find anything.  Which means the ARC section:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/arc.png" alt="" class="wp-image-70"/></figure>
+
+
+
+<p>Needs to come from my own code.  Fortunately, this is data that&#8217;s easily accessible:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/arc_code.png" alt="" class="wp-image-71" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/arc_code.png 649w, https://blog.kroy.io/wp-content/uploads/2019/08/arc_code-300x185.png 300w" sizes="(max-width: 649px) 100vw, 649px" /></figure>
+
+
+
+<p>Similar code builds the pool topologies, data structures, health and more from running <code>zpool status</code>/<code>zpool list</code>/etc:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/zfspool-1024x628.png" alt="" class="wp-image-72" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/zfspool-1024x628.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/zfspool-300x184.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/zfspool-768x471.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/zfspool-850x521.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/zfspool.png 1469w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And while sanoid works perfectly, sometimes its nice to be able to visualize snapshots (and remove some manual ones):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/zfssnapshots-1024x721.png" alt="" class="wp-image-73" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/zfssnapshots-1024x721.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/zfssnapshots-300x211.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/zfssnapshots-768x541.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/zfssnapshots-850x599.png 850w, https://blog.kroy.io/wp-content/uploads/2019/08/zfssnapshots.png 1440w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h2 id="theend">The end</h2>
+
+
+
+<p>In all, I am far more satisfied with this setup than any of the ZFS systems I&#8217;ve run in a long time.  FreeNAS always felt like a crapshoot whether an update was going to implode my setup, and the support was non-existent when something went wrong in OmniOS.</p>
+
+
+
+<p><a href="https://gfycat.com/ifr/DesertedEsteemedIcterinewarbler">The dashboard in motion</a></p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&amp;linkname=Building%20a%20ZFS%20on%20Linux%20Fileserver" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F16%2Fbuilding-a-zfs-on-linux-fileserver%2F&#038;title=Building%20a%20ZFS%20on%20Linux%20Fileserver" data-a2a-url="https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/" data-a2a-title="Building a ZFS on Linux Fileserver"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">30</post-id>	</item>
+		<item>
+		<title>The ZFS walk-of-shame with Seagate and OmniOS CE.</title>
+		<link>https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-zfs-walk-of-shame-with-seagate-and-omnios-ce</link>
+					<comments>https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Sat, 07 Jul 2018 08:32:00 +0000</pubDate>
+				<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/</guid>
+
+					<description><![CDATA[This is a bit of a long one, so I’ll put this first. The TL;DR Opinion #1: OmniOS and Napp-IT are nice, but there’s a good chance it’s not worth&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&#038;title=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." data-a2a-url="https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/" data-a2a-title="The ZFS walk-of-shame with Seagate and OmniOS CE."></a></p>
+<p>This is a bit of a long one, so I’ll put this first.</p>
+
+
+
+<p>The TL;DR</p>
+
+
+
+<p>Opinion #1: OmniOS and Napp-IT are nice, but there’s a good chance it’s not worth the headache.</p>
+
+
+
+<p>There is absolutely little to zero support, and even with some Enterprise hardware that is potentially only 4 years old now, the driver support isn’t there.</p>
+
+
+
+<p>Opinion #2: Don&#8217;t buy 10TB Seagate IronWolf drives.  They will probably not work in most ZFS setups, unless you are running ZFS on Linux. I’m pretty sure both the regular and Pro versions have broken firmware when used in ZFS pools.</p>
+
+
+
+<p>FreeNAS and OmniOS are both affected with no real resolution in sight, but at least so far, Linux seems stable. And Seagate support isn’t much help.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>After a few weeks of testing, a few months ago I migrated all my ZFS pools over to OmniOS CE using Napp-IT for a GUI.</p>
+
+
+
+<p>As a long-time ZFS user, I’ve grown to loathe FreeNAS, and the big ZFS GUI for Linux is in OMV, and that’s not great.</p>
+
+
+
+<p>For the most part, I’ve been reasonably satisfied with the OmniOS setup. My biggest complaint (prior to my problems) is that Solaris is just so different from Linux/FreeBSD. There’s just not a lot of documentation, so any minor issues take a lot of trudging to figure out.</p>
+
+
+
+<p>I really do love a few things about it. How NFS and SMB are configured are glorious compared to something like FreeNAS. And Comstar is an incredible piece of software for managing iSCSI.</p>
+
+
+
+<p>A major annoyance is that it will sometimes fail to complete booting, necessitating a reboot. Apparently this is an ancient Solaris bug that’s still hanging out in illumos.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So a simple reboot for a software update often results in needing to reboot two or three times. And this happened both in VM installs that I’ve tried and on multiple different hardware platforms.</p>
+
+
+
+<p>Other than that, all was fine until about a month ago when I added four 10TB Seagate IronWolf drives as two additional mirrored vdevs. Specifically model number ST10000VN0004, but some searching tells me the 10TB IronWolf Pro is probably impacted too.</p>
+
+
+
+<p>Four brand new drives, and within a few days they ALL started to throw timeouts, which eventually resulted in them getting offlined and kicked out of the pool until a reboot. I came dangerously close to losing the whole pool more than once.</p>
+
+
+
+<p>Fortunately, the last OmniOS CE update introduced a new killer feature, vdev removal. Using this feature, I was able to remove the two new vdevs, get my pool back to stability. Or so I thought.</p>
+
+
+
+<p>The problem is that now my pool was anything but stable. Random checksum errors, transport errors on the drives, basically everything scary that you don’t want to see.</p>
+
+
+
+<p>I tried:</p>
+
+
+
+<ul><li>Three different HBAs, one brand new</li><li>Different cables, SFF8088.</li><li>Different SA120s and enclosures with breakout cables</li><li>This is an array of 10TB Seagate Enterprise drives, and a mix of 6/8TB IronWolf drives, and every one of them pass SMART. The errors aren’t even tied to specific drives, just on the pool in general.</li></ul>
+
+
+
+<p>So I have two issues. The unstable original pool and the broken new 10TB Seagates.</p>
+
+
+
+<p>In trying to troubleshoot the Seagates, I hooked them up to different SAS expanders, HBAs, even directly to the SATA ports on the motherboard. The dropouts continued under every ZFS implementation except Linux. And since I’m not using them in a “supported” NAS, there’s not any help from Seagate Support.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Note that I’ve been using almost exclusively IronWolf drives for years, 6/8TB Pro/non-Pro, and I’ll say they’ve been some of the most reliable drives I’ve ever used. So it’s disappointing that Seagate support won’t do anything with the 10TB drives when it’s clearly a firmware problem. I’m running almost half a petabyte of Seagate storage, and these drives are the ONLY ones that have issues.</p>
+
+
+
+<p>There’s a few posts about these 10TB drives on the FreeNAS forums and  on Reddit. The fix currently is to buy Western Digital drives (ewww), or run ZoL.</p>
+
+
+
+<p>Anyway, after almost a month of messing around with it (and wasting a pile of cash on different HBAs, expanders and cables, to try and troubleshoot both problems), I’ve basically come to the conclusion that the vdev device removal is buggy and triggered all my stability issues.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So I did what any sane person would do.</p>
+
+
+
+<p>I grabbed a spare R330 SFF from production , loaded it up with a bunch of SSDs for VM storage, a brand new Intel x540 10Gb card, and a brand new 9207-8e.  All with the intention of migrating my data over to a whole new pool, before giving the loaner hardware back.</p>
+
+
+
+<p>One word. FAIL. With OmniOS, and the H330 that is in the R330, any attempt to migrate VMs off the server results in the “mr_sas” driver causing a kernel panic. This a year old bug that’s been reported with no fix in sight.</p>
+
+
+
+<p>So now I had a terabyte of VMs stuck on a datastore and I couldn’t get them off. The second a migration in vCenter was attempted, the box kernel-panicked.</p>
+
+
+
+<p>After three days of working on it, I finally figured out I could copy them manually to a single-spinner 2TB datastore, over a 1Gbps link, to prevent the load (or lack of) from triggering the kernel panic. Almost a literal week later&#8230;</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So here I am. I have:</p>
+
+
+
+<ul><li>a previously rock-solid pool of drives exhibiting failure symptoms on OmniOS CE</li><li>Four brand new 10TB drives connected to the loaner R330 that have been running a test pool on Ubuntu. I’ve been subjecting this pool to load for the last 5 days with precisely zero dropouts.</li><li>Four gallon freezer bags full of SAS/SATA cards/expanders/adapters/parts/cables purchased in the last month.</li></ul>
+
+
+
+<p>That leads me to the simple conclusion that it’s time to go back to ZFS on Linux. At this point I’m stuck with the new 10TB drives, and I need them to be stable.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>This morning, I started the migration back. Unfortunately the OmniOS CE ZFS version has a ton of feature flags that haven&#8217;t/possibly won&#8217;t make it back to Linux and FreeNAS.</p>
+
+
+
+<p>Because of vdev removal on the source pool, I’m able to copy a bunch of data, remove a mirror on the original pool, add the mirror to the new pool on Linux.</p>
+
+
+
+<p>This is almost a 300TB pool, so unfortunately this is the only reliable way to migrate the pool without investing in a ton more drives. The downside is that it&#8217;s going to greatly unbalance the disks in the pool. The early ones are going to have most of the data on them, which will kill some performance.</p>
+
+
+
+<p>Since I’m running the new server on bare metal Ubuntu, I’m probably going to end up writing at least some sort of simple reporting GUI for the server.</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&amp;linkname=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F07%2F07%2Fthe-zfs-walk-of-shame-with-seagate-and-omnios-ce%2F&#038;title=The%20ZFS%20walk-of-shame%20with%20Seagate%20and%20OmniOS%20CE." data-a2a-url="https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/" data-a2a-title="The ZFS walk-of-shame with Seagate and OmniOS CE."></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">29</post-id>	</item>
+		<item>
+		<title>Building a Disk Tower, for all pain and no profit</title>
+		<link>https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=building-a-disk-tower-for-pain-and-no-profit</link>
+					<comments>https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Wed, 02 May 2018 22:49:09 +0000</pubDate>
+				<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/</guid>
+
+					<description><![CDATA[In my lab, more than anything, quiet and power-sipping are the two factors that matter most to me. That means most of my servers are towers instead of rack-mount gear.&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&#038;title=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" data-a2a-url="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/" data-a2a-title="Building a Disk Tower, for all pain and no profit"></a></p>
+<p>In my lab, more than anything, quiet and power-sipping are the two factors that matter most to me.  That means most of my servers are towers instead of rack-mount gear.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So when a recent post on <a href="https://www.reddit.com/r/DataHoarder/comments/7z7q1j/my_new_diy_15_bay_das_more_info_in_comments/">/r/datahoarder</a> outlined shoving 15 drives into a DVD duplicator tower, I jumped all over the idea.</p>
+
+
+
+<p>One thing I didn&#8217;t want was to be forced to run multiple SFF-8088 cables.  So early-on, I decided a SAS expander was needed.</p>
+
+
+
+<h3 id="partslist">Parts List</h3>
+
+
+
+<ul><li>Copystars 9 Bay Duplicator case ($80 new on eBay)</li><li>HP SAS Expander ($18 used on eBay).  This is the one with the SFF-8088 port on the back</li><li>Some random SAS-&gt;SATA breakout cables ($12 new for a pair on eBay)</li><li>SeaSonic M12II-620 EVO, 620W modular PSU ($60 new from Newegg)</li><li>A way to turn on the PSU without a motherboard.  A bright orange switch ($7 on Amazon)</li><li>A pair of Rosewill 3 x 5.25-Inch to 4 x 3.5-Inch bays ($50 each from Newegg)</li><li>Powered PCIe riser ($10 Amazon)</li></ul>
+
+
+
+<p>Right away you might notice that I only ordered enough enclosures for eight drive bays.  Initially, that was all that I needed.  My long term plan was to be able to turn one of the 5.25&#8243; bays into 6 or 8 2.5&#8243; docks for SSDs.</p>
+
+
+
+<p>I ordered the Rosewill bays because of the fans on them.  Most of the other 3.5&#8243; drive bays had VERY small fans on them.  I&#8217;ve had some cooling problems in the past, and I wanted to make sure my new DAS didn&#8217;t have any issues.</p>
+
+
+
+<h4 id="thepartsarrive">The parts arrive</h4>
+
+
+
+<p>I feel like this project was doomed from the start.  As the parts started to arrive, there were immediate problems:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/geuPRlM.png" alt="fail
+" class="wp-image-118" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/geuPRlM.png 586w, https://blog.kroy.io/wp-content/uploads/2019/08/geuPRlM-225x300.png 225w" sizes="(max-width: 586px) 100vw, 586px" /></figure>
+
+
+
+<p>That&#8217;s a surface-mount capacitor on the HP SAS Expander.  It was floating around in the bag.  While it probably would have worked, I wasn&#8217;t willing to risk data to it.  So without a working SAS expander, which was going to take another week to arrive, about all I could do was assemble the rest of the case.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="grrrthecase">Grrr, the case&#8230;</h2>
+
+
+
+<p>So I don&#8217;t know why, but I ordered the Copystars case instead of the BestDuplicator case mentioned in the Datahoarders reddit post above.  There is almost NO room in the Copystars case, whereas the BestDuplicator has <a href="https://imgur.com/a/CRYg1Xe">room for days</a>.  The only nice thing about the Copystars case is that it has CONSIDERABLY more cooling in it, due to a pair of nice big (and relatively silent) fans.</p>
+
+
+
+<p>While I had planned on needing to replace the PSU, the one that shipped with this Copystars case was truly dreadful:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/YlDw1a4.png" alt="original psu" class="wp-image-119" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/YlDw1a4.png 728w, https://blog.kroy.io/wp-content/uploads/2019/08/YlDw1a4-300x225.png 300w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<p>300w, with 15A on the 12 volt rail.  Nowhere near enough for even 8 drives.</p>
+
+
+
+<p>Unfortunately, even with the stock PSU, I don&#8217;t think it would have been possible to fit the SAS Expander (which is HUGE).  Nor would the final set of drive bays be available.  So enter the velcro:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/mNQ8S5t.png" alt="guts showing expander" class="wp-image-120" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/mNQ8S5t.png 728w, https://blog.kroy.io/wp-content/uploads/2019/08/mNQ8S5t-300x226.png 300w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="needmoreparts">Need more parts!</h2>
+
+
+
+<p>While I was waiting for a new SAS expander, Seagate_Surfer on Reddit responded to a <a href="https://www.reddit.com/r/homelab/comments/8deebx/cautionary_tale_on_why_buying_enterprise_drives/">post</a> I wrote about the potential pitfalls of buying Enterprise drives on Amazon.  Due to the generosity of Seagate, I had some brand new 10TB drives on the way!!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>I want to take this moment to shill for Seagate a little.  I&#8217;ve bought TONS (in the hundreds) of drives over the years.  For many of those years, I was exclusively buying Western Digital Reds and was constantly forced to RMA them at the 1.5 year mark.  Upwards of 20% or more.</p>
+
+
+
+<p>Since I started buying Seagates, I&#8217;ve had zero RMAs.  Even the drives from the aforementioned post above were just starting to throw errors, they hadn&#8217;t even failed yet.</p>
+
+
+
+<p>I really do feel Seagate took care of me by honoring a warranty that they were under absolutely no requirement to honor.  They&#8217;ve got a customer for life in me, both for personal and in business.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Of course this meant I needed to fill in the third set of drive bays, so it was off to Amazon for another Rosewill kit.</p>
+
+
+
+<p>I decided because of the limited SAS lanes available over a single cable, putting 2.5&#8243; bays in this case for SSDs probably didn&#8217;t make sense.  Because of that, I also picked up an SFF-8088 to SFF-8087 cable.  With how I was required to mount the SAS expander in the case, my original plan of just a straight SFF-8088 cable wasn&#8217;t going to work.</p>
+
+
+
+<p>A few days later, everything arrived and was mounted.</p>
+
+
+
+<p>Cable gore:<br><br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/M7KalRX-742x1024.jpg" alt="building" class="wp-image-121" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX-742x1024.jpg 742w, https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX-217x300.jpg 217w, https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX-768x1060.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX.jpg 889w" sizes="(max-width: 742px) 100vw, 742px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/32MrdMQ.jpg" alt="moar building" class="wp-image-122" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/32MrdMQ.jpg 728w, https://blog.kroy.io/wp-content/uploads/2019/08/32MrdMQ-222x300.jpg 222w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<p>Not perfect but it works:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/ZwrL7uj.jpg" alt="PSU mount" class="wp-image-123" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/ZwrL7uj.jpg 728w, https://blog.kroy.io/wp-content/uploads/2019/08/ZwrL7uj-218x300.jpg 218w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<p>I hate that this cable isn&#8217;t removable, but it&#8217;s what worked for now:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/BlYaYIT.jpg" alt="psu with sas cable" class="wp-image-124" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/BlYaYIT.jpg 728w, https://blog.kroy.io/wp-content/uploads/2019/08/BlYaYIT-222x300.jpg 222w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<p>Doesn&#8217;t really look too bad:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/0nHaIR8.jpg" alt="built" class="wp-image-125" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/0nHaIR8.jpg 728w, https://blog.kroy.io/wp-content/uploads/2019/08/0nHaIR8-223x300.jpg 223w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<p>At this point, I had gone through 2 Expanders, ordered an extra set of SFF-8087-&gt;8088 cables and an additional set of drive bays.  And this project was well into its third week.</p>
+
+
+
+<h1 id="allofthefailures">All of the failures</h1>
+
+
+
+<p>Once everything was installed, I immediately fired it up and started plugging in drives.</p>
+
+
+
+<p><em>NOTHING</em></p>
+
+
+
+<p>Nothing was detected.  The lights on the drive bays came on, but OmniOS never registered drives as being connected.  And of course I had sealed up the case because I blindly assumed everything would work.</p>
+
+
+
+<p>After much plugging and replugging, I determined the SAS expander was bad. So it was back to eBay for a new SAS expander.  This time I went with the IBM ServeRAID.</p>
+
+
+
+<p>A week later, it arrived:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/S7IVOYD-1024x763.jpg" alt="" class="wp-image-126" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD-1024x763.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD-300x223.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD-768x572.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD.jpg 1188w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And was installed:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/3vQbqzQ-624x1024.jpg" alt="cable gore" class="wp-image-127" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3vQbqzQ-624x1024.jpg 624w, https://blog.kroy.io/wp-content/uploads/2019/08/3vQbqzQ-183x300.jpg 183w, https://blog.kroy.io/wp-content/uploads/2019/08/3vQbqzQ.jpg 728w" sizes="(max-width: 624px) 100vw, 624px" /></figure>
+
+
+
+<p>The design of this card makes it a bit more difficult to shove the third set of bays all the way in, but it fit (potato pic):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/3usxvEg.png" alt="more cable gore
+" class="wp-image-128" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3usxvEg.png 728w, https://blog.kroy.io/wp-content/uploads/2019/08/3usxvEg-233x300.png 233w" sizes="(max-width: 728px) 100vw, 728px" /></figure>
+
+
+
+<h1 id="morefailures">More Failures</h1>
+
+
+
+<p>With the new SAS expander, plugging in drives caused them to start showing up in OmniOS.  But as with everything in this project, one step forward resulted in two steps back.</p>
+
+
+
+<p>In two of the Rosewill enclosures, the third drive bay was bad and refused to connect.  Note that one of these came from Newegg, and one of them came from Amazon, which means it&#8217;s probably a common problem with the enclosure.  So while I continued to use them, I started the replacement process</p>
+
+
+
+<p>The bigger concern was actually the apparent failure of one of my Seagate IronWolf drives.  These things are built like <em>TANKS</em> and I had never seen problems before on <strong>DOZENS</strong> of them.</p>
+
+
+
+<p>But ZFS was throwing checksum errors and smart tests started getting aborted:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/KhhyHph.png" alt="smart problems" class="wp-image-129" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/KhhyHph.png 688w, https://blog.kroy.io/wp-content/uploads/2019/08/KhhyHph-300x65.png 300w" sizes="(max-width: 688px) 100vw, 688px" /></figure>
+
+
+
+<p>The hard and transfer error counters were rising:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/yrNsQL8.png" alt="hard/transfer errors" class="wp-image-130" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/yrNsQL8.png 814w, https://blog.kroy.io/wp-content/uploads/2019/08/yrNsQL8-300x14.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/yrNsQL8-768x35.png 768w" sizes="(max-width: 814px) 100vw, 814px" /></figure>
+
+
+
+<p>And the UDMA CRC Error count was going up and up</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/xRPOBQO.png" alt="udma crc" class="wp-image-131" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/xRPOBQO.png 649w, https://blog.kroy.io/wp-content/uploads/2019/08/xRPOBQO-300x23.png 300w" sizes="(max-width: 649px) 100vw, 649px" /></figure>
+
+
+
+<p>Some quick googling told me this was probably due to a bad cable, and sure enough, swapping the SATA connection from the dead drive bay to the drive throwing errors caused all the problems to go away.</p>
+
+
+
+<p>I&#8217;ve found those breakout cables to be a little fragile.  So I guess I&#8217;m not surprised that one of them failed in all my shuffling between replacing the expander and trying to troubleshoot why the third bays in two of the enclosures were bad.</p>
+
+
+
+<p>So back to Amazon for another SAS-&gt;SATA breakout cable.</p>
+
+
+
+<h1 id="thecasualtylist">The Casualty List</h1>
+
+
+
+<p>I ordered more breakout cables (and ordered extras just to be safe), and Amazon has replaced the failed Rosewill enclosure.  I&#8217;m now almost a month into this project, and while the DAS is stable and I&#8217;m using it, I&#8217;m still waiting on Newegg for a replacment for the final piece.</p>
+
+
+
+<p>The list of failed parts so far:</p>
+
+
+
+<ul><li>Two HP SAS Expanders.</li><li>Two Rosewill 4&#215;3.5 in 3&#215;5.25 drive bays.</li><li>SFF-8087 -&gt; 4xSATA breakout cable.</li><li>My sanity.</li></ul>
+
+
+
+<h3 id="theresult">The result:</h3>
+
+
+
+<p>Potato pic (no idea why my camera keeps being blurry):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/LRLNnk7-766x1024.jpg" alt="potato finished product" class="wp-image-132" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7-766x1024.jpg 766w, https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7-224x300.jpg 224w, https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7-768x1027.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7.jpg 844w" sizes="(max-width: 766px) 100vw, 766px" /></figure>
+
+
+
+<p>The drives in this array:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/lGf30Mq.png" alt="devices" class="wp-image-133" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/lGf30Mq.png 330w, https://blog.kroy.io/wp-content/uploads/2019/08/lGf30Mq-300x181.png 300w" sizes="(max-width: 330px) 100vw, 330px" /></figure>
+
+
+
+<p>and temps:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/ZV6jAgI.png" alt="temps" class="wp-image-134" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/ZV6jAgI.png 597w, https://blog.kroy.io/wp-content/uploads/2019/08/ZV6jAgI-300x102.png 300w" sizes="(max-width: 597px) 100vw, 597px" /></figure>
+
+
+
+<p>Obligatory blinkenlights, with an idea of how loud it is:</p>
+
+
+
+<div style="width:100%;height:0px;position:relative;padding-bottom:56.250%;"><figure><iframe src="https://streamable.com/s/ob5uf/cfomck" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></figure></div>
+
+
+
+<h1 id="conclusion">Conclusion</h1>
+
+
+
+<p>After all of this, I have a 12 bay DAS that is:</p>
+
+
+
+<ul><li>basically silent from more than a few feet away</li><li>pulls about 20 watts without any disks</li><li>still has a dead drive bay until Newegg responds to my return request</li></ul>
+
+
+
+<p>Would I do it again?</p>
+
+
+
+<figure><iframe src="https://giphy.com/embed/98C4E2HeR4NBm" width="480" height="480" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe></figure>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&amp;linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&#038;title=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" data-a2a-url="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/" data-a2a-title="Building a Disk Tower, for all pain and no profit"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">27</post-id>	</item>
+		<item>
+		<title>Abusing the QNAP TS-831x with ZFS</title>
+		<link>https://blog.kroy.io/2017/07/05/abusing-the-qnap-ts-831x-with-zfs/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=abusing-the-qnap-ts-831x-with-zfs</link>
+					<comments>https://blog.kroy.io/2017/07/05/abusing-the-qnap-ts-831x-with-zfs/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 06 Jul 2017 00:01:08 +0000</pubDate>
+				<category><![CDATA[Debian]]></category>
+		<category><![CDATA[QNAP]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/07/05/abusing-the-qnap-ts-831x-with-zfs/</guid>
+
+					<description><![CDATA[Lately for my business, I&#8217;ve been recommending the QNAP TS-831x to clients. As I have a few of them sitting around my lab now, I decided to abuse them a&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&#038;title=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" data-a2a-url="https://blog.kroy.io/2017/07/05/abusing-the-qnap-ts-831x-with-zfs/" data-a2a-title="Abusing the QNAP TS-831x with ZFS"></a></p>
+<p>Lately for my business, I&#8217;ve been recommending the QNAP TS-831x to clients. As I have a few of them sitting around my lab now, I decided to abuse them a little.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>In the world of SOHO NAS devices, most people would solidly recommend Synology. Arguably, the software is second to none, but then again so is the price tag. And after a very bad experience with a DS2015xs, I decided to give QNAP a try.</p>
+
+
+
+<p>Since then, I&#8217;ve been recommending the TS-831x to clients. For the price, the performance is stellar and it&#8217;s a steal at $799. It has dual-SFP+ ports, software that is practically indistinguishable from Synology, and eight 6Gbps SATA ports, which is something that the equivalent Synology didn&#8217;t have until this year&#8217;s hardware update. It does have a pretty lackluster ARM CPU in it, so I definitely wouldn&#8217;t recommend it for people that like to mix their compute and their storage.</p>
+
+
+
+<p>As I have a few of these devices now as spares and backup, I decided it was time to explore the possibilities of them.</p>
+
+
+
+<h4 id="virtualjbod">Virtual JBOD</h4>
+
+
+
+<p>I&#8217;ve started using ZFS again as my primary storage, and I would love to be able to somehow use one of these TS-831x as part of a ZFS pool for a receive target as a fourth tier backup.</p>
+
+
+
+<p>A capability that the TS-831x advertises is &#8220;Virtual JBOD&#8221;. Digging into that concept, the idea is to export iSCSI LUNs from other devices and use them as part of the storage pool on the QNAP.</p>
+
+
+
+<p>On the QNAP, with the basic RAID that it uses, that&#8217;s reasonably safe. Of course, with ZFS, that&#8217;s not what I want.</p>
+
+
+
+<p>I wanted it the opposite direction.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p><strong>The players:</strong></p>
+
+
+
+<ul><li>A QNAP TS-831x</li><li>5x6TB Western Digital Red Drives (the 5400 RPM non-pro version)</li><li>Ubuntu 17.04 VM on ESXi</li><li>End-to-end 10Gb</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="donoteverdothis">DO NOT EVER DO THIS</h2>
+
+
+
+<p>When you are talking about ZFS, there is a hard and fast rule. Give ZFS direct access to the disks. Many of the horror stories you hear about people losing data starts with something like &#8220;I have a RAID card and not an HBA, so I created single RAID stripes out of the disks, etc&#8221;.</p>
+
+
+
+<p>Needless to say, doing something like this is probably not recommended:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/qnap_storage-1024x550.png" alt="" class="wp-image-154" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/qnap_storage-1024x550.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_storage-300x161.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_storage-768x412.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_storage-1600x859.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/qnap_iscsi-1024x581.png" alt="" class="wp-image-155" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/qnap_iscsi-1024x581.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_iscsi-300x170.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_iscsi-768x436.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_iscsi-1600x908.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>For the uninitiated, I&#8217;ve taken five 6TB drives in a TS-831x, created separate storage pools out of them, and exported each pool as an iSCSI target.</p>
+
+
+
+<h5 id="error">Error</h5>
+
+
+
+<p>I&#8217;m not entirely sure this is the best way to set this up, but it was the only way I could make it work. Of course the QNAP is screaming the entire way. It wants to be a complete storage+media device, not just a slave for some drives.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/qnap_warnings-1-1024x399.png" alt="" class="wp-image-156" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/qnap_warnings-1-1024x399.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_warnings-1-300x117.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_warnings-1-768x299.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_warnings-1.png 1238w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/qnap_no_like-1024x598.png" alt="" class="wp-image-157" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/qnap_no_like-1024x598.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_no_like-300x175.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_no_like-768x449.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_no_like-1600x935.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4 id="zfsandubuntuandqnap">ZFS and Ubuntu and QNAP</h4>
+
+
+
+<p>The goal of all of this was to be able to take periodic ZFS snapshots of a live pool, send them to the QNAP. Of course unless you are using Enterprise-level QNAP devices, ZFS isn&#8217;t supported.</p>
+
+
+
+<p>After many years of FreeNAS, I&#8217;ve started using Ubuntu for all my ZFS needs.</p>
+
+
+
+<p>iSCSI is simple to set up now and well-covered on one of their <a href="https://help.ubuntu.com/lts/serverguide/iscsi-initiator.html">guides</a>. After the normal ZFS-creation <a href="https://wiki.ubuntu.com/Kernel/Reference/ZFS">stuff</a>, I had a RAIDz1 pool of my QNAP drives.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/zpoolimport-1-1024x465.png" alt="" class="wp-image-158" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/zpoolimport-1-1024x465.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/zpoolimport-1-300x136.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/zpoolimport-1-768x348.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/zpoolimport-1-1600x726.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/zpoolimport-1.png 1794w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>It&#8217;s important to note that on every reboot, I had to manually import the pool. I&#8217;m sure it&#8217;s just a simple dependency loading-order issue, ZFS is loading before iSCSI. For this testing and backup, I didn&#8217;t bother to fix it.</p>
+
+
+
+<h5 id="sendandreceive">Send and Receive</h5>
+
+
+
+<p>Once I had a working ZFS pool running on the TS-831x via an Ubuntu VM, it was time to get to work. On the original zpool:</p>
+
+
+
+<pre class="wp-block-code"><code>zpool get allocated
+NAME  PROPERTY   VALUE  SOURCE
+tank  allocated  12.2T  -</code></pre>
+
+
+
+<p>12.2T of data should be enough to throughly break it in.</p>
+
+
+
+<p>I assumed that if the setup was going to break, a ZFS send/receive would be a good way to cause it to implode.</p>
+
+
+
+<p><code>zfs send -R tank@1498833771| ssh root@qnap-zfs zfs recv qnaptank/tankbackup</code></p>
+
+
+
+<p>While loading, it showed decent performance:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/qnap_zfs_load_benchmark-1024x449.png" alt="" class="wp-image-159" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_load_benchmark-1024x449.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_load_benchmark-300x132.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_load_benchmark-768x337.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_load_benchmark-1600x702.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_load_benchmark.png 1604w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h5 id="crashandburn">Crash and Burn</h5>
+
+
+
+<p>Well it didn&#8217;t actually crash or burn to my surprise.</p>
+
+
+
+<p>My custom ZFS snapshot send/receive management script had a bug in it. So I ended up sending the 12.2T of data twice because my script trashed the first copy. That means my stress test was inadvertantly doubled.</p>
+
+
+
+<p>Anyway, exactly 24 hours and 13 minutes later (after starting over), I had a copy of 12.2T of data on the ZFS/QNAP setup. That&#8217;s a solid 160MB/s to a RAIDz1 over SSH and iSCSI. There were no drive or other checksum errors, and some random verification of the data showed it was fully intact.</p>
+
+
+
+<p>And even subsequent sends/receives of updated snapshots completed without issue, though those are usually slower than the initial:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance-1024x127.png" alt="" class="wp-image-160" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance-1024x127.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance-300x37.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance-768x95.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance-1600x198.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance.png 1696w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance_final-1024x178.png" alt="" class="wp-image-161" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance_final-1024x178.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance_final-300x52.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance_final-768x134.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/zfs_send_to_qnap_performance_final.png 1288w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Migrating a VM to the new &#8220;QNAP ZFS&#8221; array, it showed decent performance when running disk tests inside of the VM:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/qnap_zfs_diskmark.png" alt="" class="wp-image-162" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_diskmark.png 964w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_diskmark-300x263.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/qnap_zfs_diskmark-768x674.png 768w" sizes="(max-width: 964px) 100vw, 964px" /></figure>
+
+
+
+<p>For RAIDz1 on slow drives, over an iSCSI connection, not bad at all.</p>
+
+
+
+<h5 id="conclusion">Conclusion</h5>
+
+
+
+<p>It goes without saying that this is probably not a setup someone should actually run. At some point I&#8217;m imagining the pool is going to explode. For now, it&#8217;s fine as a 4th level of backup.</p>
+
+
+
+<p>If nothing else, it&#8217;s analogous to setting up individual RAID0 on 5 separate drives (which is a huge NO-NO), and then exporting it over a network connection (also probably a huge NO-NO).</p>
+
+
+
+<p>I&#8217;m currently gathering and writing up some benchmarks on one of these TS-831x devices, just using them as intended. The result of these will be posted later, but I will say, these are fully capable devices for any basic home or small business setup.</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&amp;linkname=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F07%2F05%2Fabusing-the-qnap-ts-831x-with-zfs%2F&#038;title=Abusing%20the%20QNAP%20TS-831x%20with%20ZFS" data-a2a-url="https://blog.kroy.io/2017/07/05/abusing-the-qnap-ts-831x-with-zfs/" data-a2a-title="Abusing the QNAP TS-831x with ZFS"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2017/07/05/abusing-the-qnap-ts-831x-with-zfs/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">24</post-id>	</item>
+		<item>
+		<title>Growing from Baby to Giant</title>
+		<link>https://blog.kroy.io/2017/02/12/growing-from-baby-to-giant/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=growing-from-baby-to-giant</link>
+					<comments>https://blog.kroy.io/2017/02/12/growing-from-baby-to-giant/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Sun, 12 Feb 2017 22:15:00 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/02/12/growing-from-baby-to-giant/</guid>
+
+					<description><![CDATA[Once I decided to Frankenbox my SYS-E300-8D into a new form factor, the hunt was on. The central item of this build: Fractal Design R5 &#8211; I loved the modular&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&#038;title=Growing%20from%20Baby%20to%20Giant" data-a2a-url="https://blog.kroy.io/2017/02/12/growing-from-baby-to-giant/" data-a2a-title="Growing from Baby to Giant"></a></p>
+<p>Once I decided to Frankenbox my SYS-E300-8D into a new form factor, the hunt was on.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The central item of this build:</p>
+
+
+
+<ul><li><a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16811352048">Fractal Design R5 </a> &#8211; I loved the modular design of this and the ease of swapping drives. Plus it has plenty of room for fans.</li></ul>
+
+
+
+<p>A few weeks later, everything  arrives!</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0195-1-1024x768.jpg" alt="" class="wp-image-231" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0195-1.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0195-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0195-1-768x576.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>A modular power supply, LSI 9300-8i, a bunch of 120MM fans:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/TkOEz-1-1024x768.jpg" alt="" class="wp-image-232" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/TkOEz-1.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/TkOEz-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/TkOEz-1-768x576.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Just in case I need them:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0197-2-1.jpg" alt="" class="wp-image-233" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0197-2-1.jpg 576w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0197-2-1-225x300.jpg 225w" sizes="(max-width: 576px) 100vw, 576px" /></figure>
+
+
+
+<p>Then goes some RAM shuffling.  64 GB from the 5028D-TN4T goes into this new server, and this 96 GB goes into the 5028D-TN4T.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0198-1.jpg" alt="" class="wp-image-234" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0198-1.jpg 720w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0198-1-225x300.jpg 225w" sizes="(max-width: 720px) 100vw, 720px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-1024x768.jpg" alt="" class="wp-image-235" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1.jpg 1080w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The power supply.  I&#8217;ve never had a modular power supply, but I like the idea.  The SeaSonic seems to be a trusted modal, and at least visually, I was impressed:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0214-1.jpg" alt="" class="wp-image-236" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0214-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0214-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0214-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1.jpg" alt="" class="wp-image-237" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0213-1.jpg" alt="" class="wp-image-238" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0213-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0213-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0213-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Any time you include a cloth bag, it gives it an instant premium feel, even if it&#8217;s really not.</p>
+
+
+
+<p>An LSI HBA.  12Gb/s is probably overkill, but I wanted this to have a long life over eventual upgrades.  And I got the correct breakout cables!  I love it when planning pays off:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0200-1.jpg" alt="" class="wp-image-239" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0200-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0200-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0200-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0199-1.jpg" alt="" class="wp-image-240" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0199-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0199-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0199-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h2 id="thecase">The Case</h2>
+
+
+
+<p>When I was researching cases online, everyone seemed to really like their Fractal Design cases.  I felt <em>REALLY</em> good about the purchase of the case until it actually arrived.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0206-1-1.jpg" alt="" class="wp-image-241" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0206-1-1.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0206-1-1-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0208-1.jpg" alt="" class="wp-image-242" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0208-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0208-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0208-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0211-1.jpg" alt="" class="wp-image-243" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0211-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0211-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0211-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>The size of this case is impossible to capture in a picture. IT. IS. HUGE.</p>
+
+
+
+<h3 id="puttingitalltogether">Putting it all together</h3>
+
+
+
+<p>Mission accomplished.  It fits!</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0216-1.jpg" alt="" class="wp-image-244" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0216-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0216-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0216-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Disassembling the SYS-E300-8D to get the Xeon D-1518 board out of it:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0222-1.jpg" alt="" class="wp-image-245" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0222-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0222-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0222-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1.jpg" alt="" class="wp-image-246" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>It&#8217;s extricated:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0225-1.jpg" alt="" class="wp-image-247" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0225-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0225-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0225-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Another place I was glad I planned.  The new I/O plate arrived in the mail the day before!</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0217-1.jpg" alt="" class="wp-image-248" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0217-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0217-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0217-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>And mounted in its new home:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0226-1.jpg" alt="" class="wp-image-249" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0226-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0226-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0226-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>It&#8217;s so small that it looks a bit comical in the giant case (with a bunch of drives that I later found out I mounted backwards):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0227-1-1.jpg" alt="" class="wp-image-250" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0227-1-1.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0227-1-1-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<p>Hrm, those SATA cables feel a bit tight&#8230; I wonder if something is wrong:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0228-1.jpg" alt="" class="wp-image-251" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0228-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0228-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0228-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>And a picture of it all hooked up:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0229-2.jpg" alt="" class="wp-image-252" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0229-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0229-2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0229-2-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h3 id="oops">Oops&#8230;</h3>
+
+
+
+<p>And a few days later when I realized that I mounted the drives backwards:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0245-1-768x1024.jpg" alt="" class="wp-image-253" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0245-1-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0245-1-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0245-1.jpg 911w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<p>The CPU was also running at 70C despite all the fans and positive airflow. A jury-rigged Noctuna was placed in there when I redid the cabling:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0244-768x1024.jpg" alt="" class="wp-image-254" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0244-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0244-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0244.jpg 911w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<p>Perfect temps:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/cnF136u.png" alt="" class="wp-image-255" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/cnF136u.png 251w, https://blog.kroy.io/wp-content/uploads/2019/08/cnF136u-198x300.png 198w" sizes="(max-width: 251px) 100vw, 251px" /></figure></div>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&amp;linkname=Growing%20from%20Baby%20to%20Giant" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F02%2F12%2Fgrowing-from-baby-to-giant%2F&#038;title=Growing%20from%20Baby%20to%20Giant" data-a2a-url="https://blog.kroy.io/2017/02/12/growing-from-baby-to-giant/" data-a2a-title="Growing from Baby to Giant"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2017/02/12/growing-from-baby-to-giant/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">13</post-id>	</item>
+		<item>
+		<title>One Media Server to Rule Them All &#8211; Part 2</title>
+		<link>https://blog.kroy.io/2017/01/17/one-media-server-to-rule-them-all-part-2/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=one-media-server-to-rule-them-all-part-2</link>
+					<comments>https://blog.kroy.io/2017/01/17/one-media-server-to-rule-them-all-part-2/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Wed, 18 Jan 2017 01:54:00 +0000</pubDate>
+				<category><![CDATA[mediaserver]]></category>
+		<category><![CDATA[SysAdmin]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/01/17/one-media-server-to-rule-them-all-part-2/</guid>
+
+					<description><![CDATA[FreeNAS WOAH! It was around the time my head was exploding from carrying around USB hard drives that my brother introduced me to FreeNAS. MIND BLOWN All I could say&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&#038;title=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" data-a2a-url="https://blog.kroy.io/2017/01/17/one-media-server-to-rule-them-all-part-2/" data-a2a-title="One Media Server to Rule Them All – Part 2"></a></p>
+<h5 id="freenaswoah">FreeNAS WOAH!</h5>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>It was around the time my head was exploding from carrying around <a href="/one-media-server-to-rule-them-all-part-1/#exthd">USB hard drives</a> that my brother introduced me to FreeNAS.</p>
+
+
+
+<h3 id="mindblown"><mark>MIND BLOWN</mark></h3>
+
+
+
+<p>All I could say at the time was <em>WOW!!</em>.  This was around 2010.  I remember this because the version I specifically installed a bunch of times was FreeNAS 0.7.2 (sabanda), and I remember FreeNAS 8 was just coming out in beta.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/freenas7-1024x559.png" alt="" class="wp-image-262" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/freenas7-1024x559.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/freenas7-300x164.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/freenas7-768x419.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/freenas7-1600x874.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/freenas7.png 1716w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>FreeNAS was certainly a different beast then.  It was one of the few ways you could run ZFS outside of Solaris, and it was designed to be more of a complete media system instead of a just a storage system that is extensible through plugins/jails/Docker.</p>
+
+
+
+<p>Coming from a place where I was constantly losing data due to terrible USB hard drives, ZFS seemed like a jackpot.  So I cobbled together a bunch of old hardware, and created this:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/first_media_server.png" alt="" class="wp-image-263"/></figure></div>
+
+
+
+<p>It&#8217;s a terribly pixelated image, but you get the point.  I think it had five 500GB drives in it and used some old hardware I had lying around.</p>
+
+
+
+<p>At the time, I had significantly hacked around with the underlying system to install XBMC (<a href="https://kodi.tv/">now Kodi</a>) as well as finding and getting a video card with HDMI working. This was by no means an easy feat with the state of FreeBSD in 2010/2011.  Plex and simple streaming was still a few years off yet, so I was stuck with a &#8220;fat&#8221; centralized XBMC install on the server, and a couple of micro PCs running XBMC as a client in the bedrooms.</p>
+
+
+
+<p>For me, this was an life-changing setup.  No longer did I have to deal with files that I couldn&#8217;t play due to encoding.  No longer was I lugging two or three hard drives between main PC, to load with media, and the Xbox to play a movie.  MKV files suddenly became the <em>crème de la crème</em> instead of the bane of my existence.</p>
+
+
+
+<h6 id="freenassourapples">FreeNAS Sour Apples</h6>
+
+
+
+<p><em>(Don&#8217;t get me wrong, I respect what FreeNAS has done for the community.  If nothing else, they brought ZFS to the masses.  But sheeeesh, can they make up their minds and calm down?)</em></p>
+
+
+
+<p>I love ZFS.  It is amazing and perfect in so many ways.  I can&#8217;t count how many times I&#8217;ve completely messed something up (unplug a live drive anybody?) and had it keep my data safe.</p>
+
+
+
+<p>For as much as I loved ZFS, I disliked FreeNAS.  When I first fired it up, it was pretty great.  But soon I realized I wanted move beyond simple DNLA file serving.  Not to mention be able to run custom services, install drives and fire up XBMC without such a hassle.</p>
+
+
+
+<p>FreeNAS 8 changed the playing field for me as well.  It made much of the customization I was doing all but impossible. Many of the Linux-ish tools I was using to customize my server were gone as of that version.</p>
+
+
+
+<p>In that version, FreeNAS completely changed directions from a &#8220;media centric&#8221; file server to &#8220;serious file storage only&#8221;.  In hindsight, they probably had a good point.  But at the time and with how I was using the earlier version of FreeNAS, it was an annoying shift. Strangely enough, with the upcoming FreeNAS 10 release, it feels a <em>LOT</em> like they are doing this again.</p>
+
+
+
+<p>The final straw was the FreeNAS forums.  Have you ever been there?  <strong>TOXIC</strong> is an understatement.  Ask a simple question and you get absolutely crucified.  Even in 2011/2012, it wasn&#8217;t much better.</p>
+
+
+
+<h6 id="entertheubuntu">Enter the Ubuntu</h6>
+
+
+
+<p><a href="https://www.ubuntu.com/">Ubuntu</a> has always been one of my favorite Linux distributions.  Having grown up ordering slackware CDs from <a href="https://en.wikipedia.org/wiki/Walnut_Creek_CDROM">ftp.cdrom.com</a>, once Ubuntu hit, it was instant love.</p>
+
+
+
+<p>My FreeNAS 0.7.2 USB stick died (once again) and I was stuck deciding where to go next.  Every time I needed to reinstall FreeNAS with all my hacks, it made me want to break something.</p>
+
+
+
+<p>In almost an act of divine providence, Ubuntu happened to be the first Linux distribution that could run ZFS. And not more than a week before my USB stick died again, they had released the first version of ZFSOnLinux that could mount and import FreeNAS ZFS Pools.  <strong>NO BRAINER</strong></p>
+
+
+
+<p>Ubuntu was perfect.  All the great ZFS stuff as well as a huge array of easy to install drivers and programs.  Were there some growing pains with ZFSOnLinux?  Absolutely, but nothing that really endangered the actual data in the zpool.  This is the webpage I visited at least a few times monthly for those years.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/ppa-1024x479.png" alt="" class="wp-image-264" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/ppa-1024x479.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/ppa-300x140.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/ppa-768x359.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/ppa-1600x748.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/ppa.png 1706w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h6 id="stability">Stability</h6>
+
+
+
+<p>From 2012-2016 I ran on the same pool in RAIDz2 on Ubuntu.  I grew the pool from a single terabyte to over 30TB.  I swapped out drives to grow the pool or because they failed. I upgraded CPUs and motherboards at least three times, expanded RAM, swapped SATA cards and more.  Most importantly, I never once lost data.  XBMC became Plex, and the server started running extra services like nginx/PHP, Grafana and even a few virtual machines via VirtualBox.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2.jpg" alt="" class="wp-image-261" srcset="https://blog.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>And this was &#8220;Old Faithful&#8221; and the setup I ran until earlier this year in 2016.  After 3+ years, I have to believe only the dust held it together.</p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&amp;linkname=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F17%2Fone-media-server-to-rule-them-all-part-2%2F&#038;title=One%20Media%20Server%20to%20Rule%20Them%20All%20%E2%80%93%20Part%202" data-a2a-url="https://blog.kroy.io/2017/01/17/one-media-server-to-rule-them-all-part-2/" data-a2a-title="One Media Server to Rule Them All – Part 2"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2017/01/17/one-media-server-to-rule-them-all-part-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">11</post-id>	</item>
+		<item>
+		<title>From media to Home Lab</title>
+		<link>https://blog.kroy.io/2017/01/07/from-media-to-home-lab/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=from-media-to-home-lab</link>
+					<comments>https://blog.kroy.io/2017/01/07/from-media-to-home-lab/#respond</comments>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Sat, 07 Jan 2017 23:09:00 +0000</pubDate>
+				<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[mediaserver]]></category>
+		<category><![CDATA[SysAdmin]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/01/07/from-media-to-home-lab/</guid>
+
+					<description><![CDATA[For years, I&#8217;ve been running a Media server, outlined here. Over time, it&#8217;s evolved from a strict XBMC machine, to an Ubuntu server running Plex, sabnzbd, SickBeard, CouchPotato and more.&#8230;]]></description>
+										<content:encoded><![CDATA[<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&#038;title=From%20media%20to%20Home%20Lab" data-a2a-url="https://blog.kroy.io/2017/01/07/from-media-to-home-lab/" data-a2a-title="From media to Home Lab"></a></p>
+<p>For years, I&#8217;ve been running a Media server, outlined <a href="/one-media-server-to-rule-them-all-part-1/">here</a>.  Over time, it&#8217;s evolved from a strict XBMC machine, to an Ubuntu server running Plex, sabnzbd, SickBeard, CouchPotato and more.</p>
+
+
+
+<p>I had some concerns with the server itself.  &#8220;Old Faithful&#8221; was a three year old six-core AMD FX-6300 (upgraded from an older AM2 CPU) with 32 gb DDR3 UDIMM ECC RAM running Ubuntu and ZFSOnLinux.  And despite the motherboard, chipsets and CPU all saying they supported ECC, I really don&#8217;t think it did.  No memory or system information tests ever showed ECC capable.</p>
+
+
+
+<p>I had lost the main SSD drive in her a few times.  A combination of older SSDs with a bunch of logging was a death knell for those drives. I was using up all the SATA ports and was probably close to lighting a fire with one of these guys (<em>edit, I&#8217;ve learned that this particular model is probably the least fire-prone.  So by accident I picked up the right one</em>):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/XcRnKyE.jpg" alt="" class="wp-image-278" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/XcRnKyE.jpg 500w, https://blog.kroy.io/wp-content/uploads/2019/08/XcRnKyE-300x225.jpg 300w" sizes="(max-width: 500px) 100vw, 500px" /></figure>
+
+
+
+<p>I didn&#8217;t exactly have room to build in redundancy for OS drives.  So every time I lost the OS SSD, it took forever to get it back up and going.  Most of the important stuff was stored on the actual ZFS array, so at least that was safe.</p>
+
+
+
+<p>I also managed to need to RMA array drives on a far-too-regular basis (I blame WD Reds for being crappy).  My particular tower case made it a pain to actually replace said drives when they failed.</p>
+
+
+
+<p>Finally, Plex was getting a little &#8220;kerchunky&#8221; on it.  It would handle a stream or two just fine, but anything more would negatively impact everybody connected.  While that server had 6 cores, the cores themselves just weren&#8217;t that powerful (though they were power hungry!).</p>
+
+
+
+<p>Here is my setup before I started redoing it.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2017/01/IMG_20160508_214322-2.jpg" alt="" class="wp-image-277" srcset="https://blog.kroy.io/wp-content/uploads/2017/01/IMG_20160508_214322-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2017/01/IMG_20160508_214322-2-300x224.jpg 300w, https://blog.kroy.io/wp-content/uploads/2017/01/IMG_20160508_214322-2-768x574.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>A DiskStation for backup.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_20160919_205849-1.jpg" alt="" class="wp-image-279" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_20160919_205849-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_20160919_205849-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_20160919_205849-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>This was the last picture I took of the old girl before she got retired, after I had ripped out the ZFS array.  That&#8217;s at least 4 years of dust holding her together.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2.jpg" alt="" class="wp-image-261" srcset="https://blog.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2017/01/NBBxwq0-1-2-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h5 id="virtualboxfornofunorprofit">VirtualBox for no fun or profit</h5>
+
+
+
+<p>I don&#8217;t know that I want to knock VirtualBox too much.  I had been using it for years to spin up random VMs.  But it was when I started to use it for serious home development when it started to fail on me.</p>
+
+
+
+<p>Running as a GUI, it was fine.  It just never behaved correctly as a service running under Ubuntu.  A VM that was supposed to start on boot with the server may or may not come up. And if it did, it might have corruption due to the fact that on server shutdown, it didn&#8217;t go down cleanly.</p>
+
+
+
+<p>One thing was pretty clear to me.  I needed something else.  I wanted:</p>
+
+
+
+<ul><li>A server with some sort of redundancy built into the OS drives.  This priority went out the window when I decided to bare-metal virtualize.</li><li>Something where I wasn&#8217;t stuffing drives into a tower case and trying to maneuver drives around PCI cards and RAM.</li></ul>
+
+
+
+<p>It was about that time that I discovered /r/homelab on Reddit.  I followed posts there for about an hour before I <em>KNEW</em> I needed to build an actual homelab.</p>
+
+
+
+<p><em>&#8220;Sometimes you are sitting on a mountain of gold and you don&#8217;t even realize it&#8221;</em></p>
+
+
+
+<p>I spent the next week or so shopping on eBay for an R710.  That seemed to be the recommended server of the time.  It has some power and it wasn&#8217;t too power hungry or loud.  When I found one I liked and was priced right, I put it in my cart.  Then I realized it would probably make sense to check &#8220;The Pile&#8221; first.</p>
+
+
+
+<h5 id="anamethepileathepile"><a name="thepile"></a>The Pile</h5>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/HusR0kTr.jpg" alt="" class="wp-image-280" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/HusR0kTr.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/HusR0kTr-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/HusR0kTr-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/8rDTFqvr-1.jpg" alt="" class="wp-image-281" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/8rDTFqvr-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/8rDTFqvr-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/8rDTFqvr-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p><em>The Pile</em> is a mountain of retired gear  from my business that has been sitting on my floor since at least 2012.  As this HomeLab <em>WAS</em> going to have a business function (it&#8217;s running as an offsite DR site right now), I decided to dig through <em>The Pile</em> and see if there was anything worthwhile.</p>
+
+
+
+<p>Loe and behold, a wild R710 appears:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/s-l500.jpg" alt="" class="wp-image-282" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/s-l500.jpg 500w, https://blog.kroy.io/wp-content/uploads/2019/08/s-l500-300x224.jpg 300w" sizes="(max-width: 500px) 100vw, 500px" /></figure>
+
+
+
+<p>It was modestly specced, with dual E5520 and 32 GB of RAM, but it was a start.  Continued in the <a href="/the_homelab_mutation/">HomeLab Mutation</a></p>
+<p><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&amp;linkname=From%20media%20to%20Home%20Lab" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share#url=https%3A%2F%2Fblog.kroy.io%2F2017%2F01%2F07%2Ffrom-media-to-home-lab%2F&#038;title=From%20media%20to%20Home%20Lab" data-a2a-url="https://blog.kroy.io/2017/01/07/from-media-to-home-lab/" data-a2a-title="From media to Home Lab"></a></p>]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.kroy.io/2017/01/07/from-media-to-home-lab/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">10</post-id>	</item>
+	</channel>
+</rss>

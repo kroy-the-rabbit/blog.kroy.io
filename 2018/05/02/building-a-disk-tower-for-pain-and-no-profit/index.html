@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="UTF-8"><title>Building a Disk Tower, for all pain and no profit – blog.kroy.io</title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="dns-prefetch" href="//s.w.org"><script type="text/javascript" data-cfasync="false">
+	var em_version         = '6.1.0';
+	var em_track_user      = true;
+	var em_no_track_reason = '';
+	
+	var disableStr = 'ga-disable-UA-89722449-1';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+
+	if ( 'undefined' === typeof gaOptout ) {
+		function gaOptout() {
+			__gaTrackerOptout();
+		}
+	}
+	
+	if ( em_track_user ) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
+		__gaTracker('set', 'forceSSL', true);
+		__gaTracker('send','pageview');
+		__gaTracker( function() { window.ga = __gaTracker; } );
+	} else {
+		console.log( "" );
+		(function() {
+			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+			var noopfn = function() {
+				return null;
+			};
+			var noopnullfn = function() {
+				return null;
+			};
+			var Tracker = function() {
+				return null;
+			};
+			var p = Tracker.prototype;
+			p.get = noopfn;
+			p.set = noopfn;
+			p.send = noopfn;
+			var __gaTracker = function() {
+				var len = arguments.length;
+				if ( len === 0 ) {
+					return;
+				}
+				var f = arguments[len-1];
+				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + em_no_track_reason );
+					return;
+				}
+				try {
+					f.hitCallback();
+				} catch (ex) {
+
+				}
+			};
+			__gaTracker.create = function() {
+				return new Tracker();
+			};
+			__gaTracker.getByName = noopnullfn;
+			__gaTracker.getAll = function() {
+				return [];
+			};
+			__gaTracker.remove = noopfn;
+			window['__gaTracker'] = __gaTracker;
+			window.ga = __gaTracker;		})();
+		}
+</script><style type="text/css" media="all">
+.wpautoterms-footer{background-color:#ffffff;text-align:center;}
+.wpautoterms-footer a{color:#000000;font-family:Arial, sans-serif;font-size:14px;}
+.wpautoterms-footer .separator{color:#cccccc;font-family:Arial, sans-serif;font-size:14px;}</style><link rel="stylesheet" id="wp-block-library-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/style.min.css" media="all"><style id="wp-block-library-inline-css">
+.has-text-align-justify{text-align:justify;}
+</style><link rel="stylesheet" id="wp-block-library-theme-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/theme.min.css" media="all"><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="addtoany-css" href="https://blog.kroy.io/wp-content/plugins/add-to-any/addtoany.min.css" media="all"><style id="addtoany-inline-css">
+@media screen and (max-width:980px){
+.a2a_floating_style.a2a_vertical_style{display:none;}
+}
+</style><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script>
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js"></script><script src="https://blog.kroy.io/wp-content/plugins/add-to-any/addtoany.min.js"></script><script data-cfasync="false">
+window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};
+(function(d,s,a,b){a=d.createElement(s);b=d.getElementsByTagName(s)[0];a.async=1;a.src="https://static.addtoany.com/menu/page.js";b.parentNode.insertBefore(a,b);})(document,"script");
+</script><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-27 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left comments-open si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+
+
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+	<header id="masthead" class="site-header" role="banner" itemtype="https://schema.org/WPHeader" itemscope="itemscope"><div id="sinatra-header">
+		<div id="sinatra-header-inner">
+	
+<div class="si-container si-header-container">
+
+	
+<div class="sinatra-logo si-header-element" itemtype="https://schema.org/Organization" itemscope="itemscope">
+	<div class="logo-inner"><span class="site-title" itemprop="name">
+						<a href="https://blog.kroy.io/" rel="home" itemprop="url">
+							blog.kroy.io
+						</a>
+					</span><p class="site-description" itemprop="description">
+						computers, tech, and whatever other random stuff crosses my mind.
+					</p></div></div>
+
+<nav class="site-navigation main-navigation sinatra-primary-nav sinatra-nav si-header-element" role="navigation" itemtype="https://schema.org/SiteNavigationElement" itemscope="itemscope" aria-label="Site Navigation"><ul class="sinatra-primary-nav"><li><a href="https://blog.kroy.io/"><span>Home</span></a></li></ul></nav><div class="si-header-widgets si-header-element sinatra-widget-location-right"><div class="si-header-widget__search si-header-widget sinatra-hide-mobile-tablet"><div class="si-widget-wrapper">
+<div aria-haspopup="true">
+	<a href="#" class="si-search">
+		<i class="si-icon si-search"></i>
+	</a>
+
+	<div class="si-search-simple si-search-container dropdown-item">
+		<form role="search" aria-label="Site Search" method="get" class="si-search-form" action="https://blog.kroy.io/">
+
+			<label class="si-form-label">
+				<span class="screen-reader-text">Search for:</span>
+				<input type="search" class="si-input-search" placeholder="Search" value="" name="s" autocomplete="off"></label>
+
+			
+			<button type="submit" class="sinatra-animate-arrow right-arrow" aria-hidden="true" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="18px" viewbox="0 0 30 18" enable-background="new 0 0 30 18" xml:space="preserve"><path class="arrow-handle" d="M2.511,9.007l7.185-7.221c0.407-0.409,0.407-1.071,0-1.48s-1.068-0.409-1.476,0L0.306,8.259 c-0.408,0.41-0.408,1.072,0,1.481l7.914,7.952c0.407,0.408,1.068,0.408,1.476,0s0.407-1.07,0-1.479L2.511,9.007z"></path><path class="arrow-bar" fill-rule="evenodd" clip-rule="evenodd" d="M1,8h28.001c0.551,0,1,0.448,1,1c0,0.553-0.449,1-1,1H1c-0.553,0-1-0.447-1-1
+					                            C0,8.448,0.447,8,1,8z"></path></svg></button>
+		</form>
+	</div>
+</div>
+</div></div></div>
+	<span class="si-header-element si-mobile-nav">
+				<button class="si-hamburger hamburger--spin si-hamburger-sinatra-primary-nav" aria-label="Menu" aria-controls="sinatra-primary-nav" type="button">
+
+			
+			<span class="hamburger-box">
+				<span class="hamburger-inner"></span>
+			</span>
+
+		</button>
+			</span>
+
+</div>	</div>
+	</div>
+		
+<div class="page-header si-has-breadcrumbs">
+
+	
+	
+	<div class="si-container si-breadcrumbs"><nav role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs" itemprop="breadcrumb"><ul class="trail-items" itemscope itemtype="http://schema.org/BreadcrumbList"><meta name="numberOfItems" content="5"><meta name="itemListOrder" content="Ascending"><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-begin"><a href="https://blog.kroy.io/" rel="home" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2018/" itemprop="item"><span itemprop="name">2018</span></a><meta itemprop="position" content="2"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2018/05/" itemprop="item"><span itemprop="name">May</span></a><meta itemprop="position" content="3"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2018/05/02/" itemprop="item"><span itemprop="name">2</span></a><meta itemprop="position" content="4"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-end"><span><span itemprop="name">Building a Disk Tower, for all pain and no profit</span></span><meta itemprop="position" content="5"></li></ul></nav></div>
+</div>
+	</header><div id="main" class="site-main">
+
+		
+<div class="si-container">
+
+	<div id="primary" class="content-area">
+
+		
+		<main id="content" class="site-content" role="main" itemscope itemtype="http://schema.org/Blog"><article id="post-27" class="sinatra-article post-27 post type-post status-publish format-standard has-post-thumbnail hentry category-homelab category-zfs" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="post-category">
+
+	<span class="cat-links"><span class="screen-reader-text">Posted in</span><span><a href="https://blog.kroy.io/category/homelab/" rel="category tag">HomeLab</a> <a href="https://blog.kroy.io/category/zfs/" rel="category tag">ZFS</a></span></span>
+</div>
+
+<header class="entry-header"><h1 class="entry-title" itemprop="headline">
+		Building a Disk Tower, for all pain and no profit	</h1>
+
+</header><div class="entry-meta"><div class="entry-meta-elements">		<span class="post-author">
+			<span class="posted-by vcard author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+				<span class="screen-reader-text">Posted by</span>
+
+				
+				<span>
+										By 					<a class="url fn n" title="View all posts by Kroy" href="https://blog.kroy.io/author/kroy3348/" rel="author" itemprop="url">
+						<span class="author-name" itemprop="name">Kroy</span>
+					</a>
+				</span>
+			</span>
+		</span>
+		<span class="posted-on">May 2, 2018</span><span class="comments-link"><a href="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/#respond" class="comments-link">No Comments</a></span></div></div><div class="post-thumb entry-media thumbnail"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2018/05/zleVN8t-768x1024.jpg" class="attachment-large size-large wp-post-image" alt="tower"></div>
+<div class="entry-content si-entry" itemprop="text">
+	<div class="addtoany_share_save_container addtoany_content addtoany_content_top"><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/" data-a2a-title="Building a Disk Tower, for all pain and no profit"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div>
+<p>In my lab, more than anything, quiet and power-sipping are the two factors that matter most to me.  That means most of my servers are towers instead of rack-mount gear.</p>
+
+
+
+<hr class="wp-block-separator"><p>So when a recent post on <a href="https://www.reddit.com/r/DataHoarder/comments/7z7q1j/my_new_diy_15_bay_das_more_info_in_comments/">/r/datahoarder</a> outlined shoving 15 drives into a DVD duplicator tower, I jumped all over the idea.</p>
+
+
+
+<p>One thing I didn’t want was to be forced to run multiple SFF-8088 cables.  So early-on, I decided a SAS expander was needed.</p>
+
+
+
+<h3 id="partslist">Parts List</h3>
+
+
+
+<ul><li>Copystars 9 Bay Duplicator case ($80 new on eBay)</li><li>HP SAS Expander ($18 used on eBay).  This is the one with the SFF-8088 port on the back</li><li>Some random SAS->SATA breakout cables ($12 new for a pair on eBay)</li><li>SeaSonic M12II-620 EVO, 620W modular PSU ($60 new from Newegg)</li><li>A way to turn on the PSU without a motherboard.  A bright orange switch ($7 on Amazon)</li><li>A pair of Rosewill 3 x 5.25-Inch to 4 x 3.5-Inch bays ($50 each from Newegg)</li><li>Powered PCIe riser ($10 Amazon)</li></ul><p>Right away you might notice that I only ordered enough enclosures for eight drive bays.  Initially, that was all that I needed.  My long term plan was to be able to turn one of the 5.25″ bays into 6 or 8 2.5″ docks for SSDs.</p>
+
+
+
+<p>I ordered the Rosewill bays because of the fans on them.  Most of the other 3.5″ drive bays had VERY small fans on them.  I’ve had some cooling problems in the past, and I wanted to make sure my new DAS didn’t have any issues.</p>
+
+
+
+<h4 id="thepartsarrive">The parts arrive</h4>
+
+
+
+<p>I feel like this project was doomed from the start.  As the parts started to arrive, there were immediate problems:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/geuPRlM.png" alt="fail
+" class="wp-image-118" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/geuPRlM.png 586w,https://blog.kroy.io/wp-content/uploads/2019/08/geuPRlM-225x300.png 225w" sizes="(max-width: 586px) 100vw, 586px"></figure><p>That’s a surface-mount capacitor on the HP SAS Expander.  It was floating around in the bag.  While it probably would have worked, I wasn’t willing to risk data to it.  So without a working SAS expander, which was going to take another week to arrive, about all I could do was assemble the rest of the case.</p>
+
+
+
+<hr class="wp-block-separator"><h2 id="grrrthecase">Grrr, the case…</h2>
+
+
+
+<p>So I don’t know why, but I ordered the Copystars case instead of the BestDuplicator case mentioned in the Datahoarders reddit post above.  There is almost NO room in the Copystars case, whereas the BestDuplicator has <a href="https://imgur.com/a/CRYg1Xe">room for days</a>.  The only nice thing about the Copystars case is that it has CONSIDERABLY more cooling in it, due to a pair of nice big (and relatively silent) fans.</p>
+
+
+
+<p>While I had planned on needing to replace the PSU, the one that shipped with this Copystars case was truly dreadful:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/YlDw1a4.png" alt="original psu" class="wp-image-119" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/YlDw1a4.png 728w,https://blog.kroy.io/wp-content/uploads/2019/08/YlDw1a4-300x225.png 300w" sizes="(max-width: 728px) 100vw, 728px"></figure><p>300w, with 15A on the 12 volt rail.  Nowhere near enough for even 8 drives.</p>
+
+
+
+<p>Unfortunately, even with the stock PSU, I don’t think it would have been possible to fit the SAS Expander (which is HUGE).  Nor would the final set of drive bays be available.  So enter the velcro:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/mNQ8S5t.png" alt="guts showing expander" class="wp-image-120" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/mNQ8S5t.png 728w,https://blog.kroy.io/wp-content/uploads/2019/08/mNQ8S5t-300x226.png 300w" sizes="(max-width: 728px) 100vw, 728px"></figure><hr class="wp-block-separator"><h2 id="needmoreparts">Need more parts!</h2>
+
+
+
+<p>While I was waiting for a new SAS expander, Seagate_Surfer on Reddit responded to a <a href="https://www.reddit.com/r/homelab/comments/8deebx/cautionary_tale_on_why_buying_enterprise_drives/">post</a> I wrote about the potential pitfalls of buying Enterprise drives on Amazon.  Due to the generosity of Seagate, I had some brand new 10TB drives on the way!!</p>
+
+
+
+<hr class="wp-block-separator"><p>I want to take this moment to shill for Seagate a little.  I’ve bought TONS (in the hundreds) of drives over the years.  For many of those years, I was exclusively buying Western Digital Reds and was constantly forced to RMA them at the 1.5 year mark.  Upwards of 20% or more.</p>
+
+
+
+<p>Since I started buying Seagates, I’ve had zero RMAs.  Even the drives from the aforementioned post above were just starting to throw errors, they hadn’t even failed yet.</p>
+
+
+
+<p>I really do feel Seagate took care of me by honoring a warranty that they were under absolutely no requirement to honor.  They’ve got a customer for life in me, both for personal and in business.</p>
+
+
+
+<hr class="wp-block-separator"><p>Of course this meant I needed to fill in the third set of drive bays, so it was off to Amazon for another Rosewill kit.</p>
+
+
+
+<p>I decided because of the limited SAS lanes available over a single cable, putting 2.5″ bays in this case for SSDs probably didn’t make sense.  Because of that, I also picked up an SFF-8088 to SFF-8087 cable.  With how I was required to mount the SAS expander in the case, my original plan of just a straight SFF-8088 cable wasn’t going to work.</p>
+
+
+
+<p>A few days later, everything arrived and was mounted.</p>
+
+
+
+<p>Cable gore:<br><br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/M7KalRX-742x1024.jpg" alt="building" class="wp-image-121" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX-742x1024.jpg 742w,https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX-217x300.jpg 217w,https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX-768x1060.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/08/M7KalRX.jpg 889w" sizes="(max-width: 742px) 100vw, 742px"></figure><figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/32MrdMQ.jpg" alt="moar building" class="wp-image-122" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/32MrdMQ.jpg 728w,https://blog.kroy.io/wp-content/uploads/2019/08/32MrdMQ-222x300.jpg 222w" sizes="(max-width: 728px) 100vw, 728px"></figure><p>Not perfect but it works:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/ZwrL7uj.jpg" alt="PSU mount" class="wp-image-123" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/ZwrL7uj.jpg 728w,https://blog.kroy.io/wp-content/uploads/2019/08/ZwrL7uj-218x300.jpg 218w" sizes="(max-width: 728px) 100vw, 728px"></figure><p>I hate that this cable isn’t removable, but it’s what worked for now:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/BlYaYIT.jpg" alt="psu with sas cable" class="wp-image-124" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/BlYaYIT.jpg 728w,https://blog.kroy.io/wp-content/uploads/2019/08/BlYaYIT-222x300.jpg 222w" sizes="(max-width: 728px) 100vw, 728px"></figure><p>Doesn’t really look too bad:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/0nHaIR8.jpg" alt="built" class="wp-image-125" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/0nHaIR8.jpg 728w,https://blog.kroy.io/wp-content/uploads/2019/08/0nHaIR8-223x300.jpg 223w" sizes="(max-width: 728px) 100vw, 728px"></figure><p>At this point, I had gone through 2 Expanders, ordered an extra set of SFF-8087->8088 cables and an additional set of drive bays.  And this project was well into its third week.</p>
+
+
+
+<h1 id="allofthefailures">All of the failures</h1>
+
+
+
+<p>Once everything was installed, I immediately fired it up and started plugging in drives.</p>
+
+
+
+<p><em>NOTHING</em></p>
+
+
+
+<p>Nothing was detected.  The lights on the drive bays came on, but OmniOS never registered drives as being connected.  And of course I had sealed up the case because I blindly assumed everything would work.</p>
+
+
+
+<p>After much plugging and replugging, I determined the SAS expander was bad. So it was back to eBay for a new SAS expander.  This time I went with the IBM ServeRAID.</p>
+
+
+
+<p>A week later, it arrived:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/S7IVOYD-1024x763.jpg" alt="" class="wp-image-126" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD-1024x763.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD-300x223.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD-768x572.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/08/S7IVOYD.jpg 1188w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>And was installed:<br></p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/3vQbqzQ-624x1024.jpg" alt="cable gore" class="wp-image-127" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3vQbqzQ-624x1024.jpg 624w,https://blog.kroy.io/wp-content/uploads/2019/08/3vQbqzQ-183x300.jpg 183w,https://blog.kroy.io/wp-content/uploads/2019/08/3vQbqzQ.jpg 728w" sizes="(max-width: 624px) 100vw, 624px"></figure><p>The design of this card makes it a bit more difficult to shove the third set of bays all the way in, but it fit (potato pic):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/3usxvEg.png" alt="more cable gore
+" class="wp-image-128" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3usxvEg.png 728w,https://blog.kroy.io/wp-content/uploads/2019/08/3usxvEg-233x300.png 233w" sizes="(max-width: 728px) 100vw, 728px"></figure><h1 id="morefailures">More Failures</h1>
+
+
+
+<p>With the new SAS expander, plugging in drives caused them to start showing up in OmniOS.  But as with everything in this project, one step forward resulted in two steps back.</p>
+
+
+
+<p>In two of the Rosewill enclosures, the third drive bay was bad and refused to connect.  Note that one of these came from Newegg, and one of them came from Amazon, which means it’s probably a common problem with the enclosure.  So while I continued to use them, I started the replacement process</p>
+
+
+
+<p>The bigger concern was actually the apparent failure of one of my Seagate IronWolf drives.  These things are built like <em>TANKS</em> and I had never seen problems before on <strong>DOZENS</strong> of them.</p>
+
+
+
+<p>But ZFS was throwing checksum errors and smart tests started getting aborted:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/KhhyHph.png" alt="smart problems" class="wp-image-129" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/KhhyHph.png 688w,https://blog.kroy.io/wp-content/uploads/2019/08/KhhyHph-300x65.png 300w" sizes="(max-width: 688px) 100vw, 688px"></figure><p>The hard and transfer error counters were rising:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/yrNsQL8.png" alt="hard/transfer errors" class="wp-image-130" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/yrNsQL8.png 814w,https://blog.kroy.io/wp-content/uploads/2019/08/yrNsQL8-300x14.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/yrNsQL8-768x35.png 768w" sizes="(max-width: 814px) 100vw, 814px"></figure><p>And the UDMA CRC Error count was going up and up</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/xRPOBQO.png" alt="udma crc" class="wp-image-131" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/xRPOBQO.png 649w,https://blog.kroy.io/wp-content/uploads/2019/08/xRPOBQO-300x23.png 300w" sizes="(max-width: 649px) 100vw, 649px"></figure><p>Some quick googling told me this was probably due to a bad cable, and sure enough, swapping the SATA connection from the dead drive bay to the drive throwing errors caused all the problems to go away.</p>
+
+
+
+<p>I’ve found those breakout cables to be a little fragile.  So I guess I’m not surprised that one of them failed in all my shuffling between replacing the expander and trying to troubleshoot why the third bays in two of the enclosures were bad.</p>
+
+
+
+<p>So back to Amazon for another SAS->SATA breakout cable.</p>
+
+
+
+<h1 id="thecasualtylist">The Casualty List</h1>
+
+
+
+<p>I ordered more breakout cables (and ordered extras just to be safe), and Amazon has replaced the failed Rosewill enclosure.  I’m now almost a month into this project, and while the DAS is stable and I’m using it, I’m still waiting on Newegg for a replacment for the final piece.</p>
+
+
+
+<p>The list of failed parts so far:</p>
+
+
+
+<ul><li>Two HP SAS Expanders.</li><li>Two Rosewill 4×3.5 in 3×5.25 drive bays.</li><li>SFF-8087 -> 4xSATA breakout cable.</li><li>My sanity.</li></ul><h3 id="theresult">The result:</h3>
+
+
+
+<p>Potato pic (no idea why my camera keeps being blurry):</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/LRLNnk7-766x1024.jpg" alt="potato finished product" class="wp-image-132" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7-766x1024.jpg 766w,https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7-224x300.jpg 224w,https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7-768x1027.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/08/LRLNnk7.jpg 844w" sizes="(max-width: 766px) 100vw, 766px"></figure><p>The drives in this array:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/lGf30Mq.png" alt="devices" class="wp-image-133" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/lGf30Mq.png 330w,https://blog.kroy.io/wp-content/uploads/2019/08/lGf30Mq-300x181.png 300w" sizes="(max-width: 330px) 100vw, 330px"></figure><p>and temps:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://blog2.kroy.io/wp-content/uploads/2019/08/ZV6jAgI.png" alt="temps" class="wp-image-134" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/ZV6jAgI.png 597w,https://blog.kroy.io/wp-content/uploads/2019/08/ZV6jAgI-300x102.png 300w" sizes="(max-width: 597px) 100vw, 597px"></figure><p>Obligatory blinkenlights, with an idea of how loud it is:</p>
+
+
+
+<div style="width:100%;height:0px;position:relative;padding-bottom:56.250%;"><figure><iframe src="https://streamable.com/s/ob5uf/cfomck" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></figure></div>
+
+
+
+<h1 id="conclusion">Conclusion</h1>
+
+
+
+<p>After all of this, I have a 12 bay DAS that is:</p>
+
+
+
+<ul><li>basically silent from more than a few feet away</li><li>pulls about 20 watts without any disks</li><li>still has a dead drive bay until Newegg responds to my return request</li></ul><p>Would I do it again?</p>
+
+
+
+<figure><iframe src="https://giphy.com/embed/98C4E2HeR4NBm" width="480" height="480" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe></figure><div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/" data-a2a-title="Building a Disk Tower, for all pain and no profit"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div></div>
+
+
+
+
+<div class="entry-footer">
+
+	<span class="last-updated">Last updated on August 29, 2019</span>
+</div>
+
+
+<section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
+		<img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75"></div>
+
+	<div class="author-box-meta">
+		<h4 class="author-box-title">
+							<a href="https://blog.kroy.io/author/kroy3348/" class="url fn n" rel="author" itemprop="url">
+				Kroy	
+				</a>
+						</h4>
+
+		
+		
+		<div class="author-box-content" itemprop="description">
+			sometimes hacker of things and other things...		</div>
+
+		
+<div class="more-posts-button">
+	<a href="https://blog.kroy.io/author/kroy3348/" class="si-btn btn-text-1" role="button"><span>View All Posts</span></a>
+</div>
+	</div>
+
+</section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
+
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2017/12/19/monitoring-home-power-consumption-for-less-than-25/" rel="prev"><div class="nav-content"><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2017/12/bgpower-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="power" itemprop="image"><span>Monitoring Home Power Consumption for less than $25</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2018/05/17/routeros-and-switching/" rel="next"><div class="nav-content"><span>RouterOS and Switching, finally managed</span> <img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/05/screenshot-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="RouterOS and Switching, finally managed" itemprop="image"></div></a></div>
+</section></article><section id="comments" class="comments-area"><div class="comments-title-wrapper center-text">
+		<h3 class="comments-title">
+			Comments		</h3>
+
+					<p class="no-comments">No comments yet. Why don’t you start the discussion?</p>
+			</div>
+
+	<ol class="comment-list"></ol><div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://blog.kroy.io/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-textarea"><textarea name="comment" id="comment" cols="44" rows="8" class="textarea-comment" placeholder="Write a comment…" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required="required"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required="required"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200"></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><span class="sinatra-submit-form-button"><input name="submit" type="submit" id="comment-submit" class="si-btn primary-button" value="Post Comment"></span> <input type="hidden" name="comment_post_ID" value="27" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p></form>	</div>
+	
+</section></main></div>
+
+	
+<aside id="secondary" class="widget-area si-sidebar-container" itemtype="http://schema.org/WPSideBar" itemscope="itemscope" role="complementary"><div class="si-sidebar-inner">
+		
+				<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">		<h4 class="widget-title">Recent Posts</h4>		<ul><li>
+					<a href="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/">VyOS from Scratch – Edition 1</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/">A Baby WYSE, the 3040</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">The WYSE 5070, a perfect little VyOS device</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/">Battle of the Bare Metal Routers</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/10/28/migrating-a-efi-linux-install-to-a-new-server/">Migrating an EFI Linux Install to a new Server</a>
+									</li>
+					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>		<ul><li><a href="https://blog.kroy.io/2020/05/">May 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/01/">January 2020</a></li>
+	<li><a href="https://blog.kroy.io/2019/12/">December 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/11/">November 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/10/">October 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/09/">September 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/08/">August 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/01/">January 2019</a></li>
+	<li><a href="https://blog.kroy.io/2018/11/">November 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/07/">July 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/05/">May 2018</a></li>
+	<li><a href="https://blog.kroy.io/2017/12/">December 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/08/">August 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/07/">July 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/06/">June 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/05/">May 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/04/">April 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/03/">March 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/02/">February 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/01/">January 2017</a></li>
+		</ul></div><div id="categories-2" class="si-sidebar-widget si-widget si-entry widget widget_categories"><h4 class="widget-title">Categories</h4>		<ul><li class="cat-item cat-item-12"><a href="https://blog.kroy.io/category/ceph/">ceph</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.kroy.io/category/debian/">Debian</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.kroy.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.kroy.io/category/virtualization/esxi/">ESXi</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.kroy.io/category/freenas/">freenas</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="https://blog.kroy.io/category/hardware/">Hardware</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://blog.kroy.io/category/hardware-hacks/">Hardware Hacks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.kroy.io/category/homelab/">HomeLab</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.kroy.io/category/mediaserver/">mediaserver</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.kroy.io/category/mikrotik/">mikrotik</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.kroy.io/category/networking/">Networking</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://blog.kroy.io/category/nucnucnuc/">nucnucnuc</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.kroy.io/category/pfsense/">pfsense</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.kroy.io/category/proxmox/">proxmox</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://blog.kroy.io/category/virtualization/proxmox-virtualization/">Proxmox</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.kroy.io/category/routing/" title="Stuff about routing">Routing</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.kroy.io/category/rtlsdr/">RTLSDR</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://blog.kroy.io/category/storage/">Storage</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.kroy.io/category/sysadmin/">SysAdmin</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.kroy.io/category/virtualization/">Virtualization</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://blog.kroy.io/category/vyos/">VyOS</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.kroy.io/category/zfs/">ZFS</a>
+</li>
+		</ul></div><div id="meta-2" class="si-sidebar-widget si-widget si-entry widget widget_meta"><h4 class="widget-title">Meta</h4>			<ul><li><a href="https://blog.kroy.io/wp-login.php">Log in</a></li>
+			<li><a href="https://blog.kroy.io/feed/">Entries feed</a></li>
+			<li><a href="https://blog.kroy.io/comments/feed/">Comments feed</a></li>
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>			</ul></div><div id="custom_html-2" class="widget_text si-sidebar-widget si-widget si-entry widget widget_custom_html"><div class="textwidget custom-html-widget"><div id="amzn-assoc-ad-96eac8be-1743-4b44-98e2-f274484e1cac"></div><script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=96eac8be-1743-4b44-98e2-f274484e1cac"></script></div></div>
+			</div>
+
+</aside></div>
+
+		
+	</div>
+	
+	
+			<footer id="colophon" class="site-footer" role="contentinfo" itemtype="http://schema.org/WPFooter" itemscope="itemscope"><div id="sinatra-copyright" class="contained-separator">
+	<div class="si-container">
+		<div class="si-flex-row">
+
+			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2020 — blog.kroy.io. All rights reserved. <a href="https://sinatrawp.com/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
+			<div class="col-xs-12 center-xs col-md flex-basis-auto end-md"></div>
+
+		</div>
+	</div>
+</div>
+
+		</footer></div>
+
+<a href="#" id="si-scroll-top" class="si-smooth-scroll" title="Scroll to Top">
+	<span class="si-scroll-icon" aria-hidden="true">
+		<i class="si-icon si-chevron-up top-icon"></i>
+		<i class="si-icon si-chevron-up"></i>
+	</span>
+	<span class="screen-reader-text">Scroll to Top</span>
+</a>
+<div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style" style="right:0px;top:100px;background-color:transparent;"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_reddit" href="https://www.addtoany.com/add_to/reddit?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Reddit" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_hacker_news" href="https://www.addtoany.com/add_to/hacker_news?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Hacker News" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F02%2Fbuilding-a-disk-tower-for-pain-and-no-profit%2F&linkname=Building%20a%20Disk%20Tower%2C%20for%20all%20pain%20and%20no%20profit" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js"></script><script>
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"273c5609c8","responsive-breakpoint":"960","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js"></script><script>
+	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202028.js" async="async" defer></script><script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:8.7',blog:'166765678',post:'27',tz:'-5',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'clickTrackerInit', '166765678', '27' ]);
+</script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
+		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>
+</div>
+</body></html>
