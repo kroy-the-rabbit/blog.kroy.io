@@ -117,8 +117,7 @@
 .woocommerce .woocommerce-checkout-review-order table.shop_table tfoot tr:last-child td:last-child {border-radius: 0 0 3px 0;}
 .woocommerce td.product-name img {display: block;width: 64px;margin-right: 1rem;border-radius: 3px;}
 .woocommerce td.product-name a {display: inline-block;vertical-align: middle;}
-.woocommerce a.remove {height: 1.5em;width: 1.5em;line-height: 1.48em;}
-.woocommerce a.remove i {position: relative;top: -1px;}
+.woocommerce a.remove {height: 1.5em;width: 1.5em;line-height: 1.48em;-js-display: flex;display: -ms-flexbox;display: flex;-ms-flex-align: center;align-items: center;-ms-flex-pack: center;justify-content: center;}
 .woocommerce .product-remove {width: 30px;}
 .woocommerce .product-remove i {font-size: 16px;}
 .woocommerce .quantity {display: inline-block;position: relative;padding-right: 28px;}
