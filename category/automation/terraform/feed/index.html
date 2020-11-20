@@ -15,7 +15,7 @@
 	<atom:link href="https://blog.kroy.io/category/automation/terraform/feed/" rel="self" type="application/rss+xml" />
 	<link>https://blog.kroy.io/</link>
 	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
-	<lastBuildDate>Tue, 03 Nov 2020 15:00:02 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 04 Nov 2020 02:44:37 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -442,7 +442,7 @@ resource "libvirt_volume" "os_image" {
   name = "${var.hostname}-os_image"
   pool   = "VM"
   base_volume_id = libvirt_volume.os_tmpl.id
-  size = var.disksize * 1024 * 1024 * 1024
+  size = var.disksizeGB * 1024 * 1024 * 1024
 }
 
 # Use CloudInit ISO to add ssh-key to the instance

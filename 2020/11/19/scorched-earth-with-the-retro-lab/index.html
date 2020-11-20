@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="UTF-8"><title>Scorched Earth with the Retro Lab – blog.kroy.io</title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="dns-prefetch" href="//s.w.org"><script type="text/javascript" data-cfasync="false">
+    (window.gaDevIds=window.gaDevIds||[]).push("dNDMyYj");
+	var em_version         = '6.3.0';
+	var em_track_user      = true;
+	var em_no_track_reason = '';
+	
+	var disableStr = 'ga-disable-UA-89722449-1';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+
+	if ( 'undefined' === typeof gaOptout ) {
+		function gaOptout() {
+			__gaTrackerOptout();
+		}
+	}
+	
+	if ( em_track_user ) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
+		__gaTracker('set', 'forceSSL', true);
+		__gaTracker('send','pageview');
+		__gaTracker( function() { window.ga = __gaTracker; } );
+	} else {
+		console.log( "" );
+		(function() {
+			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+			var noopfn = function() {
+				return null;
+			};
+			var noopnullfn = function() {
+				return null;
+			};
+			var Tracker = function() {
+				return null;
+			};
+			var p = Tracker.prototype;
+			p.get = noopfn;
+			p.set = noopfn;
+			p.send = noopfn;
+			var __gaTracker = function() {
+				var len = arguments.length;
+				if ( len === 0 ) {
+					return;
+				}
+				var f = arguments[len-1];
+				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + em_no_track_reason );
+					return;
+				}
+				try {
+					f.hitCallback();
+				} catch (ex) {
+
+				}
+			};
+			__gaTracker.create = function() {
+				return new Tracker();
+			};
+			__gaTracker.getByName = noopnullfn;
+			__gaTracker.getAll = function() {
+				return [];
+			};
+			__gaTracker.remove = noopfn;
+			window['__gaTracker'] = __gaTracker;
+			window.ga = __gaTracker;		})();
+		}
+</script><style type="text/css" media="all">
+.wpautoterms-footer{background-color:#ffffff;text-align:center;}
+.wpautoterms-footer a{color:#000000;font-family:Arial, sans-serif;font-size:14px;}
+.wpautoterms-footer .separator{color:#cccccc;font-family:Arial, sans-serif;font-size:14px;}</style><link rel="stylesheet" id="wp-block-library-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/style.min.css" media="all"><style id="wp-block-library-inline-css">
+.has-text-align-justify{text-align:justify;}
+</style><link rel="stylesheet" id="wp-block-library-theme-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/theme.min.css" media="all"><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="SFSImainCss-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/sfsi-style.css" media="all"><link rel="stylesheet" id="disable_sfsi-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/disable_sfsi.css" media="all"><link rel="stylesheet" id="exactmetrics-popular-posts-style-css" href="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/css/frontend.min.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.js" id="jquery-core-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill.min.js" id="wp-polyfill-js"></script><script id="wp-polyfill-js-after">
+( 'fetch' in window ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0">' + 'ipt>' );( document.contains ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0">' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0">' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4">' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12">' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2">' + 'ipt>' );
+</script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script><style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-954 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+
+
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+	<header id="masthead" class="site-header" role="banner" itemtype="https://schema.org/WPHeader" itemscope="itemscope"><div id="sinatra-header">
+		<div id="sinatra-header-inner">
+	
+<div class="si-container si-header-container">
+
+	
+<div class="sinatra-logo si-header-element" itemtype="https://schema.org/Organization" itemscope="itemscope">
+	<div class="logo-inner"><span class="site-title" itemprop="name">
+						<a href="https://blog.kroy.io/" rel="home" itemprop="url">
+							blog.kroy.io
+						</a>
+					</span><p class="site-description" itemprop="description">
+						computers, tech, and whatever other random stuff crosses my mind.
+					</p></div></div>
+
+<nav class="site-navigation main-navigation sinatra-primary-nav sinatra-nav si-header-element" role="navigation" itemtype="https://schema.org/SiteNavigationElement" itemscope="itemscope" aria-label="Site Navigation"><ul class="sinatra-primary-nav"><li><a href="https://blog.kroy.io/"><span>Home</span></a></li></ul></nav><div class="si-header-widgets si-header-element sinatra-widget-location-right"><div class="si-header-widget__search si-header-widget sinatra-hide-mobile-tablet"><div class="si-widget-wrapper">
+<div aria-haspopup="true">
+	<a href="#" class="si-search">
+		<i class="si-icon si-search"></i>
+	</a>
+
+	<div class="si-search-simple si-search-container dropdown-item">
+		<form role="search" aria-label="Site Search" method="get" class="si-search-form" action="https://blog.kroy.io/">
+
+			<label class="si-form-label">
+				<span class="screen-reader-text">Search for:</span>
+				<input type="search" class="si-input-search" placeholder="Search" value="" name="s" autocomplete="off"></label>
+
+			
+			<button type="submit" class="sinatra-animate-arrow right-arrow" aria-hidden="true" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="18px" viewbox="0 0 30 18" enable-background="new 0 0 30 18" xml:space="preserve"><path class="arrow-handle" d="M2.511,9.007l7.185-7.221c0.407-0.409,0.407-1.071,0-1.48s-1.068-0.409-1.476,0L0.306,8.259 c-0.408,0.41-0.408,1.072,0,1.481l7.914,7.952c0.407,0.408,1.068,0.408,1.476,0s0.407-1.07,0-1.479L2.511,9.007z"></path><path class="arrow-bar" fill-rule="evenodd" clip-rule="evenodd" d="M1,8h28.001c0.551,0,1,0.448,1,1c0,0.553-0.449,1-1,1H1c-0.553,0-1-0.447-1-1
+					                            C0,8.448,0.447,8,1,8z"></path></svg></button>
+		</form>
+	</div>
+</div>
+</div></div></div>
+	<span class="si-header-element si-mobile-nav">
+				<button class="si-hamburger hamburger--spin si-hamburger-sinatra-primary-nav" aria-label="Menu" aria-controls="sinatra-primary-nav" type="button">
+
+			
+			<span class="hamburger-box">
+				<span class="hamburger-inner"></span>
+			</span>
+
+		</button>
+			</span>
+
+</div>
+	</div>
+	</div>
+		
+<div class="page-header si-has-breadcrumbs">
+
+	
+	
+	<div class="si-container si-breadcrumbs"><nav role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs" itemprop="breadcrumb"><ul class="trail-items" itemscope itemtype="http://schema.org/BreadcrumbList"><meta name="numberOfItems" content="5"><meta name="itemListOrder" content="Ascending"><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-begin"><a href="https://blog.kroy.io/" rel="home" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2020/" itemprop="item"><span itemprop="name">2020</span></a><meta itemprop="position" content="2"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2020/11/" itemprop="item"><span itemprop="name">November</span></a><meta itemprop="position" content="3"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2020/11/19/" itemprop="item"><span itemprop="name">19</span></a><meta itemprop="position" content="4"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-end"><span><span itemprop="name">Scorched Earth with the Retro Lab</span></span><meta itemprop="position" content="5"></li></ul></nav></div>
+</div>
+	</header><div id="main" class="site-main">
+
+		
+<div class="si-container">
+
+	<div id="primary" class="content-area">
+
+		
+		<main id="content" class="site-content" role="main" itemscope itemtype="http://schema.org/Blog"><article id="post-954" class="sinatra-article post-954 post type-post status-publish format-standard has-post-thumbnail hentry category-retrolab tag-dos tag-mac tag-vintage" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="post-category">
+
+	<span class="cat-links"><span class="screen-reader-text">Posted in</span><span><a href="https://blog.kroy.io/category/retrolab/" rel="category tag">Retrolab</a></span></span>
+</div>
+
+<header class="entry-header"><h1 class="entry-title" itemprop="headline">
+		Scorched Earth with the Retro Lab	</h1>
+
+</header><div class="entry-meta"><div class="entry-meta-elements">		<span class="post-author">
+			<span class="posted-by vcard author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+				<span class="screen-reader-text">Posted by</span>
+
+				
+				<span>
+										By 					<a class="url fn n" title="View all posts by Kroy" href="https://blog.kroy.io/author/kroy3348/" rel="author" itemprop="url">
+						<span class="author-name" itemprop="name">Kroy</span>
+					</a>
+				</span>
+			</span>
+		</span>
+		<span class="posted-on">November 19, 2020</span></div></div><div class="post-thumb entry-media thumbnail"><img width="1024" height="768" alt="Scorched Earth with the Retro Lab" loading="lazy" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1024x768.jpg" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1024x768.jpg" class="attachment-large size-large wp-post-image" alt="Scorched Earth with the Retro Lab" loading="lazy"></noscript></div>
+<div class="entry-content si-entry" itemprop="text">
+	
+<p>Recently, I got into retro labbing.  Like everything else, I’ve probably gone a bit overboard…</p>
+
+
+
+<hr class="wp-block-separator"><div class="lwptoc lwptoc-autoWidth lwptoc-baseItems lwptoc-light lwptoc-notInherit" data-smooth-scroll="1" data-smooth-scroll-offset="24"><div class="lwptoc_i">    <div class="lwptoc_header">
+        <b class="lwptoc_title">Contents</b>                    <span class="lwptoc_toggle">
+                <a href="#" class="lwptoc_toggle_label" data-label="show">hide</a>
+            </span>
+            </div>
+<div class="lwptoc_items lwptoc_items-visible">
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Introduction">
+                    <span class="lwptoc_item_number">1</span>
+                <span class="lwptoc_item_label">Introduction</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#The_Beginning">
+                    <span class="lwptoc_item_number">2</span>
+                <span class="lwptoc_item_label">The Beginning</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#Mac_Land">
+                    <span class="lwptoc_item_number">3</span>
+                <span class="lwptoc_item_label">Mac Land</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#512K_Blues">
+                    <span class="lwptoc_item_number">3.1</span>
+                <span class="lwptoc_item_label">512K Blues</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Success">
+                    <span class="lwptoc_item_number">3.1.1</span>
+                <span class="lwptoc_item_label">Success!!!</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#Mac_SE">
+                    <span class="lwptoc_item_number">3.2</span>
+                <span class="lwptoc_item_label">Mac SE</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#The_PC_Conversion">
+                    <span class="lwptoc_item_number">4</span>
+                <span class="lwptoc_item_label">The PC Conversion</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#The_Micron">
+                    <span class="lwptoc_item_number">4.1</span>
+                <span class="lwptoc_item_label">The Micron</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#The_Holy_Grail">
+                    <span class="lwptoc_item_number">4.2</span>
+                <span class="lwptoc_item_label">The Holy Grail</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#The_Gotek">
+                    <span class="lwptoc_item_number">4.3</span>
+                <span class="lwptoc_item_label">The Gotek</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#The_486">
+                    <span class="lwptoc_item_number">5</span>
+                <span class="lwptoc_item_label">The 486</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Windows_95">
+                    <span class="lwptoc_item_number">5.1</span>
+                <span class="lwptoc_item_label">Windows 95</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#The_Sound_Conundrum">
+                    <span class="lwptoc_item_number">5.2</span>
+                <span class="lwptoc_item_label">The Sound Conundrum</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#Conclusion">
+                    <span class="lwptoc_item_number">6</span>
+                <span class="lwptoc_item_label">Conclusion</span>
+    </a>
+    </div></div></div>
+</div></div><hr class="wp-block-separator"><h2><span id="Introduction">Introduction</span></h2>
+
+
+
+<p>It’s safe to say that I’ve gotten extremely nostalgic for some of the computers of my youth.  Old macs, 486s, and all the games from that time period constantly itched at the back of my head.  </p>
+
+
+
+<p>Sure, you can emulate this stuff, but it’s just not the same.  Especially on a modern 4K screen, you end up looking at a game/emulator/etc that is like 3 inches tall.  And if you try to upscale it, it just doesn’t look right.  </p>
+
+
+
+<p>There’s also something to be said about a computer where you can’t just flip away to a web browser, Discord, or other distractions.  </p>
+
+
+
+<hr class="wp-block-separator"><h2><span id="The_Beginning">The Beginning</span></h2>
+
+
+
+<p>Like so many other things, this all started on YouTube.  I found myself watching a ton of retro YouTubers like <a rel="noreferrer noopener" href="https://www.youtube.com/channel/UCLx053rWZxCiYWsBETgdKrQ" target="_blank">LGR</a> and <a rel="noreferrer noopener" href="https://www.youtube.com/channel/UC8uT9cgJorJPWu7ITLGo9Ww" target="_blank">the 8-Bit Guy</a>. It didn’t take too long for the nostalgia to kick in hard, and I rearranged my office, and made a trip to the local Goodwill.  </p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-955 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1024x768.jpg" alt="" class="wp-image-955" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0413-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>the first goodwill haul</figcaption></figure><p>Unfortunately, I’m probably a few years too late for the kind of gear I’m looking for.  All I was able to find was a PS/2 keyboard and mouse, a 4×3 LCD, and a fancy old power “strip” to fit the retro theme.</p>
+
+
+
+<p>That’s when I remembered “the pile”.  A stack of old computer stuff (mainly Macs), at my parent’s house.  </p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="the mac pile" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-957 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-768x1024.jpg" alt="the mac pile" class="wp-image-957" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0411-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>the mac pile</figcaption></figure><p>So over the course of a few weeks, I brought home almost a dozen different machines.  Unfortunately, these Macs have had a long hard life, and I was lucky to put together a few working machines from the parts of all.  Some had dead PSUs, others had corroded logic boards from batteries/caps.  Some the CD/Floppy drives were dead in various manners.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-959 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-1024x768.jpg" alt="" class="wp-image-959" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0431-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>some performa 6400s</figcaption></figure><p>The holy grail of the haul was a 17″ Trinitron Monitor.  It even has the old style BNC connections that I’ll never use:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-958 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-1024x768.jpg" alt="" class="wp-image-958" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0454-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>back of Trinitron</figcaption></figure><p>In the end, the haul from the parents house resulted in:</p>
+
+
+
+<ul><li>The 17″ Sony Trinitron Monitor</li><li>512K Mac</li><li>One working Performa 6400/180</li><li>One working Power Macintosh 6400/75</li><li>A Mac SE (the pictured Mac Classic was ruined due to leaky caps)</li><li>An array of parts like serial mice (important for the 486 later), IDE DVD Drive, random PCI cards like a Realtek 8139</li></ul><figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-960 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-1024x768.jpg" alt="" class="wp-image-960" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0414-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>the initial haul</figcaption></figure><h2><span id="Mac_Land">Mac Land</span></h2>
+
+
+
+<p>Of course, dealing with old hard drives and floppy drives is a horrible experience, so there were a number of things to make it easier (where I could).  The Macs that have SCSI are a bit more of a pain.</p>
+
+
+
+<ul><li><a rel="noreferrer noopener" href="https://amzn.to/36TDC3E" target="_blank">SD Card to IDE adapter</a>.  In the 6400/180.</li><li><a rel="noreferrer noopener" href="https://amzn.to/38WQhpj" target="_blank">Gotek USB Floppy Emulator</a>.  Can’t be used on the Macs, but for later use.</li><li><a rel="noreferrer noopener" href="https://amzn.to/36UbKMS" target="_blank">IDE to SATA adapter</a> and a $10 cheapo <a rel="noreferrer noopener" href="https://amzn.to/2KpraBp" target="_blank">SSD</a>.  I bought this just in case the SD card didn’t perform as well as I would have liked.</li><li>A <a rel="noreferrer noopener" href="https://amzn.to/331Qtjj" target="_blank">fancy VGA+Sound switcher</a>.  Not quite as good as an actual KVM switch, but it works great.</li><li>A wide array of cables, adapters, and more.</li></ul><p>After getting the 6400 75 and 180 going, I immediately played a few games I loved:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-961 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-768x1024.jpg" alt="" class="wp-image-961" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0459-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>simcity 2000</figcaption></figure><h3><span id="512K_Blues">512K Blues</span></h3>
+
+
+
+<p>Of course, the REALLY old Macs were the ones I wanted.  The 512K in particular was one of my very first computers, and there were a number of games I was itching to play again on that natively.  As mentioned, the Classic II I had was dead from leaky capacitors, so I was on a quest to make the 512K boot.</p>
+
+
+
+<p>Unfortunately there was a problem.  The initial rendition of the 512K only supported 400K disks, and you can’t just turn a double sided high density density into a standard density disk that the 512K can read.   So it was off to BMOW and grabbed one of their <a href="https://www.bigmessowires.com/floppy-emu/">Floppy Emulators</a> for Mac.</p>
+
+
+
+<p>As usual, Murphy’s Law kicked in, and I realized the 512K Mac wasn’t able to boot from “HD20” hard drive images that the Floppy Emulator can support.  But I was in luck, and my Grandpa saved the day. </p>
+
+
+
+<p>You see, years ago after he passed, I adopted a box of his random stuff.  And in this box, there were a number of old standard density disks.  So with my Floppy Emulator and one of those random disks, I was able to make an “HD20” boot disk.  This basically just allowed the 512K to boot from a floppy and bootstrap into a disk image from the Floppy Emulator.</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" alt="" width="775" height="581" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-1024x768.jpg" data-sizes="(max-width: 775px) 100vw, 775px" class="wp-image-962 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-1024x768.jpg" alt="" class="wp-image-962" width="775" height="581" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0528-2048x1536.jpg 2048w" sizes="(max-width: 775px) 100vw, 775px"></noscript><figcaption>grandpa to the rescue</figcaption></figure><h4><span id="Success">Success!!!</span></h4>
+
+
+
+<p>One of the very first games I ever remembered playing was Transylvania on a 512K Mac.  And with the help of Grandpa’s disk, a hard drive shared out from the Floppy Emu, I was playing Transylvania on a Mac again!</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-963 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-768x1024.jpg" alt="" class="wp-image-963" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0471-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>transylvania</figcaption></figure><p>Again, Murphy’s Law kicked in, as this solution was unsustainable.  All the standard density disks that were in Grandpa’s box were ancient.  I was lucky to get one boot per 5 attempts.  So after a bit of research, I discovered I could replace the ROM chips in the 512K, and it would boot from the HD20 virtual disk image without the boot floppy.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-964 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-1024x768.jpg" alt="" class="wp-image-964" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0506-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>replacing the rom chips</figcaption></figure><h3><span id="Mac_SE">Mac SE</span></h3>
+
+
+
+<p>Of course, about 18 hours after ordering the replacement ROM chips, I discovered a Mac SE.  Marginally better specs, doesn’t need any hacking to boot from hard disk images on the Floppy Emu.  The only thing it need was replacing the soldered barrel battery with a button battery:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-966 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-768x1024.jpg" alt="" class="wp-image-966" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0492-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>soldering coin battery holder</figcaption></figure><p>Using Mini vMac and hooking up the SD card from the floppy emu can help with some initial setup (ignore the SE30 name, didn’t look at the box when I named the disk)</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="667" height="561" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/unknown.png 667w, https://blog.kroy.io/wp-content/uploads/2020/11/unknown-300x252.png 300w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/unknown.png" data-sizes="(max-width: 667px) 100vw, 667px" class="wp-image-993 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="667" height="561" src="https://blog.kroy.io/wp-content/uploads/2020/11/unknown.png" alt="" class="wp-image-993" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/unknown.png 667w,https://blog.kroy.io/wp-content/uploads/2020/11/unknown-300x252.png 300w" sizes="(max-width: 667px) 100vw, 667px"></noscript><figcaption>mini vmac</figcaption></figure><p>Look ma, no disks!</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-967 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-768x1024.jpg" alt="" class="wp-image-967" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0526-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>Mac SE with Floppy Emu</figcaption></figure><h2></h2>
+
+
+
+<p>Being the banker almost feels like cheating… but I made it, and only one person died!</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/image0-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/image0-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/image0-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/image0-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/image0-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/image0-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-992 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/image0-768x1024.jpg" alt="" class="wp-image-992" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/image0-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/image0-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/image0-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/image0-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/image0-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>the Oregon Trail</figcaption></figure><p>Unfortunately, the itch was only slightly scratched…</p>
+
+
+
+<hr class="wp-block-separator"><h2><span id="The_PC_Conversion">The PC Conversion</span></h2>
+
+
+
+<p>By far, my most nostalgic gaming years were the 80s/90s/00s.  In particular, Classic Sierra and Lucasarts Adventure games are something I adore, and I still didn’t have a solution for that.  So it was off to eBay for something that I could run old DOS games one.</p>
+
+
+
+<h3><span id="The_Micron">The Micron</span></h3>
+
+
+
+<p>The end result was an old Micron tower, with a SE440BX2, PIII 500 MHz, 256MB of RAM, nice video card, and onboard Yamaha audio. The Micron didn’t come with a drive, so I dropped in my IDE->SSD adapter. MAN is that FAST.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="647" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-1024x647.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-300x190.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-768x485.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-1536x970.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-2048x1294.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-1024x647.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-968 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="647" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-1024x647.jpg" alt="" class="wp-image-968" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-1024x647.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-300x190.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-768x485.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-1536x970.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0473-2048x1294.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>lab midstate with Micron pictured</figcaption></figure><p>I initially had Windows 98 installed (now it’s XP), and was able to play some old classics, like Leisure Suit Larry 1 VGA Edition.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-970 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-1024x768.jpg" alt="" class="wp-image-970" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0457-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>can we get some of those lubbers?</figcaption></figure><p>In this image you can see the ugliness of the stock Gotek Floppy Emulator.  More on upgrading this later:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-972 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-768x1024.jpg" alt="" class="wp-image-972" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0432-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>floppy emulator</figcaption></figure><p>Discord on Windows XP?  Absolutely!!</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-996 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-1024x768.jpg" alt="" class="wp-image-996" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0523.heic-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>This is also where I learned the hard lesson of speed-sensitive games, and the mess that old sound cards are.  A lot of the games I wanted to play just didn’t work, or sounded terrible. So after a bunch more research, it was back to eBay.</p>
+
+
+
+<hr class="wp-block-separator"><h3><span id="The_Holy_Grail">The Holy Grail</span></h3>
+
+
+
+<p>After a few days of search, I was able to find what, for me, was the holy grail:</p>
+
+
+
+<ul><li>A motherboard with a button cell battery.   No leaky barrel batteries allowed!</li><li>Came with a 486dx2.  Fast enough for everything I wanted to play from that era.  Anything else can be done on the Micron.</li><li>Motherboard was full of cache</li><li>Came with some RAM, though I ditched that and upgraded to a whopping 32MB</li><li>PCI and ISA</li></ul><p>Because the board came with PCI, I was able to reuse an old S3 Virge Graphics card, and Realtek 8139 card I found at my parents.  </p>
+
+
+
+<p>Plus, I found a pre-ATX 1.2 PSU, which supports -5 volts, which some ISA require.  It might not be strictly required and I’ll probably upgrade it with a modern ATX PSU at a later date. I also just used my old Fractal R5 case that was leftover from other projects.</p>
+
+
+
+<p>Not to mention an array of adapters and cables, like a <a rel="noreferrer noopener" href="https://amzn.to/35JTXbP" target="_blank">20 pin ATX to AT </a>cable, <a rel="noreferrer noopener" href="https://amzn.to/3nCBPa7" target="_blank">a CF->IDE adapter</a>,  a <a rel="noreferrer noopener" href="https://amzn.to/2UFFRBY" target="_blank">PC Speaker</a> (gotta have that sweet tingy sound in some games), some power splitters, and and array of other cables and adapters (a 3.5->5.25 bay adapter for example).  </p>
+
+
+
+<p>The motherboard arrived like a month later (it came from Ukraine), and it was everything I wanted in more.  As a super bonus, from the BIOS, the cache can be disabled, which makes sound like in Indy256 work, and I can even play super speed sensitive games.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-974 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-1024x768.jpg" alt="" class="wp-image-974" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0474-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>486</figcaption></figure><p>The assembly was easy, but not very pretty.  All those converters, splitters, and ribbon cables are hell:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-975 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-768x1024.jpg" alt="" class="wp-image-975" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0477-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>cablemess</figcaption></figure><h3><span id="The_Gotek">The Gotek</span></h3>
+
+
+
+<p>This is also when I took the opportunity to flash my Gotek with the <a rel="noreferrer noopener" href="https://github.com/keirf/FlashFloppy" target="_blank">FlashFloppy firmware</a>.  It requires VERY minimal soldering (soldering <a rel="noreferrer noopener" href="https://amzn.to/35IrhQH" target="_blank">header pins</a>, and <a rel="noreferrer noopener" href="https://amzn.to/2UJQjIJ" target="_blank">jumpers</a>), and a <a href="https://amzn.to/331Rubf">USB-A to USB-A</a> cable.  And with a <a rel="noreferrer noopener" href="https://amzn.to/2UHkfFr" target="_blank">cheap OLED screen</a> (soldering a few more header pins and some jumpers), you can have something that’s INFINITELY more usable.</p>
+
+
+
+<p>You just create a fat32 USB stick and drop floppy images on it, or create a floppy as below.  My motherboard BIOS supports 2.88MB disks:</p>
+
+
+
+<pre class="wp-block-code"><code>cp rtl8139.img /media/kroy/GOTEK/Drivers/</code></pre>
+
+
+
+<p>or</p>
+
+
+
+<pre class="wp-block-code"><code>mkfs.msdos -C TRANSFER288.img 2880
+sudo mount /media/kroy/GOTEK/TRANSFER/TRANSFER288.img /mnt/disk
+cp files /mnt/disk</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-1024x1024.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-300x300.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-150x150.jpg 150w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-768x768.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-1536x1536.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-2048x2048.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-1024x1024.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-976 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-1024x1024.jpg" alt="" class="wp-image-976" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-1024x1024.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-300x300.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-150x150.jpg 150w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-768x768.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-1536x1536.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0520-2048x2048.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>gotek</figcaption></figure><hr class="wp-block-separator"><h2><span id="The_486">The 486</span></h2>
+
+
+
+<p>It didn’t take long for me to track down everything I needed to start installing my system. I chose MS-DOS 7.1, because I had an 8GB CF card and wanted to be able to use it all:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-978 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-1024x768.jpg" alt="" class="wp-image-978" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0478.heic-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>dos7.1</figcaption></figure><p>And with QEMMU, I’m able to get 631K of conventional memory with mouse, DVD, and other drivers all loaded, something 90s me could only dream of:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-979 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-768x1024.jpg" alt="" class="wp-image-979" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0480.heic-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript></figure><p>Getting on IRC from a 486dx2 and MS-DOS:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="804" height="1022" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/image-10.png 804w, https://blog.kroy.io/wp-content/uploads/2020/11/image-10-236x300.png 236w, https://blog.kroy.io/wp-content/uploads/2020/11/image-10-768x976.png 768w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/image-10.png" data-sizes="(max-width: 804px) 100vw, 804px" class="wp-image-1001 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="804" height="1022" src="https://blog.kroy.io/wp-content/uploads/2020/11/image-10.png" alt="" class="wp-image-1001" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/image-10.png 804w,https://blog.kroy.io/wp-content/uploads/2020/11/image-10-236x300.png 236w,https://blog.kroy.io/wp-content/uploads/2020/11/image-10-768x976.png 768w" sizes="(max-width: 804px) 100vw, 804px"></noscript></figure><p>and running the disk test.  I love the flatline of the hard drive graph:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-981 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-768x1024.jpg" alt="" class="wp-image-981" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0501.heic-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>flatlined disk</figcaption></figure><h3><span id="Windows_95">Windows 95</span></h3>
+
+
+
+<p>And because of the CF card, it’s easy to swap out and install Windows 95.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-982 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-768x1024.jpg" alt="" class="wp-image-982" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0503-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>win95 setup</figcaption></figure><p>You know it’s been a long time when TCP/IP isn’t installed by default:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-983 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-768x1024.jpg" alt="" class="wp-image-983" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0504-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>wot no TCP/IP??</figcaption></figure><p>Can you imagine a game in 2020 telling you to do this?</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-984 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-768x1024.jpg" alt="" class="wp-image-984" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0499.heic-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript></figure><p>Or reminding you that the CD needs to go in “shiney” side down (does anybody even know what a CD is in 2020??):</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-985 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-1024x768.jpg" alt="" class="wp-image-985" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0524.heic-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>shiney side down</figcaption></figure><p>and revisiting Transylvania, the DOS version, in full CGA bliss:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-986 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-768x1024.jpg" alt="" class="wp-image-986" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0507.heic-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>the princess</figcaption></figure><h3><span id="The_Sound_Conundrum">The Sound Conundrum</span></h3>
+
+
+
+<p>As mentioned, sounds on DOS are… interesting.  It didn’t take me long to realize… I NEEDED MIDI!!</p>
+
+
+
+<p>Back in the last 80s/early 90s, MIDI was the stuff of legends for most people.  Without it, most games just sounded sort of <em>meh</em>.  Soundblasters and compatibles were okay, but not the best.</p>
+
+
+
+<p>When I started this process, I had an old S3 PCI soundcard.  It was just terrible on DOS.  So I ordered an ESS1868, which according to Vogons, wasn’t terrible, especially for the price. </p>
+
+
+
+<p>This was fine.  Until I heard the <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=a324ykKV-7Y" target="_blank">Monkey Island Intro on MIDI</a>…. life changed.  Sure, the CD Audio version is “better”, but there’s a charm to midi version.  So it was back to eBay for an SC-55 and a card that has a proper MPU-401 out.  I landed on some ISA Yamaha thing, I think an Audician 32 clone, that sounds great.  And somehow in the pile at my parent’s house, I found a gameport->5PIN Midi cable.  Who the heck knows why I had that.  At best I probably hooked up an old time electronic keyboard to a soundcard.</p>
+
+
+
+<p>With the MIDI hooked up, all I can say is WOW.  WHY DIDN’T I DO THIS EARLIER!?!? Especially when coupled with an old Technics amp I inherited from gramps (who knew he would be so helpful in this retro build!)</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-987 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-1024x768.jpg" alt="" class="wp-image-987" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0518-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>Roland + Technics</figcaption></figure><p>Of course, it’s not exactly perfect.  There are some major changes in the sound between an MT-32 and an SC-55.  But I’m not exactly ready to give up a kidney for an MT-32 yet, and slightly newer games that can use general midi/SC, sound AMAZING.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-988 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-1024x768.jpg" alt="" class="wp-image-988" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0525.heic-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>WC2 and “Timpani”</figcaption></figure><hr class="wp-block-separator"><h2><span id="Conclusion">Conclusion</span></h2>
+
+
+
+<p>Here is the “final” retrolab for now.  I say final in quotes, because things are always evolving.  I think I want to upgrade the Micron to 768MB of RAM and a faster processor.  </p>
+
+
+
+<ul><li>Mac SE + Floppy Emu</li><li>Power Macintosh 7200/75 with stock everything</li><li>Performa 6400/180, drive replaced with IDE->SD, has ATI PCI Graphics and PCI 10/100 Networking</li><li>Micron PIII 500Mhz, running on IDE->SSD</li><li>486DX2 66, 32MB of RAM,  S3 Virge Graphics, RT8139 networking, Yamaha ISA sound card, IDE->CF card for storage, flashed Gotek for floppy disks.</li></ul><p>I did pick up a serial/PS2 Intellimouse that I’m still not sure if I want to open, since it’s sealed and new-in-box.  </p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-2048x1536.jpg 2048w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-990 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-1024x768.jpg" alt="" class="wp-image-990" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0527.heic-2048x1536.jpg 2048w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>“final” lab</figcaption></figure><p>In all, this has become a new passion for me.  And thanks to some foresight of my parents, I didn’t end up spending too much.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-1536x2048.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-scaled.jpg 1920w" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-991 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-768x1024.jpg" alt="" class="wp-image-991" srcset="https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-1536x2048.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2020/11/IMG_0508.heic-scaled.jpg 1920w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>The End</figcaption></figure><p></p>
+
+
+
+<p></p>
+<div class="sfsi_Sicons" style="width: 100%; display: inline-block; vertical-align: middle; text-align:left"><div style="margin:0px 8px 0px 0px; line-height: 24px"><span>Please follow and like us:</span></div><div class="sfsi_socialwpr"><div class="sf_subscrbe sf_icon" style="text-align:left;vertical-align: middle;float:left;width:auto"><a href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" target="_blank"><img alt="error" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" alt="error"></noscript></a></div><div class="sf_fb sf_icon" style="text-align:left;vertical-align: middle;"><div class="fb-like" data-href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/" data-send="false" data-layout="button"></div></div><div class="sf_fb_share sf_icon" style="text-align:left;vertical-align: middle;"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2020%2F11%2F19%2Fscorched-earth-with-the-retro-lab%2F" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div><div class="sf_twiter sf_icon" style="display: inline-block;vertical-align: middle;width: auto;margin-left: 7px;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=Scorched+Earth+with+the+Retro+Lab+https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></a>
+					</div><div class="sf_pinit sf_icon" style="text-align:left;vertical-align: middle;float:left;line-height: 33px;width:auto;margin: 0 -2px;"><a href="#" onclick='sfsi_pinterest_modal_images(event,"https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/","Scorched Earth with the Retro Lab")' style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg"></noscript></a></div></div></div></div>
+
+
+
+
+<div class="entry-footer">
+
+	<span class="screen-reader-text">Tags: </span><div class="post-tags"><span class="cat-links"><a href="https://blog.kroy.io/tag/dos/" rel="tag">dos</a><a href="https://blog.kroy.io/tag/mac/" rel="tag">mac</a><a href="https://blog.kroy.io/tag/vintage/" rel="tag">vintage</a></span></div><span class="last-updated">Last updated on November 19, 2020</span>
+</div>
+
+
+<section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
+		<img alt="" data-srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" height="75" width="75" loading="lazy" data-src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" class="avatar avatar-75 photo lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75" loading="lazy"></noscript>	</div>
+
+	<div class="author-box-meta">
+		<h4 class="author-box-title">
+							<a href="https://blog.kroy.io/author/kroy3348/" class="url fn n" rel="author" itemprop="url">
+				Kroy	
+				</a>
+						</h4>
+
+		
+		
+		<div class="author-box-content" itemprop="description">
+			sometimes hacker of things and other things...		</div>
+
+		
+<div class="more-posts-button">
+	<a href="https://blog.kroy.io/author/kroy3348/" class="si-btn btn-text-1" role="button"><span>View All Posts</span></a>
+</div>
+	</div>
+
+</section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
+
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2020/11/03/esxi-to-libvirt-now-with-more-terraform/" rel="prev"><div class="nav-content"><img width="75" height="75" alt="libvirt" loading="lazy" itemprop="image" data-src="https://blog.kroy.io/wp-content/uploads/2020/11/1280px-Libvirt_logo.svg_-150x150.png" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2020/11/1280px-Libvirt_logo.svg_-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="libvirt" loading="lazy" itemprop="image"></noscript> <span>ESXi to Libvirt, now with more Terraform.</span></div></a></div>
+</section></article></main></div>
+
+	
+<aside id="secondary" class="widget-area si-sidebar-container" itemtype="http://schema.org/WPSideBar" itemscope="itemscope" role="complementary"><div class="si-sidebar-inner">
+		
+		
+		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
+		<h4 class="widget-title">Recent Posts</h4>
+		<ul><li>
+					<a href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/" aria-current="page">Scorched Earth with the Retro Lab</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/11/03/esxi-to-libvirt-now-with-more-terraform/">ESXi to Libvirt, now with more Terraform.</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/">VyOS from Scratch – Edition 1</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/">A Baby WYSE, the 3040</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">The WYSE 5070, a perfect little VyOS device</a>
+									</li>
+					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
+			<ul><li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/05/">May 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/01/">January 2020</a></li>
+	<li><a href="https://blog.kroy.io/2019/12/">December 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/11/">November 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/10/">October 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/09/">September 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/08/">August 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/01/">January 2019</a></li>
+	<li><a href="https://blog.kroy.io/2018/11/">November 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/07/">July 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/05/">May 2018</a></li>
+	<li><a href="https://blog.kroy.io/2017/12/">December 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/08/">August 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/07/">July 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/06/">June 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/05/">May 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/04/">April 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/03/">March 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/02/">February 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/01/">January 2017</a></li>
+			</ul></div><div id="categories-2" class="si-sidebar-widget si-widget si-entry widget widget_categories"><h4 class="widget-title">Categories</h4>
+			<ul><li class="cat-item cat-item-39"><a href="https://blog.kroy.io/category/automation/">Automation</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://blog.kroy.io/category/ceph/">ceph</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.kroy.io/category/debian/">Debian</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.kroy.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.kroy.io/category/virtualization/esxi/">ESXi</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.kroy.io/category/freenas/">freenas</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="https://blog.kroy.io/category/hardware/">Hardware</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://blog.kroy.io/category/hardware-hacks/">Hardware Hacks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.kroy.io/category/homelab/">HomeLab</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="https://blog.kroy.io/category/virtualization/kvm/">KVM</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.kroy.io/category/mediaserver/">mediaserver</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.kroy.io/category/mikrotik/">mikrotik</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.kroy.io/category/networking/">Networking</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://blog.kroy.io/category/nucnucnuc/">nucnucnuc</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.kroy.io/category/pfsense/">pfsense</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.kroy.io/category/proxmox/">proxmox</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://blog.kroy.io/category/virtualization/proxmox-virtualization/">Proxmox</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.kroy.io/category/retrolab/">Retrolab</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.kroy.io/category/routing/" title="Stuff about routing">Routing</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.kroy.io/category/rtlsdr/">RTLSDR</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://blog.kroy.io/category/storage/">Storage</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.kroy.io/category/sysadmin/">SysAdmin</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="https://blog.kroy.io/category/automation/terraform/">Terraform</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="https://blog.kroy.io/category/ubuntu/">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.kroy.io/category/virtualization/">Virtualization</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://blog.kroy.io/category/vyos/">VyOS</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.kroy.io/category/zfs/">ZFS</a>
+</li>
+			</ul></div><div id="meta-2" class="si-sidebar-widget si-widget si-entry widget widget_meta"><h4 class="widget-title">Meta</h4>
+		<ul><li><a href="https://blog.kroy.io/wp-login.php">Log in</a></li>
+			<li><a href="https://blog.kroy.io/feed/">Entries feed</a></li>
+			<li><a href="https://blog.kroy.io/comments/feed/">Comments feed</a></li>
+
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>
+		</ul></div><div id="custom_html-2" class="widget_text si-sidebar-widget si-widget si-entry widget widget_custom_html"><div class="textwidget custom-html-widget"><div id="amzn-assoc-ad-96eac8be-1743-4b44-98e2-f274484e1cac"></div><script async src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=96eac8be-1743-4b44-98e2-f274484e1cac"></script></div></div>
+			</div>
+
+</aside></div>
+
+		
+	</div>
+	
+	
+			<footer id="colophon" class="site-footer" role="contentinfo" itemtype="http://schema.org/WPFooter" itemscope="itemscope"><div id="sinatra-copyright" class="contained-separator">
+	<div class="si-container">
+		<div class="si-flex-row">
+
+			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2020 — blog.kroy.io. All rights reserved. <a href="https://wordpress.org/themes/sinatra/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
+			<div class="col-xs-12 center-xs col-md flex-basis-auto end-md"></div>
+
+		</div>
+	</div>
+</div>
+
+		</footer></div>
+
+<a href="#" id="si-scroll-top" class="si-smooth-scroll" title="Scroll to Top">
+	<span class="si-scroll-icon" aria-hidden="true">
+		<i class="si-icon si-chevron-up top-icon"></i>
+		<i class="si-icon si-chevron-up"></i>
+	</span>
+	<span class="screen-reader-text">Scroll to Top</span>
+</a>
+			
+			<div id="fb-root"></div>
+			<script>
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			</script><script>
+window.addEventListener('sfsi_functions_loaded', function() {
+    if (typeof sfsi_responsive_toggle == 'function') {
+        sfsi_responsive_toggle(0);
+        // console.log('sfsi_responsive_toggle');
+
+    }
+})
+</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2020%2F11%2F19%2Fscorched-earth-with-the-retro-lab" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name+https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript>
+						</a>
+					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2020%2F11%2F19%2Fscorched-earth-with-the-retro-lab"><img data-pin-nopin="true" alt="Share" title="Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></noscript></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
+			{
+				if (typeof sfsi_widget_set == "function") {
+					sfsi_widget_set();
+				}
+			}); window.addEventListener('sfsi_functions_loaded',function()
+					  {
+						var topalign = ( jQuery(window).height() - jQuery('#sfsi_floater').height() ) / 2;
+						jQuery('#sfsi_floater').css('top',topalign);
+					  	sfsi_float_widget('center');
+					  });</script><script>
+        window.addEventListener('sfsi_functions_loaded', function() {
+            if (typeof sfsi_plugin_version == 'function') {
+                sfsi_plugin_version(2.60);
+            }
+        });
+
+        function sfsi_processfurther(ref) {
+            var feed_id = 'SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=';
+            var feedtype = 8;
+            var email = jQuery(ref).find('input[name="email"]').val();
+            var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if ((email != "Enter your email") && (filter.test(email))) {
+                if (feedtype == "8") {
+                    var url = "https://api.follow.it/subscription-form/" + feed_id + "/" + feedtype;
+                    window.open(url, "popupwindow", "scrollbars=yes,width=1080,height=760");
+                    return true;
+                }
+            } else {
+                alert("Please enter email address");
+                jQuery(ref).find('input[name="email"]').focus();
+                return false;
+            }
+        }
+    </script><style type="text/css" aria-selected="true">
+        .sfsi_subscribe_Popinner {
+            width: 100% !important;
+
+            height: auto !important;
+
+            padding: 18px 0px !important;
+
+            background-color: #ffffff !important;
+
+        }
+
+        .sfsi_subscribe_Popinner form {
+
+            margin: 0 20px !important;
+
+        }
+
+        .sfsi_subscribe_Popinner h5 {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-weight: bold !important;
+
+            color: #000000 !important;
+
+            font-size: 16px !important;
+
+            text-align: center !important;
+
+            margin: 0 0 10px !important;
+
+            padding: 0 !important;
+
+        }
+
+        .sfsi_subscription_form_field {
+
+            margin: 5px 0 !important;
+
+            width: 100% !important;
+
+            display: inline-flex;
+
+            display: -webkit-inline-flex;
+
+        }
+
+        .sfsi_subscription_form_field input {
+
+            width: 100% !important;
+
+            padding: 10px 0px !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email] {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]::-webkit-input-placeholder {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]:-moz-placeholder {
+            /* Firefox 18- */
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]::-moz-placeholder {
+            /* Firefox 19+ */
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]:-ms-input-placeholder {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=submit] {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-weight: bold !important;
+
+            color: #000000 !important;
+
+            font-size: 16px !important;
+
+            text-align: center !important;
+
+            background-color: #dedede !important;
+
+        }
+
+        .sfsi_shortcode_container {
+            float: left;
+        }
+
+        .sfsi_shortcode_container .norm_row .sfsi_wDiv {
+            position: relative !important;
+        }
+
+        .sfsi_shortcode_container .sfsi_holders {
+            display: none;
+        }
+
+            </style><link rel="stylesheet" id="lwptoc-main-css" href="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/modernizr.custom.min.js" id="SFSIjqueryModernizr-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/jquery.shuffle.min.js" id="SFSIjqueryShuffle-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/random-shuffle-min.js" id="SFSIjqueryrandom-shuffle-js"></script><script id="SFSICustomJs-js-extra">
+var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
+var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"915a5e38ef","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script src="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.js" id="lwptoc-main-js"></script><script>
+	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202047.js" async="async" defer></script><script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.1',blog:'166765678',post:'954',tz:'-6',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'clickTrackerInit', '166765678', '954' ]);
+</script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
+		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>
+</div>
+</body></html>

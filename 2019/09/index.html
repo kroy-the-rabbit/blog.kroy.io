@@ -92,117 +92,18 @@ window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
 ( 'fetch' in window ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0">' + 'ipt>' );( document.contains ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0">' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0">' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4">' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12">' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2">' + 'ipt>' );
 </script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
 var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><meta name="viewport" content="width=device-width, initial-scale=1"><meta property="og:image:secure_url" content="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF.jpg" data-id="sfsi"><meta property="og:image:type" content="image/jpeg" data-id="sfsi"><meta property="og:image:width" content="4032" data-id="sfsi"><meta property="og:image:height" content="3024" data-id="sfsi"><meta property="og:url" content="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" data-id="sfsi"><meta property="og:description" content="
-Although I'm not a huge fan of Ubiquiti stuff, some of the EdgeRouters hold a special place in my heart.  
-
-
-
-The CLI isn't terrible, mostly like the VyOS CLI that I love, and for a very minimal price, you get a tiny PoE powered device that can handle almost 1Gbps routing.  Not to mention now these things can run WireGuard, which is a huge bonus.  
-
-
-
-
-
-
-
-A huge downside for me is that the ERX doesn't ship with an external serial port.  Especially in my complex network, it can be a huge pain to get a device on a specific preconfigured subnet for initial configuration.  Not to mention that if I happened to misconfigure something, I end up losing access and need to factory reset the device.  
-
-
-
-Fortunately, the ERX does ship with exposed UART TTL pins, so adding a serial port should be a simple task.
-
-
-
-
-
-
-
-The Build
-
-
-
-The only part I needed was a USB to TTL adaptor, often used for Arduinos.  Apparently this one has a fake FT232 chipset in it, so it can be troublesome to use in Windows.  Fortunately all I use are Macs and Linux desktops, so that wasn't an issue.
-
-
-
-I had some leftover jumper cables from some Raspberry Pi machinations. Thankfully, Amazon shipped it overnight.
-
-
-
-
-
-
-
-This was never going to be a pretty build, and I needed to figure out a spot on the case where the USB->TTL adapter could fit, but not block the case from closing.  
-
-
-
-So enter the electrical tape:
-
-
-
-
-
-
-
-And a nice hole from a power drill:
-
-
-
-
-
-
-
-Slightly less nice after opening it up a bit to fit the USB connection:
-
-
-
-
-
-
-
-Making it ugly and permanent with some hot glue:
-
-
-
-
-
-
-
-
-
-
-
-Finishing it up
-
-
-
-
-
-
-
-Before sealing up the, I decided to actually test it out.  It took me far too long to figure out that the ERX used a non-standard serial speed of 57600. 
-
-
-
-screen /dev/tty.usbserial-A50285BI 57600
-
-
-
-After that, I was off to the races:
-
-
-
-
-
-
-
-And when it's all closed up, it doesn't even look horrible!
-
-
-
-
-" data-id="sfsi"><meta property="og:title" content="Hacking a serial port into an EdgeRouter X" data-id="sfsi"><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="archive date wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-blog-layout-1 si-page-title-align-left si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script><style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="archive date wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-blog-layout-1 si-page-title-align-left si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
 
 
 <div id="page" class="hfeed site">
@@ -285,7 +186,7 @@ And when it's all closed up, it doesn't even look horrible!
 	<div id="primary" class="content-area">
 
 		
-		<main id="content" class="site-content" role="main" itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage"><article id="post-311" class="sinatra-article post-311 post type-post status-publish format-standard has-post-thumbnail hentry category-hardware-hacks category-networking category-routing" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="si-blog-entry-content"><div class="post-thumb entry-media thumbnail"><a href="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" class="entry-image-link"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-1024x768.jpg" class="attachment-large size-large wp-post-image" alt="erxguts+ttlusb" loading="lazy"></a></div>
+		<main id="content" class="site-content" role="main" itemtype="http://schema.org/WebPageElement" itemprop="mainContentOfPage"><article id="post-311" class="sinatra-article post-311 post type-post status-publish format-standard has-post-thumbnail hentry category-hardware-hacks category-networking category-routing" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="si-blog-entry-content"><div class="post-thumb entry-media thumbnail"><a href="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" class="entry-image-link"><img width="1024" height="768" alt="erxguts+ttlusb" loading="lazy" data-src="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-1024x768.jpg" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/09/jHKgfoF-1024x768.jpg" class="attachment-large size-large wp-post-image" alt="erxguts+ttlusb" loading="lazy"></noscript></a></div>
 <header class="entry-header"><h2 class="entry-title" itemprop="headline">
 		<a href="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" title="Hacking a serial port into an EdgeRouter X" rel="bookmark">Hacking a serial port into an EdgeRouter X</a>	</h2>
 
@@ -309,7 +210,7 @@ And when it's all closed up, it doesn't even look horrible!
 
 <footer class="entry-footer"><a href="https://blog.kroy.io/2019/09/16/hacking-a-serial-port-into-an-edgerouter-x/" class="si-btn btn-text-1"><span>Read More</span></a>
 </footer></div>
-</article><article id="post-300" class="sinatra-article post-300 post type-post status-publish format-standard has-post-thumbnail hentry category-debian category-mikrotik category-networking category-routeros category-routing" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="si-blog-entry-content"><div class="post-thumb entry-media thumbnail"><a href="https://blog.kroy.io/2019/09/13/10-gigabit-inter-vlan-with-a-mikrotik-rb4011/" class="entry-image-link"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/09/IMG_0332-1024x768.jpg" class="attachment-large size-large wp-post-image" alt="10 gigabit inter-VLAN with a Mikrotik RB4011" loading="lazy"></a></div>
+</article><article id="post-300" class="sinatra-article post-300 post type-post status-publish format-standard has-post-thumbnail hentry category-debian category-mikrotik category-networking category-routeros category-routing" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="si-blog-entry-content"><div class="post-thumb entry-media thumbnail"><a href="https://blog.kroy.io/2019/09/13/10-gigabit-inter-vlan-with-a-mikrotik-rb4011/" class="entry-image-link"><img width="1024" height="768" alt="10 gigabit inter-VLAN with a Mikrotik RB4011" loading="lazy" data-src="https://blog.kroy.io/wp-content/uploads/2019/09/IMG_0332-1024x768.jpg" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/09/IMG_0332-1024x768.jpg" class="attachment-large size-large wp-post-image" alt="10 gigabit inter-VLAN with a Mikrotik RB4011" loading="lazy"></noscript></a></div>
 <header class="entry-header"><h2 class="entry-title" itemprop="headline">
 		<a href="https://blog.kroy.io/2019/09/13/10-gigabit-inter-vlan-with-a-mikrotik-rb4011/" title="10 gigabit inter-VLAN with a Mikrotik RB4011" rel="bookmark">10 gigabit inter-VLAN with a Mikrotik RB4011</a>	</h2>
 
@@ -342,6 +243,9 @@ And when it's all closed up, it doesn't even look horrible!
 		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
 		<h4 class="widget-title">Recent Posts</h4>
 		<ul><li>
+					<a href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/">Scorched Earth with the Retro Lab</a>
+									</li>
+											<li>
 					<a href="https://blog.kroy.io/2020/11/03/esxi-to-libvirt-now-with-more-terraform/">ESXi to Libvirt, now with more Terraform.</a>
 									</li>
 											<li>
@@ -352,9 +256,6 @@ And when it's all closed up, it doesn't even look horrible!
 									</li>
 											<li>
 					<a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">The WYSE 5070, a perfect little VyOS device</a>
-									</li>
-											<li>
-					<a href="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/">Battle of the Bare Metal Routers</a>
 									</li>
 					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
 			<ul><li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
@@ -416,6 +317,8 @@ And when it's all closed up, it doesn't even look horrible!
 	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
 </li>
 	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.kroy.io/category/retrolab/">Retrolab</a>
 </li>
 	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
 </li>
@@ -491,10 +394,11 @@ window.addEventListener('sfsi_functions_loaded', function() {
 
     }
 })
-</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2019/09" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2019%2F09" style="display:inline-block;"> <img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
+</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2019/09" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2019%2F09" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
 						<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name+https://blog.kroy.io/2019/09" style="display:inline-block">
-							<img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></a>
-					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2019%2F09"><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript>
+						</a>
+					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2019%2F09"><img data-pin-nopin="true" alt="Share" title="Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></noscript></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
 			{
 				if (typeof sfsi_widget_set == "function") {
 					sfsi_widget_set();
@@ -687,13 +591,13 @@ window.addEventListener('sfsi_functions_loaded', function() {
             </style><script src="https://blog.kroy.io/wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/modernizr.custom.min.js" id="SFSIjqueryModernizr-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/jquery.shuffle.min.js" id="SFSIjqueryShuffle-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/random-shuffle-min.js" id="SFSIjqueryrandom-shuffle-js"></script><script id="SFSICustomJs-js-extra">
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script id="sinatra-js-js-extra">
-var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"00b8b3d7c4","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"915a5e38ef","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
 </script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script>
 	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
-	</script><script type="text/javascript" src="https://stats.wp.com/e-202045.js" async="async" defer></script><script type="text/javascript">
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202047.js" async="async" defer></script><script type="text/javascript">
 	_stq = window._stq || [];
-	_stq.push([ 'view', {v:'ext',j:'1:9.0.2',blog:'166765678',post:'0',tz:'-6',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'view', {v:'ext',j:'1:9.1',blog:'166765678',post:'0',tz:'-6',srv:'blog.kroy.io'} ]);
 	_stq.push([ 'clickTrackerInit', '166765678', '0' ]);
 </script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
 		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>

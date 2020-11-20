@@ -92,539 +92,18 @@ window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
 ( 'fetch' in window ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0">' + 'ipt>' );( document.contains ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0">' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0">' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4">' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12">' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2">' + 'ipt>' );
 </script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
 var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><meta name="viewport" content="width=device-width, initial-scale=1"><meta property="og:image:secure_url" content="https://blog.kroy.io/wp-content/uploads/2018/05/screenshot.png" data-id="sfsi"><meta property="og:image:type" content="" data-id="sfsi"><meta property="og:image:width" content="1602" data-id="sfsi"><meta property="og:image:height" content="856" data-id="sfsi"><meta property="og:url" content="https://blog.kroy.io/2018/05/17/routeros-and-switching/" data-id="sfsi"><meta property="og:description" content="
-I think anybody that's ever used a Mikrotik and RouterOS can probably agree.  That tiny company from Latvia does things a bit... different.
-
-
-
-Since October of 2017, I've been fighting with RouterOS and switching.  Well, not constantly, but it's something that I keep finding reasons to try and hash out.  A few days ago, thanks to a one or two sentence post on Reddit, I finally figured it out.
-
-
-
-
-
-
-
-Back in October 2017, I picked up a CRS317-1G-16S+RM.  This is Mikrotik's 16 port SFP+ switch with a single gigabit port, ostenibly for management.  Around that time, I also started using a CCR (Cloud Core Router) for my main edge device.
-
-
-
-My requirements were fairly simple:
-
-
-
-More than 12 SFP+ ports10GbAbility to use VLANs
-
-
-
-I wasn't worried about any layer 3 capabilities on the switch (at the time), so it didn't bother me at all that while the CRS317 was capable of being a full layer 3 switch, it couldn't do it at anywhere near line-rate.
-
-
-
-
-
-
-
-Cloud Core Router
-
-
-
-The CCR went in without a hitch.  As mentioned, Mikrotik likes to do things a little differently. But there's a certain logic to the config, especially if you've ever done any CLI work on something like a Cisco.
-
-
-
-A recent photo of the CCR (cabling disaster included):
-
-
-
-
-
-
-
-For routing, I'll say I absolutely adore Mikrotik and RouterOS. I have even started replacing some of my VPSs with CHRs, just because it works so well.
-
-
-
-Cloud Router Switch
-
-
-
-Switching on the other hand is a disaster, and for almost a month when I first had the CRS317, I was unable to even use the switch.
-
-
-
-With a CRS (Cloud Router Switch), there are two options.  RouterOS, which gives you full layer 3 capabilites, but potentially sacrifices line-rate speeds if you try and use any routing features, or SwOS, which turns the switch into an almost too-dumb managed switch that only supports LAGs, VLANs, RSTP, and not much else.
-
-
-
-The problem was three-fold:
-
-
-
-The default SwOS firmware (2.3p) on the switch resulted in a SwOS bootloop.The available firmware (2.5) at the time broke DHCP on any VLANs the switch could see.Trying to figure RouterOS switching (especially in the pre-6.41 RouterOS versions) was probably one of the first IT related things in a long time that I would honestly say defeated me.
-
-
-
-Until Mikrotik released SwOS version 2.6, around mid-November, the switch was as good as a brick, at least to me.
-
-
-
-
-
-
-
-Fast forward some months and once again I was looking to get RouterOS running on my CRS317.  The reasons were simple.  My RouterOS knowledge had grown exponentially through my machinations on the CCR, and it constantly bugged me that RouterOS on the CRS had defeated me.  Not to mentioned my interest in networking concepts has evolved and I wanted to use some non-router-y layer 3 features, like DHCP Relay.
-
-
-
-It helped that the current RouterOS versions have attempted to clean up the switching config.  I say attempted because it's still a bit of a mess, but the bridging system is at least a SMALL measure of improvement over the old master-port config.  Unfortunately, like any transition, it doesn't help that the documentation is a bit hard to follow as it's a mix of the old and new ways to handle things.
-
-
-
-Unfortunately, as the CRS317 is my core switch, I was only able to schedule an hour or two of downtime every other week.  This was not enough time for me to be able to figure it out, not to mention formulate the correct questions to be asking after a failed attempt.  I had posted some inqueries on a few subreddits and at the Mikrotik forums without much luck.
-
-
-
-I've got quite a bit of experience with Cisco and Dell networking, and have no problem setting up a Cisco L2/L3 switch in a few minutes via a serial cable, but this stupid Mikrotik switch was killing me.  And a some queries to a few regulars that have mentioned they also have these switches told me I wasn't the only one finding it difficult.
-
-
-
-The standard response was clear. Just stick with SwOS.
-
-
-
-
-
-
-
-Putting it all together
-
-
-
-As the weeks passed, I became more and more frantic.  Once again this stupid switch was defeating me. I knew I was close, but every time I thought I had it, my whole network went down.  It turns out that at least part of my problems was because of some dumb RSTP bug on my Netgear switch.
-
-
-
-Ultimately, I think that last item, the RSTP bug, was the cause of most of my headaches.  I probably had a working config on more than one occasion, but because the bug knocked down my entire network, I really had no way of knowing.
-
-
-
-I also believe this problem was exacerbated by the fact that I think it's easy to create forwarding loops with the VLAN filtering that's present on the Mikrotik switches.
-
-
-
-I have absolutely no idea why I did it with all the problems I was having, but when the opportunity to buy a CRS326-24G-2S+RM for less than $150 arose, I jumped on it.
-
-
-
-With a separate switch, and a handful of hours, I was finally able to get it working.
-
-
-
-
-
-
-
-RouterOS, Switching and VLANs!
-
-
-
-First off, per the following chart, unless you have a CRS3xx, it's probably not worth running RouterOS, at least at this time.  The CRS1xx/2xx disable hardware offload (and therefore line-rate) with just using some otherwise basic features.
-
-
-
-
-
-
-
-I'm also going to assume a basic working knowledge of how to navigate RouterOS. Anybody that's ever done a CLI on a Cisco can probably hammer it out because it's easy to just <tab> your way through things.  And once the switch is all set up and configured, you can access it via the web ports/WinBox if that's your thing.
-
-
-
-Nitty Gritty
-
-
-
-I would highly recommend doing most of this via a serial cable.  It is VERY easy to lock yourself out of these things because of the confusing way they handle VLANs.
-
-
-
-With the serial cable, you can reboot and navigate the menus to choose RouterOS as the default boot OS (push a key in the first few seconds).
-
-
-
-The first step is to ensure you are running the most recent RouterOS version, 6.42.1 at the time of this writing. To check the version:
-
-
-
-/system resource print
-
-
-
-If not the current version, you can download the most recent version from MikroTik and drop it in the /files.  A simple reboot will execute the upgrade.  If you get the switch online, you can also upgrade from the GUI or WinBox.
-
-
-
-Once you have the current RouterOS version installed, it's a good idea to upgrade RouterBOARD too (the boot firmware).  I would also recommend enabling the ipv6 package, which for some silly reason, isn't by default.
-
-
-
-/system package enable ipv6, /system routerboard upgrade and /system reboot
-
-
-
-At this point, you should be on the latest version of everything.
-
-
-
-I would recommend a system configuration reset, simply because especially if you are coming from a pre-6.41 version, the migration from master-port to bridge is a bit ugly, at least in how it names things.
-
-
-
-/system reset-configuration and ignore the dangerous warning.
-
-
-
-Default Config
-
-
-
-After the switch reboots, and you login (user: admin, no password), it will ask you to either accept or undo the default configuration.  I would accept it.
-
-
-
-The default configuration isn't bad as it handles some of the tedium for you, setting up a bridge and dropping all the ports on it.  It also gives the switch a default IP of 192.168.88.1/24 on the bridge (every port), so you could potentially give yourself an IP on that subnet and continue to configure the switch over the network.
-
-
-
-You can view the default config with /export
-
-
-
-
-
-
-
-Start Customizing
-
-
-
-The default IP is usually the first thing I remove.  My network is on 10.0.0.0/8, and as mentioned above, it's way too easy to lock yourself out of the switch with a simple misconfiguration.  So removing it is as simple as:
-
-
-
-/ip address print - Shows a list of IPs and interfaces they are assigned/ip address remove 0 - Remove the number.  In the following example, 10.254.1.248/24 would be removed.  You can use the above print command afterwards to verify its removal.
-
-
-
-
-
-
-
-Next, I set up any LAGs I need.  To do this, you need to remove the ports from the bridge so they can be used in a LAG:
-
-
-
-/interface bridge port print - Show all the ports on the main bridge./interface bridge port remove 0,1 - Assuming I wanted to put ether1 and ether2 in a LAG in the following example:
-
-
-
-
-
-
-
-And then dropping them in a LAG:
-
-
-
-/interface bonding add mode=802.3ad name=BOND-ToOtherSwitch slaves=ether1,ether2 transmit-hash-policy=layer-3-and-4
-
-
-
-Finally, add the new LAG interface back to the bridge:
-
-
-
-/interface bridge port add bridge=bridge interface=BOND-ToOtherSwitch
-
-
-
-Hopefully, when you do a /interface bridge port print to view the config, you see something like this:
-
-
-
-
-
-
-
-The H next to the interface name means it's hardware accelerated and will go line-rate, also designated by HW=Yes in the same output of print.
-
-
-
-
-
-
-
-Something else to do now is to ensure that RSTP is enabled on the bridge.  There might be a bug in RouterOS where the bridge refuses to pass traffic if it's not.  I'm not sure if that's the case but it's something that someone mentioned in a post and I'm going to take them at their word because of all the problems I've had.
-
-
-
-/interface bridge print/interface bridge set 0 protocol-mode=rstp - The 0 matches the ID from the print
-
-
-
-
-
-
-
-Switch Management
-
-
-
-The next step is to get the switch available on the network, or even able to contact the Internet (for easy updating).
-
-
-
-I have separate VLANs for things, but you could easily just put the IP on the bridge too.  I'm going to focus on the former since VLANs are really where these switches are a pain.
-
-
-
-Anybody that's set up a Cisco is well familiar with these steps:
-
-
-
-/interface vlan add comment=Management interface=bridge name=ManagementNet vlan-id=50 - Add a management interface on VLAN50/interface vlan add comment=SwitchNet interface=bridge name=SwitchNet vlan-id=254 - Add an interface that can route.  Even if you aren't doing any routing specifically on the switch, this is how the switch would access the Internet (mostly for updating)./ip dns set servers=10.3.1.253,10.3.1.254 - Add some DNS servers/ip route add distance=1 gateway=10.254.1.1 - Add the default route for the switch.
-
-
-
-As you can probably tell, SwitchNet is interface this switch uses to get out to the Internet.  As before, an /interface vlan print will show verify that the interfaces were created:
-
-
-
-
-
-
-
-Success!
-
-
-
-So yay!  The switch should be working and passing VLANs.  It should also be accessible via any SVIs you set.
-
-
-
-So you'd think that would enough right?  Well only if you don't care about any VLAN filtering.
-
-
-
-I have a fairly simple setup from that perspective and I'm not doing much in the way of VLAN enforcement. Unfortunately, that also includes having a port act as a traditional access port.
-
-
-
-So all the aggravation I've felt over many months is to handle something that would be handled on a Cisco in two lines:
-
-
-
-switchport mode accessswitchport access vlan 5
-
-
-
-VLAN Filtering
-
-
-
-This is really where RouterOS switching gets ugly.  Or at least annoying, especially trying to figure out where things belong with the bridge, bonds, ports and VLAN interfaces.
-
-
-
-In this case, I think it's more useful to take a look at the output of /interface bridge vlan export, which is the raw commands, instead of the output of /interface bridge vlan print, which can include some dynamic stuff, INCLUDING THE VLANS THAT AREN'T WORKING!!!.
-
-
-
-That last sentence is what makes it somewhat confusing.  It can help you troubleshoot to a point if something isn't working, but largely you'll just stare at it and go Well the interface is there, why isn't it working?!
-
-
-
-The first step here is to set the pvid on the ports on the bridge /interface bridge port print:
-
-
-
-
-
-
-
-And setting the pvid with /interface bridge port set 8,9,10,11 pvid=21 and validating with /interface bridge port print from=[/interface bridge port find pvid=21]:
-
-
-
-
-
-
-
-
-
-
-
-VLAN Filtering #2
-
-
-
-Unfortunately, despite setting the pvid, nothing actually happens in this setup without more extensive VLAN filtering.  The switch is just still rather dumbly passing VLANs.
-
-
-
-
-
-
-
-Let's talk a bit about what's going on here:
-
-
-
-Tag VLAN21 on the two LAGs,a few other ports on the switch (they are trunks for virtualization hosts,and the bridge.  That last piece of information about the bridge is important for later.
-
-
-
-/interface bridge vlan add bridge=bridge tagged=BOND-CRS317,BOND-UNIFIPOE,bridge,ether17,ether18,ether19,ether20,ether21,ether22 untagged=ether9,ether10,ether11,ether12 vlan-ids=21
-
-
-
-The default VLAN1 is untagged on the LAGs,the same trunk ports untagged from the first filter-set,and a few ports which will be ACCESS ports on the default VLAN.  This is necessary as I haven't completely my migration off the default VLAN yet for a few things.
-
-
-
-/interface bridge vlan add bridge=bridge untagged=BOND-CRS317,BOND-UNIFIPOE,ether17,ether18,ether19,ether20,ether21,ether22,ether1,ether2,ether3,ether4,ether5,ether6,ether7,ether8 vlan-ids=1
-
-
-
-Tag my other vlans on all the ports.  These aren't untagged anywhere on this switch.
-
-
-
-/interface bridge vlan add bridge=bridge tagged=BOND-CRS317,BOND-UNIFIPOE,ether17,ether18,ether19,ether20,ether21,ether22 vlan-ids=2,3,4,6,7,8,9,20,22,42,77,100,146,253
-
-
-
-Finally, tag two more VLANs to the LAGs to the bridge (important again here).  This is for my Management and default route VLANs.  I COULD combine this with the above, so above it would just be vlan_ids=2,3,4,5,6,7,8,9,20,22,42,77,100,146,253,254. It's broken out here as that's how I built it out as I was testing and it worked.
-
-
-
-/interface bridge vlan add bridge=bridge tagged=BOND-CRS317,BOND-UNIFIPOE,bridge vlan-ids=50,254
-
-
-
-
-
-
-
-The Coup de Grâce
-
-
-
-And these are where I kept coming up short:
-
-
-
-tagged=BOND-CRS317,BOND-UNIFIPOE,bridge
-
-
-
-The bridge itself must be tagged whenever the associated VLAN is an SVI/accessible IP for the switch itself.
-
-
-
-So without VLAN21/50/254 having the bridge tagged on themselves, the switch will block any attempts to contact it over associated IPs.
-
-
-
-This was causing me a tremendous headache as I was trying to tag/untag the VLAN interfaces themselves, instead of the bridge, because that's how literally every other port/interface on the switch works.  Not to mention that I believe you can accidentally create an internal forwarding loop depending on how you place the bridge on the filters.
-
-
-
-Finally, turning on VLAN filtering activates this all, and hopefully doesn't lock you out of the switch:
-
-
-
-/interface bridge set 0 vlan-filtering=yes - again, the 0 here would be the number of the bridge from a /interface bridge print
-
-
-
-
-
-
-
-The Postmortum
-
-
-
-Assuming everything went well, the switch should be passing traffic, the access ports should be acting like access ports, and the switch should be responding and accessible on its SVIs.
-
-
-
-I'm using it as a dhcp relay:
-
-
-
-/ip dhcp-relay add dhcp-server=10.254.1.1 disabled=no interface=ProdUnmanaged local-address=10.21.21.249 name=prod-unmanaged-relay
-
-
-
-Enabled neighbor discovery:
-
-
-
-/ip neighbor discovery-settings set discover-interface-list=all
-
-
-
-Disabled all the unnecessary services:
-
-
-
-/ip service
-set telnet disabled=yes
-set ftp disabled=yes
-set ssh port=22222
-set api disabled=yes
-set winbox disabled=yes
-set api-ssl disabled=yes
-
-
-
-Set up SSH key based authentication (honestly this alone might have been enough reason for me to do this) :
-
-
-
-
-
-
-
-And pointed a few gateways at the switch for routing where I don't need or care about wire-speed routing.
-
-
-
-
-
-
-
-So I've finally got it all working.  I've only been working on it since October.  The feeling when I enabled VLAN filtering again (for the umpteenth time) and everything still worked??
-
-
-
-
-
-
-
-Maybe someday they will release a switch that can do line-rate routing.  Hopefully by then they also will have cleaned up how the VLANs are handled a bit more as this is still a bit confusing.
-
-
-
-In conclusion, I actually really like this hardware. I know some people would never buy white hardware, but I really appreciate the asthetic
-
-
-
-I'm even considering buying a few more Mikrotik switches (and am fully regretting a few recent EdgeSwitch purchases). Not to mention I have a US-8 and US-8-150W I'd love to replace.
-" data-id="sfsi"><meta property="og:title" content="RouterOS and Switching, finally managed" data-id="sfsi"><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-28 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left comments-open si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script><style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-28 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left comments-open si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
 
 
 <div id="page" class="hfeed site">
@@ -716,7 +195,7 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 				</span>
 			</span>
 		</span>
-		<span class="posted-on">May 17, 2018</span><span class="comments-link"><a href="https://blog.kroy.io/2018/05/17/routeros-and-switching/#respond" class="comments-link">No Comments</a></span></div></div><div class="post-thumb entry-media thumbnail"><img width="1024" height="547" src="https://blog.kroy.io/wp-content/uploads/2018/05/screenshot-1024x547.png" class="attachment-large size-large wp-post-image" alt="RouterOS and Switching, finally managed" loading="lazy"></div>
+		<span class="posted-on">May 17, 2018</span><span class="comments-link"><a href="https://blog.kroy.io/2018/05/17/routeros-and-switching/#respond" class="comments-link">No Comments</a></span></div></div><div class="post-thumb entry-media thumbnail"><img width="1024" height="547" alt="RouterOS and Switching, finally managed" loading="lazy" data-src="https://blog.kroy.io/wp-content/uploads/2018/05/screenshot-1024x547.png" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="547" src="https://blog.kroy.io/wp-content/uploads/2018/05/screenshot-1024x547.png" class="attachment-large size-large wp-post-image" alt="RouterOS and Switching, finally managed" loading="lazy"></noscript></div>
 <div class="entry-content si-entry" itemprop="text">
 	
 <p>I think anybody that’s ever used a Mikrotik and RouterOS can probably agree.  That tiny company from Latvia does things a bit… different.</p>
@@ -751,7 +230,7 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/eaYEoM0-1024x768.jpg" alt="" class="wp-image-101" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0.jpg 1492w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>For routing, I’ll say I absolutely adore Mikrotik and RouterOS. I have even started replacing some of my VPSs with CHRs, just because it works so well.</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0.jpg 1492w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/eaYEoM0-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-101 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/eaYEoM0-1024x768.jpg" alt="" class="wp-image-101" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0-768x576.jpg 768w,https://blog.kroy.io/wp-content/uploads/2019/08/eaYEoM0.jpg 1492w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>For routing, I’ll say I absolutely adore Mikrotik and RouterOS. I have even started replacing some of my VPSs with CHRs, just because it works so well.</p>
 
 
 
@@ -827,7 +306,7 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="413" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-1024x413.png" alt="hardware offload chart" class="wp-image-103" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-1024x413.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-300x121.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-768x310.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1.png 1141w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>I’m also going to assume a basic working knowledge of how to navigate RouterOS. Anybody that’s ever done a CLI on a Cisco can probably hammer it out because it’s easy to just <code><tab></code> your way through things.  And once the switch is all set up and configured, you can access it via the web ports/WinBox if that’s your thing.</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="413" alt="hardware offload chart" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-1024x413.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-300x121.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-768x310.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1.png 1141w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-1024x413.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-103 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="413" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-1024x413.png" alt="hardware offload chart" class="wp-image-103" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-1024x413.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-300x121.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1-768x310.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/Vujbk3P-1.png 1141w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>I’m also going to assume a basic working knowledge of how to navigate RouterOS. Anybody that’s ever done a CLI on a Cisco can probably hammer it out because it’s easy to just <code><tab></code> your way through things.  And once the switch is all set up and configured, you can access it via the web ports/WinBox if that’s your thing.</p>
 
 
 
@@ -887,11 +366,11 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<ul><li><code>/ip address print</code> – Shows a list of IPs and interfaces they are assigned</li><li><code>/ip address remove 0</code> – Remove the number.  In the following example, <code>10.254.1.248/24</code> would be removed.  You can use the above <code>print</code> command afterwards to verify its removal.</li></ul><figure class="wp-block-image"><img loading="lazy" width="484" height="127" src="https://blog2.kroy.io/wp-content/uploads/2019/08/aFQdad8.png" alt="remove ip" class="wp-image-104" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/aFQdad8.png 484w,https://blog.kroy.io/wp-content/uploads/2019/08/aFQdad8-300x79.png 300w" sizes="(max-width: 484px) 100vw, 484px"></figure><p>Next, I set up any LAGs I need.  To do this, you need to remove the ports from the bridge so they can be used in a LAG:</p>
+<ul><li><code>/ip address print</code> – Shows a list of IPs and interfaces they are assigned</li><li><code>/ip address remove 0</code> – Remove the number.  In the following example, <code>10.254.1.248/24</code> would be removed.  You can use the above <code>print</code> command afterwards to verify its removal.</li></ul><figure class="wp-block-image"><img loading="lazy" width="484" height="127" alt="remove ip" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/aFQdad8.png 484w, https://blog.kroy.io/wp-content/uploads/2019/08/aFQdad8-300x79.png 300w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/aFQdad8.png" data-sizes="(max-width: 484px) 100vw, 484px" class="wp-image-104 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="484" height="127" src="https://blog2.kroy.io/wp-content/uploads/2019/08/aFQdad8.png" alt="remove ip" class="wp-image-104" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/aFQdad8.png 484w,https://blog.kroy.io/wp-content/uploads/2019/08/aFQdad8-300x79.png 300w" sizes="(max-width: 484px) 100vw, 484px"></noscript></figure><p>Next, I set up any LAGs I need.  To do this, you need to remove the ports from the bridge so they can be used in a LAG:</p>
 
 
 
-<ul><li><code>/interface bridge port print</code> – Show all the ports on the main bridge.</li><li><code>/interface bridge port remove 0,1</code> – Assuming I wanted to put ether1 and ether2 in a LAG in the following example:</li></ul><figure class="wp-block-image"><img loading="lazy" width="1024" height="142" src="https://blog2.kroy.io/wp-content/uploads/2019/08/kr35Z82-1024x142.png" alt="bridge" class="wp-image-105" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-1024x142.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-300x42.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-768x106.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82.png 1386w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>And then dropping them in a LAG:</p>
+<ul><li><code>/interface bridge port print</code> – Show all the ports on the main bridge.</li><li><code>/interface bridge port remove 0,1</code> – Assuming I wanted to put ether1 and ether2 in a LAG in the following example:</li></ul><figure class="wp-block-image"><img loading="lazy" width="1024" height="142" alt="bridge" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-1024x142.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-300x42.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-768x106.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82.png 1386w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/kr35Z82-1024x142.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-105 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="142" src="https://blog2.kroy.io/wp-content/uploads/2019/08/kr35Z82-1024x142.png" alt="bridge" class="wp-image-105" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-1024x142.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-300x42.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82-768x106.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/kr35Z82.png 1386w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>And then dropping them in a LAG:</p>
 
 
 
@@ -903,15 +382,15 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="44" src="https://blog2.kroy.io/wp-content/uploads/2019/08/6J9PHyv-1024x44.png" alt="hardware accel" class="wp-image-106" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-1024x44.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-300x13.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-768x33.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv.png 1176w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>The “H” next to the interface name means it’s hardware accelerated and will go line-rate, also designated by HW=Yes in the same output of <code>print</code>.</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="44" alt="hardware accel" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-1024x44.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-300x13.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-768x33.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv.png 1176w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/6J9PHyv-1024x44.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-106 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="44" src="https://blog2.kroy.io/wp-content/uploads/2019/08/6J9PHyv-1024x44.png" alt="hardware accel" class="wp-image-106" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-1024x44.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-300x13.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv-768x33.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/6J9PHyv.png 1176w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>The “H” next to the interface name means it’s hardware accelerated and will go line-rate, also designated by HW=Yes in the same output of <code>print</code>.</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="105" height="120" src="https://blog2.kroy.io/wp-content/uploads/2019/08/knDUG2Q.png" alt="hwyes" class="wp-image-107"></figure><p>Something else to do now is to ensure that RSTP is enabled on the bridge.  There might be a bug in RouterOS where the bridge refuses to pass traffic if it’s not.  I’m not sure if that’s the case but it’s something that someone mentioned in a post and I’m going to take them at their word because of all the problems I’ve had.</p>
+<figure class="wp-block-image"><img loading="lazy" width="105" height="120" alt="hwyes" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/knDUG2Q.png" class="wp-image-107 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="105" height="120" src="https://blog2.kroy.io/wp-content/uploads/2019/08/knDUG2Q.png" alt="hwyes" class="wp-image-107"></noscript></figure><p>Something else to do now is to ensure that RSTP is enabled on the bridge.  There might be a bug in RouterOS where the bridge refuses to pass traffic if it’s not.  I’m not sure if that’s the case but it’s something that someone mentioned in a post and I’m going to take them at their word because of all the problems I’ve had.</p>
 
 
 
-<ul><li><code>/interface bridge print</code></li><li><code>/interface bridge set 0 protocol-mode=rstp</code> – The <code>0</code> matches the ID from the <code>print</code></li></ul><figure class="wp-block-image"><img loading="lazy" width="901" height="120" src="https://blog2.kroy.io/wp-content/uploads/2019/08/BzLY132.png" alt="rstp" class="wp-image-108" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132.png 901w,https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132-300x40.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132-768x102.png 768w" sizes="(max-width: 901px) 100vw, 901px"></figure><h3 id="switchmanagement">Switch Management</h3>
+<ul><li><code>/interface bridge print</code></li><li><code>/interface bridge set 0 protocol-mode=rstp</code> – The <code>0</code> matches the ID from the <code>print</code></li></ul><figure class="wp-block-image"><img loading="lazy" width="901" height="120" alt="rstp" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132.png 901w, https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132-300x40.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132-768x102.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/BzLY132.png" data-sizes="(max-width: 901px) 100vw, 901px" class="wp-image-108 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="901" height="120" src="https://blog2.kroy.io/wp-content/uploads/2019/08/BzLY132.png" alt="rstp" class="wp-image-108" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132.png 901w,https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132-300x40.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/BzLY132-768x102.png 768w" sizes="(max-width: 901px) 100vw, 901px"></noscript></figure><h3 id="switchmanagement">Switch Management</h3>
 
 
 
@@ -931,7 +410,7 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="961" height="165" src="https://blog2.kroy.io/wp-content/uploads/2019/08/eVPYeTv.png" alt="vlans" class="wp-image-109" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv.png 961w,https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv-300x52.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv-768x132.png 768w" sizes="(max-width: 961px) 100vw, 961px"></figure><h1 id="success">Success!</h1>
+<figure class="wp-block-image"><img loading="lazy" width="961" height="165" alt="vlans" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv.png 961w, https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv-300x52.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv-768x132.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/eVPYeTv.png" data-sizes="(max-width: 961px) 100vw, 961px" class="wp-image-109 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="961" height="165" src="https://blog2.kroy.io/wp-content/uploads/2019/08/eVPYeTv.png" alt="vlans" class="wp-image-109" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv.png 961w,https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv-300x52.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/eVPYeTv-768x132.png 768w" sizes="(max-width: 961px) 100vw, 961px"></noscript></figure><h1 id="success">Success!</h1>
 
 
 
@@ -971,11 +450,11 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="485" src="https://blog2.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1024x485.png" alt="interfaces" class="wp-image-111" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1024x485.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-300x142.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-768x364.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1600x758.png 1600w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP.png 1861w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>And setting the pvid with <code>/interface bridge port set 8,9,10,11 pvid=21</code> and validating with <code>/interface bridge port print from=[/interface bridge port find pvid=21]</code>:</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="485" alt="interfaces" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1024x485.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-300x142.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-768x364.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1600x758.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP.png 1861w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1024x485.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-111 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="485" src="https://blog2.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1024x485.png" alt="interfaces" class="wp-image-111" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1024x485.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-300x142.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-768x364.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP-1600x758.png 1600w,https://blog.kroy.io/wp-content/uploads/2019/08/0wwuhLP.png 1861w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>And setting the pvid with <code>/interface bridge port set 8,9,10,11 pvid=21</code> and validating with <code>/interface bridge port print from=[/interface bridge port find pvid=21]</code>:</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="113" src="https://blog2.kroy.io/wp-content/uploads/2019/08/3PBky5l-1024x113.png" alt="vlan21" class="wp-image-112" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-1024x113.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-300x33.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-768x85.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-1600x176.png 1600w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l.png 1861w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><hr class="wp-block-separator"><h2 id="vlanfiltering2">VLAN Filtering #2</h2>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="113" alt="vlan21" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-1024x113.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-300x33.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-768x85.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-1600x176.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l.png 1861w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/3PBky5l-1024x113.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-112 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="113" src="https://blog2.kroy.io/wp-content/uploads/2019/08/3PBky5l-1024x113.png" alt="vlan21" class="wp-image-112" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-1024x113.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-300x33.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-768x85.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l-1600x176.png 1600w,https://blog.kroy.io/wp-content/uploads/2019/08/3PBky5l.png 1861w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><hr class="wp-block-separator"><h2 id="vlanfiltering2">VLAN Filtering #2</h2>
 
 
 
@@ -983,7 +462,7 @@ I'm even considering buying a few more Mikrotik switches (and am fully regrettin
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="90" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Fk28kbo-1024x90.png" alt="vlan filtering" class="wp-image-113" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-1024x90.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-300x26.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-768x68.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo.png 1191w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>Let’s talk a bit about what’s going on here:</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="90" alt="vlan filtering" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-1024x90.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-300x26.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-768x68.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo.png 1191w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/Fk28kbo-1024x90.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-113 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="90" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Fk28kbo-1024x90.png" alt="vlan filtering" class="wp-image-113" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-1024x90.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-300x26.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo-768x68.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/Fk28kbo.png 1191w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>Let’s talk a bit about what’s going on here:</p>
 
 
 
@@ -1073,7 +552,7 @@ set api-ssl disabled=yes</code></pre>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="475" height="232" src="https://blog2.kroy.io/wp-content/uploads/2019/08/XR9NhBF.png" alt="ssh" class="wp-image-114" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/XR9NhBF.png 475w,https://blog.kroy.io/wp-content/uploads/2019/08/XR9NhBF-300x147.png 300w" sizes="(max-width: 475px) 100vw, 475px"></figure><p>And pointed a few gateways at the switch for routing where I don’t need or care about wire-speed routing.</p>
+<figure class="wp-block-image"><img loading="lazy" width="475" height="232" alt="ssh" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/XR9NhBF.png 475w, https://blog.kroy.io/wp-content/uploads/2019/08/XR9NhBF-300x147.png 300w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/XR9NhBF.png" data-sizes="(max-width: 475px) 100vw, 475px" class="wp-image-114 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="475" height="232" src="https://blog2.kroy.io/wp-content/uploads/2019/08/XR9NhBF.png" alt="ssh" class="wp-image-114" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/XR9NhBF.png 475w,https://blog.kroy.io/wp-content/uploads/2019/08/XR9NhBF-300x147.png 300w" sizes="(max-width: 475px) 100vw, 475px"></noscript></figure><p>And pointed a few gateways at the switch for routing where I don’t need or care about wire-speed routing.</p>
 
 
 
@@ -1081,7 +560,7 @@ set api-ssl disabled=yes</code></pre>
 
 
 
-<figure class="wp-block-image"><img src="https://i.imgur.com/1PfV0bU.jpg" alt="dafeels"></figure><p>Maybe someday they will release a switch that can do line-rate routing.  Hopefully by then they also will have cleaned up how the VLANs are handled a bit more as this is still a bit confusing.</p>
+<figure class="wp-block-image"><img alt="dafeels" data-src="https://i.imgur.com/1PfV0bU.jpg" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img src="https://i.imgur.com/1PfV0bU.jpg" alt="dafeels"></noscript></figure><p>Maybe someday they will release a switch that can do line-rate routing.  Hopefully by then they also will have cleaned up how the VLANs are handled a bit more as this is still a bit confusing.</p>
 
 
 
@@ -1090,59 +569,11 @@ set api-ssl disabled=yes</code></pre>
 
 
 <p>I’m even considering buying a few more Mikrotik switches (and am fully regretting a few recent EdgeSwitch purchases). Not to mention I have a US-8 and US-8-150W I’d love to replace.</p>
-<div class="sfsi_responsive_icons" style="display:inline-block;margin-top:0px; margin-bottom: 0px; width:100%" data-icon-width-type="Fully responsive" data-icon-width-size="240" data-edge-type="Round" data-edge-radius="5">		<div class="sfsi_responsive_icons_count sfsi_responsive_count_container sfsi_medium_button" style="display:none;text-align:center; background-color:#fff;color:#aaaaaa;  border-radius:5px; ;">
-			<h3 style="color:#aaaaaa; ">60</h3>
-			<h6 style="color:#aaaaaa;">SHARES</h6>
-		</div>
-		<div class="sfsi_icons_container sfsi_responsive_without_counter_icons sfsi_medium_button_container sfsi_icons_container_box_fully_container " style="width:100%;display:flex; ; text-align:center;">		<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching%2F" style="display:block;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_icon_facebook_container sfsi_medium_button sfsi_responsive_icon_gradient sfsi_centered_icon" style=" border-radius:5px;  width:100%; ">
-				<img style="max-height: 25px;display:unset;margin:0" class="sfsi_wicon" alt="facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/responsive-icon/facebook.svg"><span style="color:#fff">Share on Facebook</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name&url=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching%2F" style="display:block;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_icon_twitter_container sfsi_medium_button sfsi_responsive_icon_gradient sfsi_centered_icon" style=" border-radius:5px;  width:100%; ">
-				<img style="max-height: 25px;display:unset;margin:0" class="sfsi_wicon" alt="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/responsive-icon/Twitter.svg"><span style="color:#fff">Tweet</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" style="display:block;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_icon_follow_container sfsi_medium_button sfsi_responsive_icon_gradient sfsi_centered_icon" style=" border-radius:5px;  width:100%; ">
-				<img style="max-height: 25px;display:unset;margin:0" class="sfsi_wicon" alt="Follow" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/responsive-icon/Follow.png"><span style="color:#fff">Follow us</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_0_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_1_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_2_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_3_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_4_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-</div></div></div>
+<div class="sfsi_Sicons" style="width: 100%; display: inline-block; vertical-align: middle; text-align:left"><div style="margin:0px 8px 0px 0px; line-height: 24px"><span>Please follow and like us:</span></div><div class="sfsi_socialwpr"><div class="sf_subscrbe sf_icon" style="text-align:left;vertical-align: middle;float:left;width:auto"><a href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" target="_blank"><img alt="error" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" alt="error"></noscript></a></div><div class="sf_fb sf_icon" style="text-align:left;vertical-align: middle;"><div class="fb-like" data-href="https://blog.kroy.io/2018/05/17/routeros-and-switching/" data-send="false" data-layout="button"></div></div><div class="sf_fb_share sf_icon" style="text-align:left;vertical-align: middle;"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching%2F" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></noscript></a></div><div class="sf_twiter sf_icon" style="display: inline-block;vertical-align: middle;width: auto;margin-left: 7px;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=RouterOS+and+Switching%2C+finally+managed+https://blog.kroy.io/2018/05/17/routeros-and-switching/" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></noscript>
+						</a>
+					</div><div class="sf_pinit sf_icon" style="text-align:left;vertical-align: middle;float:left;line-height: 33px;width:auto;margin: 0 -2px;"><a href="#" onclick='sfsi_pinterest_modal_images(event,"https://blog.kroy.io/2018/05/17/routeros-and-switching/","RouterOS and Switching, finally managed")' style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg"></noscript></a></div></div></div></div>
 
 
 
@@ -1154,7 +585,7 @@ set api-ssl disabled=yes</code></pre>
 
 
 <section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
-		<img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75" loading="lazy"></div>
+		<img alt="" data-srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" height="75" width="75" loading="lazy" data-src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" class="avatar avatar-75 photo lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75" loading="lazy"></noscript>	</div>
 
 	<div class="author-box-meta">
 		<h4 class="author-box-title">
@@ -1176,7 +607,7 @@ set api-ssl disabled=yes</code></pre>
 
 </section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
 
-	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/" rel="prev"><div class="nav-content"><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/05/zleVN8t-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="tower" loading="lazy" itemprop="image"><span>Building a Disk Tower, for all pain and no profit</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/" rel="next"><div class="nav-content"><span>The ZFS walk-of-shame with Seagate and OmniOS CE.</span> <img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/07/photo-1531570325967-4b8fcb7e120d-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="i-am-a-monkey" loading="lazy" itemprop="image"></div></a></div>
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2018/05/02/building-a-disk-tower-for-pain-and-no-profit/" rel="prev"><div class="nav-content"><img width="75" height="75" alt="tower" loading="lazy" itemprop="image" data-src="https://blog.kroy.io/wp-content/uploads/2018/05/zleVN8t-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/05/zleVN8t-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="tower" loading="lazy" itemprop="image"></noscript> <span>Building a Disk Tower, for all pain and no profit</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2018/07/07/the-zfs-walk-of-shame-with-seagate-and-omnios-ce/" rel="next"><div class="nav-content"><span>The ZFS walk-of-shame with Seagate and OmniOS CE.</span> <img width="75" height="75" alt="i-am-a-monkey" loading="lazy" itemprop="image" data-src="https://blog.kroy.io/wp-content/uploads/2018/07/photo-1531570325967-4b8fcb7e120d-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/07/photo-1531570325967-4b8fcb7e120d-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="i-am-a-monkey" loading="lazy" itemprop="image"></noscript></div></a></div>
 </section></article><section id="comments" class="comments-area"><div class="comments-title-wrapper center-text">
 		<h3 class="comments-title">
 			Comments		</h3>
@@ -1200,6 +631,9 @@ set api-ssl disabled=yes</code></pre>
 		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
 		<h4 class="widget-title">Recent Posts</h4>
 		<ul><li>
+					<a href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/">Scorched Earth with the Retro Lab</a>
+									</li>
+											<li>
 					<a href="https://blog.kroy.io/2020/11/03/esxi-to-libvirt-now-with-more-terraform/">ESXi to Libvirt, now with more Terraform.</a>
 									</li>
 											<li>
@@ -1210,9 +644,6 @@ set api-ssl disabled=yes</code></pre>
 									</li>
 											<li>
 					<a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">The WYSE 5070, a perfect little VyOS device</a>
-									</li>
-											<li>
-					<a href="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/">Battle of the Bare Metal Routers</a>
 									</li>
 					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
 			<ul><li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
@@ -1274,6 +705,8 @@ set api-ssl disabled=yes</code></pre>
 	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
 </li>
 	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.kroy.io/category/retrolab/">Retrolab</a>
 </li>
 	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
 </li>
@@ -1349,10 +782,11 @@ window.addEventListener('sfsi_functions_loaded', function() {
 
     }
 })
-</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2018/05/17/routeros-and-switching" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching" style="display:inline-block;"> <img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
+</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2018/05/17/routeros-and-switching" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></noscript></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
 						<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name+https://blog.kroy.io/2018/05/17/routeros-and-switching" style="display:inline-block">
-							<img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></a>
-					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching"><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></noscript>
+						</a>
+					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2018%2F05%2F17%2Frouteros-and-switching"><img data-pin-nopin="true" alt="Share" title="Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></noscript></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
 			{
 				if (typeof sfsi_widget_set == "function") {
 					sfsi_widget_set();
@@ -1545,13 +979,13 @@ window.addEventListener('sfsi_functions_loaded', function() {
             </style><script src="https://blog.kroy.io/wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/modernizr.custom.min.js" id="SFSIjqueryModernizr-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/jquery.shuffle.min.js" id="SFSIjqueryShuffle-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/random-shuffle-min.js" id="SFSIjqueryrandom-shuffle-js"></script><script id="SFSICustomJs-js-extra">
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script id="sinatra-js-js-extra">
-var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"00b8b3d7c4","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"915a5e38ef","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
 </script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script>
 	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
-	</script><script type="text/javascript" src="https://stats.wp.com/e-202045.js" async="async" defer></script><script type="text/javascript">
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202047.js" async="async" defer></script><script type="text/javascript">
 	_stq = window._stq || [];
-	_stq.push([ 'view', {v:'ext',j:'1:9.0.2',blog:'166765678',post:'28',tz:'-6',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'view', {v:'ext',j:'1:9.1',blog:'166765678',post:'28',tz:'-6',srv:'blog.kroy.io'} ]);
 	_stq.push([ 'clickTrackerInit', '166765678', '28' ]);
 </script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
 		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>

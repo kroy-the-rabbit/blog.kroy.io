@@ -92,302 +92,18 @@ window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
 ( 'fetch' in window ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0">' + 'ipt>' );( document.contains ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0">' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0">' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4">' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12">' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2">' + 'ipt>' );
 </script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
 var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><meta name="viewport" content="width=device-width, initial-scale=1"><meta property="og:image:secure_url" content="https://blog.kroy.io/wp-content/uploads/2018/11/photo-1474314243412-cd4a79f02c6a.jpg" data-id="sfsi"><meta property="og:image:type" content="" data-id="sfsi"><meta property="og:image:width" content="1080" data-id="sfsi"><meta property="og:image:height" content="720" data-id="sfsi"><meta property="og:url" content="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/" data-id="sfsi"><meta property="og:description" content="
-In this series of posts, we'll be working through building a routing lab-within-a-lab featuring VyOS.  If you are unfamiliar with VyOS, you can read more about it here.
-
-
-
-
-
-
-
-Over the last few months, I've switched all the routing for my homelab to virtual VyOS instances.  The main reason was to really get my hands dirty with some more advanced routing concepts.  
-
-
-
-As I have multiple hypervisors, this configuration creates a different routing VM on each hypervisor for redundancy and backup.  This setup allows me to do a number of things:
-
-
-
-Wire-speed routing at 10Gb without noisy and power-hungry switches.  Now I just use cheap basic managed switches (specifically the CRS317).30Gbps or higher routing between VMs on the same host.Ultimate redundancy and backup for both IPv4 and IPv6.
-
-
-
-
-
-
-
-First Goal
-
-
-
-Our first goal  will be to configure a simple router+LAN setup that would mimic most home designs.  For now, we'll be skipping the firewall and just worrying about routing.  The pieces:
-
-
-
-Edge routing VM.  This is the edge device of our little routing lab.  A simple VyOS instance with two interfaces.  One on your existing network to act as the WAN, and a second interface to be the routing LAN.  Since it's virtualized, you could also mimic this with a single interface and a trunk port.  A simple Debian/CentOS/etc VM to act as a client on our LAN.  It makes it easy to run traceroutes, MTRs, speed tests, and whatever other routing validation we can imagine.  You could even move an existing Windows VM or Linux install just by changing the port group the VM uses.
-
-
-
-There are a few requirements before we get started:
-
-
-
-A hypervisor where you can easily set up virtual switches.  I'm using ESXi.A Debian/CentOS/LiveCD VM to be our test client.  I install a GUI so I can use Chrome to run speedtests or verify Internet connectivity. Again, any existing VM can temporarily be used for this with a simple port group/network migration.The VyOS ISO.  At the time of this writing, I prefer the latest RC7 as it has FRR for the routing suite.Maybe 5-10GB of RAM and 5-10GB of disk space. The ability to create a static route on your main firewall/router.  We could do NAT, but the goal here is pure routing.  A /24 subnet (or smaller/bigger), that's not in use otherwise in your network.  I will be using 10.222.222.0/24
-
-
-
-
-
-
-
-Let's Go!
-
-
-
-The first thing you will want to do is create a new virtual switch to use as our new LAN.  It doesn't need any uplinks or external connectivity.  With ESXi, you would first create a new vSwitch and remove the uplink from it.  
-
-
-
-
-
-
-
-And then create a new Port group and select the vSwitch you just created (with vCenter this can be done in one step).
-
-
-
-
-
-
-
-Once that's done, we create our Edge VM.  This will be a VyOS instance where we will run things like our DHCP server for the new LAN.  In a real setup, this VM or physical box would be connected to your ISP, do firewalling/NAT, etc:
-
-
-
-
-
-
-
-A few of the important things follow.  VyOS doesn't need much memory or disk, and at least for RAM, 1GB is probably overkill.  2GB of disk is the new minimum for VyOS. The ISO that I mounted is vyos-1.2.0-rc7-amd64.iso, but I'd grab the latest version that's available.
-
-
-
-For networking, my Network Adaptor #1 is hooked to my existing LAN.  The new network adaptor is connected to the new LAN that is going to be used for testing.  These should both be VMXNET3 for best performance. 
-
-
-
-
-
-
-
-It's important to note that everything with VyOS is done at the CLI (that's generally fairly intuitive).  There is no GUI to access, so initially you'll have to access it entirely through your hypervisor console.  SSH access can be configured once you have networking set up.
-
-
-
-The first thing to check before you start up the VM is whether ESXi changed around your network interfaces for you.  It did for me:
-
-
-
-
-
-
-
-I want my WAN to be the first network interface in the VM, and the RouteLAB-LAN to be the second one.  Easy enough to switch them back:
-
-
-
-
-
-
-
-
-
-
-
-Edge VM
-
-
-
-With the edge VM created, it's time to get VyOS installed.  Boot it up and log in at the console with vyos / vyos as the username and password. Entering install image will begin the installation.
-
-
-
-You should be able to accept the defaults:
-
-
-
-
-
-
-
-Name the image, and choose a password.  VyOS uses squashfs images, so if an install goes badly, usually you can roll back to the last working copy:
-
-
-
-
-
-
-
-And after grub is installed, you should reboot to boot into your new system:
-
-
-
-
-
-
-
-
-
-
-
-Edge VM part 2
-
-
-
-Before you can go any further, you need to decide on a static IP for your new VM.  This will be an IP on your existing network.  If we were doing NAT or dynamic routing, you could probably just use your existing DHCP, but at least for now, we want static routing.  
-
-
-
-My config looks like:
-
-
-
-Existing LAN IP Range: 10.0.1.0/24VyOS Edge IP: 10.0.1.222LAN Gateway (my existing firewall): 10.0.1.1DNS servers: 8.8.8.8, 1.1.1.1
-
-
-
-For the RouteLAB-LAN:
-
-
-
-VyOS Edge IP: 10.222.222.1/24, this will be the gateway for the hosts on the RouteLAB-LANDHCP Server running the range of 10.222.222.100-200DNS servers: 8.8.8.8, 1.1.1.1
-
-
-
-You also have to tell your existing network how it will reach your new RouteLAB-LAN
-
-
-
-This also means on your existing firewall/router, you need a new static route.  The route will be the destination network of 10.222.222.0/24 with the gateway/next-hop of 10.0.1.222.  How to do this is dependent on your router/firewall.  With something like pfSense, you might use these instructions.
-
-
-
-Edge VM config
-
-
-
-The config we are setting up is VERY simple and involves no firewalling, which obviously would be a requirement in real usage. But it is just enough to get our VM online.
-
-
-
-configure
-set interfaces ethernet eth0 address '10.0.1.222/24'
-set interfaces ethernet eth0 description 'WAN'
-set interfaces ethernet eth1 address '10.222.222.1/24'
-set interfaces ethernet eth1 description 'RouteLab-LAN'
-set protocols static route 0.0.0.0/0 next-hop 10.0.1.1
-set service ssh port '22'
-set system name-server 8.8.8.8
-set system name-server 1.1.1.1
-commit
-save
-exit
-
-
-
-Hopefully it should be fairly self-explanatory:
-
-
-
-Enter configure mode.Set the IP on your existing network and a description for the interface.  This is the IP on your existing LAN for this device. This is eth0.Set the IP on our RouteLAB-LAN and the description for the interface.  This is eth1.Set a static route for 0.0.0.0/0.  This is like setting the gateway address; it tells your VM how to get to the Internet and the rest of your network.Turn on SSH.  You will then be able to access this VM over SSH with the username vyos and the password you set up earlier.  There are settings available to use a different port, username, rate-limit, or even key-based authentication.  Sets the DNS servers for the VM.  Not strictly needed, but nice if you want Internet access on this VM.commit activates the config.  save saves the config so it will persist through a reboot.Exit configure mode.
-
-
-
-At this point you should be able to ping/ssh the existing LAN address from anywhere on your network.  Pinging the 10.222.222.1 address successfully will also tell you that the static route is working.  If something isn't working, there are a few possibilities:
-
-
-
-Your static route isn't setup correctly.  In my above config, this would mean I am able to ping 10.0.1.222 but not 10.222.222.1 from other hosts on my LANYour firewall is restricting somethingIf pings to both addresses work, but the Edge VM doesn't have access to the Internet in general (like pinging 8.8.8.8), it's probably because you need to adjust your outbound NAT.  In pfSense you'd want to switch from Automatic to Hybrid or Manual Outbound NAT and allow 10.222.222.0/24.  We technically aren't going to need Internet access for this project, but it's nice when your Client VM is able to access the wide-Internet.
-
-
-
-Edge VM config part 2
-
-
-
-The final piece to this part of the project is getting DHCP working for our RouteLAB-LAN.
-
-
-
-configure
-set service dhcp-server shared-network-name RouteLAB-LAN authoritative
-set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 default-router 10.222.222.1
-set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 dns-server 8.8.8.8
-set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 dns-server 1.1.1.1
-set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 lease 86400
-set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 range 0 start 10.222.222.100
-set service dhcp-server shared-network-name RouteLAB-LAN subnet 10.222.222.0/24 range 0 stop 10.222.222.200
-commit
-save
-exit
-
-
-
-Again, this config should be fairly self-explanatory:
-
-
-
-Enter configure mode.Set up this DHCP server as authoritative.Name this VM's 10.222.222.1 IP as the default gateway for the subnet.Set up a few different name-servers.Set our lease length to a day.Set our range of addresses from clients will grab addresses.commit and save.Exit configure mode.
-
-
-
-Now if you change the port group on your Client VM (and possible disable and re-enable the network interface from within the VM):
-
-
-
-
-
-
-
-You should see your client VM pop up in the DHCP leases on the Edge VM with a show dhcp server leases:
-
-
-
-vyos@vyos:~$ show dhcp server leases
-IP address      Hardware address    Lease expiration     Pool          Client Name
---------------  ------------------  -------------------  ------------  -------------
-10.222.222.100  00:50:56:9d:74:42   2018/11/15 16:28:08  RouteLAB-LAN  debian
-
-
-
-
-And in my case, I'm able to ping the 10.222.222.100 address from the rest of my network, and vise-versa.
-
-
-
-
-
-
-
-End of Part 1
-
-
-
-If you've made it this far, you now have a basic lab within a lab running.  What this demonstrates is how to use a static route to avoid using the dreaded double-NAT.  If you set up some firewall rules, and you plug an interface into your ISP modem or device, you could use this VM as the router for your entire network.
-
-
-
-In part 2, we'll work on setting up some redundancy and dynamic routing within our tiny little lab.
-
-
-
-
-
-
-
-Coming soon...
-" data-id="sfsi"><meta property="og:title" content="Let’s Play with Routing – Part 1" data-id="sfsi"><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-31 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left comments-open si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script><style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-31 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content si-page-title-align-left comments-open si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
 
 
 <div id="page" class="hfeed site">
@@ -479,7 +195,7 @@ Coming soon...
 				</span>
 			</span>
 		</span>
-		<span class="posted-on">November 14, 2018</span><span class="comments-link"><a href="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/#respond" class="comments-link">No Comments</a></span></div></div><div class="post-thumb entry-media thumbnail"><img width="1024" height="683" src="https://blog.kroy.io/wp-content/uploads/2018/11/photo-1474314243412-cd4a79f02c6a-1024x683.jpg" class="attachment-large size-large wp-post-image" alt="electricity-routing" loading="lazy"></div>
+		<span class="posted-on">November 14, 2018</span><span class="comments-link"><a href="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/#respond" class="comments-link">No Comments</a></span></div></div><div class="post-thumb entry-media thumbnail"><img width="1024" height="683" alt="electricity-routing" loading="lazy" data-src="https://blog.kroy.io/wp-content/uploads/2018/11/photo-1474314243412-cd4a79f02c6a-1024x683.jpg" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="683" src="https://blog.kroy.io/wp-content/uploads/2018/11/photo-1474314243412-cd4a79f02c6a-1024x683.jpg" class="attachment-large size-large wp-post-image" alt="electricity-routing" loading="lazy"></noscript></div>
 <div class="entry-content si-entry" itemprop="text">
 	
 <p>In this series of posts, we’ll be working through building a routing lab-within-a-lab featuring VyOS.  If you are unfamiliar with VyOS, you can read more about it <a href="https://wiki.vyos.net/wiki/User_Guide">here</a>.</p>
@@ -514,15 +230,15 @@ Coming soon...
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="711" height="335" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-2-1.png" alt="" class="wp-image-85" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1.png 711w,https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1-300x141.png 300w" sizes="(max-width: 711px) 100vw, 711px"></figure><p>And then create a new Port group and select the vSwitch you just created (with vCenter this can be done in one step).</p>
+<figure class="wp-block-image"><img loading="lazy" width="711" height="335" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1.png 711w, https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1-300x141.png 300w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-2-1.png" data-sizes="(max-width: 711px) 100vw, 711px" class="wp-image-85 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="711" height="335" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-2-1.png" alt="" class="wp-image-85" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1.png 711w,https://blog.kroy.io/wp-content/uploads/2019/08/image-2-1-300x141.png 300w" sizes="(max-width: 711px) 100vw, 711px"></noscript></figure><p>And then create a new Port group and select the vSwitch you just created (with vCenter this can be done in one step).</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="710" height="270" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png" alt="" class="wp-image-87" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png 710w,https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1-300x114.png 300w" sizes="(max-width: 710px) 100vw, 710px"></figure><p>Once that’s done, we create our Edge VM.  This will be a VyOS instance where we will run things like our DHCP server for the new LAN.  In a real setup, this VM or physical box would be connected to your ISP, do firewalling/NAT, etc:</p>
+<figure class="wp-block-image"><img loading="lazy" width="710" height="270" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png 710w, https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1-300x114.png 300w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png" data-sizes="(max-width: 710px) 100vw, 710px" class="wp-image-87 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="710" height="270" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png" alt="" class="wp-image-87" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1.png 710w,https://blog.kroy.io/wp-content/uploads/2019/08/image-3-1-1-300x114.png 300w" sizes="(max-width: 710px) 100vw, 710px"></noscript></figure><p>Once that’s done, we create our Edge VM.  This will be a VyOS instance where we will run things like our DHCP server for the new LAN.  In a real setup, this VM or physical box would be connected to your ISP, do firewalling/NAT, etc:</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="938" height="594" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-4.png" alt="" class="wp-image-88" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-4.png 938w,https://blog.kroy.io/wp-content/uploads/2019/08/image-4-300x190.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-4-768x486.png 768w" sizes="(max-width: 938px) 100vw, 938px"></figure><p>A few of the important things follow.  VyOS doesn’t need much memory or disk, and at least for RAM, 1GB is probably overkill.  2GB of disk is the new minimum for VyOS. The ISO that I mounted is <code>vyos-1.2.0-rc7-amd64.iso</code>, but I’d grab the latest version that’s available.</p>
+<figure class="wp-block-image"><img loading="lazy" width="938" height="594" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-4.png 938w, https://blog.kroy.io/wp-content/uploads/2019/08/image-4-300x190.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-4-768x486.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-4.png" data-sizes="(max-width: 938px) 100vw, 938px" class="wp-image-88 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="938" height="594" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-4.png" alt="" class="wp-image-88" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-4.png 938w,https://blog.kroy.io/wp-content/uploads/2019/08/image-4-300x190.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-4-768x486.png 768w" sizes="(max-width: 938px) 100vw, 938px"></noscript></figure><p>A few of the important things follow.  VyOS doesn’t need much memory or disk, and at least for RAM, 1GB is probably overkill.  2GB of disk is the new minimum for VyOS. The ISO that I mounted is <code>vyos-1.2.0-rc7-amd64.iso</code>, but I’d grab the latest version that’s available.</p>
 
 
 
@@ -530,7 +246,7 @@ Coming soon...
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="936" height="792" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-5.png" alt="" class="wp-image-89" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-5.png 936w,https://blog.kroy.io/wp-content/uploads/2019/08/image-5-300x254.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-5-768x650.png 768w" sizes="(max-width: 936px) 100vw, 936px"></figure><p>It’s important to note that everything with VyOS is done at the CLI (that’s generally fairly intuitive).  There is no GUI to access, so initially you’ll have to access it entirely through your hypervisor console.  SSH access can be configured once you have networking set up.</p>
+<figure class="wp-block-image"><img loading="lazy" width="936" height="792" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-5.png 936w, https://blog.kroy.io/wp-content/uploads/2019/08/image-5-300x254.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-5-768x650.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-5.png" data-sizes="(max-width: 936px) 100vw, 936px" class="wp-image-89 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="936" height="792" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-5.png" alt="" class="wp-image-89" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-5.png 936w,https://blog.kroy.io/wp-content/uploads/2019/08/image-5-300x254.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-5-768x650.png 768w" sizes="(max-width: 936px) 100vw, 936px"></noscript></figure><p>It’s important to note that everything with VyOS is done at the CLI (that’s generally fairly intuitive).  There is no GUI to access, so initially you’ll have to access it entirely through your hypervisor console.  SSH access can be configured once you have networking set up.</p>
 
 
 
@@ -538,11 +254,11 @@ Coming soon...
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="822" height="113" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-10.png" alt="" class="wp-image-90" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-10.png 822w,https://blog.kroy.io/wp-content/uploads/2019/08/image-10-300x41.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-10-768x106.png 768w" sizes="(max-width: 822px) 100vw, 822px"></figure><p>I want my “WAN” to be the first network interface in the VM, and the <code>RouteLAB-LAN</code> to be the second one.  Easy enough to switch them back:</p>
+<figure class="wp-block-image"><img loading="lazy" width="822" height="113" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-10.png 822w, https://blog.kroy.io/wp-content/uploads/2019/08/image-10-300x41.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-10-768x106.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-10.png" data-sizes="(max-width: 822px) 100vw, 822px" class="wp-image-90 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="822" height="113" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-10.png" alt="" class="wp-image-90" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-10.png 822w,https://blog.kroy.io/wp-content/uploads/2019/08/image-10-300x41.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-10-768x106.png 768w" sizes="(max-width: 822px) 100vw, 822px"></noscript></figure><p>I want my “WAN” to be the first network interface in the VM, and the <code>RouteLAB-LAN</code> to be the second one.  Easy enough to switch them back:</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="818" height="101" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-11.png" alt="" class="wp-image-91" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-11.png 818w,https://blog.kroy.io/wp-content/uploads/2019/08/image-11-300x37.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-11-768x95.png 768w" sizes="(max-width: 818px) 100vw, 818px"></figure><hr class="wp-block-separator"><h3 id="edgevm">Edge VM</h3>
+<figure class="wp-block-image"><img loading="lazy" width="818" height="101" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-11.png 818w, https://blog.kroy.io/wp-content/uploads/2019/08/image-11-300x37.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-11-768x95.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-11.png" data-sizes="(max-width: 818px) 100vw, 818px" class="wp-image-91 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="818" height="101" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-11.png" alt="" class="wp-image-91" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-11.png 818w,https://blog.kroy.io/wp-content/uploads/2019/08/image-11-300x37.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-11-768x95.png 768w" sizes="(max-width: 818px) 100vw, 818px"></noscript></figure><hr class="wp-block-separator"><h3 id="edgevm">Edge VM</h3>
 
 
 
@@ -554,15 +270,15 @@ Coming soon...
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="594" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png" alt="" class="wp-image-92" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/image-6-300x174.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-6-768x446.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/image-6.png 1201w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>Name the image, and choose a password.  VyOS uses squashfs images, so if an install goes badly, usually you can roll back to the last working copy:</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="594" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/image-6-300x174.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-6-768x446.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/image-6.png 1201w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-92 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="594" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png" alt="" class="wp-image-92" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-6-1024x594.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/image-6-300x174.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-6-768x446.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/image-6.png 1201w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>Name the image, and choose a password.  VyOS uses squashfs images, so if an install goes badly, usually you can roll back to the last working copy:</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="602" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png" alt="" class="wp-image-93" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/image-7-300x176.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-7-768x452.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/image-7.png 1285w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><p>And after grub is installed, you should reboot to boot into your new system:</p>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="602" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/image-7-300x176.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-7-768x452.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/image-7.png 1285w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-93 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="602" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png" alt="" class="wp-image-93" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-7-1024x602.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/image-7-300x176.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-7-768x452.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/image-7.png 1285w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><p>And after grub is installed, you should reboot to boot into your new system:</p>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="1024" height="204" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png" alt="" class="wp-image-94" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/image-9-300x60.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-9-768x153.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/image-9.png 1229w" sizes="(max-width: 1024px) 100vw, 1024px"></figure><hr class="wp-block-separator"><h3 id="edgevmpart2">Edge VM part 2</h3>
+<figure class="wp-block-image"><img loading="lazy" width="1024" height="204" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/image-9-300x60.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-9-768x153.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/image-9.png 1229w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-94 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="1024" height="204" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png" alt="" class="wp-image-94" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-9-1024x204.png 1024w,https://blog.kroy.io/wp-content/uploads/2019/08/image-9-300x60.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-9-768x153.png 768w,https://blog.kroy.io/wp-content/uploads/2019/08/image-9.png 1229w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript></figure><hr class="wp-block-separator"><h3 id="edgevmpart2">Edge VM part 2</h3>
 
 
 
@@ -647,11 +363,11 @@ exit</code></pre>
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="838" height="399" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-12.png" alt="" class="wp-image-95" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-12.png 838w,https://blog.kroy.io/wp-content/uploads/2019/08/image-12-300x143.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-12-768x366.png 768w" sizes="(max-width: 838px) 100vw, 838px"></figure><p>You should see your client VM pop up in the DHCP leases on the Edge VM with a <code>show dhcp server leases</code>:</p>
+<figure class="wp-block-image"><img loading="lazy" width="838" height="399" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-12.png 838w, https://blog.kroy.io/wp-content/uploads/2019/08/image-12-300x143.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/image-12-768x366.png 768w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-12.png" data-sizes="(max-width: 838px) 100vw, 838px" class="wp-image-95 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="838" height="399" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-12.png" alt="" class="wp-image-95" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-12.png 838w,https://blog.kroy.io/wp-content/uploads/2019/08/image-12-300x143.png 300w,https://blog.kroy.io/wp-content/uploads/2019/08/image-12-768x366.png 768w" sizes="(max-width: 838px) 100vw, 838px"></noscript></figure><p>You should see your client VM pop up in the DHCP leases on the Edge VM with a <code>show dhcp server leases</code>:</p>
 
 
 
-<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddaba4b2ae9daba4b2ae">[email protected]</a>:~$ show dhcp server leases
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e096998f93a096998f93">[email protected]</a>:~$ show dhcp server leases
 IP address      Hardware address    Lease expiration     Pool          Client Name
 --------------  ------------------  -------------------  ------------  -------------
 10.222.222.100  00:50:56:9d:74:42   2018/11/15 16:28:08  RouteLAB-LAN  debian
@@ -675,60 +391,12 @@ IP address      Hardware address    Lease expiration     Pool          Client Na
 
 
 
-<figure class="wp-block-image"><img loading="lazy" width="645" height="384" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-13.png" alt="" class="wp-image-96" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-13.png 645w,https://blog.kroy.io/wp-content/uploads/2019/08/image-13-300x179.png 300w" sizes="(max-width: 645px) 100vw, 645px"></figure><p>Coming soon…</p>
-<div class="sfsi_responsive_icons" style="display:inline-block;margin-top:0px; margin-bottom: 0px; width:100%" data-icon-width-type="Fully responsive" data-icon-width-size="240" data-edge-type="Round" data-edge-radius="5">		<div class="sfsi_responsive_icons_count sfsi_responsive_count_container sfsi_medium_button" style="display:none;text-align:center; background-color:#fff;color:#aaaaaa;  border-radius:5px; ;">
-			<h3 style="color:#aaaaaa; ">60</h3>
-			<h6 style="color:#aaaaaa;">SHARES</h6>
-		</div>
-		<div class="sfsi_icons_container sfsi_responsive_without_counter_icons sfsi_medium_button_container sfsi_icons_container_box_fully_container " style="width:100%;display:flex; ; text-align:center;">		<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F" style="display:block;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_icon_facebook_container sfsi_medium_button sfsi_responsive_icon_gradient sfsi_centered_icon" style=" border-radius:5px;  width:100%; ">
-				<img style="max-height: 25px;display:unset;margin:0" class="sfsi_wicon" alt="facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/responsive-icon/facebook.svg"><span style="color:#fff">Share on Facebook</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name&url=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F" style="display:block;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_icon_twitter_container sfsi_medium_button sfsi_responsive_icon_gradient sfsi_centered_icon" style=" border-radius:5px;  width:100%; ">
-				<img style="max-height: 25px;display:unset;margin:0" class="sfsi_wicon" alt="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/responsive-icon/Twitter.svg"><span style="color:#fff">Tweet</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" style="display:block;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_icon_follow_container sfsi_medium_button sfsi_responsive_icon_gradient sfsi_centered_icon" style=" border-radius:5px;  width:100%; ">
-				<img style="max-height: 25px;display:unset;margin:0" class="sfsi_wicon" alt="Follow" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/responsive-icon/Follow.png"><span style="color:#fff">Follow us</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_0_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_1_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_2_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_3_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-		<a target="_blank" href="" style="display:none;text-align:center;margin-left:10px;  flex-basis:100%;" class="sfsi_responsive_fluid">
-			<div class="sfsi_responsive_icon_item_container sfsi_responsive_custom_icon sfsi_responsive_icon_4_container sfsi_medium_button sfsi_centered_icon sfsi_responsive_icon_gradient" style=" border-radius:5px;  width:100%; background-color:#729fcf">
-				<img style="max-height: 25px" alt="custom" src=""><span style="color:#fff">Share</span>
-			</div>
-		</a>
-
-</div></div></div>
+<figure class="wp-block-image"><img loading="lazy" width="645" height="384" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-13.png 645w, https://blog.kroy.io/wp-content/uploads/2019/08/image-13-300x179.png 300w" data-src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-13.png" data-sizes="(max-width: 645px) 100vw, 645px" class="wp-image-96 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img loading="lazy" width="645" height="384" src="https://blog2.kroy.io/wp-content/uploads/2019/08/image-13.png" alt="" class="wp-image-96" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/image-13.png 645w,https://blog.kroy.io/wp-content/uploads/2019/08/image-13-300x179.png 300w" sizes="(max-width: 645px) 100vw, 645px"></noscript></figure><p>Coming soon…</p>
+<div class="sfsi_Sicons" style="width: 100%; display: inline-block; vertical-align: middle; text-align:left"><div style="margin:0px 8px 0px 0px; line-height: 24px"><span>Please follow and like us:</span></div><div class="sfsi_socialwpr"><div class="sf_subscrbe sf_icon" style="text-align:left;vertical-align: middle;float:left;width:auto"><a href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" target="_blank"><img alt="error" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" alt="error"></noscript></a></div><div class="sf_fb sf_icon" style="text-align:left;vertical-align: middle;"><div class="fb-like" data-href="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/" data-send="false" data-layout="button"></div></div><div class="sf_fb_share sf_icon" style="text-align:left;vertical-align: middle;"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1%2F" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></noscript></a></div><div class="sf_twiter sf_icon" style="display: inline-block;vertical-align: middle;width: auto;margin-left: 7px;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=Let%26%238217%3Bs+Play+with+Routing+%26%238211%3B+Part+1+https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></noscript>
+						</a>
+					</div><div class="sf_pinit sf_icon" style="text-align:left;vertical-align: middle;float:left;line-height: 33px;width:auto;margin: 0 -2px;"><a href="#" onclick='sfsi_pinterest_modal_images(event,"https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1/","Let’s Play with Routing – Part 1")' style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg"></noscript></a></div></div></div></div>
 
 
 
@@ -740,7 +408,7 @@ IP address      Hardware address    Lease expiration     Pool          Client Na
 
 
 <section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
-		<img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75" loading="lazy"></div>
+		<img alt="" data-srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" height="75" width="75" loading="lazy" data-src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" class="avatar avatar-75 photo lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75" loading="lazy"></noscript>	</div>
 
 	<div class="author-box-meta">
 		<h4 class="author-box-title">
@@ -762,7 +430,7 @@ IP address      Hardware address    Lease expiration     Pool          Client Na
 
 </section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
 
-	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/" rel="prev"><div class="nav-content"><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/07/login-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="loginpage" loading="lazy" itemprop="image"><span>Building a ZFS on Linux Fileserver</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2019/01/30/a-new-switch-for-a-new-day/" rel="next"><div class="nav-content"><span>A New Switch for a New Day</span> <img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2019/01/IMG_0432-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="s3900 switch" loading="lazy" itemprop="image"></div></a></div>
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2018/07/16/building-a-zfs-on-linux-fileserver/" rel="prev"><div class="nav-content"><img width="75" height="75" alt="loginpage" loading="lazy" itemprop="image" data-src="https://blog.kroy.io/wp-content/uploads/2018/07/login-150x150.png" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2018/07/login-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="loginpage" loading="lazy" itemprop="image"></noscript> <span>Building a ZFS on Linux Fileserver</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2019/01/30/a-new-switch-for-a-new-day/" rel="next"><div class="nav-content"><span>A New Switch for a New Day</span> <img width="75" height="75" alt="s3900 switch" loading="lazy" itemprop="image" data-src="https://blog.kroy.io/wp-content/uploads/2019/01/IMG_0432-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2019/01/IMG_0432-150x150.jpg" class="attachment-75x75 size-75x75 wp-post-image" alt="s3900 switch" loading="lazy" itemprop="image"></noscript></div></a></div>
 </section></article><section id="comments" class="comments-area"><div class="comments-title-wrapper center-text">
 		<h3 class="comments-title">
 			Comments		</h3>
@@ -786,6 +454,9 @@ IP address      Hardware address    Lease expiration     Pool          Client Na
 		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
 		<h4 class="widget-title">Recent Posts</h4>
 		<ul><li>
+					<a href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/">Scorched Earth with the Retro Lab</a>
+									</li>
+											<li>
 					<a href="https://blog.kroy.io/2020/11/03/esxi-to-libvirt-now-with-more-terraform/">ESXi to Libvirt, now with more Terraform.</a>
 									</li>
 											<li>
@@ -796,9 +467,6 @@ IP address      Hardware address    Lease expiration     Pool          Client Na
 									</li>
 											<li>
 					<a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">The WYSE 5070, a perfect little VyOS device</a>
-									</li>
-											<li>
-					<a href="https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/">Battle of the Bare Metal Routers</a>
 									</li>
 					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
 			<ul><li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
@@ -860,6 +528,8 @@ IP address      Hardware address    Lease expiration     Pool          Client Na
 	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
 </li>
 	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.kroy.io/category/retrolab/">Retrolab</a>
 </li>
 	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
 </li>
@@ -935,10 +605,11 @@ window.addEventListener('sfsi_functions_loaded', function() {
 
     }
 })
-</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1" style="display:inline-block;"> <img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
+</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></noscript></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
 						<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name+https://blog.kroy.io/2018/11/14/lets-run-with-routing-part-1" style="display:inline-block">
-							<img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></a>
-					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1"><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></noscript>
+						</a>
+					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2018%2F11%2F14%2Flets-run-with-routing-part-1"><img data-pin-nopin="true" alt="Share" title="Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></noscript></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
 			{
 				if (typeof sfsi_widget_set == "function") {
 					sfsi_widget_set();
@@ -1131,13 +802,13 @@ window.addEventListener('sfsi_functions_loaded', function() {
             </style><script src="https://blog.kroy.io/wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/modernizr.custom.min.js" id="SFSIjqueryModernizr-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/jquery.shuffle.min.js" id="SFSIjqueryShuffle-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/random-shuffle-min.js" id="SFSIjqueryrandom-shuffle-js"></script><script id="SFSICustomJs-js-extra">
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script id="sinatra-js-js-extra">
-var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"00b8b3d7c4","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"915a5e38ef","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
 </script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script>
 	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
-	</script><script type="text/javascript" src="https://stats.wp.com/e-202045.js" async="async" defer></script><script type="text/javascript">
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202047.js" async="async" defer></script><script type="text/javascript">
 	_stq = window._stq || [];
-	_stq.push([ 'view', {v:'ext',j:'1:9.0.2',blog:'166765678',post:'31',tz:'-6',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'view', {v:'ext',j:'1:9.1',blog:'166765678',post:'31',tz:'-6',srv:'blog.kroy.io'} ]);
 	_stq.push([ 'clickTrackerInit', '166765678', '31' ]);
 </script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
 		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>
