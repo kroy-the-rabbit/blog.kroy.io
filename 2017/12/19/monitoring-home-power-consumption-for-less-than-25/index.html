@@ -459,13 +459,10 @@ if ($meter_reading > 1) {
 
 
 
-<pre class="wp-block-code"><code><!DOCTYPE HTML>
-<html>
-<head>
-<link href="css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
-<script src="js/jquery-1.11.1.min.js"></script>
-<script src="js/jquery-ui.1.11.2.min.js"></script>
-<script>
+<pre class="wp-block-code"><code>
+
+
+<link href="css/jquery-ui.1.11.2.min.css" rel="stylesheet"><script src="js/jquery-1.11.1.min.js"></script><script src="js/jquery-ui.1.11.2.min.js"></script><script>
 
 //https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
 $.urlParam = function(name){
@@ -646,14 +643,9 @@ function updateTheRest() {
 	});
 }
 
-</script>
-</head>
-<body >
-<h1 style="color:#000000">Kilowattage</h1> <span id="goback" style="display:none;"><a href='' onclick='refreshByHour(); $("#goback").fadeOut(600); return false;' style="color:#000000">View Today</a></span><br />
-<p>
-<div class="resizable" style="height: 370px;border:1px solid gray;">
-    <div id="byHourContainer" style="height: 100%; width: 100%;"></div><br />
-</div>
+</script><h1 style="color:#000000">Kilowattage</h1> <span id="goback" style="display:none;"><a href="" onclick='refreshByHour(); $("#goback").fadeOut(600); return false;' style="color:#000000">View Today</a></span><br><p>
+</p><div class="resizable" style="height: 370px;border:1px solid gray;">
+    <div id="byHourContainer" style="height: 100%; width: 100%;"></div><br></div>
 <div class="resizable" style="height: 370px;border:1px solid gray;">
     <div id="byDayContainer" style="height: 100%; width: 100%;"></div>
 </div>
@@ -664,10 +656,8 @@ function updateTheRest() {
     <div id="byMonthContainer" style="height: 100%; width: 100%;"></div>
 </div>
 
-</p>
-<script src="js/jquery.canvasjs.min.js"></script>
-</body>
-</html></code></pre>
+
+<script src="js/jquery.canvasjs.min.js"></script></code></pre>
 
 
 
@@ -830,23 +820,7 @@ if (postvars.byHourDay) {
         $ld_res = $this->db->query("select * from byhour where ((ymd={$date} and hour > 0) || (ymd={$tomm} and hour=0)) order by ymd,hour");
         while ($ld_data = $ld_res->fetchArray()) {
             $hour = $ld_data['hour'] - 1;
-            if ($hour < 0) {
-                $hour = 23;
-            }
-            //convert to watts
-            $ret[$hour] = $ld_data['last_difference']*10;
-        }
-        
-        ##Fill in blanks spots with "0" in the final output so we have a full 24 hours worth
-        for($i=0; $i < 24; $i++) {
-            if (!isset($ret[$i])) {
-                $ret[$i] = 0;
-            }
-        }
-        ksort($ret);
-        return $ret;
-    }
-    </code></pre>
+            if ($hour </code></pre>
 
 
 

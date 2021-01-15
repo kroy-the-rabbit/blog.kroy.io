@@ -744,137 +744,7 @@ Terraform will perform the following actions:
   + resource "libvirt_cloudinit_disk" "commoninit" {
       + id             = (known after apply)
       + name           = "testvm-commoninit.iso"
-      + network_config = <<~EOT
-            version: 2
-            ethernets:
-              ens3:
-                 dhcp4: true
-        EOT
-      + pool           = "VM"
-      + user_data      = <<~EOT
-            #cloud-config
-            hostname: testvm
-            fqdn: testvm.lan.kroy.io
-            manage_etc_hosts: true
-            users:
-              - name: root
-                ssh-authorized-keys:
-                  - ssh-ed25519 key key1
-                  - ssh-ed25519 key ansible
-            
-              - name: kroy
-                sudo: ALL=(ALL) NOPASSWD:ALL
-                groups: users, admin
-                home: /home/kroy
-                shell: /bin/bash
-                lock_passwd: false
-                ssh-authorized-keys:
-                  - ssh-ed25519 key key1
-                  - ssh-ed25519 key ansible
-            
-            # only cert auth via ssh (console access can still login)
-            ssh_pwauth: false
-            disable_root: false
-            chpasswd:
-              list: |
-                 kroy:test
-              expire: False
-            packages:
-              - qemu-guest-agent
-            
-            growpart:
-              mode: auto
-              devices: ['/']
-              ignore_growroot_disabled: false
-            
-            runcmd:
-              - [ systemctl, daemon-reload ]
-              - [ systemctl, enable, qemu-guest-agent.service ]
-              - [ systemctl, start, --no-block, qemu-guest-agent.service ]
-        EOT
-    }
-
-  # libvirt_domain.domain-vm will be created
-  + resource "libvirt_domain" "domain-vm" {
-      + arch        = (known after apply)
-      + cloudinit   = (known after apply)
-      + disk        = [
-          + {
-              + block_device = null
-              + file         = null
-              + scsi         = null
-              + url          = null
-              + volume_id    = (known after apply)
-              + wwn          = null
-            },
-        ]
-      + emulator    = (known after apply)
-      + fw_cfg_name = "opt/com.coreos/config"
-      + id          = (known after apply)
-      + machine     = (known after apply)
-      + memory      = 2048
-      + name        = "testvm.lan.kroy.io"
-      + qemu_agent  = true
-      + running     = true
-      + vcpu        = 2
-
-      + graphics {
-          + autoport       = true
-          + listen_address = "127.0.0.1"
-          + listen_type    = "address"
-          + type           = "spice"
-        }
-
-      + network_interface {
-          + addresses      = (known after apply)
-          + bridge         = "vibr20"
-          + hostname       = (known after apply)
-          + mac            = (known after apply)
-          + network_id     = (known after apply)
-          + network_name   = (known after apply)
-          + wait_for_lease = true
-        }
-    }
-
-  # libvirt_volume.os_image will be created
-  + resource "libvirt_volume" "os_image" {
-      + base_volume_id = (known after apply)
-      + format         = (known after apply)
-      + id             = (known after apply)
-      + name           = "testvm-os_image"
-      + pool           = "VM"
-      + size           = 21474836480
-    }
-
-  # libvirt_volume.os_tmpl will be created
-  + resource "libvirt_volume" "os_tmpl" {
-      + format = "qcow2"
-      + id     = (known after apply)
-      + name   = "focal_os_tmpl"
-      + pool   = "VM"
-      + size   = (known after apply)
-      + source = "file:///home/kroy/Documents/infra/terraform/libvirt/diskimages/focal-server-cloudimg-amd64.img"
-    }
-
-  # mikrotik_dhcp_lease.dhcp will be created
-  + resource "mikrotik_dhcp_lease" "dhcp" {
-      + address    = (known after apply)
-      + blocked    = "false"
-      + comment    = "testvm.lan.kroy.io"
-      + dynamic    = false
-      + hostname   = "testvm"
-      + id         = (known after apply)
-      + macaddress = (known after apply)
-    }
-
-Plan: 5 to add, 0 to change, 0 to destroy.
-
-------------------------------------------------------------------------
-
-Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-can't guarantee that exactly these actions will be performed if
-"terraform apply" is subsequently run.
-</code></pre>
+      + network_config = </code></pre>
 
 
 
@@ -957,7 +827,7 @@ applicable law.
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6d061f02142d19081e191b00">[email protected]</a>:~$</code></pre>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6d061f02142d19081e191b00">[email protected]</a>:~$</command></code></pre>
 
 
 
