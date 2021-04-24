@@ -266,7 +266,7 @@ ul.tab_3_list li span {font-family: helveticaregular;}
 .sfsi_plc_btm {bottom: auto;top: 100%;left: 50%;margin-left: -63px;margin-top: -6px;margin-bottom: auto;}
 .inerCnt {position: relative;z-index: inherit !important;float: left;float: left;width: 100%;}
 .sfsi_wicons {margin-bottom: 30px;position: relative;padding-top: 5px;}
-.norm_row .bot_no {position: absolute;padding: 1px 0;font-size: 12px !important;text-align: center;line-height: 12px !important;background: #fff;border-radius: 5px;left: 50%;margin-left: -20px;z-index: 9;border: 1px solid #333;top: 100%;white-space: pre;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;margin-top: 0px;width: 40px;}
+.norm_row .bot_no {position: absolute;padding: 1px 0;font-size: 12px !important;text-align: center;line-height: 12px !important;background: #fff;border-radius: 5px;left: 50%;margin-left: -22px;z-index: 9;border: 1px solid #333;top: 100%;white-space: pre;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;margin-top: 8px;width: 40px;}
 .norm_row .bot_no:before {content: url("images/count_top_arow.png");position: absolute;height: 9px;margin-left: -7.5px;top: -10px;left: 50%;width: 15px;}
 .bot_no.sfsiSmBtn {font-size: 10px;margin-top: 4px;}
 .bot_no.sfsiSmBtn:before {margin-left: -8px;top: -9px;}

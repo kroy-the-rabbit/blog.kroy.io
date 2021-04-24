@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="UTF-8"><title>ESXi to Libvirt, now with more Terraform. – blog.kroy.io</title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="dns-prefetch" href="//s.w.org"><script type="text/javascript" data-cfasync="false">
     (window.gaDevIds=window.gaDevIds||[]).push("dNDMyYj");
-	var em_version         = '6.3.2';
+	var em_version         = '6.4.0';
 	var em_track_user      = true;
 	var em_no_track_reason = '';
 	
@@ -88,11 +88,11 @@ window.ga = __gaTracker;		__gaTracker('create', 'UA-89722449-1', 'auto');
 .wpautoterms-footer a{color:#000000;font-family:Arial, sans-serif;font-size:14px;}
 .wpautoterms-footer .separator{color:#cccccc;font-family:Arial, sans-serif;font-size:14px;}</style><link rel="stylesheet" id="wp-block-library-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/style.min.css" media="all"><style id="wp-block-library-inline-css">
 .has-text-align-justify{text-align:justify;}
-</style><link rel="stylesheet" id="wp-block-library-theme-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/theme.min.css" media="all"><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="SFSImainCss-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/sfsi-style.css" media="all"><link rel="stylesheet" id="disable_sfsi-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/disable_sfsi.css" media="all"><link rel="stylesheet" id="exactmetrics-popular-posts-style-css" href="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/css/frontend.min.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.min.js" id="jquery-core-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill.min.js" id="wp-polyfill-js"></script><script id="wp-polyfill-js-after">
+</style><link rel="stylesheet" id="wp-block-library-theme-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/theme.min.css" media="all"><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="SFSImainCss-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/sfsi-style.css" media="all"><link rel="stylesheet" id="disable_sfsi-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/disable_sfsi.css" media="all"><link rel="stylesheet" id="exactmetrics-popular-posts-style-css" href="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/css/frontend.min.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.js" id="jquery-core-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill.min.js" id="wp-polyfill-js"></script><script id="wp-polyfill-js-after">
 ( 'fetch' in window ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0">' + 'ipt>' );( document.contains ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0">' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0">' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4">' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12">' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2">' + 'ipt>' );
 </script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
 var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false"};
-</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend.min.js" id="exactmetrics-frontend-script-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
 			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
 		</script><style>
 			.no-js img.lazyload { display: none; }
@@ -482,7 +482,7 @@ var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"
 # instance the providers
 
 provider "libvirt" {
-    uri = "qemu+ssh://<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6308110c1a23090200084d0f020d4d08110c1a4d0a0c">[email protected]</a>/system"
+    uri = "qemu+ssh://<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ef5ecf1e7def4fffdf5b0f2fff0b0f5ecf1e7b0f7f1">[email protected]</a>/system"
 }
 
 provider "mikrotik" {
@@ -744,7 +744,137 @@ Terraform will perform the following actions:
   + resource "libvirt_cloudinit_disk" "commoninit" {
       + id             = (known after apply)
       + name           = "testvm-commoninit.iso"
-      + network_config = </code></pre>
+      + network_config = <<~EOT
+            version: 2
+            ethernets:
+              ens3:
+                 dhcp4: true
+        EOT
+      + pool           = "VM"
+      + user_data      = <<~EOT
+            #cloud-config
+            hostname: testvm
+            fqdn: testvm.lan.kroy.io
+            manage_etc_hosts: true
+            users:
+              - name: root
+                ssh-authorized-keys:
+                  - ssh-ed25519 key key1
+                  - ssh-ed25519 key ansible
+            
+              - name: kroy
+                sudo: ALL=(ALL) NOPASSWD:ALL
+                groups: users, admin
+                home: /home/kroy
+                shell: /bin/bash
+                lock_passwd: false
+                ssh-authorized-keys:
+                  - ssh-ed25519 key key1
+                  - ssh-ed25519 key ansible
+            
+            # only cert auth via ssh (console access can still login)
+            ssh_pwauth: false
+            disable_root: false
+            chpasswd:
+              list: |
+                 kroy:test
+              expire: False
+            packages:
+              - qemu-guest-agent
+            
+            growpart:
+              mode: auto
+              devices: ['/']
+              ignore_growroot_disabled: false
+            
+            runcmd:
+              - [ systemctl, daemon-reload ]
+              - [ systemctl, enable, qemu-guest-agent.service ]
+              - [ systemctl, start, --no-block, qemu-guest-agent.service ]
+        EOT
+    }
+
+  # libvirt_domain.domain-vm will be created
+  + resource "libvirt_domain" "domain-vm" {
+      + arch        = (known after apply)
+      + cloudinit   = (known after apply)
+      + disk        = [
+          + {
+              + block_device = null
+              + file         = null
+              + scsi         = null
+              + url          = null
+              + volume_id    = (known after apply)
+              + wwn          = null
+            },
+        ]
+      + emulator    = (known after apply)
+      + fw_cfg_name = "opt/com.coreos/config"
+      + id          = (known after apply)
+      + machine     = (known after apply)
+      + memory      = 2048
+      + name        = "testvm.lan.kroy.io"
+      + qemu_agent  = true
+      + running     = true
+      + vcpu        = 2
+
+      + graphics {
+          + autoport       = true
+          + listen_address = "127.0.0.1"
+          + listen_type    = "address"
+          + type           = "spice"
+        }
+
+      + network_interface {
+          + addresses      = (known after apply)
+          + bridge         = "vibr20"
+          + hostname       = (known after apply)
+          + mac            = (known after apply)
+          + network_id     = (known after apply)
+          + network_name   = (known after apply)
+          + wait_for_lease = true
+        }
+    }
+
+  # libvirt_volume.os_image will be created
+  + resource "libvirt_volume" "os_image" {
+      + base_volume_id = (known after apply)
+      + format         = (known after apply)
+      + id             = (known after apply)
+      + name           = "testvm-os_image"
+      + pool           = "VM"
+      + size           = 21474836480
+    }
+
+  # libvirt_volume.os_tmpl will be created
+  + resource "libvirt_volume" "os_tmpl" {
+      + format = "qcow2"
+      + id     = (known after apply)
+      + name   = "focal_os_tmpl"
+      + pool   = "VM"
+      + size   = (known after apply)
+      + source = "file:///home/kroy/Documents/infra/terraform/libvirt/diskimages/focal-server-cloudimg-amd64.img"
+    }
+
+  # mikrotik_dhcp_lease.dhcp will be created
+  + resource "mikrotik_dhcp_lease" "dhcp" {
+      + address    = (known after apply)
+      + blocked    = "false"
+      + comment    = "testvm.lan.kroy.io"
+      + dynamic    = false
+      + hostname   = "testvm"
+      + id         = (known after apply)
+      + macaddress = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an "-out" parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+"terraform apply" is subsequently run.
+</code></pre>
 
 
 
@@ -791,7 +921,7 @@ Apply complete! Resources: 5 added, 0 changed, 0 destroyed
 
 
 
-<pre class="wp-block-code"><code>❯ ssh <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="147f667b6d5425243a26243a26243a232d">[email protected]</a>
+<pre class="wp-block-code"><code>❯ ssh <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="345f465b4d7405041a06041a06041a030d">[email protected]</a>
 Warning: Permanently added '10.20.20.79' (ECDSA) to the list of known hosts.
 Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-51-generic x86_64)
 
@@ -827,7 +957,7 @@ applicable law.
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
-<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6d061f02142d19081e191b00">[email protected]</a>:~$</command></code></pre>
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="78130a1701380c1d0b0c0e15">[email protected]</a>:~$</code></pre>
 
 
 
@@ -994,6 +1124,9 @@ sed -i -e 's/testvm/doubletest/' vms/doubletest.lan.kroy.io/vm.tf</code></pre>
 		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
 		<h4 class="widget-title">Recent Posts</h4>
 		<ul><li>
+					<a href="https://blog.kroy.io/2021/01/14/bbsing-in-retro-style-with-a-wimodem232-on-a-mac-se/">BBSing Retro-style with a Wimodem232 on a Mac SE</a>
+									</li>
+											<li>
 					<a href="https://blog.kroy.io/2020/12/07/vyos-from-scratch-bgp-announcements/">VyOS from Scratch – BGP Announcement</a>
 									</li>
 											<li>
@@ -1005,11 +1138,9 @@ sed -i -e 's/testvm/doubletest/' vms/doubletest.lan.kroy.io/vm.tf</code></pre>
 											<li>
 					<a href="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/">VyOS from Scratch – Edition 1</a>
 									</li>
-											<li>
-					<a href="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/">A Baby WYSE, the 3040</a>
-									</li>
 					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
-			<ul><li><a href="https://blog.kroy.io/2020/12/">December 2020</a></li>
+			<ul><li><a href="https://blog.kroy.io/2021/01/">January 2021</a></li>
+	<li><a href="https://blog.kroy.io/2020/12/">December 2020</a></li>
 	<li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
 	<li><a href="https://blog.kroy.io/2020/05/">May 2020</a></li>
 	<li><a href="https://blog.kroy.io/2020/01/">January 2020</a></li>
@@ -1111,7 +1242,7 @@ sed -i -e 's/testvm/doubletest/' vms/doubletest.lan.kroy.io/vm.tf</code></pre>
 	<div class="si-container">
 		<div class="si-flex-row">
 
-			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2020 — blog.kroy.io. All rights reserved. <a href="https://wordpress.org/themes/sinatra/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
+			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2021 — blog.kroy.io. All rights reserved. <a href="https://wordpress.org/themes/sinatra/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
 			<div class="col-xs-12 center-xs col-md flex-basis-auto end-md"></div>
 
 		</div>
@@ -1163,7 +1294,7 @@ window.addEventListener('sfsi_functions_loaded', function() {
 					  });</script><script>
         window.addEventListener('sfsi_functions_loaded', function() {
             if (typeof sfsi_plugin_version == 'function') {
-                sfsi_plugin_version(2.61);
+                sfsi_plugin_version(2.62);
             }
         });
 
@@ -1344,12 +1475,12 @@ window.addEventListener('sfsi_functions_loaded', function() {
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
 var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
 </script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
-var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"623a4c6bbb","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"5d93b516a0","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
 </script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script src="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.js" id="lwptoc-main-js"></script><script>
 	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
-	</script><script type="text/javascript" src="https://stats.wp.com/e-202053.js" async="async" defer></script><script type="text/javascript">
+	</script><script type="text/javascript" src="https://stats.wp.com/e-202116.js" async="async" defer></script><script type="text/javascript">
 	_stq = window._stq || [];
-	_stq.push([ 'view', {v:'ext',j:'1:9.2',blog:'166765678',post:'894',tz:'-6',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'view', {v:'ext',j:'1:9.2.1',blog:'166765678',post:'894',tz:'-5',srv:'blog.kroy.io'} ]);
 	_stq.push([ 'clickTrackerInit', '166765678', '894' ]);
 </script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
 		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>

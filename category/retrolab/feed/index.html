@@ -15,13 +15,13 @@
 	<atom:link href="https://blog.kroy.io/category/retrolab/feed/" rel="self" type="application/rss+xml" />
 	<link>https://blog.kroy.io/</link>
 	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
-	<lastBuildDate>Mon, 07 Dec 2020 15:36:31 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 15 Jan 2021 04:18:02 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.6</generator>
+	<generator>https://wordpress.org/?v=5.5.4</generator>
 
 <image>
 	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
@@ -31,6 +31,239 @@
 	<height>32</height>
 </image> 
 <site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>BBSing Retro-style with a Wimodem232 on a Mac SE</title>
+		<link>https://blog.kroy.io/2021/01/14/bbsing-in-retro-style-with-a-wimodem232-on-a-mac-se/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=bbsing-in-retro-style-with-a-wimodem232-on-a-mac-se</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Fri, 15 Jan 2021 02:39:49 +0000</pubDate>
+				<category><![CDATA[Retrolab]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=1036</guid>
+
+					<description><![CDATA[There&#8217;s a simple reality that most people in 2021 probably don&#8217;t even have a concept of what a BBS (bulletin board system) is, but with my recent retro-lab musings, I&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>There&#8217;s a simple reality that most people in 2021 probably don&#8217;t even have a concept of what a BBS (bulletin board system) is, but with my recent <a rel="noreferrer noopener" href="https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/" data-type="post" data-id="954" target="_blank">retro-lab musings,</a> I discovered that BBSes are alive and well.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Introduction</h2>
+
+
+
+<p>A huge and defining part of my youth was trolling all the BBSes I could find.  At the time, there was no Internet, so BBSing was my window to the world.  It was basically the only place to find all the new shareware, images, door games, and more.  And later on, it even become possible to exchange messages with BBSes around the world through the use of FidoNet.</p>
+
+
+
+<p>In any case, there was nothing more exciting than checking into your favorite BBS and playing a bit of TradeWars, or spotting the newest Commander Keen (4 to be specific), and waiting ALLLLL night for it to download.  Of course it was <em>ONLY</em> 600KB, but that took upwards of 6 hours to download.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="759" height="569" src="https://blog.kroy.io/wp-content/uploads/2021/01/image.png" alt="" class="wp-image-1046" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image.png 759w, https://blog.kroy.io/wp-content/uploads/2021/01/image-300x225.png 300w, https://blog.kroy.io/wp-content/uploads/2021/01/image-300x225@2x.png 600w" sizes="(max-width: 759px) 100vw, 759px" /><figcaption>Commander Keen 4.  This image alone is 60% of the size of the actual game in kilobytes</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>&#8220;Dialing Up&#8221;</h2>
+
+
+
+<p>Although I was casually aware that BBSes still existed via telnet, a <a href="https://www.reddit.com/r/VintageApple/comments/koo70p/new_mac_bbs_captains_quarters_ii/" data-type="URL" data-id="https://www.reddit.com/r/VintageApple/comments/koo70p/new_mac_bbs_captains_quarters_ii/">recent post</a> on Reddit&#8217;s <a rel="noreferrer noopener" href="https://reddit.com/r/VintageApple" target="_blank">r/VintageApple</a> subreddit really caught my eye. </p>
+
+
+
+<p>It didn&#8217;t take much work to get my PowerMac 7200/75 connected via telnet to the Captain&#8217;s Quarters II, and I was immediately hooked!</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="948" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-1-1024x948.png" alt="" class="wp-image-1047" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-1-1024x948.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/01/image-1-300x278.png 300w, https://blog.kroy.io/wp-content/uploads/2021/01/image-1.png 1337w, https://blog.kroy.io/wp-content/uploads/2021/01/image-1-300x278@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>glorious ansi color</figcaption></figure>
+
+
+
+<p>Of course, that was only the beginning&#8230;</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Jacking In</h2>
+
+
+
+<p>But this wasn&#8217;t enough.  In my original BBS days, i was using either some sort of all-in-one Monochrome Macintosh, or BananaCOM on MS-DOS something on an 8088 Acer, both with some 1200/14.4k/38.4k modems.  </p>
+
+
+
+<p>As I&#8217;ve mentioned in the past, when I do something, I do it up big.  So I immediately knew I needed to get my Mac SE connecting to this BBS!</p>
+
+
+
+<p>My first attempt was hooking together the Mac SE and PowerMac 7200 via a serial cable, and sharing the PowerMac&#8217;s Internet connection with IPNetRouter.  </p>
+
+
+
+<p>Unfortunately, I was never able to get this working, though I did finally get an AppleTalk share set up between the two hosts.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="997" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-3-997x1024.png" alt="" class="wp-image-1049" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-3-997x1024.png 997w, https://blog.kroy.io/wp-content/uploads/2021/01/image-3-292x300.png 292w, https://blog.kroy.io/wp-content/uploads/2021/01/image-3.png 1398w, https://blog.kroy.io/wp-content/uploads/2021/01/image-3-292x300@2x.png 584w" sizes="(max-width: 997px) 100vw, 997px" /><figcaption>Macintosh HD is coming from the PowerMac</figcaption></figure>
+
+
+
+<p>But MacTCP failed me&#8230;</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="766" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-2-1024x766.png" alt="" class="wp-image-1048" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-2-1024x766.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/01/image-2-300x224.png 300w, https://blog.kroy.io/wp-content/uploads/2021/01/image-2.png 1450w, https://blog.kroy.io/wp-content/uploads/2021/01/image-2-300x224@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>failure</figcaption></figure>
+
+
+
+<p>I was starting to get a little disappointed, until I decided to get a &#8220;real&#8221; modem.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>A Real Modem</h2>
+
+
+
+<p>Of course, anybody that follows tech knows that modems have been entirely obsolete for a very long time.  Even though I do have some old Mac modems somewhere, the simple fact is I don&#8217;t even have a phone line to plug them into, let alone a number to dial that would be valid in 2021.</p>
+
+
+
+<p>That&#8217;s about when I discovered the WiModem232.</p>
+
+
+
+<p>To make a long story short, it&#8217;s a device that connects via WiFi and acts like an actual Hayes compatible modem.  Of course, you don&#8217;t dial phone numbers, but in my case, telnet addresses. </p>
+
+
+
+<p>It. Was. Perfect.  </p>
+
+
+
+<p>I was smart, or so I thought, and ordered up a couple of cables.  One for <a href="https://amzn.to/38Mh33o" target="_blank" rel="noreferrer noopener">my Mac Fleet</a>, and one for my <a href="https://amzn.to/3nN9M7z" target="_blank" rel="noreferrer noopener">486 running DOS</a>.</p>
+
+
+
+<p>It arrived quickly and did exactly what it promised to do.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="761" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-5-761x1024.png" alt="" class="wp-image-1051" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-5-761x1024.png 761w, https://blog.kroy.io/wp-content/uploads/2021/01/image-5-223x300.png 223w, https://blog.kroy.io/wp-content/uploads/2021/01/image-5.png 1075w, https://blog.kroy.io/wp-content/uploads/2021/01/image-5-223x300@2x.png 446w" sizes="(max-width: 761px) 100vw, 761px" /><figcaption>connected</figcaption></figure>
+
+
+
+<p>Unfortunately, the Mac cable took a few extra days to arrive, so I was forced to &#8220;slum&#8221; it on my 486 and Bananacom.  And Captain&#8217;s Quarters II looks and runs great there too:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="755" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-6-755x1024.png" alt="" class="wp-image-1052" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-6-755x1024.png 755w, https://blog.kroy.io/wp-content/uploads/2021/01/image-6-221x300.png 221w, https://blog.kroy.io/wp-content/uploads/2021/01/image-6.png 810w, https://blog.kroy.io/wp-content/uploads/2021/01/image-6-221x300@2x.png 442w" sizes="(max-width: 755px) 100vw, 755px" /><figcaption>cqII bbs on bananacom</figcaption></figure>
+
+
+
+<p>A few days later when the Mac cable arrived, I realized the horrible mistake I had made.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Mac SE goes Online</h2>
+
+
+
+<p>The mistake, of course, was that the cable I ordered was for hooking up an ImageWriter printer, and not a modem.  But amazingly, in the never ending treat-bag of old Mac &#8220;stuffs&#8221;, I discovered I had a DIN8-&gt;DB25 cable for hooking up a modem.</p>
+
+
+
+<p>It didn&#8217;t take long to hook it up, but unfortunately things were&#8230; not well.</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="871" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-7-871x1024.png" alt="" class="wp-image-1053" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-7-871x1024.png 871w, https://blog.kroy.io/wp-content/uploads/2021/01/image-7-255x300.png 255w, https://blog.kroy.io/wp-content/uploads/2021/01/image-7-1307x1536.png 1307w, https://blog.kroy.io/wp-content/uploads/2021/01/image-7.png 1340w, https://blog.kroy.io/wp-content/uploads/2021/01/image-7-255x300@2x.png 510w" sizes="(max-width: 871px) 100vw, 871px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="789" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-8-789x1024.png" alt="" class="wp-image-1054" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-8-789x1024.png 789w, https://blog.kroy.io/wp-content/uploads/2021/01/image-8-231x300.png 231w, https://blog.kroy.io/wp-content/uploads/2021/01/image-8.png 1004w, https://blog.kroy.io/wp-content/uploads/2021/01/image-8-231x300@2x.png 462w" sizes="(max-width: 789px) 100vw, 789px" /></figure>
+
+
+
+<p>Fortunately, that was just due to the ANSI colors, which I was able to turn off with a simple checkbox in ZTerm</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="982" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-9-1024x982.png" alt="" class="wp-image-1055" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-9-1024x982.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/01/image-9-300x288.png 300w, https://blog.kroy.io/wp-content/uploads/2021/01/image-9.png 1039w, https://blog.kroy.io/wp-content/uploads/2021/01/image-9-300x288@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And everything looks great:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="913" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-10-913x1024.png" alt="" class="wp-image-1056" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-10-913x1024.png 913w, https://blog.kroy.io/wp-content/uploads/2021/01/image-10-267x300.png 267w, https://blog.kroy.io/wp-content/uploads/2021/01/image-10.png 1016w, https://blog.kroy.io/wp-content/uploads/2021/01/image-10-267x300@2x.png 534w" sizes="(max-width: 913px) 100vw, 913px" /><figcaption>looking good</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="954" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-11-1024x954.png" alt="" class="wp-image-1057" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-11-1024x954.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/01/image-11-300x279.png 300w, https://blog.kroy.io/wp-content/uploads/2021/01/image-11.png 1338w, https://blog.kroy.io/wp-content/uploads/2021/01/image-11-300x279@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>and better</figcaption></figure>
+
+
+
+<p>And in attempting to download an old game, the memories of the dreaded &#8220;CRC Error&#8221; came flooding back to me:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="792" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-12-792x1024.png" alt="" class="wp-image-1058" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-12-792x1024.png 792w, https://blog.kroy.io/wp-content/uploads/2021/01/image-12-232x300.png 232w, https://blog.kroy.io/wp-content/uploads/2021/01/image-12.png 1010w, https://blog.kroy.io/wp-content/uploads/2021/01/image-12-232x300@2x.png 464w" sizes="(max-width: 792px) 100vw, 792px" /><figcaption>CRC error</figcaption></figure>
+
+
+
+<p>That&#8217;s what ZModem is for.  </p>
+
+
+
+<p>What I discovered is that this old Mac isn&#8217;t particularly stable over the serial port going past 19,200.  Knocking down the baud rate made it download just fine (and slowly):</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="848" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/01/image-13-848x1024.png" alt="" class="wp-image-1059" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/image-13-848x1024.png 848w, https://blog.kroy.io/wp-content/uploads/2021/01/image-13-248x300.png 248w, https://blog.kroy.io/wp-content/uploads/2021/01/image-13.png 1233w, https://blog.kroy.io/wp-content/uploads/2021/01/image-13-248x300@2x.png 496w" sizes="(max-width: 848px) 100vw, 848px" /><figcaption>downloading&#8230; sloooowly</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>Of course, what&#8217;s the point here? </p>
+
+
+
+<p>I can access Captain&#8217;s Quarters II and other BBSes just fine over telnet from my laptop or workstation.  And since I have a <a rel="noreferrer noopener" href="https://www.bigmessowires.com/floppy-emu/" target="_blank">Floppy EMU</a>, there&#8217;s obviously better ways to transfer files to the Mac SE.</p>
+
+
+
+<p>For me, it&#8217;s the nostalgia.  Doing the things I used to do, on the hardware (or similarly enough) to the hardware I used to do it on.  I love this hardware and rediscovering BBSes has opened up a whole new world to me.  </p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1036</post-id>	</item>
+		<item>
 		<title>Scorched Earth with the Retro Lab</title>
 		<link>https://blog.kroy.io/2020/11/19/scorched-earth-with-the-retro-lab/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=scorched-earth-with-the-retro-lab</link>
 		

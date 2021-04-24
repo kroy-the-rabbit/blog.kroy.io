@@ -15,13 +15,13 @@
 	<atom:link href="https://blog.kroy.io/tag/dell/feed/" rel="self" type="application/rss+xml" />
 	<link>https://blog.kroy.io/</link>
 	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
-	<lastBuildDate>Mon, 07 Dec 2020 15:36:43 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Jan 2021 22:41:02 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.6</generator>
+	<generator>https://wordpress.org/?v=5.5.4</generator>
 
 <image>
 	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
@@ -327,7 +327,7 @@ tmpfs           190M     0  190M   0% /run/user/1000
 
 
 
-<p>For a while now, I&#8217;ve been looking for a replacement to a <a href="https://amzn.to/350TPC0">Supermicro E200-9B</a> that I had an &#8220;accident&#8221; with.  By accident, I mean I killed the box by messing around on it with a FlashCat.  </p>
+<p>For a while now, I&#8217;ve been looking for a replacement to a <a href="https://amzn.to/350TPC0">Supermicro E200-9B</a> that I had an &#8220;accident&#8221; with.  By &#8220;accident&#8221;, I mean I killed the box by messing around on it with a FlashCat.  </p>
 
 
 
@@ -685,56 +685,56 @@ system {
 
 <pre class="wp-block-code"><code>vyos@vyos:~$ iperf3 -c 10.0.10.1 -P2
 Connecting to host 10.0.10.1, port 5201
-[  4] local 10.0.10.234 port 32910 connected to 10.0.10.1 port 5201
-[  6] local 10.0.10.234 port 32912 connected to 10.0.10.1 port 5201
-[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
-[  4]   0.00-1.00   sec  57.2 MBytes   480 Mbits/sec    0    209 KBytes
-[  6]   0.00-1.00   sec  56.9 MBytes   478 Mbits/sec    0    198 KBytes
-[SUM]   0.00-1.00   sec   114 MBytes   958 Mbits/sec    0
+&#091;  4] local 10.0.10.234 port 32910 connected to 10.0.10.1 port 5201
+&#091;  6] local 10.0.10.234 port 32912 connected to 10.0.10.1 port 5201
+&#091; ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+&#091;  4]   0.00-1.00   sec  57.2 MBytes   480 Mbits/sec    0    209 KBytes
+&#091;  6]   0.00-1.00   sec  56.9 MBytes   478 Mbits/sec    0    198 KBytes
+&#091;SUM]   0.00-1.00   sec   114 MBytes   958 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   1.00-2.00   sec  55.9 MBytes   469 Mbits/sec    0    209 KBytes
-[  6]   1.00-2.00   sec  55.7 MBytes   467 Mbits/sec    0    198 KBytes
-[SUM]   1.00-2.00   sec   112 MBytes   936 Mbits/sec    0
+&#091;  4]   1.00-2.00   sec  55.9 MBytes   469 Mbits/sec    0    209 KBytes
+&#091;  6]   1.00-2.00   sec  55.7 MBytes   467 Mbits/sec    0    198 KBytes
+&#091;SUM]   1.00-2.00   sec   112 MBytes   936 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   2.00-3.00   sec  56.1 MBytes   471 Mbits/sec    0    209 KBytes
-[  6]   2.00-3.00   sec  56.1 MBytes   471 Mbits/sec    0    198 KBytes
-[SUM]   2.00-3.00   sec   112 MBytes   941 Mbits/sec    0
+&#091;  4]   2.00-3.00   sec  56.1 MBytes   471 Mbits/sec    0    209 KBytes
+&#091;  6]   2.00-3.00   sec  56.1 MBytes   471 Mbits/sec    0    198 KBytes
+&#091;SUM]   2.00-3.00   sec   112 MBytes   941 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   3.00-4.00   sec  55.7 MBytes   467 Mbits/sec    0    209 KBytes
-[  6]   3.00-4.00   sec  56.1 MBytes   471 Mbits/sec    0    223 KBytes
-[SUM]   3.00-4.00   sec   112 MBytes   938 Mbits/sec    0
+&#091;  4]   3.00-4.00   sec  55.7 MBytes   467 Mbits/sec    0    209 KBytes
+&#091;  6]   3.00-4.00   sec  56.1 MBytes   471 Mbits/sec    0    223 KBytes
+&#091;SUM]   3.00-4.00   sec   112 MBytes   938 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   4.00-5.00   sec  54.3 MBytes   456 Mbits/sec    1    228 KBytes
-[  6]   4.00-5.00   sec  58.2 MBytes   488 Mbits/sec    0    240 KBytes
-[SUM]   4.00-5.00   sec   113 MBytes   944 Mbits/sec    1
+&#091;  4]   4.00-5.00   sec  54.3 MBytes   456 Mbits/sec    1    228 KBytes
+&#091;  6]   4.00-5.00   sec  58.2 MBytes   488 Mbits/sec    0    240 KBytes
+&#091;SUM]   4.00-5.00   sec   113 MBytes   944 Mbits/sec    1
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   5.00-6.00   sec  54.7 MBytes   459 Mbits/sec    0    228 KBytes
-[  6]   5.00-6.00   sec  56.9 MBytes   477 Mbits/sec   45    240 KBytes
-[SUM]   5.00-6.00   sec   112 MBytes   936 Mbits/sec   45
+&#091;  4]   5.00-6.00   sec  54.7 MBytes   459 Mbits/sec    0    228 KBytes
+&#091;  6]   5.00-6.00   sec  56.9 MBytes   477 Mbits/sec   45    240 KBytes
+&#091;SUM]   5.00-6.00   sec   112 MBytes   936 Mbits/sec   45
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   6.00-7.00   sec  53.8 MBytes   451 Mbits/sec    0    228 KBytes
-[  6]   6.00-7.00   sec  57.7 MBytes   484 Mbits/sec    0    240 KBytes
-[SUM]   6.00-7.00   sec   111 MBytes   935 Mbits/sec    0
+&#091;  4]   6.00-7.00   sec  53.8 MBytes   451 Mbits/sec    0    228 KBytes
+&#091;  6]   6.00-7.00   sec  57.7 MBytes   484 Mbits/sec    0    240 KBytes
+&#091;SUM]   6.00-7.00   sec   111 MBytes   935 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   7.00-8.00   sec  54.2 MBytes   455 Mbits/sec    0    228 KBytes
-[  6]   7.00-8.00   sec  58.2 MBytes   488 Mbits/sec    0    240 KBytes
-[SUM]   7.00-8.00   sec   112 MBytes   942 Mbits/sec    0
+&#091;  4]   7.00-8.00   sec  54.2 MBytes   455 Mbits/sec    0    228 KBytes
+&#091;  6]   7.00-8.00   sec  58.2 MBytes   488 Mbits/sec    0    240 KBytes
+&#091;SUM]   7.00-8.00   sec   112 MBytes   942 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   8.00-9.00   sec  52.2 MBytes   438 Mbits/sec    0    230 KBytes
-[  6]   8.00-9.00   sec  59.8 MBytes   502 Mbits/sec    0    247 KBytes
-[SUM]   8.00-9.00   sec   112 MBytes   940 Mbits/sec    0
+&#091;  4]   8.00-9.00   sec  52.2 MBytes   438 Mbits/sec    0    230 KBytes
+&#091;  6]   8.00-9.00   sec  59.8 MBytes   502 Mbits/sec    0    247 KBytes
+&#091;SUM]   8.00-9.00   sec   112 MBytes   940 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   9.00-10.00  sec  51.7 MBytes   434 Mbits/sec    0    230 KBytes
-[  6]   9.00-10.00  sec  59.8 MBytes   501 Mbits/sec    0    247 KBytes
-[SUM]   9.00-10.00  sec   111 MBytes   935 Mbits/sec    0
+&#091;  4]   9.00-10.00  sec  51.7 MBytes   434 Mbits/sec    0    230 KBytes
+&#091;  6]   9.00-10.00  sec  59.8 MBytes   501 Mbits/sec    0    247 KBytes
+&#091;SUM]   9.00-10.00  sec   111 MBytes   935 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[ ID] Interval           Transfer     Bandwidth       Retr
-[  4]   0.00-10.00  sec   546 MBytes   458 Mbits/sec    1             sender
-[  4]   0.00-10.00  sec   545 MBytes   457 Mbits/sec                  receiver
-[  6]   0.00-10.00  sec   575 MBytes   483 Mbits/sec   45             sender
-[  6]   0.00-10.00  sec   574 MBytes   482 Mbits/sec                  receiver
-[SUM]   0.00-10.00  sec  1.09 GBytes   941 Mbits/sec   46             sender
-[SUM]   0.00-10.00  sec  1.09 GBytes   939 Mbits/sec                  receiver
+&#091; ID] Interval           Transfer     Bandwidth       Retr
+&#091;  4]   0.00-10.00  sec   546 MBytes   458 Mbits/sec    1             sender
+&#091;  4]   0.00-10.00  sec   545 MBytes   457 Mbits/sec                  receiver
+&#091;  6]   0.00-10.00  sec   575 MBytes   483 Mbits/sec   45             sender
+&#091;  6]   0.00-10.00  sec   574 MBytes   482 Mbits/sec                  receiver
+&#091;SUM]   0.00-10.00  sec  1.09 GBytes   941 Mbits/sec   46             sender
+&#091;SUM]   0.00-10.00  sec  1.09 GBytes   939 Mbits/sec                  receiver
 </code></pre>
 
 
@@ -761,56 +761,56 @@ Connecting to host 10.0.10.1, port 5201
 
 <pre class="wp-block-code"><code>vyos@vyos:~$ iperf3 -c 10.172.24.1 -P2
 Connecting to host 10.172.24.1, port 5201
-[  4] local 10.172.24.60 port 36752 connected to 10.172.24.1 port 5201
-[  6] local 10.172.24.60 port 36754 connected to 10.172.24.1 port 5201
-[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
-[  4]   0.00-1.00   sec  54.3 MBytes   456 Mbits/sec    0    281 KBytes
-[  6]   0.00-1.00   sec  53.9 MBytes   452 Mbits/sec    0    283 KBytes
-[SUM]   0.00-1.00   sec   108 MBytes   908 Mbits/sec    0
+&#091;  4] local 10.172.24.60 port 36752 connected to 10.172.24.1 port 5201
+&#091;  6] local 10.172.24.60 port 36754 connected to 10.172.24.1 port 5201
+&#091; ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+&#091;  4]   0.00-1.00   sec  54.3 MBytes   456 Mbits/sec    0    281 KBytes
+&#091;  6]   0.00-1.00   sec  53.9 MBytes   452 Mbits/sec    0    283 KBytes
+&#091;SUM]   0.00-1.00   sec   108 MBytes   908 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   1.00-2.00   sec  53.5 MBytes   449 Mbits/sec    0    281 KBytes
-[  6]   1.00-2.00   sec  53.5 MBytes   449 Mbits/sec    0    283 KBytes
-[SUM]   1.00-2.00   sec   107 MBytes   898 Mbits/sec    0
+&#091;  4]   1.00-2.00   sec  53.5 MBytes   449 Mbits/sec    0    281 KBytes
+&#091;  6]   1.00-2.00   sec  53.5 MBytes   449 Mbits/sec    0    283 KBytes
+&#091;SUM]   1.00-2.00   sec   107 MBytes   898 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   2.00-3.00   sec  53.5 MBytes   449 Mbits/sec    0    293 KBytes
-[  6]   2.00-3.00   sec  53.5 MBytes   449 Mbits/sec    0    283 KBytes
-[SUM]   2.00-3.00   sec   107 MBytes   898 Mbits/sec    0
+&#091;  4]   2.00-3.00   sec  53.5 MBytes   449 Mbits/sec    0    293 KBytes
+&#091;  6]   2.00-3.00   sec  53.5 MBytes   449 Mbits/sec    0    283 KBytes
+&#091;SUM]   2.00-3.00   sec   107 MBytes   898 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   3.00-4.00   sec  53.7 MBytes   451 Mbits/sec    0    293 KBytes
-[  6]   3.00-4.00   sec  53.7 MBytes   450 Mbits/sec    0    283 KBytes
-[SUM]   3.00-4.00   sec   107 MBytes   901 Mbits/sec    0
+&#091;  4]   3.00-4.00   sec  53.7 MBytes   451 Mbits/sec    0    293 KBytes
+&#091;  6]   3.00-4.00   sec  53.7 MBytes   450 Mbits/sec    0    283 KBytes
+&#091;SUM]   3.00-4.00   sec   107 MBytes   901 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   4.00-5.00   sec  53.3 MBytes   447 Mbits/sec    0    293 KBytes
-[  6]   4.00-5.00   sec  53.4 MBytes   448 Mbits/sec    0    310 KBytes
-[SUM]   4.00-5.00   sec   107 MBytes   895 Mbits/sec    0
+&#091;  4]   4.00-5.00   sec  53.3 MBytes   447 Mbits/sec    0    293 KBytes
+&#091;  6]   4.00-5.00   sec  53.4 MBytes   448 Mbits/sec    0    310 KBytes
+&#091;SUM]   4.00-5.00   sec   107 MBytes   895 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   5.00-6.00   sec  53.3 MBytes   448 Mbits/sec    0    293 KBytes
-[  6]   5.00-6.00   sec  53.3 MBytes   447 Mbits/sec    0    310 KBytes
-[SUM]   5.00-6.00   sec   107 MBytes   895 Mbits/sec    0
+&#091;  4]   5.00-6.00   sec  53.3 MBytes   448 Mbits/sec    0    293 KBytes
+&#091;  6]   5.00-6.00   sec  53.3 MBytes   447 Mbits/sec    0    310 KBytes
+&#091;SUM]   5.00-6.00   sec   107 MBytes   895 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   6.00-7.00   sec  53.7 MBytes   451 Mbits/sec    0    293 KBytes
-[  6]   6.00-7.00   sec  53.6 MBytes   450 Mbits/sec    0    310 KBytes
-[SUM]   6.00-7.00   sec   107 MBytes   900 Mbits/sec    0
+&#091;  4]   6.00-7.00   sec  53.7 MBytes   451 Mbits/sec    0    293 KBytes
+&#091;  6]   6.00-7.00   sec  53.6 MBytes   450 Mbits/sec    0    310 KBytes
+&#091;SUM]   6.00-7.00   sec   107 MBytes   900 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   7.00-8.00   sec  53.0 MBytes   444 Mbits/sec    0    293 KBytes
-[  6]   7.00-8.00   sec  53.0 MBytes   444 Mbits/sec    0    310 KBytes
-[SUM]   7.00-8.00   sec   106 MBytes   889 Mbits/sec    0
+&#091;  4]   7.00-8.00   sec  53.0 MBytes   444 Mbits/sec    0    293 KBytes
+&#091;  6]   7.00-8.00   sec  53.0 MBytes   444 Mbits/sec    0    310 KBytes
+&#091;SUM]   7.00-8.00   sec   106 MBytes   889 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   8.00-9.00   sec  54.0 MBytes   453 Mbits/sec    0    415 KBytes
-[  6]   8.00-9.00   sec  53.8 MBytes   451 Mbits/sec    0    415 KBytes
-[SUM]   8.00-9.00   sec   108 MBytes   904 Mbits/sec    0
+&#091;  4]   8.00-9.00   sec  54.0 MBytes   453 Mbits/sec    0    415 KBytes
+&#091;  6]   8.00-9.00   sec  53.8 MBytes   451 Mbits/sec    0    415 KBytes
+&#091;SUM]   8.00-9.00   sec   108 MBytes   904 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[  4]   9.00-10.00  sec  53.5 MBytes   449 Mbits/sec    0    415 KBytes
-[  6]   9.00-10.00  sec  54.0 MBytes   453 Mbits/sec    0    415 KBytes
-[SUM]   9.00-10.00  sec   107 MBytes   902 Mbits/sec    0
+&#091;  4]   9.00-10.00  sec  53.5 MBytes   449 Mbits/sec    0    415 KBytes
+&#091;  6]   9.00-10.00  sec  54.0 MBytes   453 Mbits/sec    0    415 KBytes
+&#091;SUM]   9.00-10.00  sec   107 MBytes   902 Mbits/sec    0
 - - - - - - - - - - - - - - - - - - - - - - - - -
-[ ID] Interval           Transfer     Bandwidth       Retr
-[  4]   0.00-10.00  sec   536 MBytes   450 Mbits/sec    0             sender
-[  4]   0.00-10.00  sec   535 MBytes   449 Mbits/sec                  receiver
-[  6]   0.00-10.00  sec   536 MBytes   449 Mbits/sec    0             sender
-[  6]   0.00-10.00  sec   534 MBytes   448 Mbits/sec                  receiver
-[SUM]   0.00-10.00  sec  1.05 GBytes   899 Mbits/sec    0             sender
-[SUM]   0.00-10.00  sec  1.04 GBytes   897 Mbits/sec                  receiver
+&#091; ID] Interval           Transfer     Bandwidth       Retr
+&#091;  4]   0.00-10.00  sec   536 MBytes   450 Mbits/sec    0             sender
+&#091;  4]   0.00-10.00  sec   535 MBytes   449 Mbits/sec                  receiver
+&#091;  6]   0.00-10.00  sec   536 MBytes   449 Mbits/sec    0             sender
+&#091;  6]   0.00-10.00  sec   534 MBytes   448 Mbits/sec                  receiver
+&#091;SUM]   0.00-10.00  sec  1.05 GBytes   899 Mbits/sec    0             sender
+&#091;SUM]   0.00-10.00  sec  1.04 GBytes   897 Mbits/sec                  receiver
 </code></pre>
 
 
