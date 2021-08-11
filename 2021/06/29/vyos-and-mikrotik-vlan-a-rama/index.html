@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="UTF-8"><title>VyOS and Mikrotik – VLAN-a-rama – blog.kroy.io</title><meta name="robots" content="max-image-preview:large"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="dns-prefetch" href="//s.w.org"><script src="//www.googletagmanager.com/gtag/js?id=UA-89722449-1" type="text/javascript" data-cfasync="false"></script><script type="text/javascript" data-cfasync="false">
+				var em_version = '6.7.0';
+				var em_track_user = true;
+				var em_no_track_reason = '';
+				
+								var disableStr = 'ga-disable-UA-89722449-1';
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					return document.cookie.indexOf( disableStr + '=true' ) > - 1;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if ( __gtagTrackerIsOptedOut() ) {
+					window[disableStr] = true;
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = true;
+				}
+
+				if ( 'undefined' === typeof gaOptout ) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+				if ( em_track_user ) {
+					function __gtagTracker() {dataLayer.push( arguments );}
+					__gtagTracker( 'js', new Date() );
+					__gtagTracker( 'set', {
+						'developer_id.dNDMyYj' : true,
+						                    });
+					__gtagTracker( 'config', 'UA-89722449-1', {
+						forceSSL:true,					} );
+										window.gtag = __gtagTracker;										(
+						function () {
+							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+							/* ga and __gaTracker compatibility shim. */
+							var noopfn = function () {
+								return null;
+							};
+							var newtracker = function () {
+								return new Tracker();
+							};
+							var Tracker = function () {
+								return null;
+							};
+							var p = Tracker.prototype;
+							p.get = noopfn;
+							p.set = noopfn;
+							p.send = function (){
+								var args = Array.prototype.slice.call(arguments);
+								args.unshift( 'send' );
+								__gaTracker.apply(null, args);
+							};
+							var __gaTracker = function () {
+								var len = arguments.length;
+								if ( len === 0 ) {
+									return;
+								}
+								var f = arguments[len - 1];
+								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+									if ( 'send' === arguments[0] ) {
+										var hitConverted, hitObject = false, action;
+										if ( 'event' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[3] ) {
+												hitObject = {
+													'eventAction': arguments[3],
+													'eventCategory': arguments[2],
+													'eventLabel': arguments[4],
+													'value': arguments[5] ? arguments[5] : 1,
+												}
+											}
+										}
+										if ( typeof arguments[2] === 'object' ) {
+											hitObject = arguments[2];
+										}
+										if ( typeof arguments[5] === 'object' ) {
+											Object.assign( hitObject, arguments[5] );
+										}
+										if ( 'undefined' !== typeof (
+											arguments[1].hitType
+										) ) {
+											hitObject = arguments[1];
+										}
+										if ( hitObject ) {
+											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+											hitConverted = mapArgs( hitObject );
+											__gtagTracker( 'event', action, hitConverted );
+										}
+									}
+									return;
+								}
+
+								function mapArgs( args ) {
+									var gaKey, hit = {};
+									var gaMap = {
+										'eventCategory': 'event_category',
+										'eventAction': 'event_action',
+										'eventLabel': 'event_label',
+										'eventValue': 'event_value',
+										'nonInteraction': 'non_interaction',
+										'timingCategory': 'event_category',
+										'timingVar': 'name',
+										'timingValue': 'value',
+										'timingLabel': 'event_label',
+									};
+									for ( gaKey in gaMap ) {
+										if ( 'undefined' !== typeof args[gaKey] ) {
+											hit[gaMap[gaKey]] = args[gaKey];
+										}
+									}
+									return hit;
+								}
+
+								try {
+									f.hitCallback();
+								} catch ( ex ) {
+								}
+							};
+							__gaTracker.create = newtracker;
+							__gaTracker.getByName = newtracker;
+							__gaTracker.getAll = function () {
+								return [];
+							};
+							__gaTracker.remove = noopfn;
+							__gaTracker.loaded = true;
+							window['__gaTracker'] = __gaTracker;
+						}
+					)();
+									} else {
+										console.log( "" );
+					( function () {
+							function __gtagTracker() {
+								return null;
+							}
+							window['__gtagTracker'] = __gtagTracker;
+							window['gtag'] = __gtagTracker;
+					} )();
+									}
+			</script><style type="text/css" media="all">
+.wpautoterms-footer{background-color:#ffffff;text-align:center;}
+.wpautoterms-footer a{color:#000000;font-family:Arial, sans-serif;font-size:14px;}
+.wpautoterms-footer .separator{color:#cccccc;font-family:Arial, sans-serif;font-size:14px;}</style><link rel="stylesheet" id="wp-block-library-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/style.min.css" media="all"><style id="wp-block-library-inline-css">
+.has-text-align-justify{text-align:justify;}
+</style><style id="wp-block-library-theme-inline-css">
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="SFSImainCss-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/sfsi-style.css" media="all"><link rel="stylesheet" id="disable_sfsi-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/disable_sfsi.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.min.js" id="jquery-core-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/regenerator-runtime.min.js" id="regenerator-runtime-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill.min.js" id="wp-polyfill-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false","ua":"UA-89722449-1"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend-gtag.min.js" id="exactmetrics-frontend-script-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script><style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-1169 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content narrow-content si-page-title-align-left si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+
+
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+	<header id="masthead" class="site-header" role="banner" itemtype="https://schema.org/WPHeader" itemscope="itemscope"><div id="sinatra-header">
+		<div id="sinatra-header-inner">
+	
+<div class="si-container si-header-container">
+
+	
+<div class="sinatra-logo si-header-element" itemtype="https://schema.org/Organization" itemscope="itemscope">
+	<div class="logo-inner"><span class="site-title" itemprop="name">
+						<a href="https://blog.kroy.io/" rel="home" itemprop="url">
+							blog.kroy.io
+						</a>
+					</span><p class="site-description" itemprop="description">
+						computers, tech, and whatever other random stuff crosses my mind.
+					</p></div></div>
+
+<nav class="site-navigation main-navigation sinatra-primary-nav sinatra-nav si-header-element" role="navigation" itemtype="https://schema.org/SiteNavigationElement" itemscope="itemscope" aria-label="Site Navigation"><ul class="sinatra-primary-nav"><li><a href="https://blog.kroy.io/"><span>Home</span></a></li></ul></nav><div class="si-header-widgets si-header-element sinatra-widget-location-right"><div class="si-header-widget__search si-header-widget sinatra-hide-mobile-tablet"><div class="si-widget-wrapper">
+<div aria-haspopup="true">
+	<a href="#" class="si-search">
+		<i class="si-icon si-search"></i>
+	</a>
+
+	<div class="si-search-simple si-search-container dropdown-item">
+		<form role="search" aria-label="Site Search" method="get" class="si-search-form" action="https://blog.kroy.io/">
+
+			<label class="si-form-label">
+				<span class="screen-reader-text">Search for:</span>
+				<input type="search" class="si-input-search" placeholder="Search" value="" name="s" autocomplete="off"></label>
+
+			
+			<button type="submit" class="sinatra-animate-arrow right-arrow" aria-hidden="true" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="18px" viewbox="0 0 30 18" enable-background="new 0 0 30 18" xml:space="preserve"><path class="arrow-handle" d="M2.511,9.007l7.185-7.221c0.407-0.409,0.407-1.071,0-1.48s-1.068-0.409-1.476,0L0.306,8.259 c-0.408,0.41-0.408,1.072,0,1.481l7.914,7.952c0.407,0.408,1.068,0.408,1.476,0s0.407-1.07,0-1.479L2.511,9.007z"></path><path class="arrow-bar" fill-rule="evenodd" clip-rule="evenodd" d="M1,8h28.001c0.551,0,1,0.448,1,1c0,0.553-0.449,1-1,1H1c-0.553,0-1-0.447-1-1
+					                            C0,8.448,0.447,8,1,8z"></path></svg></button>
+		</form>
+	</div>
+</div>
+</div></div></div>
+	<span class="si-header-element si-mobile-nav">
+				<button class="si-hamburger hamburger--spin si-hamburger-sinatra-primary-nav" aria-label="Menu" aria-controls="sinatra-primary-nav" type="button">
+
+			
+			<span class="hamburger-box">
+				<span class="hamburger-inner"></span>
+			</span>
+
+		</button>
+			</span>
+
+</div>
+	</div>
+	</div>
+		
+<div class="page-header si-has-breadcrumbs">
+
+	
+	
+	<div class="si-container si-breadcrumbs"><nav role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs" itemprop="breadcrumb"><ul class="trail-items" itemscope itemtype="http://schema.org/BreadcrumbList"><meta name="numberOfItems" content="5"><meta name="itemListOrder" content="Ascending"><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-begin"><a href="https://blog.kroy.io/" rel="home" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2021/" itemprop="item"><span itemprop="name">2021</span></a><meta itemprop="position" content="2"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2021/06/" itemprop="item"><span itemprop="name">June</span></a><meta itemprop="position" content="3"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2021/06/29/" itemprop="item"><span itemprop="name">29</span></a><meta itemprop="position" content="4"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-end"><span><span itemprop="name">VyOS and Mikrotik – VLAN-a-rama</span></span><meta itemprop="position" content="5"></li></ul></nav></div>
+</div>
+	</header><div id="main" class="site-main">
+
+		
+<div class="si-container">
+
+	<div id="primary" class="content-area">
+
+		
+		<main id="content" class="site-content" role="main" itemscope itemtype="http://schema.org/Blog"><article id="post-1169" class="sinatra-article post-1169 post type-post status-publish format-standard has-post-thumbnail hentry category-mikrotik category-networking category-vyos tag-vlan" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="post-category">
+
+	<span class="cat-links"><span class="screen-reader-text">Posted in</span><span><a href="https://blog.kroy.io/category/mikrotik/" rel="category tag">mikrotik</a> <a href="https://blog.kroy.io/category/networking/" rel="category tag">Networking</a> <a href="https://blog.kroy.io/category/vyos/" rel="category tag">VyOS</a></span></span>
+</div>
+
+<header class="entry-header"><h1 class="entry-title" itemprop="headline">
+		VyOS and Mikrotik – VLAN-a-rama	</h1>
+
+</header><div class="entry-meta"><div class="entry-meta-elements">		<span class="post-author">
+			<span class="posted-by vcard author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+				<span class="screen-reader-text">Posted by</span>
+
+				
+				<span>
+										By 					<a class="url fn n" title="View all posts by Kroy" href="https://blog.kroy.io/author/kroy3348/" rel="author" itemprop="url">
+						<span class="author-name" itemprop="name">Kroy</span>
+					</a>
+				</span>
+			</span>
+		</span>
+		<span class="posted-on">June 29, 2021</span></div></div><div class="post-thumb entry-media thumbnail"><img width="659" height="1024" alt="VyOS and Mikrotik – VLAN-a-rama" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="659" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png" class="attachment-large size-large wp-post-image" alt="VyOS and Mikrotik – VLAN-a-rama"></noscript></div>
+<div class="entry-content si-entry" itemprop="text">
+	
+<p>For the novice networker, VLANs are easily one of the most misunderstood concepts.  In this post, I’ll go over some basics and demonstrate how to make the jump from separate interfaces and switches to VLANs. </p>
+
+
+
+<hr class="wp-block-separator"><div class="lwptoc lwptoc-autoWidth lwptoc-baseItems lwptoc-light lwptoc-notInherit" data-smooth-scroll="1" data-smooth-scroll-offset="24"><div class="lwptoc_i">    <div class="lwptoc_header">
+        <b class="lwptoc_title">Contents</b>                    <span class="lwptoc_toggle">
+                <a href="#" class="lwptoc_toggle_label" data-label="show">hide</a>
+            </span>
+            </div>
+<div class="lwptoc_items lwptoc_items-visible">
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Introduction">
+                    <span class="lwptoc_item_number">1</span>
+                <span class="lwptoc_item_label">Introduction</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#Physical_Setup">
+                    <span class="lwptoc_item_number">2</span>
+                <span class="lwptoc_item_label">Physical Setup</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Networking_Config">
+                    <span class="lwptoc_item_number">2.1</span>
+                <span class="lwptoc_item_label">Networking Config</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#VyOS_Config">
+                    <span class="lwptoc_item_number">2.2</span>
+                <span class="lwptoc_item_label">VyOS Config</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#VLANs">
+                    <span class="lwptoc_item_number">3</span>
+                <span class="lwptoc_item_label">VLANs</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#VLANs_Going_Deeper">
+                    <span class="lwptoc_item_number">4</span>
+                <span class="lwptoc_item_label">VLANs – Going Deeper</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#VLANs_Gotta_Find_the_Bottom">
+                    <span class="lwptoc_item_number">5</span>
+                <span class="lwptoc_item_label">VLANs – Gotta Find the Bottom!</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#Conclusion">
+                    <span class="lwptoc_item_number">6</span>
+                <span class="lwptoc_item_label">Conclusion</span>
+    </a>
+    </div></div></div>
+</div></div><hr class="wp-block-separator"><h2><span id="Introduction">Introduction</span></h2>
+
+
+
+<p>Virtual LANs, or VLANs, are one of the most useful features in all of networking.  To put it simply, they allow a logical separation of broadcast domains.  In layperson’s terms, “I took a switch and put it in your switch!”.  </p>
+
+
+
+<p>I think it’s best to start with a traditional physical setup that would represent how most people start their networking adventures.</p>
+
+
+
+<hr class="wp-block-separator"><h2><span id="Physical_Setup">Physical Setup</span></h2>
+
+
+
+<p>For this adventure, I’ll be using be using:</p>
+
+
+
+<ul><li>The <a rel="noreferrer noopener" href="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/" data-type="post" data-id="539" target="_blank">WYSE 3040</a> from a previous blog post.</li><li>An array of small Mikrotiks (<a rel="noreferrer noopener" href="https://amzn.to/35XStKu" target="_blank">hex</a>, <a href="https://amzn.to/3AefB5h" data-type="URL" data-id="https://amzn.to/3AefB5h">hap</a>, <a rel="noreferrer noopener" href="https://amzn.to/2UR3I5h" target="_blank">hex lite</a>) since they are painfully easy to set up as both simple switches and managed switches supporting VLANs.</li><li>A few Virtual Machines to act as end devices, also from a<a href="https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/" data-type="post" data-id="1104"> prior blog post.</a></li></ul><p>Let’s start with this simple network diagram.  </p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="651" height="902" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1.png 651w, https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1-217x300.png 217w, https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1-217x300@2x.png 434w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1.png" data-sizes="(max-width: 651px) 100vw, 651px" class="wp-image-1221 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="651" height="902" src="https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1.png" alt="" class="wp-image-1221" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1.png 651w,https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1-217x300.png 217w,https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1-217x300@2x.png 434w" sizes="(max-width: 651px) 100vw, 651px"></noscript><figcaption>physical layout</figcaption></figure></div>
+
+
+
+<p>and how does this setup look when it’s all wired up?</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="1024" height="768" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491.jpg 1920w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-300x225@2x.jpg 600w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1024x768.jpg" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-1232 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1024x768.jpg" alt="" class="wp-image-1232" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1024x768.jpg 1024w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-300x225.jpg 300w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1536x1152.jpg 1536w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491.jpg 1920w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-300x225@2x.jpg 600w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>messy</figcaption></figure></div>
+
+
+
+<hr class="wp-block-separator"><h3><span id="Networking_Config">Networking Config</span></h3>
+
+
+
+<p>This is the basic config for all three of the switches.  I don’t want to get too bogged down with the Mikrotik config, but I should explain some of it.</p>
+
+
+
+<p>In the Linux world, and subsequently in Mikrotik-land, a switch would be called a “bridge”.  So in this case, I’ve created a bridge and added all the ports to it.  And then I’ve told the switches to pull an IP address from the bridge for management.</p>
+
+
+
+<pre class="wp-block-code"><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2a4b4e4743446a67434158457e4341">[email protected]</a>] > /export 
+# jun/28/2021 21:03:30 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+add bridge=bridgeLocal comment=defconf interface=ether2
+add bridge=bridgeLocal comment=defconf interface=ether3
+add bridge=bridgeLocal comment=defconf interface=ether4
+add bridge=bridgeLocal comment=defconf interface=ether5
+/ip dhcp-client
+add comment=defconf disabled=no interface=bridgeLocal
+</code></pre>
+
+
+
+<p>This configuration essentially turns these Mikrotik devices into a dumb switch, with an IP address to manage them.  They are also plugged into my existing network:</p>
+
+
+
+<ul><li>HEX into my “WAN” network (random VLAN on my existing network that has internet access)</li><li>HAP into a VLAN connected to the “enduser1” VM </li><li>HEX LITE into a VLAN connected to the “enduser2” VM.</li></ul><p> </p>
+
+
+
+<hr class="wp-block-separator"><h3><span id="VyOS_Config">VyOS Config</span></h3>
+
+
+
+<p>The VyOS config here on the WYSE 3040 is very simple:</p>
+
+
+
+<ul><li>Onboard NIC is eth0, connected to WAN/HEX switch, pulling an IP from my existing infrastructure.</li><li>USB NIC1 is eth1, connected to HAP switch</li><li>USB NIC2 is eth2, connected to HEX switch</li><li>Some NAT, so my test clients can get on the Internet</li><li>Some DHCP, so my test clients can auto-configure themselves</li></ul><pre class="wp-block-code"><code>interfaces {
+    ethernet eth0 {
+        address dhcp
+        description WAN
+        hw-id 8c:ec:4b:6d:dc:d6
+    }
+    ethernet eth1 {
+        address 172.21.39.1/24
+        description HAPLAN
+        hw-id 8c:ae:4c:f5:e5:8f
+    }
+    ethernet eth2 {
+        address 192.168.39.1/24
+        description HEXLITELAN
+        hw-id 8c:ae:4c:f5:e5:94
+    }
+    loopback lo {
+    }
+}
+nat {
+    source {
+        rule 10 {
+            outbound-interface eth0
+            source {
+                address 172.21.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+        rule 11 {
+            outbound-interface eth0
+            source {
+                address 192.168.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name HAPDHCP {
+            subnet 172.21.39.0/24 {
+                default-router 172.21.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 172.21.39.100
+                    stop 172.21.39.200
+                }
+            }
+        }
+        shared-network-name HEXLITEDHCP {
+            subnet 192.168.39.0/24 {
+                default-router 192.168.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 192.168.39.100
+                    stop 192.168.39.200
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}</code></pre>
+
+
+
+<p>And once it’s all set up, the two “enduser” VMs both have appropriate IP addresses and Internet access as served out by the VyOS-3040:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="328" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1024x328.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-300x96.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1536x493.png 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-2048x657.png 2048w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-300x96@2x.png 600w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1024x328.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-1216 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="328" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1024x328.png" alt="" class="wp-image-1216" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1024x328.png 1024w,https://blog.kroy.io/wp-content/uploads/2021/06/image-47-300x96.png 300w,https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1536x493.png 1536w,https://blog.kroy.io/wp-content/uploads/2021/06/image-47-2048x657.png 2048w,https://blog.kroy.io/wp-content/uploads/2021/06/image-47-300x96@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>VMs working</figcaption></figure><hr class="wp-block-separator"><h2><span id="VLANs">VLANs</span></h2>
+
+
+
+<p>Of course we aren’t here to just make a simple multi-network setup.  We want some VLANs.  So let’s rewrite some things, and eliminate two of the switches. </p>
+
+
+
+<p>First off, let’s talk about the physical setup we had before.  Before, each of the different switches were connected to “raw” ports connecting to existing VLANs on my network:</p>
+
+
+
+<ul><li>HEX: VAN9.  This is an existing client network in my homelab.  You plug something in here, it gets a 10.9.1.0/24 address, and instantly has Internet access. This is what the “WAN” port of VyOS connects to.</li><li>HAP: VLAN41.  This was a new VLAN I created to connect between eth1 on VyOS and the “enduser1” VM.</li><li>HEX LITE: VLAN42. Similarly, a new VLAN I created to connect between eth2 on VyOS and the “enduser2” VM.</li></ul><p>Physically, this is how the new setup will look:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="768" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494.jpg 1437w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-225x300@2x.jpg 450w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-768x1024.jpg" data-sizes="(max-width: 768px) 100vw, 768px" class="wp-image-1234 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-768x1024.jpg" alt="" class="wp-image-1234" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-768x1024.jpg 768w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-225x300.jpg 225w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-1152x1536.jpg 1152w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494.jpg 1437w,https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-225x300@2x.jpg 450w" sizes="(max-width: 768px) 100vw, 768px"></noscript><figcaption>getting cleaner</figcaption></figure></div>
+
+
+
+<p>In most networking circles, a “trunk” just means a port carrying multiple VLANs.  Since we removed two switches, the remaining switch, the HEX, will need to have its uplink port changed into a trunk:</p>
+
+
+
+<ul><li>Remove HAP and HEX LITE switches</li><li>On the HEX, change the port that was previously connected to a raw VLAN9 port on my existing network to a trunk.</li><li>Plug eth1 from VyOS into port 4 on HEX, change the VLAN of that port to 41</li><li>Plug eth2 from VyOS into port 3 on HEX, change the VLAN of the port to 42</li><li>Change the VLAN on port 5 on the HEX to 9.  This will change the PVID, or the raw VLAN that’s use when whatever is plugged in on the other end isn’t speaking VLANs.</li><li>Due to the prior step, the nothing on VyOS will change</li></ul><p>The characteristics of our trunk ports will be simple:</p>
+
+
+
+<ul><li>VLAN1 == PVID/untagged.  This is the VLAN traffic will land on if the traffic has no VLAN tags</li><li>VLAN9 == Tagged. </li><li>VLAN41 == Tagged</li><li>VLAN42 == Tagged</li></ul><p>I’ve highlighted the important changes on the remaining switch below:</p>
+
+
+
+<ol><li>Add an Switched Virtual Interface or SVI.  This is saying “Give this switch an interface on this VLAN”.  This is important because VLAN9 is no longer the default “untagged” for the uplink port (ether1)</li><li>Change the PVIDs/default VLANs of the appropriate ports on the bridge.  We are doing this to make the VyOS-3040 think nothing has changed in our physical setup.</li><li>Handle VLAN filtering.  This is going to control what VLANs are allowed on these ports. This is how you create a trunk port in Mikrotik <ol><li><code>ether1</code> is the Trunk to the rest of the network.  It is untagged on VLAN1 (which is a throwaway VLAN for security).  It is tagged on the other two VLANs we are using, 41 and 42.</li><li><code>bridgeLocal</code> is Mikrotik itself. It is untagged on VLAN1 for similar reasons as above.  It it tagged on VLAN9 as this is what allows our newly created <code>VLAN9_SVI</code> so we can create a management address for it.</li><li><code>ether3/4/5</code> are all untagged on the VLANs that match the PVIDs.</li></ol></li><li>Finally, we tell the Mikrotik to pull its address via DHCP on the newly created <code>VLAN9_SVI</code></li></ol><pre class="wp-block-code"><code># jun/29/2021 10:27:41 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal vlan-filtering=yes
+<strong>/interface vlan
+add interface=bridgeLocal name=VLAN9_SVI vlan-id=9</strong>
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+add bridge=bridgeLocal comment=defconf interface=ether2
+<strong>add bridge=bridgeLocal comment=defconf interface=ether3 pvid=42
+add bridge=bridgeLocal comment=defconf interface=ether4 pvid=41
+add bridge=bridgeLocal comment=defconf interface=ether5 pvid=9</strong>
+/interface bridge vlan
+<strong>add bridge=bridgeLocal untagged=bridgeLocal,ether1 vlan-ids=1</strong>
+<strong>add bridge=bridgeLocal tagged=bridgeLocal,ether1 untagged=ether5 vlan-ids=9
+add bridge=bridgeLocal tagged=ether1 untagged=ether4 vlan-ids=41
+add bridge=bridgeLocal tagged=ether1 untagged=ether3 vlan-ids=42</strong>
+/ip dhcp-client
+<strong>add comment=defconf disabled=no interface=VLAN9_SVI</strong></code></pre>
+
+
+
+<p>As mentioned above, everything just works as before.  As far as the VyOS-3040 is concerned, it is still connected to three separate switches:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="327" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1024x327.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-300x96.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1536x491.png 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-2048x655.png 2048w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-300x96@2x.png 600w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1024x327.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-1217 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="327" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1024x327.png" alt="" class="wp-image-1217" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1024x327.png 1024w,https://blog.kroy.io/wp-content/uploads/2021/06/image-48-300x96.png 300w,https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1536x491.png 1536w,https://blog.kroy.io/wp-content/uploads/2021/06/image-48-2048x655.png 2048w,https://blog.kroy.io/wp-content/uploads/2021/06/image-48-300x96@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>as before, working perfect</figcaption></figure><h2><span id="VLANs_Going_Deeper">VLANs – Going Deeper</span></h2>
+
+
+
+<p>Of course, we haven’t even touched VLANs on VyOS yet, so let’s dig into that.  </p>
+
+
+
+<p>The basic goals will be:</p>
+
+
+
+<ul><li>Remove all the dongles</li><li>Move the cable that goes to VyOS-3040 from port 5 to port 2.</li><li>Trunk VLANs 41 and 42 into VyOS</li><li>Change the config in VyOS to use VLAN interfaces instead of physical interfaces.</li></ul><p>Physically, this is starting to look super clean.  We only have two cables plugged into the switch, the trunk from the existing networking and the trunk to the VyOS-3040. </p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="659" height="1024" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png 659w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50-193x300.png 193w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50-988x1536.png 988w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50.png 1097w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50-193x300@2x.png 386w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png" data-sizes="(max-width: 659px) 100vw, 659px" class="wp-image-1223 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="659" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png" alt="" class="wp-image-1223" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png 659w,https://blog.kroy.io/wp-content/uploads/2021/06/image-50-193x300.png 193w,https://blog.kroy.io/wp-content/uploads/2021/06/image-50-988x1536.png 988w,https://blog.kroy.io/wp-content/uploads/2021/06/image-50.png 1097w,https://blog.kroy.io/wp-content/uploads/2021/06/image-50-193x300@2x.png 386w" sizes="(max-width: 659px) 100vw, 659px"></noscript><figcaption>cleaner still</figcaption></figure></div>
+
+
+
+<p>I’ve highlighted the changes to the switch, but basically we are turning port 2 into another trunk, BUUUUT, a trunk with the PVID of 9:</p>
+
+
+
+<ul><li>Change the PVID of ether2 to 9.  This is to make it so VyOS-3040 still is “on” VLAN9 on its raw port</li><li>Add ether2 as untagged on VLAN9</li><li>Add ether2 as tagged on VLANs 41/42</li></ul><pre class="wp-block-code"><code># jun/29/2021 10:49:20 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+# serial number = 8AFF09A3F98D
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal vlan-filtering=yes
+/interface vlan
+add interface=bridgeLocal name=VLAN9_SVI vlan-id=9
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+<strong>add bridge=bridgeLocal comment=defconf interface=ether2 pvid=9</strong>
+add bridge=bridgeLocal comment=defconf interface=ether3 pvid=42
+add bridge=bridgeLocal comment=defconf interface=ether4 pvid=41
+add bridge=bridgeLocal comment=defconf interface=ether5 pvid=9
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface bridge vlan
+add bridge=bridgeLocal untagged=bridgeLocal,ether1 vlan-ids=1
+<strong>add bridge=bridgeLocal tagged=bridgeLocal,ether1 untagged=ether5,ether2 vlan-ids=9</strong>
+<strong>add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether4 vlan-ids=41
+add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether3 vlan-ids=42</strong>
+/ip dhcp-client
+add comment=defconf disabled=no interface=VLAN9_SVI</code></pre>
+
+
+
+<p>And in VyOS, the only change is removing eth1/eth2, and moving the config under the appropriate vif:</p>
+
+
+
+<pre class="wp-block-code"><code>interfaces {
+    ethernet eth0 {
+        address dhcp
+        description WAN
+        hw-id 8c:ec:4b:6d:dc:d6
+        <strong>vif 41 {
+            address 172.21.39.1/24
+            description HAPLAN
+        }
+        vif 42 {
+            address 192.168.39.1/24
+            description HEXLITELAN
+        }</strong>
+    }
+    loopback lo {
+    }
+}
+</code></pre>
+
+
+
+<p>which we can now access everywhere via <code>eth0.41</code>/<code>eth0.42</code>.</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95e3ecfae6d5e3ecfae6">[email protected]</a>:~$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             10.9.1.73/24                      u/u  WAN   
+eth0.41          172.21.39.1/24                    u/u  HAPLAN
+eth0.42          192.168.39.1/24                   u/u  HEXLITELAN
+</code></pre>
+
+
+
+<hr class="wp-block-separator"><h2><span id="VLANs_Gotta_Find_the_Bottom">VLANs – Gotta Find the Bottom!</span></h2>
+
+
+
+<p>Of course, if you are like me, you turn everything into a trunk to routers.</p>
+
+
+
+<p>So we are going to remove VLAN as the PVID from our VyOS-3040 facing port, and just tag it:</p>
+
+
+
+<pre class="wp-block-code"><code>[<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="19787d747077595470726b764d7072">[email protected]</a>] > export           
+# jun/29/2021 10:52:50 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal vlan-filtering=yes
+/interface vlan
+add interface=bridgeLocal name=VLAN9_SVI vlan-id=9
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+<strong>add bridge=bridgeLocal comment=defconf interface=ether2</strong>
+add bridge=bridgeLocal comment=defconf interface=ether3 pvid=42
+add bridge=bridgeLocal comment=defconf interface=ether4 pvid=41
+add bridge=bridgeLocal comment=defconf interface=ether5 pvid=9
+/interface bridge vlan
+add bridge=bridgeLocal untagged=bridgeLocal,ether1,ether2 vlan-ids=1
+<strong>add bridge=bridgeLocal tagged=bridgeLocal,ether1,ether2 untagged=ether5 vlan-ids=9</strong>
+add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether4 vlan-ids=41
+add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether3 vlan-ids=42
+/ip dhcp-client
+add comment=defconf disabled=no interface=VLAN9_SVI
+</code></pre>
+
+
+
+<p>and a few small changes to VyOS. We move the “WAN” dhcp to a VLAN, and change the outbound-interface for the NAT:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="087e71677b487e71677b">[email protected]</a>:~$ show configuration 
+interfaces {
+    ethernet eth0 {
+        hw-id 8c:ec:4b:6d:dc:d6
+       <strong> vif 9 {
+            address dhcp
+            description WAN
+        }</strong>
+        vif 41 {
+            address 172.21.39.1/24
+            description HAPLAN
+        }
+        vif 42 {
+            address 192.168.39.1/24
+            description HEXLITELAN
+        }
+    }
+    loopback lo {
+    }
+}
+nat {
+    source {
+        rule 10 {
+            <strong>outbound-interface eth0.9</strong>
+            source {
+                address 172.21.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+        rule 11 {
+            <strong>outbound-interface eth0.9</strong>
+            source {
+                address 192.168.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name HAPDHCP {
+            subnet 172.21.39.0/24 {
+                default-router 172.21.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 172.21.39.100
+                    stop 172.21.39.200
+                }
+            }
+        }
+        shared-network-name HEXLITEDHCP {
+            subnet 192.168.39.0/24 {
+                default-router 192.168.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 192.168.39.100
+                    stop 192.168.39.200
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}</code></pre>
+
+
+
+<p>And if we show our interfaces:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abddd2c4d8ebddd2c4d8">[email protected]</a>:~$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             -                                 u/u  
+eth0.9           10.9.1.73/24                      u/u  WAN
+eth0.41          172.21.39.1/24                    u/u  HAPLAN
+eth0.42          192.168.39.1/24                   u/u  HEXLITELAN
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+</code></pre>
+
+
+
+<hr class="wp-block-separator"><h2><span id="Conclusion">Conclusion</span></h2>
+
+
+
+<p>That’s it!  I’ve walked through going from a traditional network with 3 separate interfaces to a single interface carrying the traffic of all three networks.</p>
+
+
+
+<p>On to the next!</p>
+<div class="sfsi_Sicons" style="width: 100%; display: inline-block; vertical-align: middle; text-align:left"><div style="margin:0px 8px 0px 0px; line-height: 24px"><span>Please follow and like us:</span></div><div class="sfsi_socialwpr"><div class="sf_subscrbe sf_icon" style="text-align:left;vertical-align: middle;float:left;width:auto"><a href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" target="_blank"><img alt="error" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" alt="error"></noscript></a></div><div class="sf_fb sf_icon" style="text-align:left;vertical-align: middle;"><div class="fb-like" data-href="https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama/" data-send="false" data-layout="button"></div></div><div class="sf_fb_share sf_icon" style="text-align:left;vertical-align: middle;"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2021%2F06%2F29%2Fvyos-and-mikrotik-vlan-a-rama%2F" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div><div class="sf_twiter sf_icon" style="display: inline-block;vertical-align: middle;width: auto;margin-left: 7px;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=VyOS+and+Mikrotik+%26%238211%3B+VLAN-a-rama+https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama/" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></a>
+					</div><div class="sf_pinit sf_icon" style="text-align:left;vertical-align: middle;float:left;line-height: 33px;width:auto;margin: 0 -2px;"><a href="#" onclick='sfsi_pinterest_modal_images(event,"https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama/","VyOS and Mikrotik – VLAN-a-rama")' style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg"></noscript></a></div></div></div></div>
+
+
+
+
+<div class="entry-footer">
+
+	<span class="screen-reader-text">Tags: </span><div class="post-tags"><span class="cat-links"><a href="https://blog.kroy.io/tag/vlan/" rel="tag">VLAN</a></span></div><span class="last-updated">Last updated on June 29, 2021</span>
+</div>
+
+
+<section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
+		<img alt="" data-srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" height="75" width="75" data-src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" class="avatar avatar-75 photo lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75"></noscript>	</div>
+
+	<div class="author-box-meta">
+		<h4 class="author-box-title">
+							<a href="https://blog.kroy.io/author/kroy3348/" class="url fn n" rel="author" itemprop="url">
+				Kroy	
+				</a>
+						</h4>
+
+		
+		
+		<div class="author-box-content" itemprop="description">
+			sometimes hacker of things and other things...		</div>
+
+		
+<div class="more-posts-button">
+	<a href="https://blog.kroy.io/author/kroy3348/" class="si-btn btn-text-1" role="button"><span>View All Posts</span></a>
+</div>
+	</div>
+
+</section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
+
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2021/06/28/transylvania-a-retrospective-and-remake/" rel="prev"><div class="nav-content"><img width="75" height="75" alt="Transylvania – A Retrospective and Remake" itemprop="image" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png 150w, https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150@2x.png 300w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png" data-sizes="(max-width: 75px) 100vw, 75px" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="Transylvania – A Retrospective and Remake" itemprop="image" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png 150w,https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150@2x.png 300w" sizes="(max-width: 75px) 100vw, 75px"></noscript> <span>Transylvania – A Retrospective and Remake</span></div></a></div>
+</section></article></main></div>
+
+	
+<aside id="secondary" class="widget-area si-sidebar-container" itemtype="http://schema.org/WPSideBar" itemscope="itemscope" role="complementary"><div class="si-sidebar-inner">
+		
+		
+		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
+		<h4 class="widget-title">Recent Posts</h4>
+		<ul><li>
+					<a href="https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama/" aria-current="page">VyOS and Mikrotik – VLAN-a-rama</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2021/06/28/transylvania-a-retrospective-and-remake/">Transylvania – A Retrospective and Remake</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/">VyOS from Scratch: Routing and VPS Edition</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2021/01/14/bbsing-in-retro-style-with-a-wimodem232-on-a-mac-se/">BBSing Retro-style with a Wimodem232 on a Mac SE</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/12/07/vyos-from-scratch-bgp-announcements/">VyOS from Scratch – BGP Announcement</a>
+									</li>
+					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
+			<ul><li><a href="https://blog.kroy.io/2021/06/">June 2021</a></li>
+	<li><a href="https://blog.kroy.io/2021/01/">January 2021</a></li>
+	<li><a href="https://blog.kroy.io/2020/12/">December 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/05/">May 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/01/">January 2020</a></li>
+	<li><a href="https://blog.kroy.io/2019/12/">December 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/11/">November 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/10/">October 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/09/">September 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/08/">August 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/01/">January 2019</a></li>
+	<li><a href="https://blog.kroy.io/2018/11/">November 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/07/">July 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/05/">May 2018</a></li>
+	<li><a href="https://blog.kroy.io/2017/12/">December 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/08/">August 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/07/">July 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/06/">June 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/05/">May 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/04/">April 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/03/">March 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/02/">February 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/01/">January 2017</a></li>
+			</ul></div><div id="categories-2" class="si-sidebar-widget si-widget si-entry widget widget_categories"><h4 class="widget-title">Categories</h4>
+			<ul><li class="cat-item cat-item-39"><a href="https://blog.kroy.io/category/automation/">Automation</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://blog.kroy.io/category/ceph/">ceph</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.kroy.io/category/debian/">Debian</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.kroy.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.kroy.io/category/virtualization/esxi/">ESXi</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.kroy.io/category/freenas/">freenas</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="https://blog.kroy.io/category/gaming/">gaming</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="https://blog.kroy.io/category/hardware/">Hardware</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://blog.kroy.io/category/hardware-hacks/">Hardware Hacks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.kroy.io/category/homelab/">HomeLab</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="https://blog.kroy.io/category/virtualization/kvm/">KVM</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.kroy.io/category/mediaserver/">mediaserver</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.kroy.io/category/mikrotik/">mikrotik</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.kroy.io/category/networking/">Networking</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://blog.kroy.io/category/nucnucnuc/">nucnucnuc</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.kroy.io/category/pfsense/">pfsense</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.kroy.io/category/proxmox/">proxmox</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://blog.kroy.io/category/virtualization/proxmox-virtualization/">Proxmox</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.kroy.io/category/retrolab/">Retrolab</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.kroy.io/category/routing/" title="Stuff about routing">Routing</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.kroy.io/category/rtlsdr/">RTLSDR</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://blog.kroy.io/category/storage/">Storage</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.kroy.io/category/sysadmin/">SysAdmin</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="https://blog.kroy.io/category/automation/terraform/">Terraform</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="https://blog.kroy.io/category/ubuntu/">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.kroy.io/category/virtualization/">Virtualization</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://blog.kroy.io/category/vpn/">vpn</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://blog.kroy.io/category/vyos/">VyOS</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.kroy.io/category/zfs/">ZFS</a>
+</li>
+			</ul></div><div id="meta-2" class="si-sidebar-widget si-widget si-entry widget widget_meta"><h4 class="widget-title">Meta</h4>
+		<ul><li><a href="https://blog.kroy.io/wp-login.php">Log in</a></li>
+			<li><a href="https://blog.kroy.io/feed/">Entries feed</a></li>
+			<li><a href="https://blog.kroy.io/comments/feed/">Comments feed</a></li>
+
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>
+		</ul></div>
+			</div>
+
+</aside></div>
+
+		
+	</div>
+	
+	
+			<footer id="colophon" class="site-footer" role="contentinfo" itemtype="http://schema.org/WPFooter" itemscope="itemscope"><div id="sinatra-copyright" class="contained-separator">
+	<div class="si-container">
+		<div class="si-flex-row">
+
+			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2021 — blog.kroy.io. All rights reserved. <a href="https://wordpress.org/themes/sinatra/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
+			<div class="col-xs-12 center-xs col-md flex-basis-auto end-md"></div>
+
+		</div>
+	</div>
+</div>
+
+		</footer></div>
+
+<a href="#" id="si-scroll-top" class="si-smooth-scroll" title="Scroll to Top">
+	<span class="si-scroll-icon" aria-hidden="true">
+		<i class="si-icon si-chevron-up top-icon"></i>
+		<i class="si-icon si-chevron-up"></i>
+	</span>
+	<span class="screen-reader-text">Scroll to Top</span>
+</a>
+			
+			<div id="fb-root"></div>
+			<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			</script><script>
+window.addEventListener('sfsi_functions_loaded', function() {
+    if (typeof sfsi_responsive_toggle == 'function') {
+        sfsi_responsive_toggle(0);
+        // console.log('sfsi_responsive_toggle');
+
+    }
+})
+</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2021%2F06%2F29%2Fvyos-and-mikrotik-vlan-a-rama" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name+https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript>
+						</a>
+					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2021%2F06%2F29%2Fvyos-and-mikrotik-vlan-a-rama"><img data-pin-nopin="true" alt="Share" title="Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></noscript></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
+			{
+				if (typeof sfsi_widget_set == "function") {
+					sfsi_widget_set();
+				}
+			}); window.addEventListener('sfsi_functions_loaded',function()
+					  {
+						var topalign = ( jQuery(window).height() - jQuery('#sfsi_floater').height() ) / 2;
+						jQuery('#sfsi_floater').css('top',topalign);
+					  	sfsi_float_widget('center');
+					  });</script><script>
+        window.addEventListener('sfsi_functions_loaded', function() {
+            if (typeof sfsi_plugin_version == 'function') {
+                sfsi_plugin_version(2.63);
+            }
+        });
+
+        function sfsi_processfurther(ref) {
+            var feed_id = 'SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=';
+            var feedtype = 8;
+            var email = jQuery(ref).find('input[name="email"]').val();
+            var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if ((email != "Enter your email") && (filter.test(email))) {
+                if (feedtype == "8") {
+                    var url = "https://api.follow.it/subscription-form/" + feed_id + "/" + feedtype;
+                    window.open(url, "popupwindow", "scrollbars=yes,width=1080,height=760");
+                    return true;
+                }
+            } else {
+                alert("Please enter email address");
+                jQuery(ref).find('input[name="email"]').focus();
+                return false;
+            }
+        }
+    </script><style type="text/css" aria-selected="true">
+        .sfsi_subscribe_Popinner {
+            width: 100% !important;
+
+            height: auto !important;
+
+            padding: 18px 0px !important;
+
+            background-color: #ffffff !important;
+
+        }
+
+        .sfsi_subscribe_Popinner form {
+
+            margin: 0 20px !important;
+
+        }
+
+        .sfsi_subscribe_Popinner h5 {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-weight: bold !important;
+
+            color: #000000 !important;
+
+            font-size: 16px !important;
+
+            text-align: center !important;
+
+            margin: 0 0 10px !important;
+
+            padding: 0 !important;
+
+        }
+
+        .sfsi_subscription_form_field {
+
+            margin: 5px 0 !important;
+
+            width: 100% !important;
+
+            display: inline-flex;
+
+            display: -webkit-inline-flex;
+
+        }
+
+        .sfsi_subscription_form_field input {
+
+            width: 100% !important;
+
+            padding: 10px 0px !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email] {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]::-webkit-input-placeholder {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]:-moz-placeholder {
+            /* Firefox 18- */
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]::-moz-placeholder {
+            /* Firefox 19+ */
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]:-ms-input-placeholder {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=submit] {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-weight: bold !important;
+
+            color: #000000 !important;
+
+            font-size: 16px !important;
+
+            text-align: center !important;
+
+            background-color: #dedede !important;
+
+        }
+
+        .sfsi_shortcode_container {
+            float: left;
+        }
+
+        .sfsi_shortcode_container .norm_row .sfsi_wDiv {
+            position: relative !important;
+        }
+
+        .sfsi_shortcode_container .sfsi_holders {
+            display: none;
+        }
+
+            </style><link rel="stylesheet" id="lwptoc-main-css" href="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/modernizr.custom.min.js" id="SFSIjqueryModernizr-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/jquery.shuffle.min.js" id="SFSIjqueryShuffle-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/random-shuffle-min.js" id="SFSIjqueryrandom-shuffle-js"></script><script id="SFSICustomJs-js-extra">
+var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
+var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"0abd269183","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script src="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.js" id="lwptoc-main-js"></script><script>
+	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
+	</script><script src="https://stats.wp.com/e-202130.js" defer></script><script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.8.1',blog:'166765678',post:'1169',tz:'-5',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'clickTrackerInit', '166765678', '1169' ]);
+</script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
+		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>
+</div>
+</body></html>

@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>VLAN &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/tag/vlan/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Tue, 29 Jun 2021 22:53:09 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>VLAN &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>VyOS and Mikrotik &#8211; VLAN-a-rama</title>
+		<link>https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=vyos-and-mikrotik-vlan-a-rama</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Tue, 29 Jun 2021 19:12:19 +0000</pubDate>
+				<category><![CDATA[mikrotik]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[VLAN]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=1169</guid>
+
+					<description><![CDATA[For the novice networker, VLANs are easily one of the most misunderstood concepts. In this post, I&#8217;ll go over some basics and demonstrate how to make the jump from separate&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>For the novice networker, VLANs are easily one of the most misunderstood concepts.  In this post, I&#8217;ll go over some basics and demonstrate how to make the jump from separate interfaces and switches to VLANs. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Introduction</h2>
+
+
+
+<p>Virtual LANs, or VLANs, are one of the most useful features in all of networking.  To put it simply, they allow a logical separation of broadcast domains.  In layperson&#8217;s terms, &#8220;I took a switch and put it in your switch!&#8221;.  </p>
+
+
+
+<p>I think it&#8217;s best to start with a traditional physical setup that would represent how most people start their networking adventures.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Physical Setup</h2>
+
+
+
+<p>For this adventure, I&#8217;ll be using be using:</p>
+
+
+
+<ul><li>The <a rel="noreferrer noopener" href="https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/" data-type="post" data-id="539" target="_blank">WYSE 3040</a> from a previous blog post.</li><li>An array of small Mikrotiks (<a rel="noreferrer noopener" href="https://amzn.to/35XStKu" target="_blank">hex</a>, <a href="https://amzn.to/3AefB5h" data-type="URL" data-id="https://amzn.to/3AefB5h">hap</a>, <a rel="noreferrer noopener" href="https://amzn.to/2UR3I5h" target="_blank">hex lite</a>) since they are painfully easy to set up as both simple switches and managed switches supporting VLANs.</li><li>A few Virtual Machines to act as end devices, also from a<a href="https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/" data-type="post" data-id="1104"> prior blog post.</a></li></ul>
+
+
+
+<p>Let&#8217;s start with this simple network diagram.  </p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="651" height="902" src="https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1.png" alt="" class="wp-image-1221" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1.png 651w, https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1-217x300.png 217w, https://blog.kroy.io/wp-content/uploads/2021/06/vlanaram1-1-217x300@2x.png 434w" sizes="(max-width: 651px) 100vw, 651px" /><figcaption>physical layout</figcaption></figure></div>
+
+
+
+<p>and how does this setup look when it&#8217;s all wired up?</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1024x768.jpg" alt="" class="wp-image-1232" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491.jpg 1920w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0491-300x225@2x.jpg 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>messy</figcaption></figure></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Networking Config</h3>
+
+
+
+<p>This is the basic config for all three of the switches.  I don&#8217;t want to get too bogged down with the Mikrotik config, but I should explain some of it.</p>
+
+
+
+<p>In the Linux world, and subsequently in Mikrotik-land, a switch would be called a &#8220;bridge&#8221;.  So in this case, I&#8217;ve created a bridge and added all the ports to it.  And then I&#8217;ve told the switches to pull an IP address from the bridge for management.</p>
+
+
+
+<pre class="wp-block-code"><code>&#091;admin@MikroTik] &gt; /export 
+# jun/28/2021 21:03:30 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+add bridge=bridgeLocal comment=defconf interface=ether2
+add bridge=bridgeLocal comment=defconf interface=ether3
+add bridge=bridgeLocal comment=defconf interface=ether4
+add bridge=bridgeLocal comment=defconf interface=ether5
+/ip dhcp-client
+add comment=defconf disabled=no interface=bridgeLocal
+</code></pre>
+
+
+
+<p>This configuration essentially turns these Mikrotik devices into a dumb switch, with an IP address to manage them.  They are also plugged into my existing network:</p>
+
+
+
+<ul><li>HEX into my &#8220;WAN&#8221; network (random VLAN on my existing network that has internet access)</li><li>HAP into a VLAN connected to the &#8220;enduser1&#8221; VM </li><li>HEX LITE into a VLAN connected to the &#8220;enduser2&#8221; VM.</li></ul>
+
+
+
+<p> </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>VyOS Config</h3>
+
+
+
+<p>The VyOS config here on the WYSE 3040 is very simple:</p>
+
+
+
+<ul><li>Onboard NIC is eth0, connected to WAN/HEX switch, pulling an IP from my existing infrastructure.</li><li>USB NIC1 is eth1, connected to HAP switch</li><li>USB NIC2 is eth2, connected to HEX switch</li><li>Some NAT, so my test clients can get on the Internet</li><li>Some DHCP, so my test clients can auto-configure themselves</li></ul>
+
+
+
+<pre class="wp-block-code"><code>interfaces {
+    ethernet eth0 {
+        address dhcp
+        description WAN
+        hw-id 8c:ec:4b:6d:dc:d6
+    }
+    ethernet eth1 {
+        address 172.21.39.1/24
+        description HAPLAN
+        hw-id 8c:ae:4c:f5:e5:8f
+    }
+    ethernet eth2 {
+        address 192.168.39.1/24
+        description HEXLITELAN
+        hw-id 8c:ae:4c:f5:e5:94
+    }
+    loopback lo {
+    }
+}
+nat {
+    source {
+        rule 10 {
+            outbound-interface eth0
+            source {
+                address 172.21.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+        rule 11 {
+            outbound-interface eth0
+            source {
+                address 192.168.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name HAPDHCP {
+            subnet 172.21.39.0/24 {
+                default-router 172.21.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 172.21.39.100
+                    stop 172.21.39.200
+                }
+            }
+        }
+        shared-network-name HEXLITEDHCP {
+            subnet 192.168.39.0/24 {
+                default-router 192.168.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 192.168.39.100
+                    stop 192.168.39.200
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}</code></pre>
+
+
+
+<p>And once it&#8217;s all set up, the two &#8220;enduser&#8221; VMs both have appropriate IP addresses and Internet access as served out by the VyOS-3040:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="328" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1024x328.png" alt="" class="wp-image-1216" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1024x328.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-300x96.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-1536x493.png 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-2048x657.png 2048w, https://blog.kroy.io/wp-content/uploads/2021/06/image-47-300x96@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>VMs working</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>VLANs</h2>
+
+
+
+<p>Of course we aren&#8217;t here to just make a simple multi-network setup.  We want some VLANs.  So let&#8217;s rewrite some things, and eliminate two of the switches. </p>
+
+
+
+<p>First off, let&#8217;s talk about the physical setup we had before.  Before, each of the different switches were connected to &#8220;raw&#8221; ports connecting to existing VLANs on my network:</p>
+
+
+
+<ul><li>HEX: VAN9.  This is an existing client network in my homelab.  You plug something in here, it gets a 10.9.1.0/24 address, and instantly has Internet access. This is what the &#8220;WAN&#8221; port of VyOS connects to.</li><li>HAP: VLAN41.  This was a new VLAN I created to connect between eth1 on VyOS and the &#8220;enduser1&#8221; VM.</li><li>HEX LITE: VLAN42. Similarly, a new VLAN I created to connect between eth2 on VyOS and the &#8220;enduser2&#8221; VM.</li></ul>
+
+
+
+<p>Physically, this is how the new setup will look:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-768x1024.jpg" alt="" class="wp-image-1234" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-1152x1536.jpg 1152w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494.jpg 1437w, https://blog.kroy.io/wp-content/uploads/2021/06/IMG_0494-225x300@2x.jpg 450w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>getting cleaner</figcaption></figure></div>
+
+
+
+<p>In most networking circles, a &#8220;trunk&#8221; just means a port carrying multiple VLANs.  Since we removed two switches, the remaining switch, the HEX, will need to have its uplink port changed into a trunk:</p>
+
+
+
+<ul><li>Remove HAP and HEX LITE switches</li><li>On the HEX, change the port that was previously connected to a raw VLAN9 port on my existing network to a trunk.</li><li>Plug eth1 from VyOS into port 4 on HEX, change the VLAN of that port to 41</li><li>Plug eth2 from VyOS into port 3 on HEX, change the VLAN of the port to 42</li><li>Change the VLAN on port 5 on the HEX to 9.  This will change the PVID, or the raw VLAN that&#8217;s use when whatever is plugged in on the other end isn&#8217;t speaking VLANs.</li><li>Due to the prior step, the nothing on VyOS will change</li></ul>
+
+
+
+<p>The characteristics of our trunk ports will be simple:</p>
+
+
+
+<ul><li>VLAN1 == PVID/untagged.  This is the VLAN traffic will land on if the traffic has no VLAN tags</li><li>VLAN9 == Tagged. </li><li>VLAN41 == Tagged</li><li>VLAN42 == Tagged</li></ul>
+
+
+
+<p>I&#8217;ve highlighted the important changes on the remaining switch below:</p>
+
+
+
+<ol><li>Add an Switched Virtual Interface or SVI.  This is saying &#8220;Give this switch an interface on this VLAN&#8221;.  This is important because VLAN9 is no longer the default &#8220;untagged&#8221; for the uplink port (ether1)</li><li>Change the PVIDs/default VLANs of the appropriate ports on the bridge.  We are doing this to make the VyOS-3040 think nothing has changed in our physical setup.</li><li>Handle VLAN filtering.  This is going to control what VLANs are allowed on these ports. This is how you create a trunk port in Mikrotik <ol><li><code>ether1</code> is the Trunk to the rest of the network.  It is untagged on VLAN1 (which is a throwaway VLAN for security).  It is tagged on the other two VLANs we are using, 41 and 42.</li><li><code>bridgeLocal</code> is Mikrotik itself. It is untagged on VLAN1 for similar reasons as above.  It it tagged on VLAN9 as this is what allows our newly created <code>VLAN9_SVI</code> so we can create a management address for it.</li><li><code>ether3/4/5</code> are all untagged on the VLANs that match the PVIDs.</li></ol></li><li>Finally, we tell the Mikrotik to pull its address via DHCP on the newly created <code>VLAN9_SVI</code></li></ol>
+
+
+
+<pre class="wp-block-code"><code># jun/29/2021 10:27:41 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal vlan-filtering=yes
+<strong>/interface vlan
+add interface=bridgeLocal name=VLAN9_SVI vlan-id=9</strong>
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+add bridge=bridgeLocal comment=defconf interface=ether2
+<strong>add bridge=bridgeLocal comment=defconf interface=ether3 pvid=42
+add bridge=bridgeLocal comment=defconf interface=ether4 pvid=41
+add bridge=bridgeLocal comment=defconf interface=ether5 pvid=9</strong>
+/interface bridge vlan
+<strong>add bridge=bridgeLocal untagged=bridgeLocal,ether1 vlan-ids=1</strong>
+<strong>add bridge=bridgeLocal tagged=bridgeLocal,ether1 untagged=ether5 vlan-ids=9
+add bridge=bridgeLocal tagged=ether1 untagged=ether4 vlan-ids=41
+add bridge=bridgeLocal tagged=ether1 untagged=ether3 vlan-ids=42</strong>
+/ip dhcp-client
+<strong>add comment=defconf disabled=no interface=VLAN9_SVI</strong></code></pre>
+
+
+
+<p>As mentioned above, everything just works as before.  As far as the VyOS-3040 is concerned, it is still connected to three separate switches:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="327" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1024x327.png" alt="" class="wp-image-1217" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1024x327.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-300x96.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-1536x491.png 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-2048x655.png 2048w, https://blog.kroy.io/wp-content/uploads/2021/06/image-48-300x96@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>as before, working perfect</figcaption></figure>
+
+
+
+<h2>VLANs &#8211; Going Deeper</h2>
+
+
+
+<p>Of course, we haven&#8217;t even touched VLANs on VyOS yet, so let&#8217;s dig into that.  </p>
+
+
+
+<p>The basic goals will be:</p>
+
+
+
+<ul><li>Remove all the dongles</li><li>Move the cable that goes to VyOS-3040 from port 5 to port 2.</li><li>Trunk VLANs 41 and 42 into VyOS</li><li>Change the config in VyOS to use VLAN interfaces instead of physical interfaces.</li></ul>
+
+
+
+<p>Physically, this is starting to look super clean.  We only have two cables plugged into the switch, the trunk from the existing networking and the trunk to the VyOS-3040. </p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="659" height="1024" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png" alt="" class="wp-image-1223" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-50-659x1024.png 659w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50-193x300.png 193w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50-988x1536.png 988w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50.png 1097w, https://blog.kroy.io/wp-content/uploads/2021/06/image-50-193x300@2x.png 386w" sizes="(max-width: 659px) 100vw, 659px" /><figcaption>cleaner still</figcaption></figure></div>
+
+
+
+<p>I&#8217;ve highlighted the changes to the switch, but basically we are turning port 2 into another trunk, BUUUUT, a trunk with the PVID of 9:</p>
+
+
+
+<ul><li>Change the PVID of ether2 to 9.  This is to make it so VyOS-3040 still is &#8220;on&#8221; VLAN9 on its raw port</li><li>Add ether2 as untagged on VLAN9</li><li>Add ether2 as tagged on VLANs 41/42</li></ul>
+
+
+
+<pre class="wp-block-code"><code># jun/29/2021 10:49:20 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+# serial number = 8AFF09A3F98D
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal vlan-filtering=yes
+/interface vlan
+add interface=bridgeLocal name=VLAN9_SVI vlan-id=9
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+<strong>add bridge=bridgeLocal comment=defconf interface=ether2 pvid=9</strong>
+add bridge=bridgeLocal comment=defconf interface=ether3 pvid=42
+add bridge=bridgeLocal comment=defconf interface=ether4 pvid=41
+add bridge=bridgeLocal comment=defconf interface=ether5 pvid=9
+/ip neighbor discovery-settings
+set discover-interface-list=!dynamic
+/interface bridge vlan
+add bridge=bridgeLocal untagged=bridgeLocal,ether1 vlan-ids=1
+<strong>add bridge=bridgeLocal tagged=bridgeLocal,ether1 untagged=ether5,ether2 vlan-ids=9</strong>
+<strong>add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether4 vlan-ids=41
+add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether3 vlan-ids=42</strong>
+/ip dhcp-client
+add comment=defconf disabled=no interface=VLAN9_SVI</code></pre>
+
+
+
+<p>And in VyOS, the only change is removing eth1/eth2, and moving the config under the appropriate vif:</p>
+
+
+
+<pre class="wp-block-code"><code>interfaces {
+    ethernet eth0 {
+        address dhcp
+        description WAN
+        hw-id 8c:ec:4b:6d:dc:d6
+        <strong>vif 41 {
+            address 172.21.39.1/24
+            description HAPLAN
+        }
+        vif 42 {
+            address 192.168.39.1/24
+            description HEXLITELAN
+        }</strong>
+    }
+    loopback lo {
+    }
+}
+</code></pre>
+
+
+
+<p>which we can now access everywhere via <code>eth0.41</code>/<code>eth0.42</code>.</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyos:~$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             10.9.1.73/24                      u/u  WAN   
+eth0.41          172.21.39.1/24                    u/u  HAPLAN
+eth0.42          192.168.39.1/24                   u/u  HEXLITELAN
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>VLANs &#8211; Gotta Find the Bottom!</h2>
+
+
+
+<p>Of course, if you are like me, you turn everything into a trunk to routers.</p>
+
+
+
+<p>So we are going to remove VLAN as the PVID from our VyOS-3040 facing port, and just tag it:</p>
+
+
+
+<pre class="wp-block-code"><code>&#091;admin@MikroTik] &gt; export           
+# jun/29/2021 10:52:50 by RouterOS 6.48.3
+# software id = IMPN-EEMU
+#
+# model = RB750Gr3
+/interface bridge
+add admin-mac=B8:69:F4:AB:2E:7A auto-mac=no comment=defconf name=bridgeLocal vlan-filtering=yes
+/interface vlan
+add interface=bridgeLocal name=VLAN9_SVI vlan-id=9
+/interface bridge port
+add bridge=bridgeLocal comment=defconf interface=ether1
+<strong>add bridge=bridgeLocal comment=defconf interface=ether2</strong>
+add bridge=bridgeLocal comment=defconf interface=ether3 pvid=42
+add bridge=bridgeLocal comment=defconf interface=ether4 pvid=41
+add bridge=bridgeLocal comment=defconf interface=ether5 pvid=9
+/interface bridge vlan
+add bridge=bridgeLocal untagged=bridgeLocal,ether1,ether2 vlan-ids=1
+<strong>add bridge=bridgeLocal tagged=bridgeLocal,ether1,ether2 untagged=ether5 vlan-ids=9</strong>
+add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether4 vlan-ids=41
+add bridge=bridgeLocal tagged=ether1,ether2 untagged=ether3 vlan-ids=42
+/ip dhcp-client
+add comment=defconf disabled=no interface=VLAN9_SVI
+</code></pre>
+
+
+
+<p>and a few small changes to VyOS. We move the &#8220;WAN&#8221; dhcp to a VLAN, and change the outbound-interface for the NAT:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyos:~$ show configuration 
+interfaces {
+    ethernet eth0 {
+        hw-id 8c:ec:4b:6d:dc:d6
+       <strong> vif 9 {
+            address dhcp
+            description WAN
+        }</strong>
+        vif 41 {
+            address 172.21.39.1/24
+            description HAPLAN
+        }
+        vif 42 {
+            address 192.168.39.1/24
+            description HEXLITELAN
+        }
+    }
+    loopback lo {
+    }
+}
+nat {
+    source {
+        rule 10 {
+            <strong>outbound-interface eth0.9</strong>
+            source {
+                address 172.21.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+        rule 11 {
+            <strong>outbound-interface eth0.9</strong>
+            source {
+                address 192.168.39.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name HAPDHCP {
+            subnet 172.21.39.0/24 {
+                default-router 172.21.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 172.21.39.100
+                    stop 172.21.39.200
+                }
+            }
+        }
+        shared-network-name HEXLITEDHCP {
+            subnet 192.168.39.0/24 {
+                default-router 192.168.39.1
+                dns-server 10.53.53.53
+                range 0 {
+                    start 192.168.39.100
+                    stop 192.168.39.200
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}</code></pre>
+
+
+
+<p>And if we show our interfaces:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyos:~$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             -                                 u/u  
+eth0.9           10.9.1.73/24                      u/u  WAN
+eth0.41          172.21.39.1/24                    u/u  HAPLAN
+eth0.42          192.168.39.1/24                   u/u  HEXLITELAN
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>That&#8217;s it!  I&#8217;ve walked through going from a traditional network with 3 separate interfaces to a single interface carrying the traffic of all three networks.</p>
+
+
+
+<p>On to the next!</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1169</post-id>	</item>
+	</channel>
+</rss>

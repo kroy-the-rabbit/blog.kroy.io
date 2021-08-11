@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>nucnucnuc &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/nucnucnuc/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Mon, 07 Dec 2020 15:37:44 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>nucnucnuc &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>Proxmox and Ceph for the NucNucNuc</title>
+		<link>https://blog.kroy.io/2017/05/03/proxmox-and-ceph-for-the-nucnucnuc/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=proxmox-and-ceph-for-the-nucnucnuc</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Wed, 03 May 2017 07:30:42 +0000</pubDate>
+				<category><![CDATA[ceph]]></category>
+		<category><![CDATA[nucnucnuc]]></category>
+		<category><![CDATA[proxmox]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/05/03/proxmox-and-ceph-for-the-nucnucnuc/</guid>
+
+					<description><![CDATA[In the latest incarnation of the NucNucNuc, I get Proxmox and Ceph installed The idea of Ceph is very attractive. Distributed storage eliminates a huge concern of mine, which is&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>In the latest incarnation of the NucNucNuc, I get Proxmox and Ceph installed</p>
+
+
+
+<p>The idea of Ceph is very attractive. Distributed storage eliminates a huge concern of mine, which is being forced to replace a handful of very expensive Nimble storage units in the near future.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The first step was to get Proxmox installed and get the three NucNucNuc nodes in a cluster.</p>
+
+
+
+<p><code>pvecm create NucNucNuc</code> -&gt; First node (192.168.202.10)</p>
+
+
+
+<p><code>pvecm add 192.168.202.10</code> -&gt; Second and third nodes</p>
+
+
+
+<pre class="wp-block-code"><code>root@pve1:~# pvecm status
+Quorum information
+------------------
+Date:             Wed Apr 26 09:57:39 2017
+Quorum provider:  corosync_votequorum
+Nodes:            3
+Node ID:          0x00000001
+Ring ID:          1/28
+Quorate:          Yes
+
+Votequorum information
+----------------------
+Expected votes:   3
+Highest expected: 3
+Total votes:      3
+Quorum:           2
+Flags:            Quorate
+
+Membership information
+----------------------
+Nodeid      Votes Name
+0x00000001          1 192.168.202.10 (local)
+0x00000002          1 192.168.202.11
+0x00000003          1 192.168.202.12
+root@pve1:~#</code></pre>
+
+
+
+<p>Next, a dedicated network interface for the Ceph traffic. I used a <a href="https://www.amazon.com/Plugable-Gigabit-Ethernet-Network-Adapter/dp/B011DDXGVC">USB-C to Gigabit Ethernet dongle</a> that&#8217;s well-known as having decent Linux support.</p>
+
+
+
+<figure class="wp-block-image alignfull"><img width="1024" height="271" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-1024x271.png" alt="" class="wp-image-170" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-1024x271.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-300x79.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-768x203.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-1600x424.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM.png 1911w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>In a production deployment, as I discovered in my benchmarking, 10GbE is practically a must. You also wouldn&#8217;t bridge the devices; you would want a NIC (or more) dedicated to the Ceph traffic. For this testing, I figured I might want to use the separate NIC in my VMs.</p>
+
+
+
+<h3 id="installingceph">Installing Ceph</h3>
+
+
+
+<p>The next step was to get Ceph installed. Recent versions of Proxmox have made this a very simple task. I&#8217;m using the Proxmox 5.0 Beta1, so the version of Ceph that is available is <code>luminous</code></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="429" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-1024x429.png" alt="" class="wp-image-171" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-1024x429.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-300x126.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-768x322.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-1600x670.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM.png 1914w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Initializing Ceph and setting up monitors is next.</p>
+
+
+
+<p>This is where I ended up making the first mistake. I figured I would be clever, and paste my commands into three terminals at once. This caused some sort of weird deadlock, which forced me to have to uninstall and reinstall Ceph.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="547" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-1024x547.png" alt="" class="wp-image-172" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-1024x547.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-300x160.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-768x410.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-1600x854.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3.png 1939w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>A quick <code>ceph quorom_status</code>, <code>ceph health</code>, and a <code>ceph mon_status</code> tells me everything is properly set up.</p>
+
+
+
+<h4 id="initializingandconfiguringthedisks">Initializing and Configuring the Disks</h4>
+
+
+
+<p>Once I had Ceph up and rolling, it was time to set up the disk. For now, this is just going to be a single disk setup, where the disk used in each NUC is a 500GB M2 SATA SSD. In a more extensive setup, you would want more disks, and 10 GbE for the Ceph network.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="217" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-1024x217.png" alt="" class="wp-image-173" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-1024x217.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-300x64.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-768x163.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-1600x339.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM.png 1937w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="547" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-1024x547.png" alt="" class="wp-image-174" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-1024x547.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-300x160.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-768x410.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-1600x854.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM.png 1913w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Once the osds are configured and the disks are set up, the Proxmox GUI should be showing everything.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="415" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-1024x415.png" alt="" class="wp-image-175" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-1024x415.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-300x122.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-768x311.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-1600x649.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1.png 1907w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="435" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-1024x435.png" alt="" class="wp-image-176" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-1024x435.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-300x127.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-768x326.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-1600x679.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM.png 1915w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="415" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-1024x415.png" alt="" class="wp-image-177" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-1024x415.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-300x122.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-768x311.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-1600x649.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM.png 1912w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 id="addingthestoragetothecluster">Adding the Storage to the Cluster</h3>
+
+
+
+<p>Once it&#8217;s been confirmed that Ceph is running, and everything appears to be working, it&#8217;s time to add the storage to Proxmox. At this point, Proxmox just sees the storage as remote, sort of like NFS or iSCSI, so it&#8217;s a simple handful clicks to add.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="572" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-1024x572.png" alt="" class="wp-image-178" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-1024x572.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-300x168.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-768x429.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-1600x894.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The storage type is &#8220;RDB&#8221;. In this case, I&#8217;ve added the IPs for my three monitor IPs, 192.168.203.10/11/12.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="459" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-1024x459.png" alt="" class="wp-image-179" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-1024x459.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-300x135.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-768x344.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1.png 1360w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I&#8217;ve set this up twice now, and both time the hassle has been remembering this step.</p>
+
+
+
+<p>Permission must be granted to access the storage &#8220;remotely&#8221;, even if remote in this case are the Proxmox nodes themselves. This must be done from the command line on one of the hosts.</p>
+
+
+
+<p>In this case, my storage is named &#8220;ssd_ceph&#8221;.</p>
+
+
+
+<p><code>mkdir /etc/pve/priv/ceph &amp;&amp; cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/ssd_ceph.keyring</code></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="706" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-1024x706.png" alt="" class="wp-image-180" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-1024x706.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-300x207.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-768x529.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1.png 1410w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 id="somebenchmarks">Some Benchmarks</h3>
+
+
+
+<p>After it was all set up, I installed Ubuntu in a VM on the storage to do some benchmarks.</p>
+
+
+
+<p>It&#8217;s very obvious why 10GbE is recommended for the Ceph storage network. As I am writing files to the VM that was running on the first node, it is transferring data out to both of the other nodes.</p>
+
+
+
+<p>This is just the <code>iftop</code> results of some minor benchmarking. On these relatively slow NUCs with slow SSDs in them, it was coming close to saturating the USB-C gigabit connection.</p>
+
+
+
+<figure class="wp-block-image"><img width="732" height="186" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Untitled-1.png" alt="" class="wp-image-181" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-1.png 732w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-1-300x76.png 300w" sizes="(max-width: 732px) 100vw, 732px" /></figure>
+
+
+
+<p>A simple <code>rsync</code> inside of the VM tells a similar story.</p>
+
+
+
+<figure class="wp-block-image"><img width="916" height="170" src="https://blog2.kroy.io/wp-content/uploads/2019/08/pHgKD.png" alt="" class="wp-image-182" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/pHgKD.png 916w, https://blog.kroy.io/wp-content/uploads/2019/08/pHgKD-300x56.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/pHgKD-768x143.png 768w" sizes="(max-width: 916px) 100vw, 916px" /></figure>
+
+
+
+<h3 id="finalthoughts">Final thoughts</h3>
+
+
+
+<p>Sure, it&#8217;s not monster speeds, but on these slow NUCs with a gigabit Ceph network and a single Ceph OSD per drive, it&#8217;s definitely acceptable. With a 10GbE backplane and array of SSDs as the <a href="https://pve.proxmox.com/wiki/Ceph_Server">recommended</a>, I think this would perform admirably.</p>
+
+
+
+<p>See more <a href="/category/nucnucnuc/">Nucnucnuc</a> stuff <a href="/tag/nucnucnuc/">here</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">22</post-id>	</item>
+		<item>
+		<title>The NucNucNuc gets XenServered</title>
+		<link>https://blog.kroy.io/2017/04/12/the-nucnucnuc-gets-xenservered/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-nucnucnuc-gets-xenservered</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Wed, 12 Apr 2017 23:30:00 +0000</pubDate>
+				<category><![CDATA[nucnucnuc]]></category>
+		<category><![CDATA[SysAdmin]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/04/12/the-nucnucnuc-gets-xenservered/</guid>
+
+					<description><![CDATA[In this post, I explore putting XenServer on these NUCs. While XenServer is firmly in the &#8220;traditional full-blown hypervisor&#8221; category, it would be a potential alternative to expensive VMWare licenses.&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>In this post, I explore putting XenServer on these NUCs.  While XenServer is firmly in the &#8220;traditional full-blown hypervisor&#8221; category, it would be a potential alternative to expensive VMWare licenses.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>XenServer is a virtualization platform by <a href="https://xenserver.org/">Citrix</a> that adds VMWare-ish capabilities to the otherwise fairly bare hypervisor <a href="https://www.xenproject.org/">Xen</a>.  Xen is probably one of the most widely deployed bare-metal hypervisors simply due to the fact that Amazon&#8217;s EC2 uses it.</p>
+
+
+
+<p>Personally, I&#8217;ve used XenServer in the past in production and hated it.  The internal vSwitch was constantly getting overloaded and bringing down our entire software stack. It&#8217;s not like Xen itself isn&#8217;t capable, but at least when I used XenServer (in the 5.0 days), it had problems.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4 id="installation">Installation</h4>
+
+
+
+<p>I figured as long as I had the platform to mess around on, I might as well give XenServer a shot.  About an hour later <em>(it took FOREVER to install)</em>, it was up and running.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="640" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.10-PM-1024x640.png" alt="" class="wp-image-186" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.10-PM-1024x640.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.10-PM-300x187.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.10-PM-768x480.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.10-PM-1600x1000.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="645" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.44-PM-1024x645.png" alt="" class="wp-image-187" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.44-PM-1024x645.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.44-PM-300x189.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.44-PM-768x484.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-12-at-1.38.44-PM-1600x1008.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I suppose it surprised me a little bit when I realized a &#8220;fat&#8221; Windows client was still required.  At least on ESXi, there has been an HTML/Flash client available for a while now.  A quick search told me Xen Orchestra was available, but I needed to get the storage set up first.</p>
+
+
+
+<h5 id="networkingfail">Networking Fail</h5>
+
+
+
+<p>It didn&#8217;t take me long to realize I had a problem.  When I was looking for the USB Ethernet controller to create the storage network, I realized it wasn&#8217;t working.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="602" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.30-PM-1024x602.png" alt="" class="wp-image-188" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.30-PM-1024x602.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.30-PM-300x176.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.30-PM-768x452.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.30-PM-1600x941.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The NIC was found, but it wasn&#8217;t detecting the link on itself.  Moreover, every time I rebooted the server and clicked &#8220;Rescan&#8221;, it changed its name to another NIC.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="697" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.40-PM-1024x697.png" alt="" class="wp-image-189" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.40-PM-1024x697.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.40-PM-300x204.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.40-PM-768x523.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.04.40-PM-1600x1089.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Through some command-line hackery, I was able to get the secondary NICs working:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="274" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.08-PM-1024x274.png" alt="" class="wp-image-190" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.08-PM-1024x274.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.08-PM-300x80.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.08-PM-768x205.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.08-PM-1600x428.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.08-PM.png 1840w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="144" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.42-PM-1024x144.png" alt="" class="wp-image-191" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.42-PM-1024x144.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.42-PM-300x42.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.42-PM-768x108.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.05.42-PM.png 1108w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="876" height="330" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.08.46-PM-1.png" alt="" class="wp-image-192" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.08.46-PM-1.png 876w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.08.46-PM-1-300x113.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-5.08.46-PM-1-768x289.png 768w" sizes="(max-width: 876px) 100vw, 876px" /></figure>
+
+
+
+<p>But unfortunately, the GUI still wouldn&#8217;t see the NICs, not to mention that every reboot changed the name of the device, so it wasn&#8217;t much help anyway.</p>
+
+
+
+<h5 id="xenserverfail">XenServer Fail</h5>
+
+
+
+<p>So that was the end of that test.  Unfortunately if I can&#8217;t even get the basic networking set up (and stable), it wasn&#8217;t going to do to me much good to continue testing with it. I was only marginally interested in XenServer anyway, so it didn&#8217;t really break my heart to move beyond this test.</p>
+
+
+
+<p>With that said, these servers are getting tossed into the GParted bootstick blender!</p>
+
+
+
+<p>See more <a href="/category/nucnucnuc/">Nucnucnuc</a> stuff <a href="/category/nucnucnuc/">here</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">21</post-id>	</item>
+		<item>
+		<title>The NucNucNuc is born</title>
+		<link>https://blog.kroy.io/2017/03/30/the-nucnucnuc-is-born/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-nucnucnuc-is-born</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 30 Mar 2017 05:28:00 +0000</pubDate>
+				<category><![CDATA[nucnucnuc]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/03/30/the-nucnucnuc-is-born/</guid>
+
+					<description><![CDATA[In the next year, I will be forced to replace about $200,000 of aging hardware due to end-of-life. I am not excited about this prospect. My mission in this is&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>In the next year, I will be forced to replace about $200,000 of aging hardware due to end-of-life.  I am not excited about this prospect.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>My mission in this is to replace all my aging production hardware as cheaply, but efficiently as possible.  This encompasses a few Nimble SANs and a stack of Dell servers, as well as a soon-to-be forced upgrade to VMWare Enterprise Plus/Plus license.  That last fact has soured me a bit on VMWare.</p>
+
+
+
+<p>To that end, I decided it was best to research potential alternatives to the traditional &#8220;heavy&#8221; virtualization stack. While our Nimbles offer the speed and IOPs we need, the price tag on them is extremely hefty.</p>
+
+
+
+<p>In 2017, technologies such as hyper-convergence have moved beyond buzzwords and into a realm of being accessible by the masses <em>(okay, so it&#8217;s been available before, but this is the first I&#8217;ve looked into it)</em>.</p>
+
+
+
+<h4 id="enterthenucnucnuc">Enter the NucNucNuc</h4>
+
+
+
+<p>While my homelab is extremely capable and in most cases overkill, the idea of having physical hardware as a testbed was attractive to me.  A key goal was to have a reasonable facsimile for the real thing.</p>
+
+
+
+<p>With that decided, I placed an order for 3 NUCs, some RAM, and an array of drives for them.</p>
+
+
+
+<p><em>(three NUCs, I like the Stooges, the NucNucNuc is born.  Get it?)</em></p>
+
+
+
+<p>A few days later, they arrived.</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0368-1-768x1024.jpg" alt="" class="wp-image-203" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0368-1-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0368-1-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0368-1-1600x2134.jpg 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0368-1.jpg 1654w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<p>I&#8217;ve seen a few small PCs in my days, but the size of these NUCs are shocking.  They are <em><strong>TINY</strong></em>!</p>
+
+
+
+<h5 id="thebillofmaterials">The Bill of Materials:</h5>
+
+
+
+<ul><li>Three NUC7i3BNH.  These have Intel Core i3-7100u in them, which are dual core with hyperthreading.  They are also the &#8220;tall&#8221; versions, that are able to fit a 2.5&#8243; drive in them.</li><li>80GB of RAM for them.  Two servers will have 32GB and one will have 16GB.  If I&#8217;ve learned anything while using virtualization over the years, RAM is always running out far before CPU does.</li><li>Three 500GB Western Digital Blue M2.SATA SSDs.</li><li>Three 2TB Samsung 2.5&#8243; 7200RPM drives.</li></ul>
+
+
+
+<p>I figured for a testing platform, the heavier i5 or i7 CPUs were probably not needed, especially for the price.</p>
+
+
+
+<h5 id="theinstallation">The Installation</h5>
+
+
+
+<p>As I mentioned above, it&#8217;s a bit crazy how small these things are.  This fact was highlighted as I installed the drives and the RAM.  The entire NUC&#8217;s footprint is only slightly larger than the 2.5&#8243; laptop hard drive being installed.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0369-1-1024x768.jpg" alt="" class="wp-image-204" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0369-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0369-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0369-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0369-1-1600x1200.jpg 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Somehow, on two out of the three NUCs I stripped out the M2 SATA screw.  Those things were on there <em>TIGHT</em> and no matter which screwdriver I used, it stripped it.  I had to use a pair of pliers to remove them.</p>
+
+
+
+<p>Fortunately, the NUCs shipped with with an extra screw, so I replaced the stripped screws with fresh ones <em>(and made sure not to tighten them so much!)</em></p>
+
+
+
+<h5 id="nutanix">Nutanix</h5>
+
+
+
+<p>The day that my NUCs arrived, I had met with the Nutanix reps over a lunch. It was a lunch meeting I had on the schedule for a few weeks, without any real idea what Nutanix was about.</p>
+
+
+
+<p>Imagine my surprise when I found out that hyper-convergence was their &#8220;thing&#8221; and they liked to run small test clusters on NUCs.</p>
+
+
+
+<p>The guys tossed me a download code over email and I almost tripped myself trying to get home to set up everything. I cabled them up into an old Netgear switch.  The Netgear hooked into a tagged port on one of my managed switches and I set up a new subnet and VLAN for the test network.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0371-1024x768.jpg" alt="" class="wp-image-205" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0371-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0371-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0371-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0371-1600x1200.jpg 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Years of experience in building servers, installing and reinstalling operating systems taught me one simple lesson:</p>
+
+
+
+<h2 id="setupstaticdhcp"><strong>SET UP STATIC DHCP</strong></h2>
+
+
+
+<p>I was going to be installing and reinstalling multiple OSs on these NUCs, and I didn&#8217;t want to mess with changing IPs or constantly having to retype the same numbers.</p>
+
+
+
+<p>I&#8217;m not saying DHCP statically assigned IPs are always the greatest thing (as I locked myself out of my NAS once), but for these things, they were going to save me a ton of time.</p>
+
+
+
+<p>So into the DHCP Static address pool the MAC addresses of these NUCs went:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="230" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-8.15.06-PM-1024x230.png" alt="" class="wp-image-206" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-8.15.06-PM-1024x230.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-8.15.06-PM-300x68.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-8.15.06-PM-768x173.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-8.15.06-PM-1600x360.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-11-at-8.15.06-PM.png 1804w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h5 id="nutanixinflames">Nutanix in flames</h5>
+
+
+
+<p>If you know me at all then you know that the phrases &#8220;Murphy&#8217;s Law&#8221; and &#8220;The best laid plans of mice and men&#8221; are two simple phrases that seem to govern my existence.</p>
+
+
+
+<p>Okay, so maybe I didn&#8217;t <em>PLAN</em> on installing Nutanix on these when I ordered them, but it sure sounded like a great idea once I heard about it.</p>
+
+
+
+<p>Unfortunately my Nutanix aspirations fell short.</p>
+
+
+
+<p>Nutanix won&#8217;t install with less than 4 cores.  Of course the members of the NucNucNuc each have 2 cores. This is a surprisingly easy problem to fix, and after a few minutes of Googling, I got past it.</p>
+
+
+
+<p>The second problem was the network drivers.  While the NUCs contain NICs <em>&#8211; say that 5 times fast &#8211;</em> that are a variation of the popular E1000 series of NICs that work almost everywhere, the driver for them on the current version of Nutanix doesn&#8217;t work.  I spent a few hours trying to cross compile something that would work and ultimately failed.</p>
+
+
+
+<p>So for now, I had to give up on Nutanix for my NucNucNuc.</p>
+
+
+
+<h6 id="tobecontinued">To be continued&#8230;</h6>
+
+
+
+<p>Once I dug into Nutanix a bit, I realized that this setup (distributed storage and compute) was potentially the direction to head.  Having to refresh large storage nodes every handful of years just isn&#8217;t sustainable in the long run for a small company.  Not to mention it would be nice to add more storage just by adding more drives or servers instead of whole new SANs.</p>
+
+
+
+<p>The next thing I realized was that if I was serious about playing with various storage technologies, I was probably going to need secondary NICs for these servers.  So I ordered up a bunch of Plugable USB-C to Gigabit NICs and hooked up the managed switch I had from attending a webinar.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0373-1-1024x768.jpg" alt="" class="wp-image-207" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0373-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0373-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0373-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0373-1-1600x1200.jpg 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I also took the opportunity to put the &#8220;dumb&#8221; Netgear switch where it belongs, as a shelf</p>
+
+
+
+<p>See more <a href="/category/nucnucnuc/">Nucnucnuc</a> updates <a href="/category/nucnucnuc/">here</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">19</post-id>	</item>
+	</channel>
+</rss>

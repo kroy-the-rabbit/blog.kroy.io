@@ -1,0 +1,1998 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>Hardware &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/hardware/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Mon, 07 Dec 2020 15:37:55 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>Hardware &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>A Baby WYSE, the 3040</title>
+		<link>https://blog.kroy.io/2020/01/17/the-baby-wyse-the-dell-3040/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-baby-wyse-the-dell-3040</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Fri, 17 Jan 2020 17:30:58 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[dell]]></category>
+		<category><![CDATA[wireguard]]></category>
+		<category><![CDATA[wysebaby]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=539</guid>
+
+					<description><![CDATA[Ever since my successful adventure with the WYSE J5005, I fell in love with these little thin clients. So when the opportunity arose to pick up a baby one for&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Ever since my successful adventure with the <a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">WYSE J5005</a>, I fell in love with these little thin clients.  So when the opportunity arose to pick up a baby one for $30, I pounced on it.</p>
+
+
+
+
+
+<h2>The Path to Another WYSE</h2>
+
+
+
+<p>I love my <a href="https://amzn.to/2tjOisW">WYSE 5070</a>.  That little box is so much power stuffed into a tiny little form factor.  And as I outlined in my <a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/">last review</a>, it sips power, averaging about 7.5 watts under normal load.</p>
+
+
+
+<p>Although I initially threw <a href="https://vyos.io/">VyOS</a> on it, I don&#8217;t really have a need for another dedicated router right now.  So the duties of the box shifted, and it became the charter member of a newly minted Proxmox cluster, where it&#8217;s actually running a backup routing VyOS instance:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="443" src="https://blog.kroy.io/wp-content/uploads/2020/01/j5005-1024x443.png" alt="" class="wp-image-547" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/j5005-1024x443.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-300x130.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-768x332.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-1536x664.png 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005-850x368.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/j5005.png 1949w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>wyse5070 running primary DC, backup routing, and random Debian instance</figcaption></figure>
+
+
+
+<p>When the opportunity came to pick up a WYSE3040, I absolutely jumped on it.  Especially when it was less than a cost of a Raspberry Pi.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Dell WYSE 3040</h2>
+
+
+
+<p>So when I got the 3040, I didn&#8217;t realize how SMALL it would be.  I mean, this thing is downright <strong><em>TINY</em></strong>:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-1024x768.jpg" alt="" class="wp-image-542" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0623-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>I didn&#8217;t have a banana, so this is the size compared to an SSD.</figcaption></figure>
+
+
+
+<p>As pictured, the thing has a footprint that&#8217;s only slightly bigger than an SSD. </p>
+
+
+
+<p>Even at that size, it has a surprising amount of ports:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="494" src="https://blog.kroy.io/wp-content/uploads/2020/01/image-5-1024x494.png" alt="" class="wp-image-552" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-5-1024x494.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5-300x145.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5-768x371.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5-850x410.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-5.png 1481w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>headphone jack, usb2, usb3</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="498" src="https://blog.kroy.io/wp-content/uploads/2020/01/image-4-1024x498.png" alt="" class="wp-image-551" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-4-1024x498.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4-300x146.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4-768x374.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4-850x414.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-4.png 1519w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>power, dual displayport, USB2, ethernet</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Guts</h2>
+
+
+
+<p>I don&#8217;t know why, but I alway feel a driving <em>NEED</em> to open up my new toys.  It&#8217;s a disease. And this thing was no exception.</p>
+
+
+
+<p>With the bottom of the case off, it has an open spot for a WiFi card.  With the limited storage space in this sucker, at some point I&#8217;m going to research if I can drop an M2 SSD in there:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-1024x768.jpg" alt="" class="wp-image-541" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0624-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>bottom of case off</figcaption></figure>
+
+
+
+<p>Once the device is fully extricated from its case, there&#8217;s really not much to look at.  Just a huge heatsink that covers most of the top of the motherboard:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-1024x768.jpg" alt="" class="wp-image-540" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-1536x1152.jpg 1536w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-2048x1536.jpg 2048w, https://blog.kroy.io/wp-content/uploads/2020/01/IMG_0625-850x638.jpg 850w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>fully out</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Specs</h2>
+
+
+
+<p>While the WYSE5070 is a powerhouse in a tiny form-factor, this 3040 is a bit more&#8230; modest. </p>
+
+
+
+<ul><li>Atom x5-Z8350 Processor</li><li>2GB of DDR3L RAM (soldered on)</li><li>8GB of eMMC (soldered on)</li><li>Gigabit Realtek NIC (RTL8111/8168/8411)</li></ul>
+
+
+
+<figure class="wp-block-image size-large"><img width="896" height="516" src="https://blog.kroy.io/wp-content/uploads/2020/01/image.png" alt="" class="wp-image-545" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image.png 896w, https://blog.kroy.io/wp-content/uploads/2020/01/image-300x173.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-768x442.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-850x490.png 850w" sizes="(max-width: 896px) 100vw, 896px" /><figcaption>system stats</figcaption></figure>
+
+
+
+<p>Like I said.  Pretty modest specs. And the small RAM and storage space somewhat limit the options.  The eMMC is particularly painful as that kind of flash is REALLY not designed for general usage.  I&#8217;ll probably end up using a SATA SSD over a sata-wire. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>VyOS</h2>
+
+
+
+<p>So one of the first things I usually do with a new device is toss VyOS on it.  I&#8217;m a huge VyOS enthustiast, evangelist, and as mentioned recently, now maintainer.</p>
+
+
+
+<p> Unfortunately on this device, the VyOS installer died on a black screen.  But during the course of doing this write-up, I took another look at it, and  discovered the reason for this. GRUB tries to pass the output to a non-existent serial port.  While I&#8217;ve had other devices that lacked serial ports that installer didn&#8217;t care about, on this one it refused to boot.  So I just had to edit the grub boot line to remove the serial information. </p>
+
+
+
+<p>Also, the 1.3 line of VyOS had a broken UEFI installer since release due to a change in Debian Buster, but I recently fixed that as well.  </p>
+
+
+
+<p>So expect a VyOS write-up on this forthwith.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Testing</h2>
+
+
+
+<p>For testing, I just installed Ubuntu 18.04 or 19.10 I think.  Whatever ISO I had stuck on a USB at the time. </p>
+
+
+
+<p>The space on the device is obviously a very real concern.  Not to mention, as I said, the eMMC probably wouldn&#8217;t stand up very long to even minor usage without some hacks.  2.1G available with a fairly minimal install + WireGuard.</p>
+
+
+
+<pre class="wp-block-code"><code>Filesystem      Size  Used Avail Use% Mounted on
+udev            909M     0  909M   0% /dev
+tmpfs           190M  1.4M  189M   1% /run
+/dev/mmcblk0p2  6.7G  4.2G  2.1G  68% /
+tmpfs           950M     0  950M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           950M     0  950M   0% /sys/fs/cgroup
+/dev/loop0       90M   90M     0 100% /snap/core/8268
+/dev/mmcblk0p1  511M  7.8M  504M   2% /boot/efi
+/dev/loop1       55M   55M     0 100% /snap/lxd/12211
+/dev/loop2       90M   90M     0 100% /snap/core/7917
+/dev/loop3       55M   55M     0 100% /snap/lxd/12631
+tmpfs           190M     0  190M   0% /run/user/1000
+</code></pre>
+
+
+
+<p>Obviously I could probably get that a lot leaner if I went with something like Alpine or Arch.</p>
+
+
+
+<p>A basic iperf3 to a different host on my network shows gigabit speeds:</p>
+
+
+
+<pre class="wp-block-code"><code>&#091;SUM]   0.00-10.00  sec  1.09 GBytes   934 Mbits/sec    0             sender
+&#091;SUM]   0.00-10.00  sec  1.08 GBytes   931 Mbits/sec                  receiver
+</code></pre>
+
+
+
+<p>with moderate CPU usage:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="96" src="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-1024x96.png" alt="" class="wp-image-556" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-1024x96.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-300x28.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-768x72.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg-850x80.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-no-wg.png 1200w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>cpu usage during iperf3</figcaption></figure>
+
+
+
+<p>And firing up WireGuard and running an iperf3, show slightly less speed</p>
+
+
+
+<pre class="wp-block-code"><code>&#091;SUM]   0.00-10.00  sec   991 MBytes   831 Mbits/sec    0             sender
+&#091;SUM]   0.00-10.01  sec   988 MBytes   828 Mbits/sec                  receiver
+</code></pre>
+
+
+
+<p>And lots more CPU:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="101" src="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-1024x101.png" alt="" class="wp-image-557" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-1024x101.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-300x30.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-768x76.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg-850x84.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/w3040-cpu-wg.png 1375w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>cpu usage during WireGuard iperf3</figcaption></figure>
+
+
+
+<p></p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Power Consumption</h2>
+
+
+
+<p>The power consumption is where this thing really shines.  Again, sorry for the potato pic, I just have a terrible time getting a decent picture of my kill-a-watt with a dying screen.  4.1 watts at idle:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="779" src="https://blog.kroy.io/wp-content/uploads/2020/01/image-1-1024x779.png" alt="" class="wp-image-548" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-1-1024x779.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1-300x228.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1-768x584.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1-850x646.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-1.png 1164w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>potato pic, idle power consumption 4.1 watts</figcaption></figure>
+
+
+
+<p>And 7.3 watts under WireGuard:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="733" src="https://blog.kroy.io/wp-content/uploads/2020/01/image-2-1024x733.png" alt="" class="wp-image-549" srcset="https://blog.kroy.io/wp-content/uploads/2020/01/image-2-1024x733.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2-300x215.png 300w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2-768x550.png 768w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2-850x608.png 850w, https://blog.kroy.io/wp-content/uploads/2020/01/image-2.png 1266w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>potato pic, WireGuard at full speed, 7.3 watts</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>In all, this is a great little device for projects.  I might turn it into a DNS server or something.  For a lower speed network, I can also see it making a great little router.  I could see the CPU crumbling under heavy load that was coming from more than just a handful of streams.</p>
+
+
+
+<p>For the $30 I paid for it, it can definitely replace a Raspberry Pi for me.  And it will be even more useful if I can drop an M2 SSD into that WiFi slot.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">539</post-id>	</item>
+		<item>
+		<title>Battle of the Bare Metal Routers</title>
+		<link>https://blog.kroy.io/2019/11/21/battle-of-the-bare-metal-routers/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=battle-of-the-bare-metal-routers</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 21 Nov 2019 20:32:30 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[pfsense]]></category>
+		<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=449</guid>
+
+					<description><![CDATA[Continuing from my previous post, I wanted to see how a variety of software routing and firewall platforms performed when put to the test on an equal playing field. As&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Continuing from my <a href="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/">previous post</a>, I wanted to see how a variety of software routing and firewall platforms performed when put to the test on an equal playing field.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>As before, these tests were all run on my <a href="https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1521/">Xeon D-1521</a>. This server is running 10Gb links to the rest of my network via the onboard Intel X550/552 chipset, 32GB of RAM, and an SSD boot drive.</p>
+
+
+
+<p>The final results are <a href="#finalresults">HERE</a> if this is all TLDR.</p>
+
+
+
+<p>Here is the server dangling halfway out of the rack while I was doing these tests:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-1024x768.jpg" alt="" class="wp-image-359" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>Network Layout</h4>
+
+
+
+<p>The network layout is identical to virtual routing tests, though in this case, I just used DHCP to get the &#8220;WAN&#8221; address, since I wanted to test NAT performance too.</p>
+
+
+
+<figure class="wp-block-image"><img width="812" height="788" src="https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram.png" alt="" class="wp-image-37" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram.png 812w, https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram-300x291.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/network-diagram-768x745.png 768w" sizes="(max-width: 812px) 100vw, 812px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Victims</h2>
+
+
+
+<p>For these tests, I wanted to avoid wasting time on duplicated results.  So for example, I&#8217;ll just be testing pfSense instead of pfSense and OPNSense.  Similarly just VyOS instead of Debian.  Also, based on feedback on my prior post, there were people that felt like I missed a few platforms.  So for these tests, the platforms will be:</p>
+
+
+
+<ul><li>VyOS 1.2.3</li><li>pfSense 2.4.4-p3</li><li>Sophos XG SFOS v17.5.8&nbsp;(not fully sure how the versioning works, but that was the ISO)</li><li>Untangle 14.2.2</li></ul>
+
+
+
+<p>The goal of these tests is to show how these platforms perform when installed bare metal to this D-1521.  So they will be configured mostly out of box in a basic WAN/LAN Firewall/Router setup.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>VyOS</h3>
+
+
+
+<p>I use a lot of VyOS, and I&#8217;m pretty familiar with how it performs.  It&#8217;s worth mentioning that I&#8217;m also a VyOS maintainer now. </p>
+
+
+
+<p>Basic Config:</p>
+
+
+
+<pre class="wp-block-code"><code>firewall {
+    name OUTSIDE-IN {
+        default-action drop
+        rule 10 {
+            action accept
+            state {
+                established enable
+                related enable
+            }
+        }
+    }
+    name OUTSIDE-LOCAL {
+        default-action drop
+        rule 10 {
+            action accept
+            state {
+                established enable
+                related enable
+            }
+        }
+        rule 20 {
+            action accept
+            icmp {
+                type-name echo-request
+            }
+            protocol icmp
+            state {
+                new enable
+            }
+        }
+        rule 31 {
+            action accept
+            destination {
+                port 22
+            }
+            protocol tcp
+            state {
+                new enable
+            }
+        }
+    }
+}
+interfaces {
+    ethernet eth0 {
+        address dhcp
+        firewall {
+            in {
+                name OUTSIDE-IN
+            }
+            local {
+                name OUTSIDE-LOCAL
+            }
+        }
+    }
+    ethernet eth1 {
+        vif 2222 {
+            address 10.222.222.1/24
+        }
+        vif 2223 {
+            address 10.223.223.1/24
+        }
+    }
+    loopback lo {
+    }
+}
+nat {
+    source {
+        rule 10 {
+            outbound-interface eth0
+            source {
+                address 10.0.0.0/8
+            }
+            translation {
+                address masquerade
+            }
+        }
+    }
+}
+service {
+    dhcp-server {
+        shared-network-name vlan2222 {
+            authoritative
+            subnet 10.222.222.0/24 {
+                default-router 10.222.222.1
+                dns-server 10.53.53.53
+                lease 1200
+                range 0 {
+                    start 10.222.222.10
+                    stop 10.222.222.100
+                }
+            }
+        }
+        shared-network-name vlan2223 {
+            authoritative
+            subnet 10.223.223.0/24 {
+                default-router 10.223.223.1
+                dns-server 10.53.53.53
+                lease 1200
+                range 0 {
+                    start 10.223.223.10
+                    stop 10.223.223.100
+                }
+            }
+        }
+    }
+    ssh {
+        port 22
+    }
+}
+
+</code></pre>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>In this setup, the results were &#8220;basically 10Gb&#8221;, whether for inter-vlan or LAN-&gt;WAN with NAT.</p>
+
+
+
+<p><strong>Inter-vlan (9.19 Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="593" height="42" src="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-intervlan-simple.png" alt="" class="wp-image-450" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-intervlan-simple.png 593w, https://blog.kroy.io/wp-content/uploads/2019/11/vyos-intervlan-simple-300x21.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></figure>
+
+
+
+<p><strong>NAT (9.17 Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="591" height="43" src="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-simple.png" alt="" class="wp-image-451" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-simple.png 591w, https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-simple-300x22.png 300w" sizes="(max-width: 591px) 100vw, 591px" /></figure>
+
+
+
+<p>While I was testing it, I was curious to see if using a simple firewall was any different than using zone-based firewalls.  </p>
+
+
+
+<p>So adding the zone config:</p>
+
+
+
+<pre class="wp-block-code"><code>zone LAN {
+    default-action drop
+    from LOCAL {
+        firewall {
+            name LOCAL-LAN
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LAN
+        }
+    }
+    interface eth1.2222
+    interface eth1.2223
+}
+zone LOCAL {
+    from LAN {
+        firewall {
+            name LAN-LOCAL
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LOCAL
+        }
+    }
+    local-zone
+}
+zone WAN {
+    from LAN {
+        firewall {
+            name LAN-WAN
+        }
+    }
+    from LOCAL {
+        firewall {
+            name LOCAL-WAN
+        }
+    }
+    interface eth0
+}
+
+zone LAN {
+    default-action drop
+    from LOCAL {
+        firewall {
+            name LOCAL-LAN
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LAN
+        }
+    }
+    interface eth1.2222
+    interface eth1.2223
+}
+zone LOCAL {
+    from LAN {
+        firewall {
+            name LAN-LOCAL
+        }
+    }
+    from WAN {
+        firewall {
+            name WAN-LOCAL
+        }
+    }
+    local-zone
+}
+zone WAN {
+    from LAN {
+        firewall {
+            name LAN-WAN
+        }
+    }
+    from LOCAL {
+        firewall {
+            name LOCAL-WAN
+        }
+    }
+    interface eth0
+}
+</code></pre>
+
+
+
+<p>The results were pretty much identical.</p>
+
+
+
+<p><strong>NAT zone firewall (9.12Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="593" height="50" src="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-zone.png" alt="" class="wp-image-452" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-zone.png 593w, https://blog.kroy.io/wp-content/uploads/2019/11/vyos-wanlan-zone-300x25.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>pfSense</h3>
+
+
+
+<p>In my <a href="https://blog.kroy.io/2019/08/23/battle-of-the-virtual-routers/">previous post</a>, I caught a surprising amount of flak saying that my review of pfSense was somehow unfair and biased, despite feeling like I was <em>OVERLY</em> fair.  Hopefully the results here will vindicate me. </p>
+
+
+
+<p>With pfSense, I didn&#8217;t really make any changes beyond the stock install.  I added an <code>OPT</code> interface for the second LAN, and opened up the firewall rules for that interface.</p>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>First, I tested some inter-vlan routing with all hardware offload disabled.  This is a common troubleshooting step as virtual pfSense and a lot of network cards don&#8217;t properly support the functionality under FreeBSD.</p>
+
+
+
+<p><strong>Inter-vlan, disabled hardware offload (7.58Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="56" src="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-1024x56.png" alt="" class="wp-image-454" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-1024x56.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-300x16.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-768x42.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload-850x47.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-NoHWOffload.png 1202w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>But guess what.  All those hardware offloading checkboxes exist for a reason, and enabling it can have some dramatic results if the NICs actually support it (and the drivers aren&#8217;t broken).</p>
+
+
+
+<p><strong>Inter-vlan, hardware offload (9.19Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="71" src="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-1024x71.png" alt="" class="wp-image-455" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-1024x71.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-300x21.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-768x53.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload-850x59.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-intervlan-HWOffload.png 1208w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>pfSense does slightly less better when it is NATing, though still pretty close to 10Gb.</p>
+
+
+
+<p><strong>NAT, hardware offload (8.71Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="57" src="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-1024x57.png" alt="" class="wp-image-456" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-1024x57.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-300x17.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-768x42.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT-850x47.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/pfsense-wanlan-NAT.png 1266w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Now this is where I need to eat some crow.  </p>
+
+
+
+<p>For literally <em>YEARS</em> I&#8217;ve been preaching that pfSense won&#8217;t go 10 gigabit.  As these results show, that was way wrong. Though in my defense, this was also a sentiment echoed by the pfSense devs themselves. But I’ll take my medicine and admit that I was wrong. <br></p>
+
+
+
+<p>I think are a few reasons that in my all extensive testing, I never saw 10Gb. </p>
+
+
+
+<ul><li>When I was running pfSense on bare metal (2.3.x and 2.4.0 beta days), the Xeon Ds were <em>REALLY</em> new.  To make a long story short, they were not very stable and I don&#8217;t think the drivers were fully compatible.  As the results show, enabling the hardware offload features can make a fairly large difference.</li><li>Ever since, every pfSense install I&#8217;ve done has generally been virtualized, either on KVM or ESXi.  As my prior post shows, it just doesn&#8217;t do well virtualized. </li></ul>
+
+
+
+<p>So yes, pfSense will do 10Gb assuming you have NICs that support hardware offload correctly.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Sophos XG</h3>
+
+
+
+<p>After my last post, a few people specifically mentioned that I should have done tests with Sophos XG.  </p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="736" src="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-1024x736.png" alt="" class="wp-image-457" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-1024x736.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-300x216.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-768x552.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard-850x611.png 850w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-dashboard.png 1173w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I&#8217;m not going to lie.  Sophos XG is actually quite fancy looking.  It was enough with all the options and lack of familiarity, my head spun a bit trying to set it up.  </p>
+
+
+
+<p>My first impression wasn&#8217;t very good.  Sophos makes it VERY difficult to position the WAN/LAN where I wanted it. It wanted the first NIC port to be LAN or something like that.  I think I eventually had to just swap the VLANs on the switch the server is plugged into.  </p>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>I imagine if I used Sophos more, I would become more comfortable with it.  But for the few hours I had it spun up for testing, I felt a little like:</p>
+
+
+
+<figure class="wp-block-image"><img width="1004" height="565" src="https://blog.kroy.io/wp-content/uploads/2019/11/ihave.jpg" alt="" class="wp-image-458" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/ihave.jpg 1004w, https://blog.kroy.io/wp-content/uploads/2019/11/ihave-300x169.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/11/ihave-768x432.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/11/ihave-850x478.jpg 850w" sizes="(max-width: 1004px) 100vw, 1004px" /><figcaption><a href="https://knowyourmeme.com/photos/234739-i-have-no-idea-what-im-doing">https://knowyourmeme.com/photos/234739-i-have-no-idea-what-im-doing</a></figcaption></figure>
+
+
+
+<p>I&#8217;m pretty sure I got all the security and stuff configured, and the results were pretty straightforward, full 10 gigabit.</p>
+
+
+
+<p><strong>Inter-vlan (9.27Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="625" height="57" src="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-intervlan.png" alt="" class="wp-image-459" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-intervlan.png 625w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-intervlan-300x27.png 300w" sizes="(max-width: 625px) 100vw, 625px" /></figure>
+
+
+
+<p><strong>NAT (9.24Gbps):</strong></p>
+
+
+
+<figure class="wp-block-image"><img width="622" height="51" src="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-nat.png" alt="" class="wp-image-460" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/sophos-nat.png 622w, https://blog.kroy.io/wp-content/uploads/2019/11/sophos-nat-300x25.png 300w" sizes="(max-width: 622px) 100vw, 622px" /></figure>
+
+
+
+<p>Outwardly, the results were marginally better than pfSense or VyOS, but I&#8217;m not sure I would want to use Sophos on a regular basis.  It was just confusing and non-intuitive.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Untangle</h3>
+
+
+
+<p>This was another suggestion in response to my last post.  As with Sophos, it&#8217;s another platform that I have basically no familiarity with.  </p>
+
+
+
+<p>It didn&#8217;t take much to get installed, and unlike Sophos, the initial interface configuration  was a breeze.</p>
+
+
+
+<figure class="wp-block-image"><img width="1002" height="665" src="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard.png" alt="" class="wp-image-461" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard.png 1002w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard-300x199.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard-768x510.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-dashboard-850x564.png 850w" sizes="(max-width: 1002px) 100vw, 1002px" /></figure>
+
+
+
+<p>I&#8217;m not going to lie, even though I&#8217;m completely a CLI junkie, using Untangle is <em>NICE</em>.  Everything was intuitive, and the various graphs and reporting make complete sense from the perspective of a new user.</p>
+
+
+
+<figure class="wp-block-image"><img width="1016" height="684" src="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces.png" alt="" class="wp-image-462" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces.png 1016w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces-300x202.png 300w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces-768x517.png 768w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-interfaces-850x572.png 850w" sizes="(max-width: 1016px) 100vw, 1016px" /></figure>
+
+
+
+<h4>Results</h4>
+
+
+
+<p>Unfortunately, the performance was comparatively abysmal compared to the other platforms here.  NAT and inter-vlan results were identical.</p>
+
+
+
+<p>NAT/inter-vlan (2.7Gbps):</p>
+
+
+
+<figure class="wp-block-image"><img width="595" height="45" src="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-nat.png" alt="" class="wp-image-463" srcset="https://blog.kroy.io/wp-content/uploads/2019/11/untangle-nat.png 595w, https://blog.kroy.io/wp-content/uploads/2019/11/untangle-nat-300x23.png 300w" sizes="(max-width: 595px) 100vw, 595px" /></figure>
+
+
+
+<p>I have to believe there was some performance tuning I could do to get better performance, but I wasn&#8217;t able to track down anything specific.  </p>
+
+
+
+<p>Despite the lackluster performance, I really enjoyed setting up and playing with Untangle and it&#8217;s a platform I might use again in the future.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<a name="finalresults"></a>
+
+
+
+<h3>Final Results</h3>
+
+
+
+<p>In conclusion, most platforms came out fairly even.  The outlier was Untangle, but I suspect with some tuning it could be brought up to the level of the other platforms.</p>
+
+
+
+<table class="wp-block-table is-style-regular"><tbody><tr><th><strong>Router</strong></th><th><strong>Inter-vlan</strong></th><th><strong>NAT</strong></th></tr><tr><td>VyOS</td><td>9.19 Gbps</td><td>9.17 Gbps regular firewall<br>9.12 Gbps zone firewall</td></tr><tr><td>pfSense</td><td>9.19 Gbps hardware offload<br>7.58 Gbps no hardware offload</td><td>8.71 Gbps</td></tr><tr><td>Sophos XG</td><td>9.27 Gbps</td><td>9.24 Gbps</td></tr><tr><td>Untangle</td><td>2.70 Gbps</td><td>2.70 Gbps</td></tr></tbody></table>
+
+
+
+<p>The takeaway here is that almost any platform can be an extremely performant firewall and router.  I think with pfSense, the right hardware selection could potentially impact results if you are interested higher speeds.  Whereas with VyOS and probably the other two, the hardware selection would matter a bit less due to better driver support.</p>
+
+
+
+<p>As far as Untangle is concerned, it&#8217;s a platform I might be taking another crack at and see if I can figure out why the performance was so low.  Given that the tests were <em>IDENTICAL</em>, there was almost certainly some artificial limitation occurring somewhere.  </p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">449</post-id>	</item>
+		<item>
+		<title>The Great Rack Migration &#8211; D1541</title>
+		<link>https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1541/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-great-rack-migration-d1541</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 07 Oct 2019 18:52:34 +0000</pubDate>
+				<category><![CDATA[ESXi]]></category>
+		<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[Rack Migration]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=376</guid>
+
+					<description><![CDATA[This post continues my migration into my new rack. As more and more parts arrived, it became time to migrate my Supermicro 5028D-TN4T. This tiny little server packs quite the&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>This post continues my migration into my new rack.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>As more and more parts arrived, it became time to migrate my <a href="https://amzn.to/2OrEViX">Supermicro 5028D-TN4T</a>.  This tiny little server packs quite the punch, with an 8c16t Supermicro D1541 and plays a role of one of my ESXi servers.</p>
+
+
+
+<p>Again, as before with my <a href="https://blog.kroy.io/2017/03/13/whiteboxing-a-1u/">Whiteboxing a 1U series</a>, I knew pretty much all the parts that I needed to get, except this time I got the <a href="https://amzn.to/2Ooa9HL">rear I/O version of the 1U short depth case</a>.</p>
+
+
+
+<p>The parts list is pretty extensive.  Fortunately, because Supermicro sells a server like this, I can use the parts list for the <a href="https://amzn.to/33lc2t5">Supermicro 5018D-FN4T</a>.  </p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="771" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-6-1024x771.png" alt="" class="wp-image-377" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-6-1024x771.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/image-6-300x226.png 300w, https://blog.kroy.io/wp-content/uploads/2019/10/image-6-768x579.png 768w, https://blog.kroy.io/wp-content/uploads/2019/10/image-6-850x640.png 850w, https://blog.kroy.io/wp-content/uploads/2019/10/image-6.png 1026w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>parts list</figcaption></figure>
+
+
+
+<p>The short list:</p>
+
+
+
+<ul><li>The case</li><li>Riser card bracket</li><li>x16 Riser card</li><li>some fans and brackets</li><li>an I/O shield</li><li>an 2.5&#8243; SSD/HDD Bracket</li></ul>
+
+
+
+<p>Sheesh.  It&#8217;s a long list, some of the parts were a bit hard to find, so it took a few weeks for everything to arrive.</p>
+
+
+
+<h2>The build</h2>
+
+
+
+<p>Once everything arrived, I dug the old bird out of the corner, and started disassembly.  It was VERY dusty:</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0376-768x1024.jpg" alt="" class="wp-image-378" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0376-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0376-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0376-300x400.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0376-850x1134.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0376.jpg 872w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>dusty</figcaption></figure>
+
+
+
+<p>And a terrible picture of the inside:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0377-1024x768.jpg" alt="" class="wp-image-379" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0377-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0377-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0377-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0377-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0377.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>inside</figcaption></figure>
+
+
+
+<p>And the board is extricated:</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0378-768x1024.jpg" alt="" class="wp-image-380" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0378-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0378-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0378-300x400.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0378-850x1134.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0378.jpg 872w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>extricated</figcaption></figure>
+
+
+
+<h2>The new home</h2>
+
+
+
+<p>The new case is SOOOO much better than the rear I/O version.  There&#8217;s actually room for all the cables from the PSU.  </p>
+
+
+
+<p>On the front I/O version, you usually just end up with an ugly bulge in the front:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0379-1024x768.jpg" alt="" class="wp-image-382" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0379-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0379-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0379-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0379-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0379.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>new case</figcaption></figure>
+
+
+
+<p>The top-left corner of the following image definitely demonstrates what I&#8217;m talking about with front vs rear I/O:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0380-2-1024x768.jpg" alt="" class="wp-image-383" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0380-2-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0380-2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0380-2-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0380-2-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0380-2.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>rear io cleanliness</figcaption></figure>
+
+
+
+<p>vs the mess in the front I/O version:</p>
+
+
+
+<figure class="wp-block-image"><img width="656" height="811" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-7.png" alt="" class="wp-image-384" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-7.png 656w, https://blog.kroy.io/wp-content/uploads/2019/10/image-7-243x300.png 243w, https://blog.kroy.io/wp-content/uploads/2019/10/image-7-300x371.png 300w" sizes="(max-width: 656px) 100vw, 656px" /><figcaption>front io mess</figcaption></figure>
+
+
+
+<p>Everything installed.  I reused the fan brackets from my old SYS-E300-8D, and tracked down an internal USB header that fit.  The pictured one was too tall:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0381-1-1024x768.jpg" alt="" class="wp-image-385" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0381-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0381-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0381-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0381-1-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0381-1.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>all installed</figcaption></figure>
+
+
+
+<p>I installed two fans as eventually this board will be receiving a 40Gb upgrade. As with the <a href="/2019/10/07/the-great-rack-migration-d1521/">D1521 build</a>, it was LOUD.  I installed a pair low-noise adapters, and the problem was fixed, and the server stays nice and cool:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="166" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-8-1024x166.png" alt="" class="wp-image-386" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-8-1024x166.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/image-8-300x49.png 300w, https://blog.kroy.io/wp-content/uploads/2019/10/image-8-768x125.png 768w, https://blog.kroy.io/wp-content/uploads/2019/10/image-8-850x138.png 850w, https://blog.kroy.io/wp-content/uploads/2019/10/image-8.png 1385w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>All things considered, this build went very smoothly. </p>
+
+
+
+<figure class="wp-block-image"><img width="633" height="150" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-9.png" alt="" class="wp-image-387" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-9.png 633w, https://blog.kroy.io/wp-content/uploads/2019/10/image-9-300x71.png 300w" sizes="(max-width: 633px) 100vw, 633px" /><figcaption>racked</figcaption></figure>
+
+
+
+<p> The case looks nice all racked up and is basically dead silent.  I might even consider replacing the <a href="https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1521/">D1521 build</a> with the rear I/O version if they weren&#8217;t so expensive.</p>
+
+
+
+<p>Continued in the <a href="/2019/10/28/the-great-rack-migration-x10srh-clnf/">X10SRH migration</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">376</post-id>	</item>
+		<item>
+		<title>The Great Rack Migration &#8211; D1521</title>
+		<link>https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1521/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-great-rack-migration-d1521</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 07 Oct 2019 16:43:37 +0000</pubDate>
+				<category><![CDATA[ESXi]]></category>
+		<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[Proxmox]]></category>
+		<category><![CDATA[Rack Migration]]></category>
+		<category><![CDATA[Routing]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=352</guid>
+
+					<description><![CDATA[As part of my continued rack migration, it was time to move the D1521. My Supermicro D-1521 host is my &#8220;whatever I need it to be&#8221; server. As I test&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>As part of my continued rack migration, it was time to move the D1521.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>My Supermicro D-1521 host is my &#8220;whatever I need it to be&#8221; server.  As I test and lab different topics, it becomes a Proxmox host, ESXi host, KVM, router, etc.  Whatever I need it to be basically.  <br></p>
+
+
+
+<p>Fortunately, this migration is just reusing parts from my <a href="https://blog.kroy.io/2017/03/13/whiteboxing-a-1u/">Whiteboxing a 1U series</a>. Which meant I had mostly already gone through the pain and had all parts on hand.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The original home<br></h2>
+
+
+
+<p>The &#8220;original&#8221; home for this server was a solid <a href="https://www.amazon.com/gp/product/B00DU6RVK8/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00DU6RVK8&amp;linkCode=as2&amp;tag=blogkroyio10-20&amp;linkId=10d8e867e5c30bbd8e0c428b64f0b77a">Silverstone HTPC Case</a>. </p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0301-1024x768.jpg" alt="" class="wp-image-353" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0301-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0301-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0301-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0301-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0301.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>For a tiny case, the airflow is very decent, probably due to the huge fan that floats over the main board.  Though the PCIe slot needs a bit of extra love:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0300-1024x768.jpg" alt="" class="wp-image-355" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0300-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0300-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0300-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0300-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0300.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0298-1024x768.jpg" alt="" class="wp-image-356" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0298-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0298-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0298-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0298-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0298.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The final home</h2>
+
+
+
+<p>I reused the old <a href="https://www.amazon.com/gp/product/B0093HNUD0/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B0093HNUD0&amp;linkCode=as2&amp;tag=blogkroyio10-20&amp;linkId=cff5dd63646471670d9f6ede771d735e&quot;>Supermicro Rack Mount Server Chassis CSE-505-203B</a><img src=&quot;//ir-na.amazon-adsystem.com/e/ir?t=blogkroyio10-20&amp;l=am2&amp;o=1&amp;a=B0093HNUD0">1U short depth Supermicro case</a> from my prior build.  </p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0382-1024x768.jpg" alt="" class="wp-image-358" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0382-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0382-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0382-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0382-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0382.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>1u installed</figcaption></figure>
+
+
+
+<p>And what it looks like when I&#8217;m in labbing mode and changing things around:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-1024x768.jpg" alt="" class="wp-image-359" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0393.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>You might notice some electrical tape holding down the fan.  The stock fan placement in this case is inefficient for these XeonD boards.  The fan ends up missing the CPU almost completely. </p>
+
+
+
+<p>My original setup incorporated a lack rack, so the front facing I/O was okay.  In the rack setup, it&#8217;s just means I need an extra <a href="https://www.amazon.com/gp/product/B00BTRD4Y2/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00BTRD4Y2&amp;linkCode=as2&amp;tag=blogkroyio10-20&amp;linkId=b41df4dd8754780fcfe06415aa30f631">1U brush panel</a>:</p>
+
+
+
+<figure class="wp-block-image"><img width="662" height="149" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-2.png" alt="" class="wp-image-357" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-2.png 662w, https://blog.kroy.io/wp-content/uploads/2019/10/image-2-300x68.png 300w" sizes="(max-width: 662px) 100vw, 662px" /></figure>
+
+
+
+<p>The final piece that I need to add was a <a href="https://amzn.to/2Ot30Gc">low-noise adapter</a> for the fan.  Considering the D1541 was going into a similar case, a three pack was good enough.</p>
+
+
+
+<p>This server was by FAR the most loud thing in my rack, and even on optimal settings the fan was too loud.  With the adapter, it&#8217;s nice and cool (and silent):</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="69" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-3-1024x69.png" alt="" class="wp-image-360" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-3-1024x69.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/image-3-300x20.png 300w, https://blog.kroy.io/wp-content/uploads/2019/10/image-3-768x52.png 768w, https://blog.kroy.io/wp-content/uploads/2019/10/image-3-850x58.png 850w, https://blog.kroy.io/wp-content/uploads/2019/10/image-3.png 1415w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>To be continued on <a href="/2019/10/07/the-great-rack-migration-d1541/">the D1541</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">352</post-id>	</item>
+		<item>
+		<title>The Great Rack Migration &#8211; D1518</title>
+		<link>https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1518/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-great-rack-migration-d1518</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 07 Oct 2019 16:43:22 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[Rack Migration]]></category>
+		<category><![CDATA[Storage]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=337</guid>
+
+					<description><![CDATA[So after a number of years labbing, I decided it&#8217;s time to graduate to a rack. This is my series of posts documenting the migration. I deal with a lot&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>So after a number of years labbing, I decided it&#8217;s time to graduate to a rack.  This is my series of posts documenting the migration.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>I deal with a lot of storage in my lab, and a huge focus has always been keeping the lab as quiet as possible.  This meant I deployed everything in tower cases.</p>
+
+
+
+<p>While this goal of &#8220;as quiet as possible&#8221; has been realized, what&#8217;s also been realized is a mess.  </p>
+
+
+
+<p><em><strong>A huge mess.  </strong></em><br></p>
+
+
+
+<p>This was a good day after a cleanup:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_1071-1-1024x768.jpg" alt="" class="wp-image-374" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_1071-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_1071-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_1071-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_1071-1-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_1071-1.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And this was the results of that cleanup:</p>
+
+
+
+<figure class="wp-block-image"><img width="658" height="706" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-4.png" alt="" class="wp-image-372" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-4.png 658w, https://blog.kroy.io/wp-content/uploads/2019/10/image-4-280x300.png 280w, https://blog.kroy.io/wp-content/uploads/2019/10/image-4-300x322.png 300w" sizes="(max-width: 658px) 100vw, 658px" /><figcaption>the results on a bad day</figcaption></figure>
+
+
+
+<p>So maybe it&#8217;s just me growing older (and my hearing going a little), and having a desire for a bit more organization, but recently I decided to bite the bullet and get a rack, the <a href="https://www.amazon.com/gp/product/B00O6GNLQE/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00O6GNLQE&amp;linkCode=as2&amp;tag=blogkroyio10-20&amp;linkId=c4e6452c5106cf3265f3632f10bd861c">Startech 25U adjustable rack</a> to be exact.</p>
+
+
+
+<h2>The original home</h2>
+
+
+
+<p>The first server to be migrated was a trusty old D-1518 fileserver in a U-NAS case.  </p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0366-1024x768.jpg" alt="" class="wp-image-339" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0366-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0366-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0366-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0366-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0366.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>NSC-810A</figcaption></figure>
+
+
+
+<p>I will say, that U-NAS case is pretty nice.  It&#8217;s all rubberized and has a nice premium feel to it.  The inside of the case is pretty tight, and I threw the fan block from the original SYS-E300-8D case to keep the CPU and HBA nice and cool:</p>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0367-1-1024x768.jpg" alt="" class="wp-image-340" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0367-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0367-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0367-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0367-1-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0367-1.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>u-nas guts</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The New Home</h2>
+
+
+
+<p>The new home for this server was a Supermicro CSE-826 case. </p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0364-768x1024.jpg" alt="" class="wp-image-338" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0364-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0364-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0364-300x400.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0364-850x1134.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0364.jpg 872w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>so much room for activities!</figcaption></figure>
+
+
+
+<p>The first hurdle presented itself shortly after pulling the HBA.  The 2U case only takes half-height PCIe cards, and my bracket was full-height:</p>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0368-1024x768.jpg" alt="" class="wp-image-341" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0368-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0368-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0368-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0368-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0368.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>full-height</figcaption></figure>
+
+
+
+<p>Fortunately, by some miracle, I managed to track down the shorter bracket in a box somewhere:</p>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0369-1024x768.jpg" alt="" class="wp-image-342" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0369-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0369-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0369-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0369-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0369.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>short bracket</figcaption></figure>
+
+
+
+<p>The U-NAS looks a little sad when empty:</p>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0371-1024x768.jpg" alt="" class="wp-image-343" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0371-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0371-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0371-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0371-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0371.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>empty</figcaption></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>The Issues</h2>
+
+
+
+<p>No build of mine EVER goes off without a hitch.  It&#8217;s the curse of being a Murphy.  </p>
+
+
+
+<p>Some of them, I can plan for:</p>
+
+
+
+<ul><li>The backplane of this server is SAS2.  My HBA is SAS3.  So I made sure to have a <a href="https://www.amazon.com/gp/product/B01FHNGLK2/ref=as_li_tl?ie=UTF8&amp;tag=blogkroyio10-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B01FHNGLK2&amp;linkId=064d5a7305c39d15e7edef9e9759e0d6">SFF-8643-&gt;SFF-8087 cable </a>on hand.  </li><li>The backplane of the server is an &#8220;A&#8221; backplane.  This means it has internal breakouts.  The short explanation here is that I need at least 3 SAS ports for all 12 bays to work, and I only have two.  So I made sure to order an Intel SAS Expander when I ordered the case.</li><li>There wasn&#8217;t going to be room for the SAS expander to plug into the motherboard.  So back to the old <a href="https://www.amazon.com/gp/product/B06XGTM694/ref=as_li_tl?ie=UTF8&amp;tag=blogkroyio10-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B06XGTM694&amp;linkId=9602b432cb44985d056d84fd3ec54c71">&#8220;powered riser&#8221;</a> trick, which I made sure to order.</li></ul>
+
+
+
+<p>Some of them though, I did not plan for.  Like the Flex-ATX motherboard being way too short for this case.  That mean the 24 pin power and fan cables were all too short:</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0372-1-768x1024.jpg" alt="" class="wp-image-344" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0372-1-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0372-1-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0372-1-300x400.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0372-1-850x1134.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0372-1.jpg 872w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>too short</figcaption></figure>
+
+
+
+<p>I actually had a <a href="https://www.amazon.com/gp/product/B000FL60AI/ref=as_li_tl?ie=UTF8&amp;tag=blogkroyio10-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B000FL60AI&amp;linkId=a365e70d7fbde09e74750d1303731f1b">24 pin atx extender</a> on hand from another project, but I had to wait for a few days for some <a href="https://www.amazon.com/gp/product/B0788Q4TND/ref=as_li_tl?ie=UTF8&amp;tag=blogkroyio10-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B0788Q4TND&amp;linkId=10b5d383f47655e4599dfaece64af1cc">four pin fan extensions</a> to arrive:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0373-1-1024x768.jpg" alt="" class="wp-image-345" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0373-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0373-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0373-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0373-1-850x637.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0373-1.jpg 1551w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>atx extender</figcaption></figure>
+
+
+
+<p>The final issue I had was that the powered riser took a molex connector, and based on where I had to place the SAS expander, there was no way in hell that a molex connector would reach.  So I had to order <a href="https://amzn.to/2oUzu1b">a molex extension cable</a> as well.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Build complete</h2>
+
+
+
+<p>Once all the extra cables arrived, the server finally went together smoothly:</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0384-1-768x1024.jpg" alt="" class="wp-image-347" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0384-1-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0384-1-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0384-1-300x400.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0384-1-850x1134.jpg 850w, https://blog.kroy.io/wp-content/uploads/2019/10/IMG_0384-1.jpg 872w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>Complete server</figcaption></figure>
+
+
+
+<p>Notice the rockstar placement of the SAS expander.</p>
+
+
+
+<p>The final piece of the puzzle was that no matter what I did, the CPU ran VERY hot.  So I used the old trick of placing a fan on top of the heatsink  (picture was from when I did it prior).</p>
+
+
+
+<figure class="wp-block-image"><img width="170" height="146" src="https://blog.kroy.io/wp-content/uploads/2019/10/image.png" alt="" class="wp-image-346"/><figcaption>Fan on top of CPU<br></figcaption></figure>
+
+
+
+<p>Finally all racked up:</p>
+
+
+
+<figure class="wp-block-image"><img width="682" height="452" src="https://blog.kroy.io/wp-content/uploads/2019/10/image-1.png" alt="" class="wp-image-348" srcset="https://blog.kroy.io/wp-content/uploads/2019/10/image-1.png 682w, https://blog.kroy.io/wp-content/uploads/2019/10/image-1-300x199.png 300w" sizes="(max-width: 682px) 100vw, 682px" /></figure>
+
+
+
+<p>Overall, I&#8217;m pretty satisfied.  It&#8217;s a little loud, but not terribly. And this is a server that&#8217;s not powered on full-time.</p>
+
+
+
+<p>To be continued on the <a href="https://blog.kroy.io/2019/10/07/the-great-rack-migration-d1521/">D-1521</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">337</post-id>	</item>
+		<item>
+		<title>Whiteboxing a 1U &#8211; completing the rage</title>
+		<link>https://blog.kroy.io/2017/03/22/whiteboxing-a-1u-completing-the-rage/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=whiteboxing-a-1u-completing-the-rage</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 23 Mar 2017 00:12:00 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/03/22/whiteboxing-a-1u-completing-the-rage/</guid>
+
+					<description><![CDATA[With all the previous problems from this build, it&#8217;s not surprising that this server continued to torment me. After researching and testing, I determined that my up-and-down power consumption problems&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>With all the <a href="/whiteboxing-a-1u-the-rage-continues/">previous problems</a> from this build, it&#8217;s not surprising that this server continued to torment me.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>After researching and testing, I determined that my <a href="/whiteboxing-a-1u-the-rage-continues/#powerconsumption">up-and-down power consumption problems</a> were due to the DC-&gt;DC power supply I was using.  Simple fix right?  Just install the original power supply.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/4Scv2-1024x768.jpg" alt="" class="wp-image-209" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/4Scv2-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/4Scv2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/4Scv2-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/4Scv2-1600x1200.jpg 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I wasn&#8217;t entirely happy with the routing of the all the cables either.  It just ended up being really messy.  Plus, with the way the cables were stuffed inside, the case bulged in the front.  And, it was still overheating as I wasn&#8217;t getting enough air movement over the CPU.</p>
+
+
+
+<h4 id="installingacpucooler">Installing a CPU cooler</h4>
+
+
+
+<p>The CPU fan/heatsink was finally delivered. Even though not specifically marketed for these Xeon D boards, from my online research I discovered that the <a href="https://www.newegg.com/Product/Product.aspx?Item=9SIA0ZX5727717">SNK-C0054A4L</a> is a drop-in replacement for the stock passive heatsink.</p>
+
+
+
+<p>I&#8217;d be lying if I said it wasn&#8217;t a bit scary getting the passive heatsink pulled off the board.  It was a bit welded on there, so it took some prying until it finally popped off.  After a bit of alcohol and a coffee filter, it was clean and shiny:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/BAs4U-1024x768.jpg" alt="" class="wp-image-210" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/BAs4U-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/BAs4U-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/BAs4U-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/BAs4U-1600x1200.jpg 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The CPU cooler shipped with thermal tape on it already, so installation was easy.  Pull the paper off the tape and screw down.  Success right?</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0276-768x1024.jpg" alt="" class="wp-image-211" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0276-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0276-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0276.jpg 864w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<p>If you are sharp-eyed, you&#8217;ll notice a problem.  The same problem I noticed about 5 seconds after tightening down the screws.  <em><strong>I MOUNTED THE COOLER WRONG!!!</strong></em></p>
+
+
+
+<p>The direction of the fins should be with the airflow, not across it. Sigh.  More alcohol and coffee filters.</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0275-768x1024.jpg" alt="" class="wp-image-212" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0275-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0275-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0275.jpg 864w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<h4 id="reassemblingandpostmortem">Reassembling and post-mortem</h4>
+
+
+
+<p>After all that, it was done.  Everything was mounted, cables were stuffed in front of the power supply, and fans moved around for more airflow.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/VNgXu-1024x768.jpg" alt="" class="wp-image-213" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/VNgXu-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/VNgXu-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/VNgXu-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/VNgXu-1600x1200.jpg 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The left fan in the above photo is the official mounting point for a fan in this case.  As you can tell, it&#8217;s a less-than-ideal location for this particular motherboard.</p>
+
+
+
+<p>It&#8217;s safe to say that I made mistakes, either through carelessness or lack of planning.  But there are still pieces related to assembling your own 1U server that introduce all kinds of special challenges.</p>
+
+
+
+<p>I&#8217;m never EVER doing it again.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">17</post-id>	</item>
+		<item>
+		<title>Whiteboxing a 1U &#8211; the rage continues</title>
+		<link>https://blog.kroy.io/2017/03/17/whiteboxing-a-1u-the-rage-continues/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=whiteboxing-a-1u-the-rage-continues</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Fri, 17 Mar 2017 22:00:00 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/03/17/whiteboxing-a-1u-the-rage-continues/</guid>
+
+					<description><![CDATA[Once the rest of my parts arrived, it&#8217;s safe to say the problems, and the rage, continued to build. It took over a week, but the rest of the parts&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Once the <a href="/whiteboxing-a-1u/">rest of my parts arrived</a>, it&#8217;s safe to say the problems, and the rage, continued to build.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>It took over a week, but the rest of the parts for this 1U whitebox finally arrived.  As soon as the parts were delivered, I went to work.  I pulled the original power supply and installed the motherboard and I/O plate.</p>
+
+
+
+<figure class="wp-block-image"><img width="648" height="864" src="https://blog2.kroy.io/wp-content/uploads/2019/08/buildmounted.jpg" alt="" class="wp-image-216" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/buildmounted.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/buildmounted-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<p>The whole back of the case was covered in holes for airflow.  So even if I was willing to drill, there wasn&#8217;t a good spot to mount the receptacle for the DC-DC power supply anywhere close to the motherboard.</p>
+
+
+
+<p>There was a hole in the back that <em>COULD</em> have been for something like this, but it was too small:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0259.jpg" alt="" class="wp-image-217" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0259.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0259-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0259-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>So I drilled it out with a 5/16&#8243; bit hooked up to a hammer drill:</p>
+
+
+
+<figure class="wp-block-image"><img width="648" height="864" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0260.jpg" alt="" class="wp-image-218" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0260.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0260-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="648" height="864" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0262.jpg" alt="" class="wp-image-219" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0262.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0262-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<p>I&#8217;m still not entirely sure what the purpose of that hole was.  I have to believe it was for a power supply cable or something.  It&#8217;s rather difficult finding any documentation on some of this Supermicro stuff.  You are just supposed to &#8220;know&#8221; how it works and fits together.</p>
+
+
+
+<p>I had similar problems figuring out how to actually mount the fan bracket that was designed for this case.  If you&#8217;ve never done it before, there&#8217;s little documentation how it works.   I eventually found a picture online of that.</p>
+
+
+
+<h4 id="sofarsogood">So far so good?</h4>
+
+
+
+<p>Once everything was installed, one thing became apparent.  The power supply cable was too short. I could stretch it and drag it to make it fit over the motherboard, but that wasn&#8217;t suitable for a permanent solution. The CPU would have cooked the cable if nothing else.</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0264.jpg" alt="" class="wp-image-220" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0264.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0264-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0264-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Sigh&#8230; another few days while a 4 pin ATX extension cable is shipped.  While I was at it, I ordered an internal header to USB plug adaptor.</p>
+
+
+
+<p>Another problem arose during my quick power-on testing.  The default fan mounting location of this case almost entirely missed directing the air over the CPU on this motherboard.  At best, maybe 20% of the CPU cooler had airflow going over it.</p>
+
+
+
+<p>That meant that when the case was actually sealed up, the CPU was overheating even just sitting in the BIOS.  So I had to jury-rig a solution using the fans+bracket from my <a href="/a-baby-file-server-evolves/">SYS-E300-8D disassembly</a>.  This at least keeps the CPU temperature at a balmy 50C.  I will also be installing an active cooler soon to replace that passive one.</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0264.jpg" alt="" class="wp-image-220" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0264.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0264-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0264-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h4 id="finally">FINALLY</h4>
+
+
+
+<p>I got ESXi installed and running.</p>
+
+
+
+<p>I felt pretty good about reusing the DC-DC power supply.  This device wasn&#8217;t destined to ever have any drives, so an 84W power supply should have been more than sufficient.   The server was running like a champ and I figured my problems were finally over.</p>
+
+
+
+<p><a id="powerconsumption"></a><br>That&#8217;s when I looked at my graph for power usage.  It was jumping up and down every few seconds by insane amounts.  One second it was 261 watts, the next it was almost 400. I looked at the display on the UPS just to be sure I didn&#8217;t have some sort of weird reporting error.</p>
+
+
+
+<figure class="wp-block-image"><img width="270" height="480" src="https://blog2.kroy.io/wp-content/uploads/2019/08/powerusage.gif" alt="" class="wp-image-221"/></figure>
+
+
+
+<p>This server is just the gift that kept giving.</p>
+
+
+
+<p>To be <a href="/whiteboxing-a-1u-completing-the-rage/">continued</a>&#8230;</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">16</post-id>	</item>
+		<item>
+		<title>Whiteboxing a 1U</title>
+		<link>https://blog.kroy.io/2017/03/13/whiteboxing-a-1u/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=whiteboxing-a-1u</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 13 Mar 2017 22:01:00 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/03/13/whiteboxing-a-1u/</guid>
+
+					<description><![CDATA[Much like dial, rewind, and hang up, a whitebox is a bit of an antiquated term that&#8217;s still in use. It&#8217;s a computer that someone has assembled from parts, instead&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Much like <em>dial</em>, <em>rewind</em>, and <em>hang up</em>, a <em>whitebox</em> is a bit of an antiquated term that&#8217;s still in use. It&#8217;s a computer that someone has assembled from parts, instead of buying a pre-built one from a company like Apple or Dell. To whitebox a computer means to buy the parts like the CPU, motherboard, RAM, storage, and assemble it yourself.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Back in the earlier days of home computing, most computers lived in tall white boxes. There really wasn&#8217;t much in the way of variation on them.</p>
+
+
+
+<p>In 2017, computer cases come in a variety of colors and sizes. A Pentium N3700, which is my currently my Internet <a href="https://www.supermicro.com/products/system/Mini-ITX/SYS-E200-9B.cfm">router</a>, can be found in form factor such as this:</p>
+
+
+
+<figure class="wp-block-image"><img width="954" height="690" src="https://blog2.kroy.io/wp-content/uploads/2019/08/syse200-8b.jpg" alt="" class="wp-image-224" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/syse200-8b.jpg 954w, https://blog.kroy.io/wp-content/uploads/2019/08/syse200-8b-300x217.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/syse200-8b-768x555.jpg 768w" sizes="(max-width: 954px) 100vw, 954px" /></figure>
+
+
+
+<p>or this:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="646" src="https://blog2.kroy.io/wp-content/uploads/2019/08/chromebook-1024x646.jpg" alt="" class="wp-image-225" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/chromebook-1024x646.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/chromebook-300x189.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/chromebook-768x485.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/chromebook.jpg 1340w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>or this Dell Inspiron:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="427" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Untitled-1024x427.jpg" alt="" class="wp-image-226" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-1024x427.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-300x125.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-768x320.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled.jpg 1191w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Nowadays, if you do happen to see a computer in a giant white case, chances are it&#8217;s someone trying to be retro.</p>
+
+
+
+<p>My first real whitebox was probably a 386SX that was a whopping 16MHZ. Since then I&#8217;ve assembled more computers than I can count. So why not a rack mounted server?</p>
+
+
+
+<h4 id="thefirstruleofwhiteboxing">The first rule of Whiteboxing</h4>
+
+
+
+<p>Even before I started, I knew there was one very important and steadfast rule when it comes to whiteboxing a rack-mount server. Whatever the catchy or cliché way of saying, the sentiment is simple.</p>
+
+
+
+<h2 id="youdonotwhiteboxa1userver"><mark>YOU DO NOT WHITEBOX A 1U SERVER</mark></h2>
+
+
+
+<p>The reason behind this is simple. With such limited vertical clearance, there are a number of challenges related to getting proper airflow and cooling to the appropriate spots, not to mention routing the variety of cables that live inside your standard server.</p>
+
+
+
+<p>There&#8217;s a rather popular YouTube <a href="https://www.youtube.com/watch?v=RXvmKkhINQw">video</a> where the YouTuber tries (and fails multiple times) to build a 1U rack-mount pfSense server. After having an airflow shroud custom designed and 3D printed, which is probably beyond the reach of many normal people, he ultimately ends up burning out a number of expensive motherboards.</p>
+
+
+
+<h4 id="thepridebeforethefall">The Pride before the Fall</h4>
+
+
+
+<p>So the question is&#8230; why did I think I could do it? Simple enough. If I buy a motherboard and case, which are designed to go together, I shouldn&#8217;t have <em>ANY</em> problems.</p>
+
+
+
+<p>The build was simple:</p>
+
+
+
+<ul><li><a href="https://www.supermicro.com/products/chassis/1u/505/sc505-203.cfm">SC505-203B</a></li><li><a href="http://www.supermicro.com/products/motherboard/xeon/d/X10SDV-4C-TLN2F.cfm">X10SDV-4C-TLN2F-O</a> (the -O is important here)</li><li>A few fan mounts designed for this case</li></ul>
+
+
+
+<p>I had some fans leftover from my previous <a href="/a-baby-file-server-evolves/">migration</a>, as well as the original DC-DC power supply from that came out of that server.</p>
+
+
+
+<h4 id="everythingarrives">Everything arrives!</h4>
+
+
+
+<p>New parts day is always <em>VERY</em> exciting. There&#8217;s a certain thrill in unpacking everything, assembling it, and getting it all configured.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="261" src="https://blog2.kroy.io/wp-content/uploads/2017/03/Untitled-1-1024x261.jpg" alt="" class="wp-image-223" srcset="https://blog.kroy.io/wp-content/uploads/2017/03/Untitled-1-1024x261.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2017/03/Untitled-1-300x76.jpg 300w, https://blog.kroy.io/wp-content/uploads/2017/03/Untitled-1-768x196.jpg 768w, https://blog.kroy.io/wp-content/uploads/2017/03/Untitled-1-1600x407.jpg 1600w, https://blog.kroy.io/wp-content/uploads/2017/03/Untitled-1.jpg 1693w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="567" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Untitled-2.jpg" alt="" class="wp-image-227" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-2-300x197.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-2-768x504.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Unfortunately, my excitement was short-lived. Remember how I mentioned I made sure to order the &#8220;-O&#8221; version of that motherboard? Well in the Supermicro world, &#8220;-O&#8221; designates <em>retail packaging</em>. This means it includes important stuff like the the I/O shield.</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="378" src="https://blog2.kroy.io/wp-content/uploads/2019/08/ioshield.jpg" alt="" class="wp-image-228" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/ioshield.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/ioshield-300x131.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/ioshield-768x336.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>As I quickly learned, this particular rack-mount case doesn&#8217;t use standard I/O shields. So despite believing I was being smart and ordering the board that shipped with an included shield, I was defeated.</p>
+
+
+
+<p>Do you <em>need</em> an I/O shield? Probably not. But for the sake of this being an actual professional build, I required one. I was also missing the riser bracket and card, which was something I hadn&#8217;t even considered.</p>
+
+
+
+<p>So my new build sat in a pile for over a week while the rest of my parts were delivered.</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0255.jpg" alt="" class="wp-image-229" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0255.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0255-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0255-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Continued in <a href="/whiteboxing-a-1u-the-rage-continues/">part 2</a></p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">15</post-id>	</item>
+		<item>
+		<title>Growing from Baby to Giant</title>
+		<link>https://blog.kroy.io/2017/02/12/growing-from-baby-to-giant/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=growing-from-baby-to-giant</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Sun, 12 Feb 2017 22:15:00 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[ZFS]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/02/12/growing-from-baby-to-giant/</guid>
+
+					<description><![CDATA[Once I decided to Frankenbox my SYS-E300-8D into a new form factor, the hunt was on. The central item of this build: Fractal Design R5 &#8211; I loved the modular&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Once I decided to Frankenbox my SYS-E300-8D into a new form factor, the hunt was on.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The central item of this build:</p>
+
+
+
+<ul><li><a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16811352048">Fractal Design R5 </a> &#8211; I loved the modular design of this and the ease of swapping drives. Plus it has plenty of room for fans.</li></ul>
+
+
+
+<p>A few weeks later, everything  arrives!</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0195-1-1024x768.jpg" alt="" class="wp-image-231" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0195-1.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0195-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0195-1-768x576.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>A modular power supply, LSI 9300-8i, a bunch of 120MM fans:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/TkOEz-1-1024x768.jpg" alt="" class="wp-image-232" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/TkOEz-1.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/TkOEz-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/TkOEz-1-768x576.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Just in case I need them:</p>
+
+
+
+<figure class="wp-block-image"><img width="576" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0197-2-1.jpg" alt="" class="wp-image-233" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0197-2-1.jpg 576w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0197-2-1-225x300.jpg 225w" sizes="(max-width: 576px) 100vw, 576px" /></figure>
+
+
+
+<p>Then goes some RAM shuffling.  64 GB from the 5028D-TN4T goes into this new server, and this 96 GB goes into the 5028D-TN4T.</p>
+
+
+
+<figure class="wp-block-image"><img width="720" height="960" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0198-1.jpg" alt="" class="wp-image-234" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0198-1.jpg 720w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0198-1-225x300.jpg 225w" sizes="(max-width: 720px) 100vw, 720px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="768" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-1024x768.jpg" alt="" class="wp-image-235" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-1024x768.jpg 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1-768x576.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0202-1.jpg 1080w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The power supply.  I&#8217;ve never had a modular power supply, but I like the idea.  The SeaSonic seems to be a trusted modal, and at least visually, I was impressed:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0214-1.jpg" alt="" class="wp-image-236" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0214-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0214-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0214-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1.jpg" alt="" class="wp-image-237" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0212-1-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0213-1.jpg" alt="" class="wp-image-238" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0213-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0213-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0213-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Any time you include a cloth bag, it gives it an instant premium feel, even if it&#8217;s really not.</p>
+
+
+
+<p>An LSI HBA.  12Gb/s is probably overkill, but I wanted this to have a long life over eventual upgrades.  And I got the correct breakout cables!  I love it when planning pays off:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0200-1.jpg" alt="" class="wp-image-239" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0200-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0200-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0200-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0199-1.jpg" alt="" class="wp-image-240" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0199-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0199-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0199-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h2 id="thecase">The Case</h2>
+
+
+
+<p>When I was researching cases online, everyone seemed to really like their Fractal Design cases.  I felt <em>REALLY</em> good about the purchase of the case until it actually arrived.</p>
+
+
+
+<figure class="wp-block-image"><img width="648" height="864" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0206-1-1.jpg" alt="" class="wp-image-241" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0206-1-1.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0206-1-1-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0208-1.jpg" alt="" class="wp-image-242" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0208-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0208-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0208-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0211-1.jpg" alt="" class="wp-image-243" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0211-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0211-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0211-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>The size of this case is impossible to capture in a picture. IT. IS. HUGE.</p>
+
+
+
+<h3 id="puttingitalltogether">Putting it all together</h3>
+
+
+
+<p>Mission accomplished.  It fits!</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0216-1.jpg" alt="" class="wp-image-244" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0216-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0216-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0216-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Disassembling the SYS-E300-8D to get the Xeon D-1518 board out of it:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0222-1.jpg" alt="" class="wp-image-245" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0222-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0222-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0222-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1.jpg" alt="" class="wp-image-246" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0223-1-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>It&#8217;s extricated:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0225-1.jpg" alt="" class="wp-image-247" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0225-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0225-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0225-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Another place I was glad I planned.  The new I/O plate arrived in the mail the day before!</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0217-1.jpg" alt="" class="wp-image-248" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0217-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0217-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0217-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>And mounted in its new home:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0226-1.jpg" alt="" class="wp-image-249" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0226-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0226-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0226-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>It&#8217;s so small that it looks a bit comical in the giant case (with a bunch of drives that I later found out I mounted backwards):</p>
+
+
+
+<figure class="wp-block-image"><img width="648" height="864" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0227-1-1.jpg" alt="" class="wp-image-250" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0227-1-1.jpg 648w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0227-1-1-225x300.jpg 225w" sizes="(max-width: 648px) 100vw, 648px" /></figure>
+
+
+
+<p>Hrm, those SATA cables feel a bit tight&#8230; I wonder if something is wrong:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0228-1.jpg" alt="" class="wp-image-251" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0228-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0228-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0228-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>And a picture of it all hooked up:</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0229-2.jpg" alt="" class="wp-image-252" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0229-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0229-2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0229-2-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h3 id="oops">Oops&#8230;</h3>
+
+
+
+<p>And a few days later when I realized that I mounted the drives backwards:</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0245-1-768x1024.jpg" alt="" class="wp-image-253" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0245-1-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0245-1-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0245-1.jpg 911w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<p>The CPU was also running at 70C despite all the fans and positive airflow. A jury-rigged Noctuna was placed in there when I redid the cabling:</p>
+
+
+
+<figure class="wp-block-image"><img width="768" height="1024" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0244-768x1024.jpg" alt="" class="wp-image-254" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0244-768x1024.jpg 768w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0244-225x300.jpg 225w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0244.jpg 911w" sizes="(max-width: 768px) 100vw, 768px" /></figure>
+
+
+
+<p>Perfect temps:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><img width="251" height="381" src="https://blog2.kroy.io/wp-content/uploads/2019/08/cnF136u.png" alt="" class="wp-image-255" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/cnF136u.png 251w, https://blog.kroy.io/wp-content/uploads/2019/08/cnF136u-198x300.png 198w" sizes="(max-width: 251px) 100vw, 251px" /></figure></div>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">13</post-id>	</item>
+		<item>
+		<title>A Baby File Server Evolves</title>
+		<link>https://blog.kroy.io/2017/02/01/a-baby-file-server-evolves/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=a-baby-file-server-evolves</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Wed, 01 Feb 2017 21:01:00 +0000</pubDate>
+				<category><![CDATA[Hardware]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/02/01/a-baby-file-server-evolves/</guid>
+
+					<description><![CDATA[Over the years, it&#8217;s safe to say my storage needs have evolved. What started off as a handful of Western Digital USB drives has evolved into a multiple multi-Terabyte ZFS&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Over the years, it&#8217;s safe to say my storage needs have evolved. What started off as a handful of Western Digital USB drives has evolved into a multiple multi-Terabyte ZFS arrays with numerous backups.</p>
+
+
+
+<h5 id="xeond">Xeon D</h5>
+
+
+
+<p>Some time ago, I migrated my main file server from a <a href="http://shop.lenovo.com/us/en/systems/servers/towers/ts140/">TS140</a> to a <a href="https://www.supermicro.com/products/system/Mini-ITX/SYS-E300-8D.cfm">SYS-E300-8D</a>. The reasons were pretty simple. I wanted something small and quiet and that sipped power. Both were connected to an external 12 bay drive enclosure, so it&#8217;s actually less of a migration and more of a &#8220;unplug cable from server #1 and plug into server #2&#8221;. Easy and integrated 10GbE was a plus as well.</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2017/02/IMG_0146-1-2.jpg" alt="" class="wp-image-258" srcset="https://blog.kroy.io/wp-content/uploads/2017/02/IMG_0146-1-2.jpg 864w, https://blog.kroy.io/wp-content/uploads/2017/02/IMG_0146-1-2-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2017/02/IMG_0146-1-2-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<h5 id="notreallyasolution">Not really a solution</h5>
+
+
+
+<p>As I quickly found out, even switching servers didn&#8217;t really fix the core problem. The disk array still sucked a bunch of power, upwards of 75 watts without drives. And it was loud. I mean jet engine loud.</p>
+
+
+
+<figure class="wp-block-image"><img width="864" height="648" src="https://blog2.kroy.io/wp-content/uploads/2019/08/IMG_0144-1.jpg" alt="" class="wp-image-259" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0144-1.jpg 864w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0144-1-300x225.jpg 300w, https://blog.kroy.io/wp-content/uploads/2019/08/IMG_0144-1-768x576.jpg 768w" sizes="(max-width: 864px) 100vw, 864px" /></figure>
+
+
+
+<p>Unfortunately the cooling in that particular enclosure is terrible, and I had a bunch of drives that ran hot anyway. This combination resulted in fans that needed to run at almost full speed to keep the drives below 50C.</p>
+
+
+
+<h5 id="aninterimsolutionandultimatefailure">An interim solution (and ultimate failure)</h5>
+
+
+
+<p>A <a href="https://www.synology.com/en-global/products/DS2015xs">DS2015xs</a> was my solution. Synology has developed software that is probably second to none.</p>
+
+
+
+<p>There&#8217;s a problem. The DS2015xs is a bit of a weird product. It&#8217;s got 10GbE in it, but it&#8217;s completely incapable of actually saturating that connection. The CPU is a bit of a turd, and I&#8217;m pretty sure there is a bug in the more recent versions of the DSM software. Any iSCSI traffic would kill the whole array.</p>
+
+
+
+<p>So with great regret, I returned the unit and started a new plan.</p>
+
+
+
+<h5 id="theactualsolution">The actual solution</h5>
+
+
+
+<p>I was torn on my next steps. The thing I adored about the DS2015xs was that it was quiet, and it absolutely sipped power. It was going to be a bit difficult to replicate that setup.</p>
+
+
+
+<p>I started looking at building an entirely new server. I figured I could drop all the drives in a big case, put a power-sipping cpu/motherboard in there, and be good to go.</p>
+
+
+
+<p>I played with a bunch of combinations. Most of them were revolving around a C2750 from Asus (which unfortunately was reviewed VERY poorly) or another D-1508 or D-1518.</p>
+
+
+
+<p>After spending weeks playing with various potential setups, that&#8217;s when I decided the SYS-E300-8D was getting <a href="/growing-from-baby-to-giant/">Frankenboxed</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">7</post-id>	</item>
+	</channel>
+</rss>

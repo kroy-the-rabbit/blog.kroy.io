@@ -1,0 +1,2578 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>vyos &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/tag/vyos/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Thu, 24 Jun 2021 04:08:35 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>vyos &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>VyOS from Scratch: Routing and VPS Edition</title>
+		<link>https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=vyos-from-scratch-routing-and-vps-edition</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Thu, 24 Jun 2021 04:08:33 +0000</pubDate>
+				<category><![CDATA[Routing]]></category>
+		<category><![CDATA[vpn]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[BGeeeeeP]]></category>
+		<category><![CDATA[vyos]]></category>
+		<category><![CDATA[vyosfromscratch]]></category>
+		<category><![CDATA[wireguard]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=1104</guid>
+
+					<description><![CDATA[For a while now I&#8217;ve wanted to document a more complex routing setup with VyOS, and here it is. Routing with BGP, WireGuard to a VPS, and Policy Based Routing?&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>For a while now I&#8217;ve wanted to document a more complex routing setup with <a rel="noreferrer noopener" href="https://vyos.io/" target="_blank">VyOS</a>, and here it is.  Routing with BGP, WireGuard to a VPS, and Policy Based Routing?  </p>
+
+
+
+<p>This should be a fun one.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Routing has easily become one of my favorite lab tasks.  Especially since at one point, it was such an incredibly cryptic thing to me.</p>
+
+
+
+<p>So fair warning.  This will be long.  </p>
+
+
+
+<p>I&#8217;m going to:</p>
+
+
+
+<ul><li>Set up a VPS and an internal home router.</li><li>Use WireGuard to connect the VPS and internal home router</li><li>Set up multiple other internal routers and get the traffic flowing.</li><li>Route traffic from a basic desktop through the VPS, all via BGP.</li></ul>
+
+
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Routing</h2>
+
+
+
+<p>Routing, put most simply, is: &#8220;Where do I find this IP address I&#8217;m looking for&#8221;.  </p>
+
+
+
+<p>So if a host/server/device wants to get to an IP, it needs to know the path to get there.  And it can only talk to devices that it&#8217;s locally connected to, which means a device on a local interface/subnet with it.  </p>
+
+
+
+<figure class="wp-block-pullquote"><blockquote><p>There are two main types of routing I&#8217;ll be talking about. </p><p>Static, which is &#8220;hey, I know what subnets are where, and I&#8217;ll map everything manually&#8221;, and dynamic, which is &#8220;I&#8217;m going to set up relationships with other routers and learn stuff automatically&#8221;.</p></blockquote></figure>
+
+
+
+<p>BGP, or Border Gateway Protocol, is the type of dynamic routing I&#8217;ll be using here.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Let&#8217;s break down the main routing table on one of my primary routers (<code>show ip route</code> in VyOS):</p>
+
+
+
+<pre class="wp-block-code"><code>B&gt;* 0.0.0.0/0 &#091;20/0] via 10.245.245.9, eth0.508, weight 1, 00:00:08
+C * 10.0.11.0/24 is directly connected, eth0.11, 01w0d22h
+C&gt;* 10.0.11.0/24 is directly connected, eth0.11, 01w0d22h
+C&gt;* 10.0.35.0/30 is directly connected, eth0.35, 01w0d22h
+C * 10.3.1.0/24 is directly connected, eth0.3, 01w0d22h
+C&gt;* 10.3.1.0/24 is directly connected, eth0.3, 01w0d22h
+C * 10.9.1.0/24 is directly connected, eth0.9, 01w0d22h
+C&gt;* 10.9.1.0/24 is directly connected, eth0.9, 01w0d22h
+C * 10.10.8.0/24 is directly connected, eth0.8, 01w0d22h
+C&gt;* 10.10.8.0/24 is directly connected, eth0.8, 01w0d22h
+C * 10.10.51.0/24 is directly connected, eth0.51, 01w0d22h
+C&gt;* 10.10.51.0/24 is directly connected, eth0.51, 01w0d22h
+C * 10.20.20.0/24 is directly connected, eth0.20, 01w0d22h
+C&gt;* 10.20.20.0/24 is directly connected, eth0.20, 01w0d22h
+C * 10.21.21.0/24 is directly connected, eth0.21, 01w0d22h
+C&gt;* 10.21.21.0/24 is directly connected, eth0.21, 01w0d22h
+C * 10.22.22.0/24 is directly connected, eth0.22, 01w0d22h
+C&gt;* 10.22.22.0/24 is directly connected, eth0.22, 01w0d22h
+B&gt;* 10.53.53.53/32 &#091;20/0] via 10.3.1.252, eth0.3, weight 1, 01w0d22h
+  *                       via 10.3.1.254, eth0.3, weight 1, 01w0d22h
+B&gt;* 10.53.53.54/32 &#091;20/0] via 10.3.1.252, eth0.3, weight 1, 01w0d22h
+  *                       via 10.3.1.254, eth0.3, weight 1, 01w0d22h
+C&gt;* 10.245.245.8/30 is directly connected, eth0.508, 01w0d22h</code></pre>
+
+
+
+<p>There is lots going on here, but hopefully most of it is pretty straightforward:</p>
+
+
+
+<ul><li><code>B&gt;* 0.0.0.0/0</code>: This route is learned from my main edge router via BGP.  This is a <a rel="noreferrer noopener" href="https://www.keycdn.com/support/what-is-cidr#:~:text=CIDR%2C%20which%20stands%20for%20Classless,the%20growth%20of%20routing%20tables." target="_blank">CIDR </a>that represents &#8220;Every address on the Internet&#8221;.  That means any IP or subnet that this server doesn&#8217;t know about, will be forwarded to the device at <code>10.245.245.9</code>.</li><li><code>C&gt; * ...</code> and <code>C *</code> all represent &#8220;directly connected&#8221;.  This means these are all subnets that exist directly on this router.  There are multiple entries here because I&#8217;m using <a rel="noreferrer noopener" href="https://docs.vyos.io/en/equuleus/configuration/highavailability/index.html?highlight=vrrp" target="_blank">VRRP</a> and this router is currently holding the <em>MASTER</em> status for the redundant IP:</li></ul>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="567" height="129" src="https://blog.kroy.io/wp-content/uploads/2021/06/image.png" alt="" class="wp-image-1105" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image.png 567w, https://blog.kroy.io/wp-content/uploads/2021/06/image-300x68.png 300w" sizes="(max-width: 567px) 100vw, 567px" /><figcaption>show interfaces</figcaption></figure></div>
+
+
+
+<ul><li>I have two special entries here, <code>10.53.53.53/32</code> and <code>10.53.53.54/32</code>.   These are both learned from my DNS servers via BGP, for a type of &#8220;anycast DNS&#8221;.  Meaning, if the 252 host is down, 10.53.53.53 and 10.53.53.54 will still both respond to DNS queries served from the 254 host.  Vice versa with the 254 host.  I can spin up extra DNS servers with zero effort and they would still respond to my custom DNS IPs.  At one point my DNS range was <code>10.3.1.248-254</code>, which means I had a LOT of DNS servers all responding to the same two IPs. This prevents weirdness in how different operating systems handle primary and backup DNS.</li><li>Finally, another directly connected route.  This is the <code>/30</code> that talks to my main edge router</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Let&#8217;s talk about CIDRs</h3>
+
+
+
+<p>CIDRs are a very important concept in routing.  They represent the <code>/24</code> after the network in the above descriptions.  The smaller the CIDR number, the more IP addresses that network represents.  </p>
+
+
+
+<p>Most subnets have a network address and a broadcast address, neither which can be used for hosts in that subnet.</p>
+
+
+
+<p>In my opinion, using a tool like <code>sipcalc</code> makes it super clear:</p>
+
+
+
+<ul><li>A normal <code>/24</code>.  This is what people normally use for LAN subnets.  A nice range of 254 usable. addresses.  Many people would put their router at <code>10.3.1.1</code> or <code>10.3.1.254</code>, and reserve a DHCP range for somewhere in the middle.  The .0 and .255 addresses are reserved for the network address and broadcast respectively.</li></ul>
+
+
+
+<pre class="wp-block-code"><code>❯ sipcalc 10.3.1.0/24    
+-&#091;ipv4 : 10.3.1.0/24] - 0
+
+&#091;CIDR]
+Host address            - 10.3.1.0
+Host address (decimal)  - 167969024
+Host address (hex)      - A030100
+Network address         - 10.3.1.0
+Network mask            - 255.255.255.0
+Network mask (bits)     - 24
+Network mask (hex)      - FFFFFF00
+Broadcast address       - 10.3.1.255
+Cisco wildcard          - 0.0.0.255
+Addresses in network    - 256
+Network range           - 10.3.1.0 - 10.3.1.255
+Usable range            - 10.3.1.1 - 10.3.1.254
+</code></pre>
+
+
+
+<ul><li>A <code>/30</code>.  Often used for point-to-point links.  Four addresses are represented, but only the middle two are available, again due to the network/broadcast addresses.</li></ul>
+
+
+
+<pre class="wp-block-code"><code>❯ sipcalc 10.245.245.8/30
+-&#091;ipv4 : 10.245.245.8/30] - 0
+
+&#091;CIDR]
+Host address            - 10.245.245.8
+Host address (decimal)  - 183891208
+Host address (hex)      - AF5F508
+Network address         - 10.245.245.8
+Network mask            - 255.255.255.252
+Network mask (bits)     - 30
+Network mask (hex)      - FFFFFFFC
+Broadcast address       - 10.245.245.11
+Cisco wildcard          - 0.0.0.3
+Addresses in network    - 4
+Network range           - 10.245.245.8 - 10.245.245.11
+Usable range            - 10.245.245.9 - 10.245.245.10
+</code></pre>
+
+
+
+<ul><li>Most people use the larger subnets as &#8220;summary networks&#8221;, such as with this <code>/8</code>.  It would include the <code>10.3.1.0/24</code> and <code>10.245.245.8/30</code> from above.  Meaning if you wanted to target both, and didn&#8217;t want to have two routing entries, you could just use a single route:</li></ul>
+
+
+
+<pre class="wp-block-code"><code>❯ sipcalc 10.0.0.0/8     
+-&#091;ipv4 : 10.0.0.0/8] - 0
+
+&#091;CIDR]
+Host address            - 10.0.0.0
+Host address (decimal)  - 167772160
+Host address (hex)      - A000000
+Network address         - 10.0.0.0
+Network mask            - 255.0.0.0
+Network mask (bits)     - 8
+Network mask (hex)      - FF000000
+Broadcast address       - 10.255.255.255
+Cisco wildcard          - 0.255.255.255
+Addresses in network    - 16777216
+Network range           - 10.0.0.0 - 10.255.255.255
+Usable range            - 10.0.0.1 - 10.255.255.254
+</code></pre>
+
+
+
+<ul><li>Finally, a few &#8220;special&#8221; subnets/CIDRs.  We have a <code>/31</code>, which is used for point-to-point links and not waste two addresses, and <code>0.0.0.0/0</code>, which is default route to represent the whole Internet.  Note that the <code>.0</code> address in the <code>/31</code> is actually usable!  Meaning the two usable addresses are <code>10.42.42.0 / 10.42.42.1</code>. This is an oddity if you aren&#8217;t accustomed to it:</li></ul>
+
+
+
+<pre class="wp-block-code"><code>❯ sipcalc 10.42.42.0/31
+-&#091;ipv4 : 10.42.42.0/31] - 0
+
+&#091;CIDR]
+Host address            - 10.42.42.0
+Host address (decimal)  - 170535424
+Host address (hex)      - A2A2A00
+Network address         - 10.42.42.0
+Network mask            - 255.255.255.254
+Network mask (bits)     - 31
+Network mask (hex)      - FFFFFFFE
+Broadcast address       - 10.42.42.1
+Cisco wildcard          - 0.0.0.1
+Addresses in network    - 2
+Network range           - 10.42.42.0 - 10.42.42.1
+</code></pre>
+
+
+
+<pre class="wp-block-code"><code>❯ sipcalc 0.0.0.0/0    
+-&#091;ipv4 : 0.0.0.0/0] - 0
+
+&#091;CIDR]
+Host address            - 0.0.0.0
+Host address (decimal)  - 0
+Host address (hex)      - 0
+Network address         - 0.0.0.0
+Network mask            - 0.0.0.0
+Network mask (bits)     - 0
+Network mask (hex)      - 0
+Broadcast address       - 255.255.255.255
+Cisco wildcard          - 255.255.255.255
+Addresses in network    - 4294967295
+Network range           - 0.0.0.0 - 255.255.255.255
+Usable range            - 0.0.0.1 - 255.255.255.254
+</code></pre>
+
+
+
+<p>So <code>10.53.53.0/24</code> encompasses <code>10.53.53.53/32</code>. And in the routing world, if you were to have routes for both in your routing table, the more specific, <code>/32</code>, would be the one chosen to get to the <code>10.53.53.53</code> host.</p>
+
+
+
+<p>I know all that was a bit of an information dump, but hopefully it illustrated a few things.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Home -&gt; VPS Setup</h2>
+
+
+
+<p>I don&#8217;t want to get too bogged down with the details of how the Home and VPS routers are configured.  But I&#8217;m using a relatively recent<a rel="noreferrer noopener" href="https://downloads.vyos.io/?dir=rolling/current/amd64" target="_blank"> vyos-rolling </a>build, and have spun up a cheap VPS at Vultr for this blog.</p>
+
+
+
+<p>This diagram demonstrates what I am trying to achieve:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="801" height="990" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png" alt="" class="wp-image-1130" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png 801w, https://blog.kroy.io/wp-content/uploads/2021/06/image-7-243x300.png 243w, https://blog.kroy.io/wp-content/uploads/2021/06/image-7-243x300@2x.png 486w" sizes="(max-width: 801px) 100vw, 801px" /><figcaption>the diagram</figcaption></figure>
+
+
+
+<h3>Home Setup</h3>
+
+
+
+<p>At home, I&#8217;ve buried a brand new VyOS VM deep within my network.  So this is really going to represent the setup of someone that&#8217;s behind multiple layers of NAT, including carrier-grade, meaning they might not be able to port forward.</p>
+
+
+
+<p>This is our <code>edge</code> router for this setup. </p>
+
+
+
+<p>I&#8217;m assuming some familiarity with VyOS in general, but I&#8217;ll briefly touch over what&#8217;s in the attached config:</p>
+
+
+
+<ul><li>Run <code>generate wireguard named-keypairs Vultr</code> in op-mode.  This creates the private key for putting in the following config.</li><li>Run <code>show wireguard keypairs pubkey Vultr</code> to get the pubkey to put in the VPS config.</li><li>Set up the &#8220;WAN&#8221; connection. This is just some random static IP on an existing LAN.</li><li>Set up a pair interfaces that are going to talk to a few other routers.  These <code>10.42.0.0/16</code> or <code>10.42.0-255.0/24</code> addresses are the main subnets that we are going to be playing with. </li><li>Do a little bit of source NAT.  This will make anything behind this router on any subnet inside of <code>10.42.0.0/16</code> be able to get to the Internet.  </li><li>Set up a WireGuard connection to my VPS (this will be deleted before this blog is posted, which is why I&#8217;m keeping the IP).  <ul><li>Set the description and local IP for this tunnel.  I&#8217;m using a <code>/31</code> as mentioned in the above CIDR section.</li><li>Set the <code>allowed-ips</code>.  This is the traffic we want to allow the traverse this tunnel.  We are including both the tunnel <code>/31</code> subnet and the <code>/16</code> subnet.</li><li>Make sure we have the <code>persistent-keepalive 15</code> set here.  Since we aren&#8217;t doing a site-to-site, we need to make sure to have this, so the tunnel doesn&#8217;t timeout.  The tunnel can ONLY be brought up when traffic attempts to go from Home-&gt;VPS and not vice-versa because we are emulating CGNAT here. </li><li>The address and the port of the VPS that WireGuard is configured to listen on</li><li>The public key of the VPS.  From running <code>show wireguard keypairs pubkey Home</code> on the <strong>VPS</strong> after generating it with <code>generate wireguard named-keypairs Home</code></li></ul></li><li>Choosing the local private key to use for this connection.  It should match the &#8220;generate &#8230;&#8221; you ran above.</li><li>My default route for this router so I have Internet access</li><li>turning on SSH and naming this router</li></ul>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show configuration commands
+set interfaces ethernet eth0 address '10.21.21.10/24'
+set interfaces ethernet eth0 description 'WAN'
+set interfaces ethernet eth1 address '10.42.0.1/24'
+set interfaces ethernet eth1 description 'LAB1'
+set interfaces ethernet eth2 address '10.42.1.1/24'
+set interfaces ethernet eth2 description 'LAB2'
+set interfaces loopback lo
+set nat source rule 10 description 'Outgoing NAT'
+set nat source rule 10 outbound-interface 'eth0'
+set nat source rule 10 source address '10.42.0.0/16'
+set nat source rule 10 translation address 'masquerade'
+set interfaces wireguard wg0 address '172.24.32.1/31'
+set interfaces wireguard wg0 description 'lab-ptp-vps'
+set interfaces wireguard wg0 peer VPS-Lab address '144.202.75.103'
+set interfaces wireguard wg0 peer VPS-Lab allowed-ips '172.24.32.0/31'
+set interfaces wireguard wg0 peer VPS-Lab allowed-ips '10.42.0.0/16'
+set interfaces wireguard wg0 peer VPS-Lab persistent-keepalive '15'
+set interfaces wireguard wg0 peer VPS-Lab port '8765'
+set interfaces wireguard wg0 peer VPS-Lab pubkey '<strong>lQWPCw1f+B15Au441P2qwue8/YIZ3FLTTW+6N3EzhWM=</strong>'
+set interfaces wireguard wg0 private-key 'Vultr'
+set protocols static route 0.0.0.0/0 next-hop 10.21.21.1
+set service ssh port '22'
+set system host-name 'vyoslab-edge'
+</code></pre>
+
+
+
+<p></p>
+
+
+
+<p>Hopefully this should demonstrate where the pubkeys come from:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show wireguard keypairs pubkey Vultr 
+<strong>vzJetiL/M5Ujkb5DiwaG1CMAMr1Ib6a4OGdvlIMNWXs=</strong></code></pre>
+
+
+
+<h3>VPS Setup</h3>
+
+
+
+<p>At Vultr, I&#8217;ve set up a very simple VyOS config with just the basics to get it online, and the complementary WireGuard config.  </p>
+
+
+
+<ul><li>This VPS&#8217;s static IP and default route</li><li>Enable SSH</li><li>Set the hostname</li><li>Set up Wireguard<ul><li>Uses the opposite IP address, the .0, in the <code>/31</code> subnet</li><li>Uses the pubkey from above.</li></ul></li></ul>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# run show configuration commands 
+set interfaces ethernet eth0 address '144.202.75.103/23'
+set interfaces loopback lo
+set interfaces wireguard wg0 address '172.24.32.0/31'
+set interfaces wireguard wg0 description 'lab-ptp-home'
+set interfaces wireguard wg0 peer HomeLab allowed-ips '172.24.32.0/31'
+set interfaces wireguard wg0 peer HomeLab allowed-ips '10.42.0.0/16'
+set interfaces wireguard wg0 peer HomeLab pubkey '<strong>vzJetiL/M5Ujkb5DiwaG1CMAMr1Ib6a4OGdvlIMNWXs=</strong>'
+set interfaces wireguard wg0 port '8765'
+set interfaces wireguard wg0 private-key 'Home'
+set protocols static route 0.0.0.0/0 next-hop 144.202.74.1
+set service ssh port '22'
+set system host-name 'vyoslab-vps'
+</code></pre>
+
+
+
+<p>And the key, which will match the Home pubkey config:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ show wireguard keypairs pubkey  Home 
+<strong>lQWPCw1f+B15Au441P2qwue8/YIZ3FLTTW+6N3EzhWM=</strong></code></pre>
+
+
+
+<p>If you are paying attention, you&#8217;ll notice that there is no &#8220;endpoint&#8221; directive in the WireGuard config on the VPS side.  </p>
+
+
+
+<p>We are running WireGuard here as a server, instead of a site-to-site.</p>
+
+
+
+<p>Even though to WireGuard, it doesn&#8217;t care much, it&#8217;s worth noting because it has important implications, as hinted above.  </p>
+
+
+
+<p>In this setup, if you are on the VPS and try and bring up the tunnel, nothing will happen.  Because the VPS doesn&#8217;t know how to get to the other end.  So any traffic needs to originate from the home side, and that&#8217;s also why we have the <code>persistent-keepalive</code> on the home side to make sure the tunnel stays up.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<figure class="wp-block-pullquote"><blockquote><p>So some people may have noticed&#8230; I haven&#8217;t touched ANYTHING security-wise here. </p><p>Honestly, it&#8217;s probably outside of the scope of what I&#8217;m doing. The local &#8220;edge&#8221; router is buried so far in my homelab it doesn&#8217;t matter. And for the VPS router, I&#8217;m sure some people are screaming WHY WHY WHY?</p><p>It&#8217;s because I&#8217;m using Vultr&#8217;s firewall to block all traffic from everywhere that&#8217;s not me. So calm down.</p></blockquote></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Tunnels UP!<br></h2>
+
+
+
+<p>Assuming you&#8217;ve made it this far, your tunnel should be up. A ping should work to the opposite end of the tunnel (home is .1, so ping .0):</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ ping 172.24.32.0 count 4
+PING 172.24.32.0 (172.24.32.0) 56(84) bytes of data.
+64 bytes from 172.24.32.0: icmp_seq=1 ttl=64 time=19.9 ms
+64 bytes from 172.24.32.0: icmp_seq=2 ttl=64 time=19.3 ms
+64 bytes from 172.24.32.0: icmp_seq=3 ttl=64 time=19.3 ms
+64 bytes from 172.24.32.0: icmp_seq=4 ttl=64 time=18.8 ms
+
+--- 172.24.32.0 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 8ms
+rtt min/avg/max/mdev = 18.768/19.333/19.887/0.419 ms</code></pre>
+
+
+
+<p>And a simple op-mode show command:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show interfaces wireguard wg0 
+interface: wg0
+  description: lab-ptp-vps
+  address: 172.24.32.1/31
+  public key: vzJetiL/M5Ujkb5DiwaG1CMAMr1Ib6a4OGdvlIMNWXs=
+  private key: (hidden)
+  listening port: 37175
+
+  peer: VPS-Lab
+    public key: lQWPCw1f+B15Au441P2qwue8/YIZ3FLTTW+6N3EzhWM=
+    latest handshake: 0:01:16
+    status: active
+    endpoint: 144.202.75.103:8765
+    allowed ips: 172.24.32.0/31, 10.42.0.0/16
+    transfer: 54 KB received, 251 KB sent
+    persistent keepalive: every 15 seconds
+
+    RX:   bytes  packets  errors  dropped  overrun       mcast
+          56008      599       0        0        0           0
+    TX:   bytes  packets  errors  dropped  carrier  collisions
+         257096     5728       0        1        0           0
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Route That!</h3>
+
+
+
+<p>But the goal here isn&#8217;t just to set up a tunnel.  We actually want to get to <code>LAB1/2</code> on the home <code>edge</code> router from the VPS.</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             10.21.21.10/24                    u/u  WAN
+eth1             10.42.0.1/24                      u/u  LAB1
+eth2             10.42.1.1/24                      u/u  LAB2
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+wg0              172.24.32.1/31                    u/u  lab-ptp-vps
+</code></pre>
+
+
+
+<p>So let&#8217;s do that.  From the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ ping 10.42.0.1 count 4
+PING 10.42.0.1 (10.42.0.1) 56(84) bytes of data.
+^C
+--- 10.42.0.1 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 87ms</code></pre>
+
+
+
+<p>What&#8217;s the problem here?   Well look at the routing table:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       &gt; - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S&gt;* 0.0.0.0/0 &#091;1/0] via 144.202.74.1, eth0, weight 1, 1d00h17m
+C&gt;* 144.202.74.0/23 is directly connected, eth0, 1d00h17m
+C&gt;* 172.24.32.0/31 is directly connected, wg0, 1d00h17m
+</code></pre>
+
+
+
+<p>Since <code>10.42.0.1</code> doesn&#8217;t match any subnets in the routing table, it will try to go out the default <code>0.0.0.0/0</code> route.  This won&#8217;t work because private IPs can&#8217;t be routed over the public Internet.  </p>
+
+
+
+<h4>Static Routing, The Easy Way Out</h4>
+
+
+
+<p>There are a few ways around this.  A simple static entry for each of the LAB subnets pointed at the home IP of the tunnel (VPS is .0, home is .1):</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# set protocols static route 10.42.0.0/24 next-hop 172.24.32.1
+&#091;edit]
+vyos@vyoslab-vps# set protocols static route 10.42.1.0/24 next-hop 172.24.32.1
+&#091;edit]
+vyos@vyoslab-vps# commit
+Done
+&#091;edit]
+vyos@vyoslab-vps# run show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       &gt; - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S&gt;* 0.0.0.0/0 &#091;1/0] via 144.202.74.1, eth0, weight 1, 1d00h25m
+S&gt;* 10.42.0.0/24 &#091;1/0] via 172.24.32.1, wg0, weight 1, 00:00:05
+S&gt;* 10.42.1.0/24 &#091;1/0] via 172.24.32.1, wg0, weight 1, 00:00:05
+C&gt;* 144.202.74.0/23 is directly connected, eth0, 1d00h25m
+C&gt;* 172.24.32.0/31 is directly connected, wg0, 1d00h25m
+&#091;edit]
+vyos@vyoslab-vps# 
+</code></pre>
+
+
+
+<p></p>
+
+
+
+<p>Of course, this is ugly, and since I deliberately designed the subnets I&#8217;m using here to be easily &#8220;summarizable&#8221;, there&#8217;s a VERY simple solution:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# delete protocols static route 10.42.0.0/24
+&#091;edit]
+vyos@vyoslab-vps# delete protocols static route 10.42.1.0/24
+&#091;edit]
+vyos@vyoslab-vps# set protocols static route 10.42.0.0/16 next-hop 172.24.32.1
+&#091;edit]
+vyos@vyoslab-vps# commit
+&#091;edit]
+vyos@vyoslab-vps# save
+Saving configuration to '/config/config.boot'...
+Done
+&#091;edit]
+vyos@vyoslab-vps# run show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       &gt; - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S&gt;* 0.0.0.0/0 &#091;1/0] via 144.202.74.1, eth0, weight 1, 1d00h28m
+S&gt;* 10.42.0.0/16 &#091;1/0] via 172.24.32.1, wg0, weight 1, 00:00:09
+C&gt;* 144.202.74.0/23 is directly connected, eth0, 1d00h28m
+C&gt;* 172.24.32.0/31 is directly connected, wg0, 1d00h28m
+</code></pre>
+
+
+
+<p>In both cases, a simple ping to either the LAB1 or LAB2 address of <code>edge</code> should work from the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# run ping 10.42.0.1 count 2
+PING 10.42.0.1 (10.42.0.1) 56(84) bytes of data.
+64 bytes from 10.42.0.1: icmp_seq=1 ttl=64 time=18.6 ms
+64 bytes from 10.42.0.1: icmp_seq=2 ttl=64 time=19.2 ms
+
+--- 10.42.0.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 3ms
+rtt min/avg/max/mdev = 18.624/18.908/19.193/0.315 ms
+&#091;edit]
+vyos@vyoslab-vps# run ping 10.42.1.1 count 2
+PING 10.42.1.1 (10.42.1.1) 56(84) bytes of data.
+64 bytes from 10.42.1.1: icmp_seq=1 ttl=64 time=19.5 ms
+64 bytes from 10.42.1.1: icmp_seq=2 ttl=64 time=19.2 ms
+
+--- 10.42.1.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 3ms
+rtt min/avg/max/mdev = 19.164/19.338/19.512/0.174 ms
+&#091;edit]</code></pre>
+
+
+
+<p>Now that it&#8217;s working, delete it and get back to a clean slate so we can proceed to the BGP:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# delete protocols static route 10.42.0.0/16 
+&#091;edit]
+vyos@vyoslab-vps# commit
+&#091;edit]
+vyos@vyoslab-vps# run show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       &gt; - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S&gt;* 0.0.0.0/0 &#091;1/0] via 144.202.74.1, eth0, weight 1, 1d00h56m
+C&gt;* 144.202.74.0/23 is directly connected, eth0, 1d00h56m
+C&gt;* 172.24.32.0/31 is directly connected, wg0, 1d00h56m</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>BGP, The Slightly Less Easy Way Out</h4>
+
+
+
+<p>So why not just static routing?  It works right?  Well it does&#8230;  but has a number of notable problems:</p>
+
+
+
+<ul><li>Requires planning.  Especially if you want to judiciously use summary routes</li><li>Could potentially require a lot of upkeep as your network grows and morphs.  </li><li>It&#8217;s not BGP, which is just cool.</li></ul>
+
+
+
+<p>With the first one, who ever plans?  I know I don&#8217;t.  I&#8217;d rather adjust config on one or two routers than all of them.  </p>
+
+
+
+<p>Regardless, we are here to BGP, so let&#8217;s do it.</p>
+
+
+
+<p>If you don&#8217;t know what BGP is, you should Google it.  There are 1000 different resources that will explain it better than me. </p>
+
+
+
+<p>There are two main types, internal and external (eBGP), and we are going to be focusing on external, because it&#8217;s bit more plug-and-play.  </p>
+
+
+
+<p>An ASN, or Autonomous System Number, is an important concept when it comes to eBGP.  When you are announcing public subnets, you need an officially blessed ASN from a place like <a rel="noreferrer noopener" href="https://www.arin.net/resources/guide/asn/" data-type="URL" data-id="https://www.arin.net/resources/guide/asn/" target="_blank">ARIN</a>,  but for our uses, there are a number of for-private ranges we can use:</p>
+
+
+
+<ul><li>64512 to 65534 (16 bit)</li><li>4200000000 to 4294967294 (32 bit)</li></ul>
+
+
+
+<p>The ASNs are used both for identification and routing decisions.  If I wanted to make a route take a shorter route sometimes and a longer one that others, I could have the ASN PATH in BGP set to &#8220;64512 64512 64512&#8221; on one peer versus just &#8220;64512&#8221; on a second.  This would give preference to the shorter path.  </p>
+
+
+
+<p>Does it really matter if you use a non-private one?  Probably not.  And for our cases it will hurt even less than wrongly using non<a rel="noreferrer noopener" href="https://datatracker.ietf.org/doc/html/rfc1918" target="_blank">-RFC1918</a> addresses that people sometimes do in homelabs.  But it&#8217;s still good practice to be a good netizen out of the gate.</p>
+
+
+
+<h5>Home Setup</h5>
+
+
+
+<p>I&#8217;ll be starting with the Home setup, since that will be kind of the central hub here.  First, start with the basic peering:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show configuration commands
+set protocols bgp local-as '4200000000'
+set protocols bgp neighbor 172.24.32.0 remote-as '4200000001'
+</code></pre>
+
+
+
+<p>I&#8217;ll be going with a very basic setup here, just setting up the initial tunnel.</p>
+
+
+
+<p>Let&#8217;s walk through here to see what&#8217;s going on:</p>
+
+
+
+<ul><li>Set our local ASN.  For <code>edge</code>, I&#8217;ll be using the bottom 32bit private ASN</li><li>Set up our neighbor, this is the <code>vps</code> IP over wireguard, the next available 32bit ASN</li></ul>
+
+
+
+<p> </p>
+
+
+
+<h5>VPS Setup</h5>
+
+
+
+<p>On the VPS, a similarly simple config, with everything swapped. We use the <code>edge</code> side of the WireGuard tunnel, and swap the appropriate local and remote ASN. </p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# run show configuration commands 
+set protocols bgp local-as '4200000001'
+set protocols bgp neighbor 172.24.32.1 remote-as '4200000000'</code></pre>
+
+
+
+<p>With that, the tunnel should be up.  In op-mode:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.1, local AS number 4200000000 vrf-id 0
+BGP table version 0
+RIB entries 0, using 0 bytes of memory
+Peers 1, using 21 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+172.24.32.0     4 4200000001        15        15        0    0    0 00:12:27            0        0
+
+Total number of neighbors 1
+vyos@vyoslab-edge:~$ 
+</code></pre>
+
+
+
+<p>and</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# run show bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.0, local AS number 4200000001 vrf-id 0
+BGP table version 0
+RIB entries 0, using 0 bytes of memory
+Peers 1, using 21 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+172.24.32.1     4 4200000000        16        16        0    0    0 00:14:00            0        0
+
+Total number of neighbors 1
+&#091;edit]
+</code></pre>
+
+
+
+<p>The important things to note is that the ASN and neighbor IP get swapped on each host.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Of course, we need a few small modifications to actually get things advertising.</p>
+
+
+
+<p>First, we need to tell the home <code>edge</code> to advertise its connected routes. This means that we want to redistribute any routes from this router that are attached to interfaces:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show configuration commands
+set protocols bgp address-family ipv4-unicast redistribute connected
+</code></pre>
+
+
+
+<p>and then on the VPS router to pull any updates instantly:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps# set protocols bgp neighbor 172.24.32.1 address-family ipv4-unicast soft-reconfiguration inbound 
+&#091;edit]
+vyos@vyoslab-vps# commit
+</code></pre>
+
+
+
+<p>With that done, if you look on the <code>vps</code> router, you can see stuff happening:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ show bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.0, local AS number 4200000001 vrf-id 0
+BGP table version 8
+RIB entries 9, using 1728 bytes of memory
+Peers 1, using 21 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+172.24.32.1     4 4200000000        51        40        0    0    0 00:33:36            5        5
+
+Total number of neighbors 1
+
+</code></pre>
+
+
+
+<p>So let&#8217;s look at our routing table on <code>vps</code>:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       &gt; - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S&gt;* 0.0.0.0/0 &#091;1/0] via 144.202.74.1, eth0, weight 1, 00:37:57
+B&gt;* 10.21.21.0/24 &#091;20/0] via 172.24.32.1, wg0, weight 1, 00:13:12
+B&gt;* 10.42.0.0/24 &#091;20/0] via 172.24.32.1, wg0, weight 1, 00:13:12
+B&gt;* 10.42.1.0/24 &#091;20/0] via 172.24.32.1, wg0, weight 1, 00:13:12
+C&gt;* 144.202.74.0/23 is directly connected, eth0, 00:38:03
+B   172.24.32.0/31 &#091;20/0] via 172.24.32.1 inactive, weight 1, 00:13:12
+C&gt;* 172.24.32.0/31 is directly connected, wg0, 00:38:00
+</code></pre>
+
+
+
+<p>If everything is working, any route that exists on our <code>edge</code>&#8216;s routing table as &#8220;directly connected&#8221;, should be found on our <code>vps</code>&#8216;s routing table going over the WireGuard tunnel.</p>
+
+
+
+<p>You can test this by adding a new dummy interface on the <code>edge</code> router:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge# set interfaces dummy dum0 address 172.22.22.255/32
+&#091;edit]
+vyos@vyoslab-edge# commit</code></pre>
+
+
+
+<p>Almost immediately, you should see it pop up in the routing table on the <code>vps</code>, but it won&#8217;t be pingable because it&#8217;s not part of the <code>allowed-ips</code> of the WireGuard tunnel:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ show ip route 172.22.22.255/32
+Routing entry for 172.22.22.255/32
+  Known via "bgp", distance 20, metric 0, best
+  Last update 00:00:36 ago
+  * 172.24.32.1, via wg0, weight 1
+
+
+vyos@vyoslab-vps:~$ ping 172.22.22.255
+PING 172.22.22.255 (172.22.22.255) 56(84) bytes of data.
+From 172.24.32.0 icmp_seq=1 Destination Host Unreachable
+ping: sendmsg: Required key not available
+From 172.24.32.0 icmp_seq=2 Destination Host Unreachable
+ping: sendmsg: Required key not available
+^C
+--- 172.22.22.255 ping statistics ---
+2 packets transmitted, 0 received, +2 errors, 100% packet loss, time 54ms
+</code></pre>
+
+
+
+<p>Now the real fun can start&#8230;.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>BGeeeeeP All The Things</h2>
+
+
+
+<p>So if you&#8217;ve been following along, we&#8217;ve completed the top part of our diagram here:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="776" height="894" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-8.png" alt="" class="wp-image-1131" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-8.png 776w, https://blog.kroy.io/wp-content/uploads/2021/06/image-8-260x300.png 260w, https://blog.kroy.io/wp-content/uploads/2021/06/image-8-260x300@2x.png 520w" sizes="(max-width: 776px) 100vw, 776px" /></figure>
+
+
+
+<p>It&#8217;s time to get our LAB1 and LAB2 routers up.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>A Pair of Internal-Internal Routers</h3>
+
+
+
+<p>The first thing I&#8217;ll be doing is preparing the <code>edge</code> router to connect to <code>lab1</code> and <code>lab2</code>:</p>
+
+
+
+<ul><li>Set up a neighbor pointing at <code>lab1</code>.</li><li><code>default-originate</code> tells this router to automatically set the default route for <code>lab1</code> to this router</li><li>As before, pull updates from <code>lab1</code> quickly</li><li>Set the next ASN in line</li><li>Rinse and repeat for <code>lab2</code></li></ul>
+
+
+
+<pre class="wp-block-code"><code>set protocols bgp neighbor 10.42.0.2 address-family ipv4-unicast default-originate
+set protocols bgp neighbor 10.42.0.2 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.0.2 remote-as '4200000002'
+set protocols bgp neighbor 10.42.1.2 address-family ipv4-unicast default-originate
+set protocols bgp neighbor 10.42.1.2 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.1.2 remote-as '4200000003'</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The configs for these two are mostly identical.  Note the changes in IP addresses and ASNs</p>
+
+
+
+<ul><li>I&#8217;m using a slightly different method of advertising on <code>lab2</code>.  Instead of redistributing any connected network, I&#8217;m choosing the specific network to spit out.</li><li>I&#8217;ve set up some DHCP Servers.  This is so I can just plug in a client and go for testing</li><li>I&#8217;ve also ignored setting up any source NAT.  This is so I can directly access the 100/101 networks from the VPS.</li><li>Note that both of these are missing the <code>0.0.0.0/0</code> default route/gateway.  This is because they are learning it via BGP.</li></ul>
+
+
+
+<p></p>
+
+
+
+<h4>LAB1</h4>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-lab1:~$ show configuration commands
+set interfaces ethernet eth0 address '10.42.0.2/24'
+set interfaces ethernet eth1 address '10.42.100.1/24'
+set interfaces loopback lo
+<strong>set protocols bgp address-family ipv4-unicast redistribute connected </strong>
+set protocols bgp local-as '4200000002'
+set protocols bgp neighbor 10.42.0.1 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.0.1 remote-as '4200000000'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 default-router '10.42.100.1'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 dns-server '1.1.1.1'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 dns-server '1.0.0.1'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 range 0 start '10.42.100.100'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 range 0 stop '10.42.100.200'
+set service ssh port '22'
+set system host-name 'vyoslab-lab1'
+</code></pre>
+
+
+
+<h4>LAB2</h4>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-lab2:~$ show configuration commands
+set interfaces ethernet eth0 address '10.42.1.2/24'
+set interfaces ethernet eth1 address '10.42.101.1/24'
+set interfaces loopback lo
+<strong>set protocols bgp address-family ipv4-unicast network 10.42.101.0/24</strong>
+set protocols bgp local-as '4200000003'
+set protocols bgp neighbor 10.42.1.1 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.1.1 remote-as '4200000000'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 default-router '10.42.101.1'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 dns-server '1.1.1.1'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 dns-server '1.0.0.1'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 range 0 start '10.42.101.100'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 range 0 stop '10.42.101.200'
+set service ssh port '22'
+set system host-name 'vyoslab-lab2'
+</code></pre>
+
+
+
+<p>Assuming everything is set up right, the BGP connections should pop up and be viewable from <code>edge</code>.  Note the different counts in <code>State/PfxRcd</code> between <code>lab1</code> and <code>lab2</code>.  This is due to how I chose to advertise as mentioned above.  </p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show ip bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.1, local AS number 4200000000 vrf-id 0
+BGP table version 18
+RIB entries 11, using 2112 bytes of memory
+Peers 3, using 64 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+10.42.0.2       4 4200000002       131       139        0    0    0 01:22:18            <strong>2</strong>        6
+10.42.1.2       4 4200000003       129       143        0    0    0 01:21:56            <strong>1</strong>        6
+172.24.32.0     4 4200000001       123       122        0    0    0 01:33:50            0        6</code></pre>
+
+
+
+<p>And the routing table all the way out on the <code>vps</code> should be populated and pingable with the two new subnets:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       &gt; - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S&gt;* 0.0.0.0/0 &#091;1/0] via 10.21.21.1, eth0, weight 1, 01:37:31
+C&gt;* 10.21.21.0/24 is directly connected, eth0, 01:37:33
+C&gt;* 10.42.0.0/24 is directly connected, eth1, 01:37:34
+C&gt;* 10.42.1.0/24 is directly connected, eth2, 01:37:33
+B&gt;* 10.42.100.0/24 &#091;20/0] via 10.42.0.2, eth1, weight 1, 00:04:04
+B&gt;* 10.42.101.0/24 &#091;20/0] via 10.42.1.2, eth2, weight 1, 01:25:05
+C&gt;* 172.24.32.0/31 is directly connected, wg0, 01:37:32
+
+------------
+
+vyos@vyoslab-edge:~$ ping 10.42.100.1 count 1
+PING 10.42.100.1 (10.42.100.1) 56(84) bytes of data.
+64 bytes from 10.42.100.1: icmp_seq=1 ttl=64 time=0.264 ms
+
+--- 10.42.100.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.264/0.264/0.264/0.000 ms
+
+--------------
+
+vyos@vyoslab-edge:~$ ping 10.42.101.1 count 1
+PING 10.42.101.1 (10.42.101.1) 56(84) bytes of data.
+64 bytes from 10.42.101.1: icmp_seq=1 ttl=64 time=10.7 ms
+
+--- 10.42.101.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 10.711/10.711/10.711/0.000 ms
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Playing around with Clients</h2>
+
+
+
+<p>Whew&#8230; We&#8217;ve made it this far.  So what can we do?</p>
+
+
+
+<p>First off, a pair of basic Ubuntu installs.  One behind <code>lab1</code> and one behind <code>lab2</code>:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="338" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1024x338.png" alt="" class="wp-image-1149" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1024x338.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9-300x99.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1536x507.png 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9.png 2009w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9-300x99@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>two installs</figcaption></figure>
+
+
+
+<p>If we traceroute from one to another:</p>
+
+
+
+<pre class="wp-block-code"><code>kroy@vyoslab-enduser1:~$ traceroute 10.42.101.100  &lt;1st Ubuntu&gt;
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.192 ms  0.168 ms  0.162 ms  &lt;LAB1&gt;
+ 2  10.42.0.1 (10.42.0.1)  0.719 ms  0.709 ms  0.704 ms  &lt;EDGE&gt;
+ 3  10.42.1.2 (10.42.1.2)  0.769 ms  0.763 ms  0.759 ms  &lt;LAB2&gt;
+ 4  10.42.101.100 (10.42.101.100)  1.188 ms  1.183 ms  1.177 ms  &lt;2nd Ubuntu&gt;
+</code></pre>
+
+
+
+<p>What about if we go from the <code>vps</code> to one of the Ubuntu installs:</p>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ traceroute 10.42.101.100
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  172.24.32.1 (172.24.32.1)  18.453 ms  18.367 ms  18.378 ms   &lt;EDGE via WireGuard&gt;
+ 2  10.42.1.2 (10.42.1.2)  18.343 ms  18.308 ms  18.275 ms   &lt;LAB2&gt;
+ 3  10.42.101.100 (10.42.101.100)  18.250 ms  18.211 ms  18.178 ms   &lt;2nd Ubuntu&gt;
+</code></pre>
+
+
+
+<p>To a well-known site:</p>
+
+
+
+<pre class="wp-block-code"><code>kroy@vyoslab-enduser1:~$ traceroute 1.1.1.1
+traceroute to 1.1.1.1 (1.1.1.1), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.220 ms  0.183 ms  0.176 ms   &lt;LAB1&gt;
+ 2  10.42.0.1 (10.42.0.1)  0.379 ms  0.372 ms  0.362 ms  &lt;EDGE&gt;
+ 3  10.21.21.3 (10.21.21.3)  1.206 ms  1.200 ms  1.193 ms  &lt;An Internal Router&gt;
+ 4  10.245.245.9 (10.245.245.9)  1.255 ms  1.249 ms  1.236 ms  &lt;My Edge Router&gt;
+ 5  xxxxxxxxxxxxxxxxxxxxxxxxxxx 2.658 ms  2.651 ms  2.639 ms
+ 6  xxxxxxxxxxxxxxxxxxxxxxxxxxx 5.195 ms  3.781 ms  4.081 ms
+ 7  xxxxxxxxxxxxxxxxxxxxxxxxxxx  4.069 ms  4.646 ms  4.626 ms
+ 8  xxxxxxxxxxxxxxxxxxxxxxxxxxx.191 ms  4.610 ms  4.600 ms
+ 9  100ge15-2.core1.mci3.he.net (184.105.65.165)  8.474 ms  9.064 ms  8.443 ms
+10  cloudflare.grand1.kcix.net (206.51.7.34)  9.040 ms  10.013 ms  9.385 ms
+11  one.one.one.one (1.1.1.1)  9.415 ms  8.984 ms  8.106 ms
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>A Policy Route</h3>
+
+
+
+<p>Of course, all we&#8217;ve really done here is set up basic communication between a number of subnets at multiple locations.  So let&#8217;s toss some PBR (Policy Based Routing) into the mix.  </p>
+
+
+
+<p>The first step is to make sure <code>vps</code> is set up to NAT out. This is:</p>
+
+
+
+<ul><li>Take all traffic from this subnet</li><li>Masquerade it to the public IP of the VPS</li><li><code>eth0</code> is the WAN interface of the VPS</li></ul>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-vps:~$ show configuration commands 
+set nat source rule 10 source address '10.42.100.0/24'
+set nat source rule 10 translation address 'masquerade'
+set nat source rule 10 outbound-interface 'eth0'</code></pre>
+
+
+
+<p>Then, on <code>edge</code> is where all the magic happens.  The goal here is to put all traffic from/to the <code>10.42.100.0/24</code> subnet, into a separate routing table.  That way we can tell all the <code>0.0.0.0/0</code> traffic to leave this router via the WireGuard/VPS connection.</p>
+
+
+
+<ul><li>Set up a policy route.  This puts all traffic to and from in a separate routing table, <code>100</code></li><li>Tie a specific route for <code>0.0.0.0/0</code> to that table, and tell it to go out via the <code>vps</code> WireGuard IP</li><li>Allow all traffic through WireGuard on this end.  Otherwise WireGuard will deny traffic to everywhere</li><li>Attach the new policy to the interface the traffic will be coming in on.</li></ul>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show configuration commands        
+set policy route OUTGOING-VPS rule 100 set table '100'
+set policy route OUTGOING-VPS rule 100 source address '10.42.100.0/24'
+set policy route OUTGOING-VPS rule 101 destination address '10.42.100.0/24'
+set policy route OUTGOING-VPS rule 101 set table '100'
+set protocols static table 100 route 0.0.0.0/0 next-hop 172.24.32.0
+set interfaces wireguard wg0 peer VPS-Lab allowed-ips '0.0.0.0/0'
+set interfaces ethernet eth1 policy route 'OUTGOING-VPS'
+</code></pre>
+
+
+
+<p>Once that is complete, you should be accessing the web through the VPS.  Note the VPS IP in the curl, and the dramatically different path than the one it took above.</p>
+
+
+
+<pre class="wp-block-code"><code>kroy@vyoslab-enduser1:~$ curl ifconfig.co
+144.202.75.103
+
+kroy@vyoslab-enduser1:~$ traceroute 1.1.1.1
+traceroute to 1.1.1.1 (1.1.1.1), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.221 ms  0.195 ms  0.189 ms  &lt;LAB1&gt;
+ 2  10.42.0.1 (10.42.0.1)  0.421 ms  0.415 ms  0.406 ms    &lt;EDGE&gt;
+ 3  172.24.32.0 (172.24.32.0)  19.710 ms  20.094 ms  20.088 ms  &lt;VPS WireGuard&gt;
+ 4  * * *  &lt;VPS Default Gateway&gt;
+ 5  vl199-ds1-b5-02.05.dal4.constant.com (108.61.111.1)  23.403 ms  26.589 ms  29.625 ms
+ 6  * * *
+ 7  * * *
+ 8  ae-31.a01.dllstx09.us.bb.gin.ntt.net (128.241.219.53)  19.701 ms * 8-1-5.ear1.Dallas3.Level3.net (4.15.38.133)  19.719 ms
+ 9  ae-31.a01.dllstx09.us.bb.gin.ntt.net (128.241.219.53)  19.682 ms 8-1-5.ear1.Dallas3.Level3.net (4.15.38.133)  19.726 ms  19.721 ms
+10  ae11.cr8-dal3.ip4.gtt.net (213.200.115.30)  19.877 ms ip4.gtt.net (208.116.142.210)  19.950 ms ae-6.r10.dllstx09.us.bb.gin.ntt.net (129.250.5.4)  19.623 ms
+11  ip4.gtt.net (208.116.142.210)  20.130 ms  20.148 ms cloudflare-ic328260-dls-b23.ip.twelve99-cust.net (62.115.61.243)  20.989 ms
+12  one.one.one.one (1.1.1.1)  19.788 ms  20.716 ms  20.428 ms
+</code></pre>
+
+
+
+<p>Once this is working, you could set up a web server on this IP and access it via the VPS.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>OOOPS&#8230;</h4>
+
+
+
+<p>Unfortunately, we&#8217;ve create a bit of a mistake.  Remember this from above?</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="833" height="298" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-10.png" alt="" class="wp-image-1152" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-10.png 833w, https://blog.kroy.io/wp-content/uploads/2021/06/image-10-300x107.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-10-300x107@2x.png 600w" sizes="(max-width: 833px) 100vw, 833px" /><figcaption>original traceroute</figcaption></figure>
+
+
+
+<p>The path looks waaaay different now:</p>
+
+
+
+<pre class="wp-block-code"><code>kroy@vyoslab-enduser1:~$ traceroute 10.42.101.100   &lt;1st Ubuntu&gt;
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.215 ms  0.201 ms  0.196 ms   &lt;LAB1&gt;
+ 2  10.42.0.1 (10.42.0.1)  0.357 ms  0.700 ms  0.694 ms  &lt;EDGE&gt;
+ 3  172.24.32.0 (172.24.32.0)  19.082 ms  19.076 ms  19.142 ms   &lt;VPS???&gt;
+ 4  172.24.32.1 (172.24.32.1)  19.135 ms  19.129 ms  19.264 ms   &lt;EDGE AGAIN WOT?&gt;
+ 5  10.42.1.2 (10.42.1.2)  19.504 ms  19.494 ms  19.488 ms  &lt;LAB2&gt;
+ 6  10.42.101.100 (10.42.101.100)  19.717 ms  19.680 ms  19.654 ms &lt;2nd Ubuntu&gt;
+ </code></pre>
+
+
+
+<p>The policy based routing has created a bit of a weird path.  In fact, we are a bit lucky it can find a path at all.  </p>
+
+
+
+<p>Fortunately, this is easily fixable on <code>edge</code>:</p>
+
+
+
+<ul><li>When traffic from our &#8220;re-routed&#8221; network tries to hit anything in the <code>10.0.0.0/8</code> network (another summary route for the networks I use here and in the rest of my lab), put the traffic back in the <code>main</code> routing table.</li></ul>
+
+
+
+<pre class="wp-block-code"><code>vyos@vyoslab-edge:~$ show configuration commands  
+set policy route OUTGOING-VPS rule 90 destination address '10.0.0.0/8'
+set policy route OUTGOING-VPS rule 90 set table 'main'
+</code></pre>
+
+
+
+<p>And once more the traceroute looks normal AND the rest of the traffic is still being routed though the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code>kroy@vyoslab-enduser1:~$ traceroute 10.42.101.100
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.286 ms  0.233 ms  0.227 ms
+ 2  10.42.0.1 (10.42.0.1)  0.429 ms  0.423 ms  0.413 ms
+ 3  10.42.1.2 (10.42.1.2)  0.732 ms  0.726 ms  0.720 ms
+ 4  10.42.101.100 (10.42.101.100)  0.964 ms  0.949 ms  0.937 ms
+
+kroy@vyoslab-enduser1:~$ curl ifconfig.co
+144.202.75.103
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Caveats</h2>
+
+
+
+<p>Even though I&#8217;m at almost 5000 words on this post already, I fully acknowledge this will end with a LOT of basics missing:</p>
+
+
+
+<ul><li>At any point in this whole thing,&#8221;insert security&#8221;.  This is all very wide open and would be a bad idea to implement without some security controls in place.</li><li>You would need to set up access/as-path/communities/prefix -lists and route-maps to fine tune what you are announcing and accepting.  Right now, everything that was built is basically &#8220;Announce Everything and Accept Everything!&#8221;.   This is bad in so many ways, and on the public Internet, has actually broken big parts of the Internet because some network engineer announced or accepted a prefix they shouldn&#8217;t have.  </li><li>None of this even scratches the surface of what BGP can do.  You can build up failover and redundancy, make routing decisions based on tons of factors and more.   </li><li>I could write 20 more posts of equal or more length and still barely demonstrate beyond the basics, especially when it comes to best-practices (of which there weren&#8217;t many here), or capabilities of BGP.</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>Even with the caveats mentioned, hopefully this post will set some people on the path of learning and enjoying routing.   It&#8217;s been a long one, but I&#8217;ve enjoyed labbing it out.  </p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1104</post-id>	</item>
+		<item>
+		<title>VyOS from Scratch &#8211; Edition 1</title>
+		<link>https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=vyos-from-scratch-edition-1</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 04 May 2020 05:28:47 +0000</pubDate>
+				<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[vyos]]></category>
+		<category><![CDATA[vyosfromscratch]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=593</guid>
+
+					<description><![CDATA[As a VyOS evangelist, maintainer, and more, I&#8217;ve been meaning to write a simple series of &#8220;how-to&#8221; guides for VyOS for a while. Sure, there are plenty of guides out&#8230;]]></description>
+										<content:encoded><![CDATA[
+<hr class="wp-block-separator"/>
+
+
+
+<p>As a VyOS evangelist, maintainer, and more, I&#8217;ve been meaning to write a simple series of &#8220;how-to&#8221; guides for VyOS for a while.  Sure, there are plenty of guides out there, but I think a lot of them fall short in demonstrating WHY you are entering specific commands.  </p>
+
+
+
+<p>VyOS is capable, but it&#8217;s much more helpful if you can fully understand what it&#8217;s doing.  </p>
+
+
+
+<p>This initial guide will walk through the basic setup steps in replacing something like pfSense or some other consumer router with a simple and secure system running VyOS.  </p>
+
+
+
+<p>This is also going to be a very very long post, so buckle in!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Who is this For</h2>
+
+
+
+<p>Anybody that wants to use VyOS of course!  </p>
+
+
+
+<p>The nice thing about running VyOS is that if you set up it, and understand <strong><em>WHAT</em></strong> it&#8217;s doing, then you&#8217;ve actually learned something about networking.  </p>
+
+
+
+<p>Does something like pfSense work?  </p>
+
+
+
+<p>Sure, but it also doesn&#8217;t teach you much about what&#8217;s actually going on.  And the knowledge learned in VyOS will easily translate to almost any other vendor like Cisco, Arista, and more.  At that point, the concepts are the same, you are just learning the different dialects. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Environment</h2>
+
+
+
+<p>VyOS really doesn&#8217;t take much in resources.  </p>
+
+
+
+<p>8GB of storage and 2-4GB of RAM will be overkill for most basic setups.  </p>
+
+
+
+<p>CPU-wise, even small Pentium Silver CPUs can handle gigabit and beyond, even over VPN .  Anything like an i3/i5 or a Xeon won&#8217;t break a sweat except in all but the most demanding scenarios.</p>
+
+
+
+<p>If you virtualize, it can be helpful to set up a test environment.  This could consist of a simple:</p>
+
+
+
+<ul><li>WAN Network.  For testing this could be your existing LAN network.</li><li>A new &#8220;LAN&#8221; Network. For testing this could just be a separate port group or bridge, and it wouldn&#8217;t even need an uplink.</li><li>A simple VM with a GUI (or without), to run some testing. </li></ul>
+
+
+
+<p>If virtualization isn&#8217;t an option, VyOS can run on almost any device that is x86_64.  I&#8217;ve run it on everything from:</p>
+
+
+
+<ul><li>NUCs with single NICs and USB/USB-C NICs.</li><li><a href="https://blog.kroy.io/2019/12/08/the-wyse-5070-a-perfect-little-vyos-device/" target="_blank" rel="noreferrer noopener">WYSE 5070/3040 Thin Clients</a>.</li><li>A variety of Dells, including R710s/R620s/R630s.</li><li>Anything Supermicro from 1U to 4U devices.</li></ul>
+
+
+
+<p>Finally, for this guide, I&#8217;ll be working with two NICs.  </p>
+
+
+
+<p>One is a WAN, connected to my current LAN.  I&#8217;ll be creating a &#8220;network inside a network&#8221;.  The second will be our new &#8220;LAN&#8221;.  This is separate from my existing LAN so I can pretend like it&#8217;s a second private network.  These interfaces can be anything:</p>
+
+
+
+<ul><li>Physical NICs.</li><li>VLANs.</li><li>Virtual NICs from ESXi, Proxmox, etc.</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Install</h1>
+
+
+
+<p>The first step is to grab yourself a copy of the installer ISO.  </p>
+
+
+
+<p>Most people will want the <a href="https://www.vyos.io/rolling-release/" target="_blank" rel="noreferrer noopener">Rolling Release</a>.  You can also build it yourself, via the <a href="https://docs.vyos.io/en/latest/contributing/build-vyos.html" target="_blank" rel="noreferrer noopener">Docker image</a>, which is helpful if there are some extra packages you want to add.</p>
+
+
+
+<p>If you want access to the LTS version, it requires self-building (an easy process), contributing, or a subscription. I <a href="https://blog.vyos.io/vyos-access-subscriptions-for-documentation" target="_blank" rel="noreferrer noopener">highly recommend contributing</a>, as even writing or cleaning up some documentation will get you access to the LTS prebuilt versions.  </p>
+
+
+
+<p>You can also support and get access via <a href="https://www.patreon.com/vyos" target="_blank" rel="noreferrer noopener">Patreon</a> or <a href="https://www.buymeacoffee.com/kUa78LT" target="_blank" rel="noreferrer noopener">BuyMeACoffee</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Note that for these guides, I will be using a recent version of rolling.  This is important as some configuration nodes have changed locations and format between 1.3+ and the existing LTS versions (DHCP and IPv6 RAs are two things that come to mind).</p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Rolling Stability</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+It&#8217;s important to note that the rolling releases are generally completely stable.  I would say 95% of them or more are functional without any major bugs.</p>
+<p>Every once in a while, some broken functionality is pushed, but it is almost always fixed quickly. A broken upgrade is not a show-stopper and it is trivial to boot back into the working version with the built-in <a href="https://docs.vyos.io/en/latest/image-mgmt.html" target="_blank" rel="noopener noreferrer">Image Management</a>.</p>
+<p>I have no issues running rolling releases in many production locations.<br />
+</div></div>
+
+
+
+<h2>Install Steps</h2>
+
+
+
+<p>Installation is trivial:</p>
+
+
+
+<ul><li>Burn ISO to CD/DVD/USB stick, or boot ISO via remote management (iDrac, iLo, IPMI)</li><li>Login with <code><em>vyos</em></code>/<code><em>vyos</em></code></li><li>Type <code><em>install image</em></code></li><li>Answer the install steps</li><li>Reboot and remove installation media</li></ul>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#cc8700;border-radius:3px"><div class="su-box-title" style="background-color:#ffba00;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Installation Gotchas</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<ul>
+<li> The installer ISO is a fully functional VyOS image.  That means if you skip the <em>install image</em> step, you can configure the system, and it will work as intended&#8230; until you reboot.  Don&#8217;t be me.  Make sure to install if you want a permanent installation.
+<li> Some systems that lack a serial port get stuck on a black screen on the installer ISO.  The simple fix is to edit the grub boot option line and remove the <em>console=ttyS0,115200</em> option from the kernel boot arguments.  Then just boot with <em>CTRL-X</em> as directed.
+</ul>
+</div></div>
+
+
+
+<figure class="wp-block-image size-large"><img width="720" height="404" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-2.png" alt="" class="wp-image-609" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-2.png 720w, https://blog.kroy.io/wp-content/uploads/2020/04/image-2-300x168.png 300w" sizes="(max-width: 720px) 100vw, 720px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img width="726" height="400" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-1.png" alt="" class="wp-image-608" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-1.png 726w, https://blog.kroy.io/wp-content/uploads/2020/04/image-1-300x165.png 300w" sizes="(max-width: 726px) 100vw, 726px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Basic Configuration</h1>
+
+
+
+<p>Once installed, you&#8217;ll be staring at the login screen.  Login with <code>vyos</code> and the password you set up during install:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="723" height="408" src="https://blog.kroy.io/wp-content/uploads/2020/04/image.png" alt="" class="wp-image-607" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image.png 723w, https://blog.kroy.io/wp-content/uploads/2020/04/image-300x169.png 300w" sizes="(max-width: 723px) 100vw, 723px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Decision Time!</h3>
+
+
+
+<p>Before you go any further, you need to make a decision.  You need to pick out the subnet (or later subnets) where your network will live.  Or, if you are converting over your existing network, just reuse it.</p>
+
+
+
+<p>These should be <a href="https://en.wikipedia.org/wiki/Private_network">RFC1918 addresses</a>.  You generally want a /24, which is 254 usable addresses.</p>
+
+
+
+<p>So, there are three main groups of these private addresses you can choose from:</p>
+
+
+
+<ul><li><code>10.X.Y.1-254</code>, where <code>X</code> and <code>Y</code> are any number between 0 and 255.  For the last number, 0 would be your &#8220;network&#8221; address, and 255 would be your broadcast address.  You could then assign all your hosts to 1-254.</li><li><code>172.X.Y.1-254</code>, in this case <code>X</code> would be between 16 and 31, and <code>Y</code> could be 0 to 255. </li><li><code>192.168.X.1-254</code>, where <code>X</code> is between 0 and 255.  </li></ul>
+
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Subnetting Pro-tips</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<p>Many routers around the world off-the-shelf use a subnet like 10.0.0.0/24 or 192.168.0.0/24.</p>
+<p>
+While you can use these subnets, future-you will hate yourself if you ever want to access your network remotely or access other networks when both sides are using the same subnet.
+</p>
+<p>
+I would highly recommend:
+<ul>
+ 	<li>Choose a subnet away from the norm.  For example, 10.32.47.0/24.</li>
+ 	<li>If you want to plan ahead and are planning to break things out on VLANs, use a subnet like 10.32.X.0/24.  That way, in the future, X can represent your VLAN number, and you can do a summary route like 10.32.0.0/16.  I&#8217;ll be showing some examples of where this can be used later on in this post.</ul>
+</p>
+</div></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Configuring the LAN and Remote access</h3>
+
+
+
+<p>After the subnet is chosen, the first step is to get the router on the LAN and accessible via SSH.  This makes it much easier to configure, as you are no longer tethered to a keyboard/monitor, VM console, can copy/paste, etc.  </p>
+
+
+
+<h4>LAN IP</h4>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter configure mode</li><li>Add address to the correct interface</li><li>Commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The first step is to enter configure mode.  This allows you to make changes to the system configuration.  Type <code>configure</code>.  VyOS also supports shortcuts and tab completion, so typing <code>conf</code> or <code>conf&lt;TAB&gt;</code> will do the same thing.</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="336" height="135" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-5.png" alt="" class="wp-image-626" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-5.png 336w, https://blog.kroy.io/wp-content/uploads/2020/04/image-5-300x121.png 300w" sizes="(max-width: 336px) 100vw, 336px" /></figure>
+
+
+
+<p>The prompt will change to include <code>#</code>, and the <code>[edit]</code> line will appear to designate that you are in configure mode.</p>
+
+
+
+<p>Next, you need to add your LAN IP.  You can check your interfaces by typing <code>run show interfaces</code>.  This tells VyOS to show all the interfaces in operational mode (the mode you were in before you typed <code>conf</code>).</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-4.png" alt="" class="wp-image-625" width="580" height="98" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-4.png 600w, https://blog.kroy.io/wp-content/uploads/2020/04/image-4-300x51.png 300w" sizes="(max-width: 580px) 100vw, 580px" /></figure>
+
+
+
+<p>In my case, <code>eth1</code> is attached to my LAN here.  I&#8217;m going to use the subnet from above, <code>10.32.0.0/24</code>.  I prefer to use <code>.1</code> for my routers, but you can use any IP in that range.</p>
+
+
+
+<p>There are two methods to assign it once in <code>conf</code> mode.  Either with the full path, or by drilling-down.</p>
+
+
+
+<p>Full path:</p>
+
+
+
+<pre class="wp-block-code"><code>configure
+set interfaces ethernet eth1 address 10.32.0.1/24
+set interfaces ethernet eth1 description LAN
+commit
+save</code></pre>
+
+
+
+<p>Drill down:</p>
+
+
+
+<pre class="wp-block-code"><code>configure
+edit interfaces ethernet eth1
+set address 10.32.0.1/24
+set description LAN
+commit
+save</code></pre>
+
+
+
+<p>Committing makes the configuration active, and saving saves it to disk so it will persist on a reboot.</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="225" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-18-1024x225.png" alt="" class="wp-image-657" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-18-1024x225.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-300x66.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-768x169.png 768w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-1536x337.png 1536w, https://blog.kroy.io/wp-content/uploads/2020/04/image-18-2048x450.png 2048w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Or:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="293" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-19-1024x293.png" alt="" class="wp-image-658" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-19-1024x293.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19-300x86.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19-768x220.png 768w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19-1536x439.png 1536w, https://blog.kroy.io/wp-content/uploads/2020/04/image-19.png 1994w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>You can show your work with <code>show interfaces</code> and <code>run show interfaces</code></p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="693" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-20-1024x693.png" alt="" class="wp-image-659" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-20-1024x693.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/04/image-20-300x203.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-20-768x520.png 768w, https://blog.kroy.io/wp-content/uploads/2020/04/image-20.png 1034w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h4>Set up DHCP</h4>
+
+
+
+<p>Now that that router has a LAN IP, it&#8217;s time to connect your laptop/desktop/etc up to it.  </p>
+
+
+
+<p>You can assign it a static IP in the chosen subnet (<code>10.32.0.10/24</code> for example), but I imagine you are also going to want to assign a DHCP range for automatic configuration of clients.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter configure mode</li><li>Set up DHCP ranges</li><li>commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Let&#8217;s talk about the following config.  </p>
+
+
+
+<p>We are going to make two DHCP ranges, and leave some holes.  This would allow us to assign the IP addresses between <code>.2</code> and <code>.49</code> for static or other uses, as well as <code>.126-199</code> and <code>.251-254</code>.</p>
+
+
+
+<p>While this is a non-standard usage, it demonstrates the capabilities. Many people would just have a single range. </p>
+
+
+
+<pre class="wp-block-code"><code>set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 0 start 10.32.0.50
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 0 stop 10.32.0.125
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 1 start 10.32.0.200
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 range 1 stop 10.32.0.250</code></pre>
+
+
+
+<p>Some other important config options follow.   </p>
+
+
+
+<p>You want to tell the DHCP server to hand out the router&#8217;s IP address as the default gateway and DNS.  This will make it so (eventually), your LAN devices will have DNS and routing to the Internet:</p>
+
+
+
+<pre class="wp-block-code"><code>set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 dns-server 10.32.0.1
+set service dhcp-server shared-network-name LAN subnet 10.32.0.0/24 default-router 10.32.0.1</code></pre>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#ccaaaa;border-radius:3px"><div class="su-box-title" style="background-color:#ffdddd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">DNS Alert</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<p>This would also be the place to insert something like your pi-hole or active directory DNS server.  In the above example, your pi-hole/ADDNS address or addresses would be where the dns-server option is. </p>
+</div></div>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img src="https://blog.kroy.io/wp-content/uploads/2020/04/image-8.png" alt="" class="wp-image-630" width="580" height="230" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-8.png 781w, https://blog.kroy.io/wp-content/uploads/2020/04/image-8-300x119.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-8-768x305.png 768w" sizes="(max-width: 580px) 100vw, 580px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img width="760" height="208" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-10.png" alt="" class="wp-image-632" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-10.png 760w, https://blog.kroy.io/wp-content/uploads/2020/04/image-10-300x82.png 300w" sizes="(max-width: 760px) 100vw, 760px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>SSH</h4>
+
+
+
+<p>The final step before we can access the router over SSH is to actually enable SSH:</p>
+
+
+
+<pre class="wp-block-code"><code>set service ssh port 22
+commit
+save</code></pre>
+
+
+
+<p>At this point you ought to be able to hook up a LAN client, and verify that you have an IP, gateway, and DNS.  </p>
+
+
+
+<p>This is a fairly stock Debian VM I set up.  As you can see, my IP is in one of my DHCP ranges, and my DNS and default route are the router&#8217;s IP. </p>
+
+
+
+<p>This is on Linux, but the same thing could be confirmed on Windows or MacOS:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="736" height="472" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-16.png" alt="" class="wp-image-640" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-16.png 736w, https://blog.kroy.io/wp-content/uploads/2020/04/image-16-300x192.png 300w" sizes="(max-width: 736px) 100vw, 736px" /></figure>
+
+
+
+<p>From there, you should be able to ssh into the router with the username <code>vyos</code> and password you set up during install:<br></p>
+
+
+
+<figure class="wp-block-image size-large"><img width="541" height="191" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-13.png" alt="" class="wp-image-637" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-13.png 541w, https://blog.kroy.io/wp-content/uploads/2020/04/image-13-300x106.png 300w" sizes="(max-width: 541px) 100vw, 541px" /></figure>
+
+
+
+<p>And typing <code>show configuration</code> (in op mode), should show you the work done so far.  VyOS also comes with a few defaults, like NTP servers configured.</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="414" height="990" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-14.png" alt="" class="wp-image-638" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-14.png 414w, https://blog.kroy.io/wp-content/uploads/2020/04/image-14-125x300.png 125w" sizes="(max-width: 414px) 100vw, 414px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>NAT &amp; DNS</h1>
+
+
+
+<h3>NAT</h3>
+
+
+
+<p>The next important duty for a router and firewall is to be able to NAT.  NAT allows all your private LAN devices to access the Internet.  </p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Information Dump</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+Back when the Internet started, every device had a unique IP address. </p>
+<p>Unfortunately, because of the numbering scheme used, there are only 4.2 billion of these address, at least in IPv4, and the transition to IPv6 is far from complete.</p>
+<p>Because of this, every device on your network needs to be able to &#8220;pretend&#8221; that it is your router to access the Internet.  Your router keeps track of which requests belong to which device.  </p>
+<p>Source NAT is what allows you to do this.</p>
+<p>This is also where the above mentioned &#8220;summary route&#8221; can come into play.  Instead of creating three separate NAT rules for 10.32.1.0/24, 10.32.2.0/24, and 10.32.3.0/24, you can create a single rule for 10.32.0.0/16.<br />
+</div></div>
+
+
+
+<p>For this setup, it&#8217;s important to identify which network interface will eventually be your WAN interface, even though it&#8217;s not configured yet.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>As before, enter configuration mode.</li><li>Set up a source NAT rule to target our LAN or LAN subnets.</li><li>Define the outgoing WAN interface on the rule.</li><li>Set the translation type of the rule to <code>masquerade</code>. </li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The type of NAT we will be using is called <code>SOURCE NAT</code>.  This type of NAT is going to have three components:</p>
+
+
+
+<ul><li>Target all traffic from our LAN or LANs&#8230;</li><li>&#8230; when the traffic is going out to the Internet through this outgoing interface&#8230;</li><li>&#8230; Change the IP address from the LAN IP to the WAN IP</li></ul>
+
+
+
+<p>To do this:</p>
+
+
+
+<pre class="wp-block-code"><code>set nat source rule 100 source address '10.32.0.0/24'
+set nat source rule 100 outbound-interface 'eth0'
+set nat source rule 100 translation address masquerade
+commit
+save</code></pre>
+
+
+
+<p>In the above example, the <code>100</code> is an arbitrary number (between 1-9999).  The <code>eth0</code> is my eventual WAN interface.  <code>masquerade</code> translates the internal LAN IP to your public WAN IP.  </p>
+
+
+
+<p></p>
+
+
+
+<figure class="wp-block-image size-large"><img width="962" height="768" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-21.png" alt="" class="wp-image-660" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-21.png 962w, https://blog.kroy.io/wp-content/uploads/2020/04/image-21-300x240.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-21-768x613.png 768w" sizes="(max-width: 962px) 100vw, 962px" /></figure>
+
+
+
+<p>Once we set up our WAN interface, we&#8217;ll be able to type <code>show nat source rules</code> in op mode, or <code>run show nat source rules</code> in conf mode to run the op mode command, it will be clear what&#8217;s happening.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>DNS</h3>
+
+
+
+<p>The next step is to set up our VyOS instance as for DNS.  This will allow you to use local DNS and caching instead of your ISP&#8217;s, but also eventually will allow you run custom DNS and hosts. </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter config mode</li><li>Set the DNS Listen Address</li><li>Set the subnets we are allowing from</li><li>Set the cache size to 0</li><li>commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<pre class="wp-block-code"><code>set service dns forwarding listen-address '10.32.0.1'
+set service dns forwarding allow-from '10.32.0.0/24'
+set service dns forwarding cache-size '0'
+commit
+save</code></pre>
+
+
+
+<p>As mentioned, this accomplishes three things.  </p>
+
+
+
+<ul><li>It tells VyOS to listen for DNS requests on its LAN IP, <code>10.32.0.1</code>.  </li><li>It limits requests from your LAN subnet.  </li><li>Finally, it sets the cache size to 0.  This is good to start out with to make sure everything is working, but later you can bump it up to speed up multiple requests for the same sites. </li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#ccaaaa;border-radius:3px"><div class="su-box-title" style="background-color:#ffdddd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Opportunity Alert</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+This is another opportunity to use the &#8220;summary&#8221; route that I&#8217;ve mentioned a few times.  </p>
+<p>Instead of allowing &#8220;10.32.0.0/24&#8221;, you would allow &#8220;10.32.0.0/16&#8221;.  This would ensure that as you add VLANs and subnets, your DNS will just work without adding a long list of /24s.<br />
+</div></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<figure class="wp-block-image size-large"><img width="508" height="212" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-22.png" alt="" class="wp-image-678" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-22.png 508w, https://blog.kroy.io/wp-content/uploads/2020/04/image-22-300x125.png 300w" sizes="(max-width: 508px) 100vw, 508px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>DNS Forwarding</h4>
+
+
+
+<p>There is one more consideration to be made.  As configured, your DNS server will run in &#8220;recursor&#8221; mode.  This means it will take responsibility for fully resolving DNS on its own.  This may be a bad thing for a number of reasons:</p>
+
+
+
+<ul><li>It leaks your IP to potential undesirables.  </li><li>It&#8217;s almost always slower, as you don&#8217;t get to benefit from the caches of a large service like CloudFlare or Google.  </li></ul>
+
+
+
+<p>It&#8217;s quite simple to set up in forwarding mode, meaning when you make a DNS request, you end up asking an upstream resolver.  </p>
+
+
+
+<p>In the following example, we&#8217;ll be using CloudFlare and Google:</p>
+
+
+
+<pre class="wp-block-code"><code>set service dns forwarding name-server 1.1.1.1
+set service dns forwarding name-server 1.0.0.1
+set service dns forwarding name-server 8.8.8.8
+set service dns forwarding name-server 8.8.4.4
+commit
+save</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img width="564" height="399" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-23.png" alt="" class="wp-image-680" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-23.png 564w, https://blog.kroy.io/wp-content/uploads/2020/04/image-23-300x212.png 300w" sizes="(max-width: 564px) 100vw, 564px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h4>System DNS</h4>
+
+
+
+<p>One final step is to set the DNS for VyOS itself.  Everything we&#8217;ve done so far has just set up VyOS to be a DNS server for your clients.</p>
+
+
+
+<p>This will be the DNS that is used, for example, when you do a VyOS update, ping or traceroute from VyOS, etc.</p>
+
+
+
+<p>The easiest thing to do if you&#8217;ve been following this guide, is just to use the DNS server you set up above:</p>
+
+
+
+<pre class="wp-block-code"><code>set system name-server 10.32.0.1
+commit
+save</code></pre>
+
+
+
+<p>This is also another spot where if you wanted to use Google, CloudFlare, or AD-DNS, you could plug in that IP:</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img src="https://blog.kroy.io/wp-content/uploads/2020/05/image-13.png" alt="" class="wp-image-779" width="760" height="276" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-13.png 760w, https://blog.kroy.io/wp-content/uploads/2020/05/image-13-300x109.png 300w" sizes="(max-width: 760px) 100vw, 760px" /></figure>
+
+
+
+<p>Alternatively, you call tell VyOS to use the DNS servers that it received from your WAN DHCP server with:</p>
+
+
+
+<pre class="wp-block-code"><code>set system name-servers-dhcp eth0</code></pre>
+
+
+
+<p></p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Firewall</h1>
+
+
+
+<p>If you&#8217;ve made it this far, congrats!  We are almost there! </p>
+
+
+
+<p>This section will cover the creation of a zone-based firewall, which is far superior to the default method of attaching firewalls to interfaces.  </p>
+
+
+
+<p>The reason it is superior is simple.  It&#8217;s a bit more hassle to set up, but it&#8217;s far easier to manage on an ongoing basis, plus, you start thinking about firewalling as flows of information from interface to interface.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Enter configuration mode</li><li>Create a firewall to allow all LAN traffic.</li><li>Create firewall to allow all LAN traffic to access VyOS itself.</li><li>Create a firewall to protect the router itself from WAN.</li><li>Create a firewall to protect LAN devices from WAN.</li><li>Commit</li><li>Create LOCAL/LAN zones.</li><li>Assign appropriate interfaces to zones.</li><li>Commit and save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>For as complex as firewalling seems, it&#8217;s actually pretty simple when you break it down.  </p>
+
+
+
+<p>A firewall tracks connection &#8220;states&#8221; to determine what is and is not allowed.  This is where packets are originating and going to, ports involved, types of traffic like TCP/UDP/ICMP, and more.  </p>
+
+
+
+<p>We are going to build a very simple firewall that assumes that we want to block everything externally, and allow everything from LAN.</p>
+
+
+
+<p>So let&#8217;s dig right into it.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>LAN</h2>
+
+
+
+<p>First, create a firewall that will allow our LAN to access everything. This is a setup that would mimic what most consumer routers do:</p>
+
+
+
+<pre class="wp-block-code"><code>conf
+set firewall name LAN-WAN default-action accept
+set firewall name LAN-LOCAL default-action accept
+commit
+save</code></pre>
+
+
+
+<p>The <code>LAN-WAN</code> and the <code>LAN-LOCAL</code> can be arbitrarily named anything.  I use this naming scheme because as mentioned above, it&#8217;s better to think about firewalls as controlling the flow of information through the router, and these names are self-documenting.</p>
+
+
+
+<p><code>LOCAL</code> is a specific VyOS designation that means &#8220;this router&#8221;.  When you are attaching the firewall in the zones, LOCAL will be what you use to control traffic destined to the firewall itself.  </p>
+
+
+
+<p>As should be obvious, we are just allowing everything.  But you can set whatever rules you wanted.  <code>LAN-WAN</code> would generally remain pretty open as it would be uncommon to block your own access to the Internet, but <code>LAN-LOCAL</code> might contain rules to maybe allow only specific devices access to manage the VyOS router.</p>
+
+
+
+<p>Also note that we are just creating the firewalls here.  They don&#8217;t become active until you attach them to the zones.</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="894" height="376" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-24.png" alt="" class="wp-image-740" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-24.png 894w, https://blog.kroy.io/wp-content/uploads/2020/04/image-24-300x126.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-24-768x323.png 768w" sizes="(max-width: 894px) 100vw, 894px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>LOCAL</h2>
+
+
+
+<p>As mentioned, the <code>LOCAL</code> zone is traffic destined for the VyOS router itself.  </p>
+
+
+
+<p>In most cases, it will have a similar ruleset to the LAN one above, as most people want their router to have full access to the Internet and their LAN devices:</p>
+
+
+
+<pre class="wp-block-code"><code>conf
+set firewall name LOCAL-WAN default-action accept
+set firewall name LOCAL-LAN default-action accept
+commit
+save</code></pre>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Food for Thought</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+<p>While I might be getting a little ahead of myself here, it&#8217;s important to note that you could use the same firewall instead of creating four different firewalls as we&#8217;ve done here.  The firewalls are just attached to interfaces or zones by names, so there&#8217;s nothing really stopping you from creating a single firewall and attaching it to four different places.</p>
+<p>As a bit of a pro-tip though, I would recommend not doing this.  Eventually you&#8217;ll want them broken out, and it&#8217;s far more of a hassle to do it later than to just do it during initial setup.<br />
+</div></div>
+
+
+
+<figure class="wp-block-image size-large"><img width="988" height="280" src="https://blog.kroy.io/wp-content/uploads/2020/04/image-26.png" alt="" class="wp-image-743" srcset="https://blog.kroy.io/wp-content/uploads/2020/04/image-26.png 988w, https://blog.kroy.io/wp-content/uploads/2020/04/image-26-300x85.png 300w, https://blog.kroy.io/wp-content/uploads/2020/04/image-26-768x218.png 768w" sizes="(max-width: 988px) 100vw, 988px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>WAN</h2>
+
+
+
+<p>The <code>WAN</code> zone is where we are actually going to do most of our work.  </p>
+
+
+
+<p>The basic goal here will be two things.  To block all access to the router itself, and to provide basic setup and template for future things like port forwarding to our LAN.  </p>
+
+
+
+<p>When you start moving data to and from the Internet, that&#8217;s when you need to start worrying about the state tracking I mentioned before.  </p>
+
+
+
+<p>For both LOCAL and LAN traffic, we&#8217;ll be setting up what&#8217;s known as a &#8220;stateful firewall&#8221;.  </p>
+
+
+
+<p>In stateful firewalling, there are three main states to worry about:</p>
+
+
+
+<ul><li>New &#8211; Traffic in a <code>NEW</code> state is the first packet from a destination to a source.  Allowing or denying this packet ultimately determines whether the traffic will be allowed.</li><li>Established &#8211; Once traffic from <code>NEW</code> has been allowed, the subsequent packets are marked as <code>ESTABLISHED</code>.  This is essentially traffic that has already been allowed by other rules.  This is another basic requirement for a working stateful firewall.</li><li>Related &#8211; This means that this is traffic that is somehow related to already allowed traffic.  Also required.</li></ul>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">A note about rule numbers</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+As with the NAT rule numbers, the rule numbers you use for firewall are arbitrary.</p>
+<p>With that said, it doesn&#8217;t mean you shouldn&#8217;t plan ahead a bit:</p>
+<ul>
+<li>Rules are processed numerically, so for fastest firewalling and routing, you definitely want your ESTABLISHED/RELATED rule at the top.  That ensures that existing traffic, which is going to be the bulk of the traffic your firewall processes, only has to look at a single rule.</li>
+<li>Leave yourself some gaps for future rules.  You&#8217;ll appreciate it later if you want to insert a new rule before an existing one, though you can always rename and move around.</li>
+</div></div>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>WAN-LOCAL</h3>
+
+
+
+<p>As mentioned, the <code>WAN-LOCAL</code> firewall is traffic destined for the VyOS router itself.  In the future, this will be where you allow traffic, say to your WireGuard port for VPN.</p>
+
+
+
+<p>The first rule we want to build is to allow all <code>ESTABLISHED</code> and <code>RELATED</code> traffic.  So we&#8217;ll:</p>
+
+
+
+<ul><li>Create the WAN-LOCAL firewall.  </li><li>Set the default policy on the firewall to drop everything.  </li><li>Create a rule to accept specific traffic for rule.</li><li>Set the match for the rule to our established and related states.</li><li>Set a description for ease of use later.</li></ul>
+
+
+
+<p></p>
+
+
+
+<pre class="wp-block-code"><code>set firewall name WAN-LOCAL default-action drop
+set firewall name WAN-LOCAL rule 5 action accept
+set firewall name WAN-LOCAL rule 5 state established enable
+set firewall name WAN-LOCAL rule 5 state related enable
+set firewall name WAN-LOCAL rule 5 description "Allow EST/Related Traffic"
+commit
+save</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="660" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-1024x660.png" alt="" class="wp-image-753" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-1024x660.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-300x193.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-768x495.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image.png 1232w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The next rule we want on is to allow ICMP.  Many people like to block this, but not me.  I&#8217;ll defer to <a href="http://shouldiblockicmp.com/">ShouldIBlockICMP.com</a> on this.</p>
+
+
+
+<ul><li>Create a new rule matching ICMP</li><li>Match the state of <code>NEW</code>. This is what actually matches the unknown traffic to allow</li><li>Allow the traffic</li><li>Commit and save</li></ul>
+
+
+
+<pre class="wp-block-code"><code>set firewall name WAN-LOCAL rule 20 protocol icmp
+set firewall name WAN-LOCAL rule 20 state new enable
+set firewall name WAN-LOCAL rule 20 action accept
+commit
+save</code></pre>
+
+
+
+<p>And you can see that the firewall is created (but still not attached to any interfaces), by doing the <code>op mode</code> command <code>show interfaces</code>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="900" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-1-1024x900.png" alt="" class="wp-image-759" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-1-1024x900.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-1-300x264.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-1-768x675.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-1.png 1176w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3>WAN-LAN</h3>
+
+
+
+<p>For now, the <code>WAN-LAN</code> firewall is identical to the <code>WAN-LOCAL</code>.  In the future, this is where you will allow your port forward rules, or other traffic you want to send to your LAN devices, so it&#8217;s helpful to break it out beforehand.</p>
+
+
+
+<p>As before, we create the firewall, set it to drop by default, allowed EST/RELATED, and allow ICMP, which won&#8217;t do anything now, but could be helpful in the future:</p>
+
+
+
+<pre class="wp-block-code"><code>set firewall name WAN-LAN default-action drop
+set firewall name WAN-LAN rule 5 action accept
+set firewall name WAN-LAN rule 5 state established enable
+set firewall name WAN-LAN rule 5 state related enable
+set firewall name WAN-LAN rule 5 description "Allow EST/Related Traffic"
+set firewall name WAN-LAN rule 20 protocol icmp
+set firewall name WAN-LAN rule 20 state new enable
+set firewall name WAN-LAN rule 20 action accept</code></pre>
+
+
+
+<p>Don&#8217;t forget you can dive down into levels as in the following example:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1002" height="672" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-2.png" alt="" class="wp-image-760" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-2.png 1002w, https://blog.kroy.io/wp-content/uploads/2020/05/image-2-300x201.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-2-768x515.png 768w" sizes="(max-width: 1002px) 100vw, 1002px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Finally!  We have our firewalls set up and ready to deploy.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>WAN and Zones</h1>
+
+
+
+<p>If you&#8217;ve been paying attention, we still don&#8217;t have one <em>VERY</em> important piece to this puzzle. We still don&#8217;t have WAN access!</p>
+
+
+
+<p>Of course I did this to protect your router during the initial setup phase.  Until you have firewalls ready to deploy, you probably don&#8217;t want to be kicking your brand new VyOS install out on the open Internet.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Zones</h2>
+
+
+
+<p>Zones are easily one of my favorite parts of VyOS, and something that in my opinion, puts it lightyears ahead of other firewall solutions.</p>
+
+
+
+<p>Especially as your firewalling needs grow, zones just make it so <em>EASY</em>.  As I sort of touched on, zones are a bit more work initially, but save you <em>MUCH</em> more time in the future.</p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#ccaaaa;border-radius:3px"><div class="su-box-title" style="background-color:#ffdddd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Lockout Alert</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+Be careful and pay attention here.  </p>
+<p>If you mistype something and are still configuring VyOS over SSH, you can potentially lock yourself out.<br />
+</div></div>
+
+
+
+<p>The naming scheme as I&#8217;ve outlined above should be helpful here when creating our firewall zones.  It basically says <code>FROMZONE-&gt;TOZONE</code></p>
+
+
+
+<p>So let&#8217;s run through the whole thing.  </p>
+
+
+
+<p>Goals:</p>
+
+
+
+<ul><li>Set the default action for the zone.  This should always be drop to cover yourself in case you miss something.</li><li>Apply the &#8220;For traffic from X zone to current zone, attach Y firewall&#8221;</li><li>Add the interfaces that are part of this zone</li><li>Repeat for all zones</li><li>commit</li><li>save</li></ul>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So what does this look like for the LAN:</p>
+
+
+
+<ul><li>In this example we are working on the LAN zone</li><li>We drop everything by default</li><li>We assign the <code>WAN-LAN</code> firewall to traffic from any interface in the below <code>WAN</code> zone</li><li>Similarly for the <code>LOCAL-LAN</code>.  This is traffic from the VyOS instance itself to LAN hosts.</li><li>We put <code>eth1</code> in our LAN zone.</li></ul>
+
+
+
+<pre class="wp-block-code"><code>set zone-policy zone LAN default-action drop
+set zone-policy zone LAN from WAN firewall name WAN-LAN
+set zone-policy zone LAN from LOCAL firewall name LOCAL-LAN
+set zone-policy zone LAN interface eth1
+
+
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Repeat all steps for the <code>LOCAL</code> zone.  The major difference here is the <code>local-zone</code> designation.  As I&#8217;ve mentioned a few times, <code>LOCAL</code> is a special designation that means &#8220;this firewall&#8221;, so you don&#8217;t attach interfaces:</p>
+
+
+
+<pre class="wp-block-code"><code>set zone-policy zone LOCAL local-zone
+set zone-policy zone LOCAL from LAN firewall name LAN-LOCAL
+set zone-policy zone LOCAL from WAN firewall name WAN-LOCAL
+set zone-policy zone LOCAL default-action drop
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Finally, the WAN zone is basically the same as the LAN zone. The only major change you should notice is that I just changed the firewall names and interface name:</p>
+
+
+
+<pre class="wp-block-code"><code>set zone-policy zone WAN from LAN firewall name LAN-WAN
+set zone-policy zone WAN from LOCAL firewall name LOCAL-WAN
+set zone-policy zone WAN interface eth0
+set zone-policy zone WAN default-action drop</code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="676" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-4-1024x676.png" alt="" class="wp-image-766" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-4-1024x676.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-4-300x198.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-4-768x507.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-4.png 1176w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>If you were like me, you might have tried committing between steps.  Unfortunately, if you don&#8217;t set up everything at once, you&#8217;ll quickly discover that zones are interdependent on one another.  This happens because I&#8217;ve created the LAN zone, but the referenced WAN and LOCAL zones don&#8217;t exist yet.</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="528" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-3-1024x528.png" alt="" class="wp-image-765" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-3-1024x528.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-3-300x155.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-3-768x396.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-3.png 1168w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Show your work</h3>
+
+
+
+<p>Hopefully, if you&#8217;ve done everything correctly, you should see all your zone policies set up under the <code>op mode</code> command <code>run show zone-policy</code>.  This view should make it obvious which traffic is flowing through what firewall:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="838" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-6-838x1024.png" alt="" class="wp-image-768" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-6-838x1024.png 838w, https://blog.kroy.io/wp-content/uploads/2020/05/image-6-245x300.png 245w, https://blog.kroy.io/wp-content/uploads/2020/05/image-6-768x939.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-6.png 872w" sizes="(max-width: 838px) 100vw, 838px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>WAN Setup</h2>
+
+
+
+<p>Finally, here we are.  </p>
+
+
+
+<p>Setting up your WAN. If you&#8217;ve made it this far, congrats.  You are basically 1 or 2 commands away from having a working router and firewall!</p>
+
+
+
+<p>There are multiple ways to get a WAN address.  For simplicity&#8217;s sake, I&#8217;ll just cover two of them here, static and DHCP assignment.  For something like PPPoE, you&#8217;ll need a few more steps.</p>
+
+
+
+<h3>DHCP Assignment</h3>
+
+
+
+<p>DHCP is when your router asks your ISP&#8217;s servers for what it should use for its IP address and routing information.  This is accomplished with one simple command (well, four if you add a description to the interface, and commit and save):</p>
+
+
+
+<pre class="wp-block-code"><code>set interfaces ethernet eth0 address dhcp
+set interfaces ethernet eth0 description WAN
+commit
+save</code></pre>
+
+
+
+<p>You can verify that the setup is complete with the <code>op mode</code> commands <code>run show interfaces</code> and <code>run show ip route</code>.  (I have some debug variables set, so ignore the extra output:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="988" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-8-988x1024.png" alt="" class="wp-image-773" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-8-988x1024.png 988w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8-290x300.png 290w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8-768x796.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8-1482x1536.png 1482w, https://blog.kroy.io/wp-content/uploads/2020/05/image-8.png 1490w" sizes="(max-width: 988px) 100vw, 988px" /></figure>
+
+
+
+<p>In the above output, <code>10.21.21.57</code> is the IP address I was assigned via DHCP.  The <code>show ip route</code> verifies that I have a default route.</p>
+
+
+<div class="su-box su-box-style-default" id="" style="border-color:#aaccaa;border-radius:3px"><div class="su-box-title" style="background-color:#ddffdd;color:#000000;border-top-left-radius:1px;border-top-right-radius:1px">Information Dump</div><div class="su-box-content su-u-clearfix su-u-trim" style="border-bottom-left-radius:1px;border-bottom-right-radius:1px">
+Your &#8220;gateway&#8221; or default route, is the router your devices ask when they encounter an IP address that they don&#8217;t know how to get to.</p>
+<p>In the networking world, this is represented by <em>0.0.0.0/0</em>, which is a shortcut for <strong><em>the entire Internet</em></strong></p>
+<p>So in the above example, this VyOS knows how to talk directly to anything in the 10.21.21.0/24 or 10.32.0.0/24 subnets because they are directly connected.  Anything outside of that, it needs to ask 10.21.21.1 for a route to it.<br />
+</div></div>
+
+
+
+<h3>Static IP</h3>
+
+
+
+<p>Static IPs just skip the automatic configuration.  It&#8217;s up to your ISP how this is configured, but usually it&#8217;s an extra step, manually applying your default route.</p>
+
+
+
+<p>So to duplicate my above DHCP configuration:</p>
+
+
+
+<pre class="wp-block-code"><code>set interfaces ethernet eth0 address 10.21.21.57/24
+set protocols static route 0.0.0.0/0 next-hop 10.21.21.1
+commit
+save</code></pre>
+
+
+
+<p>As you can see in the following screenshot, I forgot the exact format, so I hit my <code>&lt;TAB&gt;</code> button to get hints:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="881" height="1024" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-12-881x1024.png" alt="" class="wp-image-778" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-12-881x1024.png 881w, https://blog.kroy.io/wp-content/uploads/2020/05/image-12-258x300.png 258w, https://blog.kroy.io/wp-content/uploads/2020/05/image-12-768x893.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-12.png 1106w" sizes="(max-width: 881px) 100vw, 881px" /></figure>
+
+
+
+<h3>Check your work</h3>
+
+
+
+<p>Assuming nothing has gone wrong, you should be able to verify everything with the <code>op mode</code> command <code>ping</code>.  So let&#8217;s hit Google with 4 pings:</p>
+
+
+
+<p><code>run ping www.google.com count 4</code></p>
+
+
+
+<p>If all goes well, you should see a response:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="264" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-9-1024x264.png" alt="" class="wp-image-774" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-9-1024x264.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-9-300x77.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-9-768x198.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-9.png 1290w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1>Conclusion</h1>
+
+
+
+<p>So wow, this post turned into a bit of a novel.  Hopefully if you&#8217;ve made it this far, your LAN clients now have accessible Internet. From a client, you should be able to ping google:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="402" src="https://blog.kroy.io/wp-content/uploads/2020/05/image-14-1024x402.png" alt="" class="wp-image-783" srcset="https://blog.kroy.io/wp-content/uploads/2020/05/image-14-1024x402.png 1024w, https://blog.kroy.io/wp-content/uploads/2020/05/image-14-300x118.png 300w, https://blog.kroy.io/wp-content/uploads/2020/05/image-14-768x302.png 768w, https://blog.kroy.io/wp-content/uploads/2020/05/image-14.png 1416w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Obviously there are a lot of basic topics I haven&#8217;t covered yet.  But I wanted to lay out and explain the basic setup first.  </p>
+
+
+
+<p>Future editions will feature:</p>
+
+
+
+<ul><li>Port Forwarding.</li><li>Hairpin NAT (this goes hand-in-hand with the first).</li><li>VPNs, especially WireGuard</li><li>How routing works when you have VPNs.</li><li>Some potential hardening tactics.</li><li>Other advanced topics like BGP/OSPF.</li></ul>
+
+
+
+<p>Cheers!</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">593</post-id>	</item>
+	</channel>
+</rss>

@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>bgp &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/tag/bgp/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Mon, 07 Dec 2020 23:57:39 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>bgp &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>VyOS from Scratch &#8211; BGP Announcement</title>
+		<link>https://blog.kroy.io/2020/12/07/vyos-from-scratch-bgp-announcements/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=vyos-from-scratch-bgp-announcements</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Mon, 07 Dec 2020 15:45:00 +0000</pubDate>
+				<category><![CDATA[Routing]]></category>
+		<category><![CDATA[VyOS]]></category>
+		<category><![CDATA[bgp]]></category>
+		<guid isPermaLink="false">https://blog.kroy.io/?p=1012</guid>
+
+					<description><![CDATA[Something that comes up quite often is &#8220;how do I announce subnets&#8221;. This is when you own at least a /24 IPv4 or /48 in IPv6 (the minimum subnet sizes&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>Something that comes up quite often is &#8220;how do I announce subnets&#8221;.  This is when you own at least a /24 IPv4 or /48 in IPv6 (the minimum subnet sizes that can be announced), and want to make it publicly accessible to the rest of the world.  In this edition, we&#8217;ll walk through the logistics of subnet announcement on a basic level.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Introduction</h2>
+
+
+
+<p>On the Internet, you know you&#8217;ve made it when you have a subnet to announce.  </p>
+
+
+
+<p>Either you paid an exorbitant  sum to buy one yourself, or are leasing/borrowing a subnet from a LIR/RIR (local or regional  Internet Registry), having your own subnet in your homelab is definitely a bit of a status symbol.  </p>
+
+
+
+<p>Of course, once you have the subnet, what do you do with it?  You announce it with BGP of course!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Announcement</h2>
+
+
+
+<p>To put simply, announcement is you telling the world where and how to get to your subnet.  Whether you have an IPv4 subnet, IPv6, or both, the procedure is the identical.</p>
+
+
+
+<p>If you&#8217;ve got some sort of business-class Internet, you just need to send your ISP the LOA (letter of authorization from your LIR/RIR), and they should begin announcing for you. </p>
+
+
+
+<p>Now if you are just a regular homelab user with a conventional residential ISP, congrats!  You are just like me.  </p>
+
+
+
+<p>A residential ISP won&#8217;t even talk to you, so you need to trackdown a VPS that will do your announcing for you.  </p>
+
+
+
+<p>I prefer <a rel="noreferrer noopener" href="https://www.vultr.com/?ref=7273647" target="_blank">Vultr</a> (this is a referral link or click <a rel="noreferrer noopener" href="https://vultr.com/" target="_blank">HERE</a> for non-referral link).  For $5 a month, you can get a VPS that will have no problem announcing one or many subnets.</p>
+
+
+
+<p>I&#8217;m also just going over basics here, as there are TONS of things that go into this to complicate it further.  As mentioned, announcing IPv6 subnets is identical to IPv4.  And different LIR/RIRs have different rules about what you are required to do with the subnet, like multi-homing.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>VPS Setup</h2>
+
+
+
+<p>I don&#8217;t want to waste TOO much time on the non-BGPy parts of VPS.  But if you read my <a href="https://blog.kroy.io/2020/05/04/vyos-from-scratch-edition-1/" data-type="post" data-id="593" target="_blank" rel="noreferrer noopener">first article</a> on this, the basic setup is straightforward:</p>
+
+
+
+<pre class="wp-block-code"><code>firewall {
+    all-ping enable
+    broadcast-ping disable
+    config-trap disable
+    ipv6-receive-redirects disable
+    ipv6-src-route disable
+    ip-src-route disable
+    log-martians enable
+    name WAN-LOCAL {
+        rule 10 {
+            action accept
+            destination {
+                port ssh
+            }
+            protocol tcp
+            source {
+                address homeIP/32
+            }
+        }
+        rule 20 {
+            action drop
+        }
+    }
+    receive-redirects disable
+    send-redirects enable
+    source-validation disable
+    state-policy {
+        established {
+            action accept
+        }
+        invalid {
+            action drop
+        }
+        related {
+            action accept
+        }
+    }
+    syn-cookies enable
+    twa-hazards-protection disable
+}
+interfaces {
+    ethernet eth0 {
+        address VultrPublicIP/23
+        firewall {
+            local {
+                name WAN-LOCAL
+            }
+        }
+    }
+    loopback lo {
+    }
+    tunnel tun0 {
+        address 172.27.114.1/30
+        encapsulation gre
+        local-ip VultrPublicIP
+        remote-ip HomeIP
+    } 
+}
+
+protocols {
+    static {
+        route 0.0.0.0/0 {
+            next-hop VultrGateway {
+            }
+        }
+    }
+}
+service {
+    ssh {
+        disable-password-authentication
+        port 22
+    }
+}
+
+
+system {
+    config-management {
+        commit-revisions 100
+    }
+    host-name vyos
+    login {
+        user kroy {
+            authentication {
+                public-keys kroy@home {
+                    key ****************
+                    type ssh-ed25519
+                }
+            }
+        }
+    }
+    name-server 1.1.1.1
+    name-server 1.0.0.1
+    ntp {
+        server 0.pool.ntp.org {
+        }
+        server 1.pool.ntp.org {
+        }
+        server 2.pool.ntp.org {
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level info
+            }
+            facility protocols {
+                level debug
+            }
+        }
+    }
+}
+</code></pre>
+
+
+
+<p>Most of this should be fairly straightforward:</p>
+
+
+
+<ol><li>A firewall to drop all packets, except for SSH from my home IP</li><li>My public ethernet setup for the VPS</li><li>A simple GRE tunnel to my Home IP.  This is where the BGP session is going to transit to actually contact the public servers on my homelab.</li><li>A static route to define the default route for the VPS.  Not strictly necessary since I&#8217;ll be BGP peering with Vultr, but it makes it easier to configure everything over SSH.</li><li>Making SSH accessible on port 22 and forcing key-auth.</li><li>Some system-y setup things.  System name-servers, key-based ssh auth, etc.</li></ol>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>BGP</h3>
+
+
+
+<p>The next step is to look up your BGP on Vultr.  After Vultr has accepted your LOA, you&#8217;ll have a new BGP tab in your VPS settings</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="895" height="528" src="https://blog.kroy.io/wp-content/uploads/2020/12/image-1.png" alt="" class="wp-image-1014" srcset="https://blog.kroy.io/wp-content/uploads/2020/12/image-1.png 895w, https://blog.kroy.io/wp-content/uploads/2020/12/image-1-300x177.png 300w, https://blog.kroy.io/wp-content/uploads/2020/12/image-1-768x453.png 768w" sizes="(max-width: 895px) 100vw, 895px" /><figcaption>vultr bgp config</figcaption></figure>
+
+
+
+<p>These are basically all the things you&#8217;ll need to know to hook up a BGP session to Vultr.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<blockquote class="wp-block-quote"><p>Throughout this document, I&#8217;m going to pretend to advertise 10.100.0.0/22, even though that&#8217;s a private subnet per RFC1918 and could never be advertised.</p><p>This is all for example and WILL NOT WORK if you try and do this for real.</p></blockquote>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>So what does this look like on the VPS in the <code>protocols bgp</code> config?  </p>
+
+
+
+<p>The numbers like 64537 are what are known as ASNs, or Autonomous System Numbers.   In the real world, you&#8217;d get your own individual number that would tie the ASN to you or your company.</p>
+
+
+
+<p>If you don&#8217;t have your own ASN, you&#8217;ll be using what are known as &#8220;Private ASN Numbers&#8221;, per RFC6996.  </p>
+
+
+
+<p>For my example, I chose at random, while a few of them need to line up to what Vultr provided. </p>
+
+
+
+<pre class="wp-block-code"><code>protocols {
+    bgp 64537 {
+        address-family {
+            ipv4-unicast {
+                aggregate-address 10.100.0.0/22 {
+                }
+            }
+        }
+        neighbor 169.254.169.254 {
+            address-family {
+                ipv4-unicast {
+                    nexthop-self {
+                        force
+                    }
+                    prefix-list {
+                        import IPV4DENYALL
+                    }
+                    remove-private-as
+                    route-map {
+                        export V4-VULTR-ANNOUNCE
+                    }
+                }
+            }
+            ebgp-multihop 255
+            local-as 64749 {
+            }
+            password a1s2d3f4
+            remote-as 64515
+        }
+        parameters {
+            router-id VultrPublicIP
+        }
+    }
+</code></pre>
+
+
+
+<p>As mentioned, a few of things items are just &#8220;fill in the dots&#8221; to create a session with Vultr.  The <code>ebgp-multihop</code> is just a number that must be &#8220;at most this many hops away&#8221;.  So as long as it&#8217;s <code>&gt;=2</code> that Vultr provided, 255 is fine.  </p>
+
+
+
+<p>I chose to advertise a <code>/22</code> here for a reason.  This means I could have a <code>/24</code> from one location, and a <code>/23</code> from a different location, and advertise them both from a single spot.  </p>
+
+
+
+<p>The <code>remove-private-as</code> will be important when we set up our connection to home.  Otherwise, Vultr will fail to accept our advertisement, because it sees an ASN in the path that it doesn&#8217;t recognize. </p>
+
+
+
+<p>The <code>route-map</code> and <code>prefix-list</code> are part of being a good netizen and only accepting and advertising the prefixes you want.  There have been some MAJOR Internet outages because some network engineer messed up routes it was accepting or advertising somehow.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Route maps and Prefix lists</h3>
+
+
+
+<p>It&#8217;s important to focus on what the route maps and prefix lists are doing here.  As mentioned, they control what your in and out announcements are going to be.  It&#8217;s worth noting that someone like Vultr probably won&#8217;t let you do anything too bad, it&#8217;s still good to learn how to set it up somewhat securely first.</p>
+
+
+
+<pre class="wp-block-code"><code>policy {
+    prefix-list IPV4DENYALL {
+        rule 10 {
+            action deny
+            prefix 0.0.0.0/0
+        }
+    }
+    prefix-list V4-VULTR {
+        rule 10 {
+            action permit
+            prefix 10.100.0.0/22
+        }
+        rule 20 {
+            action deny
+            le 32
+            prefix 0.0.0.0/0
+        }
+    }
+    prefix-list VULTR {
+        rule 10 {
+            action permit
+            prefix 10.100.0.0/24
+        }
+        rule 20 {
+            action deny
+            prefix 0.0.0.0/0
+        }
+    }
+    route-map V4-VULTR {
+        rule 10 {
+            action permit
+            match {
+                ip {
+                    address {
+                        prefix-list V4-VULTR
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+
+
+<p>Where these are positioned in relation to the <code>export/import</code> in the peer config above, control what happens.  So in this case we want to:</p>
+
+
+
+<ol><li>IPV4DenyAll: ignore anything from Vultr.  You can tell them to give you full tables, but unless you have an instance with slightly more RAM, full tables would probably be a bit too much for this VPS.  This would basically be the routes for EVERY network on the Internet.</li><li>VULTR Route maps and prefix lists: Advertise ONLY the subnet we want.  This is for when you want to advertise different subnets to different peers.  It also stops you from leaking your routes in case of a misconfiguration somewhere.  </li></ol>
+
+
+
+<p>Now in <code>op-mode</code>, showing the BGP neighbors should give you a bunch of information:</p>
+
+
+
+<pre class="wp-block-code"><code>admin@vyos:~$ show ip bgp neighbors 169.254.169.254 </code></pre>
+
+
+
+<figure class="wp-block-image size-large"><img width="438" height="223" src="https://blog.kroy.io/wp-content/uploads/2020/12/image-2.png" alt="" class="wp-image-1015" srcset="https://blog.kroy.io/wp-content/uploads/2020/12/image-2.png 438w, https://blog.kroy.io/wp-content/uploads/2020/12/image-2-300x153.png 300w" sizes="(max-width: 438px) 100vw, 438px" /></figure>
+
+
+
+<p>and you should see the subnet being advertised:</p>
+
+
+
+<pre class="wp-block-code"><code>admin@vyos:~$ show ip bgp neighbors 169.254.169.254 advertised-routes 
+BGP table version is 7, local router ID is 45.xx.xx.xx, vrf id 0
+Default local pref 100, local AS 64537
+Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, &lt; announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 10.100.0.0/24   0.0.0.0                       100      0 i
+
+Total number of prefixes 1
+</code></pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>BGP at Home</h2>
+
+
+
+<p>The final bit of this puzzle is completing the BGP session to your home, and getting up some hosts:</p>
+
+
+
+<p>We can add another neighbor, which uses the opposite end of the GRE tunnel for the BGP peer.  Still on the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code>protocols {
+    bgp 64537 {
+        neighbor 172.27.114.2 {
+            address-family {
+                ipv4-unicast {
+                    prefix-list {
+                        export IPV4DENYALL
+                    }
+                    route-map {
+                        import V4-VULTR
+                    }
+                    soft-reconfiguration {
+                        inbound
+                    }
+                }
+            }
+            remote-as 64537
+        }
+        
+    }
+}
+</code></pre>
+
+
+
+<p>Note that there are a few important things going on here:</p>
+
+
+
+<ol><li>The <code>export/import</code> are reversed, so I can reuse the same policies.   That means, I want to make sure I&#8217;m importing only the subnet I want from home, and not exporting anything. </li><li>The <code>soft-reconfiguration inbound</code>.  This is the statement that tells VyOS to accept the routes that the home server is advertising.</li><li>The <code>bgp 64537</code> and <code>remote-as 64537</code> are the same.  This triggers the use of IBGP instead of EBGP (internal vs external).  This becomes important as you add more hosts and want to advertise from more locations, but is beyond the scope of this post.</li></ol>
+
+
+
+<p>At this point, all the prep work on the VPS should be done, and once the home router is configured, you should be advertising your subnet.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h3>Home</h3>
+
+
+
+<p>At home, the first thing is to get the GRE tunnel working.  You can use almost any transport, like WireGuard or an L3 OpenVPN, but for advertising a simple subnet, GRE is about as easy as it gets, plus it avoids some potential MTU shenanigans.  </p>
+
+
+
+<p>You might need to add appropriate firewall rules:</p>
+
+
+
+<pre class="wp-block-code"><code>WAN->LOCAL firewall:
+
+ rule 2 {
+     action accept
+     description "GRE to VPS"
+     protocol gre
+     source {
+         address VultrPublicIP
+     }
+     state {
+         invalid enable
+         new enable
+     }
+ }
+ 
+interfaces:
+tunnel tun2 {
+     address 172.27.114.2/30
+     description vultr-gre
+     encapsulation gre
+     local-ip HomePublicIP
+     multicast disable
+     remote-ip VultrPublicIP
+ }
+</code></pre>
+
+
+
+<p>Depending on your firewall config, you might want to drop (in my case) <code>tun2</code> in the appropriate zone, Barring any issues, pinging to the other end of the tunnel should immediately start working:</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large"><img width="486" height="163" src="https://blog.kroy.io/wp-content/uploads/2020/12/image-3.png" alt="" class="wp-image-1016" srcset="https://blog.kroy.io/wp-content/uploads/2020/12/image-3.png 486w, https://blog.kroy.io/wp-content/uploads/2020/12/image-3-300x101.png 300w" sizes="(max-width: 486px) 100vw, 486px" /><figcaption>home is 172.27.114.2, vps is 172.27.114.1</figcaption></figure></div>
+
+
+
+<h3>Home Config</h3>
+
+
+
+<p>Now there are a number of different directions one can take for advertising the subnet from your home to the VPS.  OSPF, static routes, or my favorite, BGP.  </p>
+
+
+
+<p>For just running a simple subnet out of your home, you&#8217;ll want to assign an IP in that subnet to your home VyOS install.  In my case, I assign it to a vlan, but you could assign it to a separate interface like <code>eth4</code>:</p>
+
+
+
+<pre class="wp-block-code"><code>admin@edge# show interfaces ethernet eth0 vif 146
+ address 10.100.0.1/24
+ policy {
+     route VULTRSTUFF
+ }</code></pre>
+
+
+
+<p>Now, anything on that VLAN that gets assigned a <code>10.100.0.0/24</code> address can use <code>10.100.0.1</code> for its gateway and have access on the advertised subnet (once we set up BGP at home).</p>
+
+
+
+<p>You&#8217;ll also note I have a policy route here.  This is to ensure that the traffic doesn&#8217;t leak out my WAN, which will result in an asymmetric routing situation where my advertised subnet doesn&#8217;t work.</p>
+
+
+
+<p>Policy based routing sets up rules that say: &#8220;Take any traffic that matches these rules, and put them in different routing tables to ensure they can&#8217;t go out the wrong interface&#8221;.</p>
+
+
+
+<pre class="wp-block-code"><code>policy route VULTRSTUFF {
+    rule 9 {
+        destination {
+            group {
+                network-group PRIVATE-NETWORKS
+            }
+        }
+        set {
+            table main
+        }
+        source {
+            address 10.100.0.0/24
+        }
+    }
+    rule 10 {
+        set {
+            table 146
+        }
+        source {
+            address 10.100.0.0/24
+        }
+    }
+    rule 20 {
+        destination {
+            address 10.100.0.0/24
+        }
+        set {
+            table 146
+        }
+    }
+}
+</code></pre>
+
+
+
+<p>So with above:</p>
+
+
+
+<ol><li>Rule 9:  Any traffic from our announced subnet trying to get to the local private networks, put back in the main routing table.  This is so my announced hosts can access my LAN.  This is known as &#8220;leaking routes&#8221;.</li><li>Take any traffic from my announced subnet and put it in a different table.  The number is arbitrary but in this case <code>146</code>.</li><li>Take any traffic destined TO my announced subnet to put it in the different table.  Again <code>146</code>.</li></ol>
+
+
+
+<p>Now that we have traffic in a separate routing table, we need to have a way for the traffic to actually go somewhere useful, namely, our GRE tunnel:</p>
+
+
+
+<pre class="wp-block-code"><code>protocols static table 146 {
+     interface-route 0.0.0.0/0 {
+         next-hop-interface tun2 {
+         }
+     }
+ }</code></pre>
+
+
+
+<p>This just tells VyOS to put ALL traffic on table <code>146</code> over the <code>tun2</code> interface, which is the GRE connection to the VPS.  With a recent version of rolling VyOS, this can all be done with some VRF antics as well. </p>
+
+
+
+<h3>BGP</h3>
+
+
+
+<p>The final piece of this puzzle is setting up BGP on the server at home.  It looks much like the setup on the VPS, just with the opposite neighbor address and reversed route/prefixes, so we are accepting none, and only advertising the appropriate subnet.  This is important because you won&#8217;t always have control of both ends of the BGP link, so you don&#8217;t want to trust someone else&#8217;s work.</p>
+
+
+
+<pre class="wp-block-code"><code> bgp 64537 {
+     address-family {
+         ipv4-unicast {
+             network 10.100.1.0/24 {
+             }
+         }
+     }
+  neighbor 172.27.114.1 {
+         address-family {
+             ipv4-unicast {
+                 prefix-list {
+                     import DENY-ALL-V4 
+                 }
+                 route-map {
+                     export V4-VULTR
+                 }
+                 route-server-client
+             }
+         }
+         remote-as 64537
+         update-source 172.27.112.2
+     }
+}</code></pre>
+
+
+
+<p>As before, we are using IBGP (the 64537 matches both locally and the remote), denying any incoming advertisements, and only allowing our outgoing advertisement:</p>
+
+
+
+<pre class="wp-block-code"><code>admin@homeserver# show policy 
+ prefix-list DENY-ALL-V4 {
+     rule 10 {
+         action deny
+         le 32
+         prefix 0.0.0.0/0
+     }
+ }
+ prefix-list V4-VULTR {
+     rule 10 {
+         action permit
+         prefix 10.100.0.0/24
+     }
+     rule 20 {
+         action deny
+         le 32
+         prefix 0.0.0.0/0
+     }
+ }</code></pre>
+
+
+
+<p>It&#8217;s also important to note, this server is only advertising <code>10.100.0.0/24</code>.  Meaning you could advertise <code>10.100.1-3.0/24</code> on other hosts or locations, and aggregate at the VPS.   </p>
+
+
+
+<p>Once complete, the BGP session should pop up and you should see via <code>advertised-routes</code>:</p>
+
+
+
+<pre class="wp-block-code"><code>admin@homeserver:~$ show ip bgp neighbors 172.27.114.1 advertised-routes 
+BGP table version is 19601, local router ID is 10.0.20.254, vrf id 0
+Default local pref 100, local AS 64537
+Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, &lt; announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 10.100.0.0/24   0.0.0.0                  0    100  32768 i
+
+Total number of prefixes 1
+admin@edge:~$ 
+</code></pre>
+
+
+
+<p>and on the VPS via <code>received-routes</code> and the <code>show ip route bgp</code></p>
+
+
+
+<pre class="wp-block-code"><code>admin@vps:~$ show ip bgp neighbors 172.27.114.2 received-routes 
+BGP table version is 0, local router ID is 45.x.x.x.x, vrf id 0
+Default local pref 100, local AS 64537
+Status codes:  s suppressed, d damped, h history, * valid, > best, = multipath,
+               i internal, r RIB-failure, S Stale, R Removed
+Nexthop codes: @NNN nexthop's vrf id, &lt; announce-nh-self
+Origin codes:  i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 10.100.0.0/24   172.27.114.2             0    100      0 i
+
+Total number of prefixes 1
+
+
+admin@vps:~$ show ip route bgp 
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued route, r - rejected route
+
+B>* 10.100.1.0/24 &#091;200/0] via 172.27.114.2, tun0, 2d03h42m</code></pre>
+
+
+
+<p>Once all this happens, your subnet should be available from the external world!  At this point you can assign a static host on like <code>10.100.1.100/24</code>, or set up DHCP for that subnet.  </p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>Of course this is VERY quick and dirty. There is plenty of room for improvement, and more importantly, needing things like appropriate firewalls, and potentially more routing.</p>
+
+
+
+<p>So where do you go from here?  Of course you don&#8217;t have to use BGP just for announcing a subnet.  You could just it just for distributing private subnets dynamically locally or across geographically diverse sites.  Much of the BGP that happens on my local network, doesn&#8217;t even leave my edge.  </p>
+
+
+
+<p>Hopefully this write-up gave you a good head start though.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">1012</post-id>	</item>
+	</channel>
+</rss>

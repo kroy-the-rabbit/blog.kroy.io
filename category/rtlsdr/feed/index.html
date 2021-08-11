@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>RTLSDR &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/rtlsdr/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Mon, 07 Dec 2020 15:37:29 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>RTLSDR &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>Monitoring Home Power Consumption for less than $25</title>
+		<link>https://blog.kroy.io/2017/12/19/monitoring-home-power-consumption-for-less-than-25/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=monitoring-home-power-consumption-for-less-than-25</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Tue, 19 Dec 2017 22:34:16 +0000</pubDate>
+				<category><![CDATA[HomeLab]]></category>
+		<category><![CDATA[RTLSDR]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/12/19/monitoring-home-power-consumption-for-less-than-25/</guid>
+
+					<description><![CDATA[On almost a daily basis, I am bombarded with ads on Facebook for the Sense. This device allows you to monitor whole-home power consumption. I could probably find room for&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>On almost a daily basis, I am bombarded with ads on Facebook for the <a href="https://sense.com/">Sense</a>.  This device allows you to monitor whole-home power consumption.</p>
+
+
+
+<p>I could probably find room for such a device in the budget, but I <em>HATE</em> electricity.  Too many years of geeky endeavors have resulted in far too many shocks, and mains electricity scares the hell out of me.  That discounted the possibility of hooking some kind of sensor to a Raspberry Pi and directly measure the mains.</p>
+
+
+
+<p>After I thought about it a bit, I realized it would be extremely simple to do something similar without any wires or hassle.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="rtlsdr">RTL-SDR</h1>
+
+
+
+<p>As I considered how I could accomplish this task, I came to a realization.  At least where I live, I haven&#8217;t seen a &#8220;meter reader&#8221; in at least a couple of decades.  This meant at least once a month, the power company was somehow retrieving my usage in an automated fashion.</p>
+
+
+
+<p>Some research told me that the power company accomplishes this via a simple radio broadcast on the 900Mhz spectrum.  Once again, it was a task for the RTL-SDR that I use for a number of projects.</p>
+
+
+
+<p>The RTL-SDR is just a cheap software-defined radio that can be had for less than $25 on Amazon with an antenna.  It can used for everything from monitoring cheap temperature and humidity sensors, tracking airplanes, and apparently, reading my own power meter.</p>
+
+
+
+<p>The software is readily available for all flavors of Linux, and simple to install and use.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="meterreading">Meter Reading</h1>
+
+
+
+<p>It turns out, at least in the United States, most meters can be read using <a href="https://github.com/bemasher/rtlamr">this software</a>.  Don&#8217;t get me wrong, manually decoding radio packets isn&#8217;t necessarily difficult, but it makes me glad that some kind soul has done the legwork for this already.</p>
+
+
+
+<p>And with one simple command, I was reading the power (and probably water) meters for my entire neighborhood:</p>
+
+
+
+<p><code>~/gocode/bin/rtlamr -msgtype=idm --format=json -msgtype=scm+</code></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="523" src="https://blog2.kroy.io/wp-content/uploads/2019/08/neighborhood-1-1024x523.png" alt="" class="wp-image-138" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/neighborhood-1-1024x523.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/neighborhood-1-300x153.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/neighborhood-1-768x392.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/neighborhood-1.png 1500w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I&#8217;m not going to lie.  It felt weird polling the meter readings for the entire neighborhood.  Out of the five different protocol types (&#8216;msgtype&#8217; option to  rtlamr), four of them were in use in my neighborhood, and I had access to hundreds of meters.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="thehuntbegins">The Hunt Begins</h1>
+
+
+
+<p>Once I was able to poll meters, it became a hunt for the proverbial needle-in-a-haystack to find my meter.  Amazingly, this was the longest part of the whole endeavor and ended up taking almost three hours.  There were a number of impediments to this goal:</p>
+
+
+
+<ol><li>The meters only report every few minutes, and sometimes sporadically, instead of even on a set schedule.  So it becomes a matter of weeding through a few hundred readings to try and pick out your own.  Some meters will report two or three times for a single report on another.  This becomes important later for why this isn&#8217;t the best option for an instantaneous &#8220;Hey my house is currently using 150 Wh&#8221; reading.</li><li>In my neighborhood, there are four different protocols in use. This meant I had to repeat the first step for all four protocols.</li><li>The reading that&#8217;s reported when you look at the physical meter isn&#8217;t the same reading that&#8217;s reported wirelessly.</li></ol>
+
+
+
+<p>That third point is obviously a huge problem when you are flying blind.  My meter was reading 55,151 kWh, so my eyes were scanning for a five digit number in the mess.  And of course searching the output wasn&#8217;t helping because by the time I got a reading (due to point #1 above), the number had moved.</p>
+
+
+
+<p>Of course this is when I realized that the wireless reading from the meter was reporting in daWh (that&#8217;s decawatt/hours). With that knowledge, I was able to identify my own meter.  Fortunately, the rtlamr binary provides a simple way to filter by a specific unit, output json, and grab a single packet:</p>
+
+
+
+<p><code>~/gocode/bin/rtlamr -msgtype=idm --format=json --filterid=XXXXXXX --single=true</code></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="126" src="https://blog2.kroy.io/wp-content/uploads/2019/08/myreading-1-1024x126.png" alt="" class="wp-image-139" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/myreading-1-1024x126.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/myreading-1-300x37.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/myreading-1-768x94.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/myreading-1-1600x197.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p><code>55422.79 kWh</code> used since my meter was replaced a few years ago.  I imagine there is some other useful information in there, like the PowerOutageFlags, DifferentialConsumptionLevels, and more.  But for now, I had my reading.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="graphallthethings">Graph All the Things!</h1>
+
+
+
+<p>Once I had JSON output, the sky is the limit for what can be accomplished.  My first reaction was to drop it in InfluxDB and use Grafana.  Unfortunately this method of reading the meter doesn&#8217;t really lend itself well to constant polling.  There are a few important things to notice in the following output:</p>
+
+
+
+<figure class="wp-block-image"><img width="651" height="175" src="https://blog2.kroy.io/wp-content/uploads/2019/08/inconsistent.png" alt="" class="wp-image-140" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/inconsistent.png 651w, https://blog.kroy.io/wp-content/uploads/2019/08/inconsistent-300x81.png 300w" sizes="(max-width: 651px) 100vw, 651px" /></figure>
+
+
+
+<ul><li>The readings didn&#8217;t actually change between every report.  For example, three successive readings might be the same (despite many watt/hours in use), but only the fourth reading would report the ultimate change.</li><li>The time between reports really inconsistent.  One time would be two minutes, the next would be a single minute. I imagine it&#8217;s done this way to stagger out the signals in a neighborhood so they aren&#8217;t clambering over one another.  This meant my RTL-SDR was constantly polling for meter reading, which broke my temperature/humidity sensors for my fridge, monitoring the basement for water, and more.</li></ul>
+
+
+
+<p>While I&#8217;ve seen some nice looking Grafana graphs, most of the time I really don&#8217;t think they look that nice. Sometimes they remind me a bit of &#8220;rrdgraph&#8221;.</p>
+
+
+
+<p>Functional, sure, but they really just look terrible compared to a modern HTML5 graphing library. Not to mention, I always waste a ton of time fighting with Grafana trying to get it to even report &#8220;sane&#8221; numbers.</p>
+
+
+
+<p>This also immediately discounted the idea of creating some sort of instantaneous usage report.  The meter wasn&#8217;t changing often enough to even get a minute-by-minute report. So I ditched Grafana and went with a simple relational database and some PHP.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="phpsqlite3andjquery">PHP, SQLite3, and JQuery</h1>
+
+
+
+<p>I use PHP.  There, I admitted it.  For heavy projects, I prefer something different.  But as I&#8217;ve been using PHP professionally since the PHP/FI days, it lends itself to extremely rapid development. And at least for quick and dirty home-tasks where I&#8217;m starting from scratch every time, some spectacularly ugly code.</p>
+
+
+
+<p>That&#8217;s why I usually don&#8217;t post code examples, because I don&#8217;t care how anybody could do it better, why my code sucks, is a security blight or whatever else. It&#8217;s quick (I&#8217;ve only got a few hours of time in the code of this project), it&#8217;s dirty, it usually gets super creepy and crufty as I change directions 42 times, and I&#8217;m not exposing it to the Internet.  With that warning out of the way&#8230;</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="datacollection">Data Collection</h2>
+
+
+
+<p>I decided I wanted a relational database, but didn&#8217;t want to mess with some heavy daemon.  While it&#8217;s running on my &#8220;collection&#8221; host, an N3700 with an SSD in it, at some point in the future this could run off a Raspberry Pi. SQLite3 was the only choice as it is lightweight and fast.</p>
+
+
+
+<p>A simple cron script set up to run every hour on the hour captures the meter reading:</p>
+
+
+
+<pre class="wp-block-code"><code>$unitid = XXXXXX;
+$type= "idm";
+
+exec("/scripts/gocode/bin/rtlamr -msgtype={$type} --format=json --filterid={$unitid} --single=true",$output);
+$arr = json_decode(implode("\n",$output),true);
+$meter_reading = $arr['Message']['LastConsumptionCount'];
+
+if ($meter_reading > 1) {
+     $r = new \reading($meter_reading);
+}</code></pre>
+
+
+
+<p>And the class that actually does the heavy lifting</p>
+
+
+
+<pre class="wp-block-code"><code>class reading {
+
+         private $db = null;
+         private $reading = 0;
+
+         private function getDb() {
+             $db = new SQLite3(dirname(__FILE__) . '/whole_home_electricity.sqlite3');
+             $db->query("CREATE TABLE IF NOT EXISTS byhour (id INTEGER PRIMARY KEY ASC, ymd integer, hour tinyint, reading bigint,last_difference integer,UNIQUE(ymd,hour))");
+             $db->query("CREATE TABLE IF NOT EXISTS byday (id INTEGER PRIMARY KEY ASC, ymd integer, reading bigint,last_difference integer,UNIQUE(ymd))");
+             $db->query("CREATE TABLE IF NOT EXISTS bymonth (id INTEGER PRIMARY KEY ASC, ym integer, reading bigint,last_difference integer,UNIQUE(ym))");
+             $db->query("CREATE TABLE IF NOT EXISTS byweek (id INTEGER PRIMARY KEY ASC, year integer, week tinyint, reading bigint,last_difference integer,UNIQUE(year,week))");
+             return $db;
+         }
+
+         private function getLastReading($table) {
+             $ld_res = $this->db->query("select * from {$table} order by id desc limit 1");
+             if ($ld_row = $ld_res->fetchArray()) {
+                 return $this->reading-$ld_row['reading'];
+             }
+             return 0;
+
+         }
+
+         public function __construct($reading) {
+             $this->db = $this->getDb();
+             $this->reading = $reading;
+
+
+             $ym = date("Ym");
+             $year = date("Y");
+             $week = date("W");
+             $ymd = date("Ymd");
+             $hour = date("H");
+
+             //By Hour
+             $res = $this->db->query("select * from byhour where ymd={$ymd} and hour={$hour}");
+             if (!$row = $res->fetchArray()) {
+                 $last_difference = $this->getLastReading("byhour");
+                 $ins=$this->db->prepare("insert into byhour (ymd,hour,reading,last_difference) values (:ymd,:hour,:reading,:last_difference)");
+                 $ins->bindValue(':ymd', date("Ymd"), SQLITE3_INTEGER);
+                 $ins->bindValue(':hour', date("G"), SQLITE3_INTEGER);
+                 $ins->bindValue(':reading', $this->reading, SQLITE3_INTEGER);
+                 $ins->bindValue(':last_difference', $last_difference, SQLITE3_INTEGER);
+                 @$ins->execute();
+             }
+             //End By Hour
+
+
+             //By Day
+             $res = $this->db->query("select * from byday where ymd={$ymd}");
+             if (!$row = $res->fetchArray()) {
+                 $last_difference = $this->getLastReading("byday");
+                 $ins=$this->db->prepare("insert into byday (ymd,reading,last_difference) values (:ymd,:reading,:last_difference)");
+                 $ins->bindValue(':ymd', $ymd, SQLITE3_INTEGER);
+                 $ins->bindValue(':reading', $this->reading, SQLITE3_INTEGER);
+                 $ins->bindValue(':last_difference', $last_difference, SQLITE3_INTEGER);
+                 @$ins->execute();
+             }
+             //End Day
+             //
+             //
+             
+             //By Week
+             $res = $this->db->query("select * from byweek where year={$year} and week={$week}");
+             if (!$row = $res->fetchArray()) {
+                 $last_difference = $this->getLastReading("byweek");
+                 $ins=$this->db->prepare("insert into byweek (year,week,reading,last_difference) values (:year,:week,:reading,:last_difference)");
+                 $ins->bindValue(':year', $year, SQLITE3_INTEGER);
+                 $ins->bindValue(':week', $week, SQLITE3_INTEGER);
+                 $ins->bindValue(':reading', $this->reading, SQLITE3_INTEGER);
+                 $ins->bindValue(':last_difference', $last_difference, SQLITE3_INTEGER);
+                 @$ins->execute();
+             }
+             //End Week
+             
+             //continues for month, and eventually year
+             
+             
+             //While we are at it, back everything up with "versioning"
+             //Backup
+
+             if (file_exists("/mnt/Backups/backup_mounted")) {
+                 for ($i = 48; $i > 0; $i--) {
+                     $a = $i - 1;
+                     rename("/mnt/Backups/analog/whole_home_electricity/whole_home_electricity.sqlite3.{$a}", "/mnt/Backups/analog/whole_home_electricity/whole_home_electricity.sqlite3.{$i}");
+                 }
+                 rename("/mnt/Backups/analog/whole_home_electricity/whole_home_electricity.sqlite3","/mnt/Backups/analog/whole_home_electricity/whole_home_electricity.sqlite3.0");
+                 copy(dirname(__FILE__) . '/whole_home_electricity.sqlite3',"/mnt/Backups/analog/whole_home_electricity/whole_home_electricity.sqlite3");
+             }</code></pre>
+
+
+
+<p>The theory behind this is simple.  Once an hour, pull a reading.  If a reading doesn&#8217;t exist for the current day, hour, week, month, year, pull the last reading, grab the difference, and store it.</p>
+
+
+
+<h5 id="weirdalert">Weird alert</h5>
+
+
+
+<p>This does create an oddity as the datapoint for <code>20171217 09</code> actually represents the data for <code>08:00-09:00</code>.  Similarly this occurs for day, week, and month.  It&#8217;s not a huge problem, but it just means that when I pull a day&#8217;s worth of data, I pull where the <code>hour&gt;0</code> and then the following day&#8217;s <code>hour=0</code>.  It&#8217;s just a slight modification on the output.  One of those crufty things born out of a change of direction that I should probably go back and change (but never will).</p>
+
+
+
+<h1 id="theoutput">The Output</h1>
+
+
+
+<p>The output is just a simple HTML5 page that calls a json-generating PHP script via JQuery/ajax.  The result ends up looking something like this:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="518" src="https://blog2.kroy.io/wp-content/uploads/2017/12/bgpower-1024x518.png" alt="power" class="wp-image-137" srcset="https://blog.kroy.io/wp-content/uploads/2017/12/bgpower-1024x518.png 1024w, https://blog.kroy.io/wp-content/uploads/2017/12/bgpower-300x152.png 300w, https://blog.kroy.io/wp-content/uploads/2017/12/bgpower-768x388.png 768w, https://blog.kroy.io/wp-content/uploads/2017/12/bgpower-1600x809.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I&#8217;ve used all sorts of frameworks and APIs over the years, but I can&#8217;t speak highly enough of <a href="https://canvasjs.com/">CanvasJS</a>.</p>
+
+
+
+<p>It&#8217;s not free, and I&#8217;ll probably end up buying a license so I can use it here and elsewhere.  It&#8217;s by far the easiest to use and nicest-looking framework for generating graphs I&#8217;ve used in a while.</p>
+
+
+
+<p>In any case.  Actual HTML for this is fairly straightforward:</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;!DOCTYPE HTML>
+&lt;html>
+&lt;head>
+&lt;link href="css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+&lt;script src="js/jquery-1.11.1.min.js">&lt;/script>
+&lt;script src="js/jquery-ui.1.11.2.min.js">&lt;/script>
+&lt;script>
+
+//https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
+$.urlParam = function(name){
+    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+    if (results) {
+        return results[1] || 0;
+    }
+    return 0;
+}
+
+$(document).ready(function(){
+    updateByHour();
+    updateTheRest();
+});
+
+function updateByHour() {
+    var postvars = { action: "byhour"};
+    if ($.urlParam('byHourDay') != 0) {
+        postvars.byHourDay = $.urlParam('byHourDay');
+    }
+
+    $.post( "api.php", postvars, function( result) {
+        result = $.parseJSON(result);
+        points = [];
+        $.each(result, function (i,v)
+        {
+              points.push({y:v, label: i+"h", indexLabelFontColor: "#000000",indexLabelPlacement:"inside", indexLabel:"{y}Wh"});
+        });
+
+        chart_title = "Hourly Consumption";
+        if (postvars.byHourDay) {
+            chart_title += " (" + decodeURIComponent(postvars.byHourDay) + ")";
+            $("#goback").fadeIn(600);
+        } else {
+            chart_title += " (today)";
+        }
+
+        var hourOptions= {
+        theme: "light2",
+        animationEnabled: true,
+        title: {
+            text: chart_title
+        },
+        data: [{
+            type: "column", //change it to line, area, bar, pie, etc
+            dataPoints: points
+            }]
+    };
+
+    $("#byHourContainer").CanvasJSChart(hourOptions)
+    });
+}
+
+function refreshByHour(day) {
+    if (day) {
+        window.history.pushState("", "","/wholehome/index.php?byHourDay=" + day);
+    } else {
+        window.history.pushState("", "","/wholehome/index.php");
+    }
+    updateByHour();
+}
+
+function updateTheRest() {
+    $.post( "api.php", { action: "byday"}, function( result) {
+        result = $.parseJSON(result);
+        points = [];
+        $.each(result, function (i,v)
+        {
+            points.push({y:v, label: i, indexLabelFontColor: "#000000", indexLabelPlacement:"inside", indexLabel:"{y}kWh", click: function(e) { refreshByHour(i); } });
+        });
+
+
+		var dayOptions= {
+			animationEnabled: true,
+				theme: "light2",
+				title:{
+				text: "Daily Consumption"
+			},
+				axisY2:{
+				prefix: "",
+	        //				lineThickness: 0
+			},
+				toolTip: {
+				shared: true
+			},
+				legend:{
+				verticalAlign: "top",
+				horizontalAlign: "center"
+			},
+			data: [
+				{
+					type: "bar",
+					name: "Kilowatt/Hour",
+					axisYType: "secondary",
+					//color: "#A87CA0",
+					dataPoints: points
+				}
+			]};
+		$("#byDayContainer").CanvasJSChart(dayOptions);
+
+	});
+
+    $.post( "api.php", { action: "byWeek"}, function( result) {
+        result = $.parseJSON(result);
+        points = [];
+        $.each(result, function (i,v)
+        {
+            points.push({y:v, label: i, indexLabelFontColor: "#000000", indexLabelPlacement:"inside", indexLabel:"{y}kWh"});
+        });
+
+
+		var monthOptions= {
+			animationEnabled: true,
+				theme: "light2",
+				title:{
+				text: "Weekly Consumption"
+			},
+				axisY2:{
+				prefix: "",
+	        //				lineThickness: 0
+			},
+				toolTip: {
+				shared: true
+			},
+				legend:{
+				verticalAlign: "top",
+				horizontalAlign: "center"
+			},
+			data: [
+				{
+					type: "bar",
+					name: "Kilowatt/Hour",
+					axisYType: "secondary",
+					//color: "#A87CA0",
+					dataPoints: points
+				}
+			]};
+		$("#byWeekContainer").CanvasJSChart(monthOptions);
+    });
+
+    $.post( "api.php", { action: "bymonth"}, function( result) {
+        result = $.parseJSON(result);
+        points = [];
+        $.each(result, function (i,v)
+        {
+            points.push({y:v, label: i, indexLabelFontColor: "#000000", indexLabelPlacement:"inside", indexLabel:"{y}kWh"});
+        });
+
+
+		var monthOptions= {
+			animationEnabled: true,
+				theme: "light2",
+				title:{
+				text: "Monthly Consumption"
+			},
+				axisY2:{
+				prefix: "",
+	        //				lineThickness: 0
+			},
+				toolTip: {
+				shared: true
+			},
+				legend:{
+				verticalAlign: "top",
+				horizontalAlign: "center"
+			},
+			data: [
+				{
+					type: "bar",
+					name: "Kilowatt/Hour",
+					axisYType: "secondary",
+					//color: "#A87CA0",
+					dataPoints: points
+				}
+			]};
+		$("#byMonthContainer").CanvasJSChart(monthOptions);
+
+	});
+}
+
+&lt;/script>
+&lt;/head>
+&lt;body >
+&lt;h1 style="color:#000000">Kilowattage&lt;/h1> &lt;span id="goback" style="display:none;">&lt;a href='' onclick='refreshByHour(); $("#goback").fadeOut(600); return false;' style="color:#000000">View Today&lt;/a>&lt;/span>&lt;br />
+&lt;p>
+&lt;div class="resizable" style="height: 370px;border:1px solid gray;">
+    &lt;div id="byHourContainer" style="height: 100%; width: 100%;">&lt;/div>&lt;br />
+&lt;/div>
+&lt;div class="resizable" style="height: 370px;border:1px solid gray;">
+    &lt;div id="byDayContainer" style="height: 100%; width: 100%;">&lt;/div>
+&lt;/div>
+&lt;div class="resizable" style="height: 370px;border:1px solid gray;">
+    &lt;div id="byWeekContainer" style="height: 100%; width: 100%;">&lt;/div>
+&lt;/div>
+&lt;div class="resizable" style="height: 370px;border:1px solid gray;">
+    &lt;div id="byMonthContainer" style="height: 100%; width: 100%;">&lt;/div>
+&lt;/div>
+
+&lt;/p>
+&lt;script src="js/jquery.canvasjs.min.js">&lt;/script>
+&lt;/body>
+&lt;/html></code></pre>
+
+
+
+<p>Without getting bogged down with details, the crux of this is pretty simple:</p>
+
+
+
+<p>Check to see if we want to grab a specific day.  This is so I can click on the day and get the specific usage for that day (and reload the chart):</p>
+
+
+
+<pre class="wp-block-code"><code>    var postvars = { action: "byhour"};    if ($.urlParam('byHourDay') != 0) {        postvars.byHourDay = $.urlParam('byHourDay');    }</code></pre>
+
+
+
+<p>Do an AJAX post to <code>api.php</code>.  Parse out the results and put them in an array of data points:</p>
+
+
+
+<pre class="wp-block-code"><code>    $.post( "api.php", postvars, function( result) {
+        result = $.parseJSON(result);
+        points = [];
+        $.each(result, function (i,v)
+        {
+              points.push({y:v, label: i+"h", indexLabelFontColor: "#000000",indexLabelPlacement:"inside", indexLabel:"{y}Wh"});
+        });</code></pre>
+
+
+
+<p>Build the chart and change some text around so we know we are looking at a different day</p>
+
+
+
+<pre class="wp-block-code"><code>chart_title = "Hourly Consumption";
+if (postvars.byHourDay) {
+            chart_title += " (" + decodeURIComponent(postvars.byHourDay) + ")";
+            $("#goback").fadeIn(600);
+        } else {
+            chart_title += " (today)";
+        }
+
+        var hourOptions= {
+        theme: "light2",
+        animationEnabled: true,
+        title: {
+            text: chart_title
+        },
+        data: [{
+            type: "column", //change it to line, area, bar, pie, etc
+            dataPoints: points
+            }]
+    };
+
+    $("#byHourContainer").CanvasJSChart(hourOptions)
+    });
+}</code></pre>
+
+
+
+<p>This repeats for the day, week, month, and eventually year.  With this, I can click on the day under the daily charts, and have it refresh the hourly chart with the new day/</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="theapi">The API</h1>
+
+
+
+<p>Finally, I needed an API to connect the HTML to the Sqlite3 database.</p>
+
+
+
+<p>Stuff like this is where I always end up missing some of the heavier frameworks I&#8217;ve developed and I used on a daily basis.</p>
+
+
+
+<p>I&#8217;m just reading the most recent backup copy of my database, to prevent locking issues; I only want to do something if my Backup drive gets mounted:</p>
+
+
+
+<pre class="wp-block-code"><code>if (file_exists("/mnt/Backups/backup_mounted")) {
+    $usage = new \usage();
+    if (!empty($_POST)) {
+        if ($_POST['action'] == 'byday') {
+            echo json_encode($usage->getByDay());
+        }
+        if ($_POST['action'] == 'bymonth') {
+            echo json_encode($usage->getByMonth());
+        }
+        if ($_POST['action'] == 'byWeek') {
+            echo json_encode($usage->getByWeek());
+        }
+        if ($_POST['action'] == 'byhour') {
+            $byHourDay = strlen($_POST['byHourDay']) > 0 ? urldecode($_POST['byHourDay']) : null;
+            echo json_encode($usage->getByHour($byHourDay));
+        }
+    }
+}</code></pre>
+
+
+
+<p>Just a simple director.  Call a method depending on URL parameters.</p>
+
+
+
+<p>This is where it gets pretty crufty.  I was in the home stretch and just wanted to be done.  Here&#8217;s what some of the functions look like:</p>
+
+
+
+<pre class="wp-block-code"><code>class usage {
+
+    private $db = null;
+
+    public function __construct() {
+        $this->db = new SQLite3("/mnt/Backups/analog/whole_home_electricity/whole_home_electricity.sqlite3");
+    }
+    
+        public function getByDay($limit = 10) {
+        $ret = [];
+
+        $ld_res = $this->db->query("select * from byday order by ymd limit {$limit}");
+        while ($ld_data = $ld_res->fetchArray()) {
+            $fdate = date("j M Y",strtotime(($ld_data['ymd']-1)));
+            
+            ##in decawatts, want kilo
+            $ret[$fdate] = $ld_data['last_difference']/100;
+        }
+
+        ##Add in today's usage since it hasn't been written yet
+        $fdate = date("j M Y");
+        
+        $tot = 0;
+        $byhour = $this->getByHour();
+        foreach ($byhour as $usage) {
+            $tot += $usage;
+        }
+
+        ##Swap the watts back to kilo
+        $ret[$fdate] = $tot/1000;
+
+        return $ret;
+    }
+
+    public function getByHour($date = null) {
+    
+        ##Pull today if nothing passed in
+        if ($date == null) {
+            $date = date("Ymd");
+        } else {
+            //format that guy
+            $date = date("Ymd",strtotime($date));
+        }
+        
+        ##This addresses the problem where I am writing the previous hour's data to the current hour
+        $tomm = $date+1;
+
+        $ret = [];
+
+        ##Usage is marked current hour when it actually means last hour
+        ##so do some fanangling
+        $ld_res = $this->db->query("select * from byhour where ((ymd={$date} and hour > 0) || (ymd={$tomm} and hour=0)) order by ymd,hour");
+        while ($ld_data = $ld_res->fetchArray()) {
+            $hour = $ld_data['hour'] - 1;
+            if ($hour &lt; 0) {
+                $hour = 23;
+            }
+            //convert to watts
+            $ret[$hour] = $ld_data['last_difference']*10;
+        }
+        
+        ##Fill in blanks spots with "0" in the final output so we have a full 24 hours worth
+        for($i=0; $i &lt; 24; $i++) {
+            if (!isset($ret[$i])) {
+                $ret[$i] = 0;
+            }
+        }
+        ksort($ret);
+        return $ret;
+    }
+    </code></pre>
+
+
+
+<p>And that&#8217;s that!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="theresults">The Results</h1>
+
+
+
+<p>The end result is a decent looking set of graphs that can be manipulated a bit. I&#8217;ve only just got full data collection going, so it will be a few weeks before the graph truly fills out and becomes interesting.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="542" src="https://blog2.kroy.io/wp-content/uploads/2019/08/final1-1024x542.png" alt="results
+" class="wp-image-141" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/final1-1024x542.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/final1-300x159.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/final1-768x407.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/final1-1600x847.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>And some fun things emerge:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="126" src="https://blog2.kroy.io/wp-content/uploads/2019/08/replication-2-1024x126.png" alt="replication
+" class="wp-image-142" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/replication-2-1024x126.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/replication-2-300x37.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/replication-2-768x95.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/replication-2-1600x197.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>and:</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="126" src="https://blog2.kroy.io/wp-content/uploads/2019/08/laundry-1024x126.png" alt="laundry" class="wp-image-143" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/laundry-1024x126.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/laundry-300x37.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/laundry-768x94.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/laundry-1600x197.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="endingthoughtsandtodos">Ending thoughts and To-dos</h1>
+
+
+
+<p>This was a fun little project that really didn&#8217;t take me much time.  Now that I&#8217;m collecting the data, I&#8217;ll be able to build out the reports a bit more.</p>
+
+
+
+<p>The next big thing on my list for this is to include my lab power consumption as a stacked graph, so I can see how much of actual usage is my lab (400+ watts).</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">26</post-id>	</item>
+	</channel>
+</rss>

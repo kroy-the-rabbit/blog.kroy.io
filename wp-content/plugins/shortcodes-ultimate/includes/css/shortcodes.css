@@ -360,7 +360,7 @@
 .su-spoiler-title:focus {outline: currentColor thin dotted;}
 .su-spoiler-icon {position: absolute;left: 7px;top: 7px;display: block;width: 20px;height: 20px;line-height: 21px;text-align: center;font-size: 14px;font-family: ShortcodesUltimateIcons;font-weight: 400;font-style: normal;-webkit-font-smoothing: antialiased;}
 .su-spoiler-content {padding: 14px;-webkit-transition: padding-top .2s;transition: padding-top .2s;-ie-transition: padding-top .2s;}
-.su-spoiler.su-spoiler-closed>.su-spoiler-content {height: 0;margin: 0;padding: 0;overflow: hidden;border: none;opacity: 0;pointer-events: none;}
+.su-spoiler.su-spoiler-closed>.su-spoiler-content {height: 0;margin: 0;padding-top: 0;padding-bottom: 0;overflow: hidden;border: none;opacity: 0;pointer-events: none;}
 .su-spoiler.su-spoiler-closed>.su-spoiler-content iframe {display: none;}
 .su-spoiler-icon-plus .su-spoiler-icon:before {content: "";}
 .su-spoiler-icon-plus.su-spoiler-closed .su-spoiler-icon:before {content: "";}
@@ -415,25 +415,29 @@
 .su-tabs-nav span:focus {outline: currentColor thin dotted;}
 .su-tabs-nav span.su-tabs-disabled {opacity: .5;cursor: default;}
 .su-tabs-pane {padding: 15px;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;background: #fff;color: #333;font-size: 13px;}
-.su-tabs-pane:not(.su-tabs-pane-open) {overflow: hidden !important;padding: 0 !important;min-height: 0 !important;height: 0 !important;border: none !important;}
+.su-tabs-pane:not(.su-tabs-pane-open) {overflow: hidden !important;padding-top: 0 !important;padding-bottom: 0 !important;min-height: 0 !important;height: 0 !important;border: none !important;}
 .su-tabs-nav, .su-tabs-nav span, .su-tabs-pane, .su-tabs-panes {box-sizing: border-box !important;}
 .su-tabs-vertical {display: -webkit-box;display: flex;}
 .su-tabs-vertical .su-tabs-nav {width: 30%;}
 .su-tabs-vertical .su-tabs-nav>span {display: block;margin-right: 0;border-radius: 0;border-top-left-radius: 3px;border-bottom-left-radius: 3px;}
 .su-tabs-vertical .su-tabs-panes {width: 70%;}
 .su-tabs-vertical .su-tabs-panes .su-tabs-pane {height: 100%;border-radius: 0;border-top-right-radius: 3px;border-bottom-right-radius: 3px;}
-.qtip.su-qtip {max-width: 480px !important;}
-.su-tooltip {display: inline-block;}
-.su-qtip-size-1 {font-size: .8em !important;}
-.su-qtip-size-2 {font-size: .9em !important;}
-.su-qtip-size-3 {font-size: 1em !important;}
-.su-qtip-size-4 {font-size: 1.1em !important;}
-.su-qtip-size-5 {font-size: 1.2em !important;}
-.su-qtip-size-6 {font-size: 1.3em !important;}
-.su-tooltip-content {display: none;}
-.su-tooltip-content>:last-child {margin-bottom: 0;}
-.qtip-content .su-tooltip-content embed, .qtip-content .su-tooltip-content iframe, .qtip-content .su-tooltip-content img, .qtip-content .su-tooltip-content object {max-width: 430px;}
-.qtip-content .su-tooltip-content .su-u-responsive-media-yes {width: 430px;}
+.su-tooltip {display: none;}
+.su-tooltip.su-tooltip-visible {display: block;}
+.su-tooltip-inner {display: block;position: relative;padding: .7em .85em;}
+.su-tooltip-title {display: block;font-weight: 700;font-size: 1.1em;margin-bottom: .25em;}
+.su-tooltip-title:empty {display: none;}
+.su-tooltip-content {display: block;}
+.su-tooltip-shadow-yes {box-shadow: 0 0 10px rgba(0,0,0,.5);}
+.su-tooltip-button {position: relative;}
+.su-tooltip-button-outline-no:focus {outline: 0;}
+.su-tooltip-arrow, .su-tooltip-arrow::before {position: absolute;width: 8px;height: 8px;background: inherit;}
+.su-tooltip-arrow {visibility: hidden;}
+.su-tooltip-arrow::before {visibility: visible;content: "";-webkit-transform: rotate(45deg);transform: rotate(45deg);}
+.su-tooltip[data-popper-placement^=top]>.su-tooltip-arrow {bottom: -4px;}
+.su-tooltip[data-popper-placement^=bottom]>.su-tooltip-arrow {top: -4px;}
+.su-tooltip[data-popper-placement^=left]>.su-tooltip-arrow {right: -4px;}
+.su-tooltip[data-popper-placement^=right]>.su-tooltip-arrow {left: -4px;}
 .su-video {position: relative;margin-bottom: 1.5em;overflow: hidden;}
 .su-video .jp-title {position: absolute;top: -100px;left: 0;width: 100%;height: 30px;padding: 0 1em;line-height: 30px;font-size: .9em;background: #000;background: rgba(0,0,0,.5);color: #fff;-webkit-transition: top .2s;transition: top .2s;}
 .su-video:hover .jp-title {top: 0;}

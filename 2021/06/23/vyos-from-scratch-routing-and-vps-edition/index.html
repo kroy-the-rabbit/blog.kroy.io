@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="UTF-8"><title>VyOS from Scratch: Routing and VPS Edition – blog.kroy.io</title><meta name="robots" content="max-image-preview:large"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="dns-prefetch" href="//s.w.org"><script src="//www.googletagmanager.com/gtag/js?id=UA-89722449-1" type="text/javascript" data-cfasync="false"></script><script type="text/javascript" data-cfasync="false">
+				var em_version = '6.7.0';
+				var em_track_user = true;
+				var em_no_track_reason = '';
+				
+								var disableStr = 'ga-disable-UA-89722449-1';
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					return document.cookie.indexOf( disableStr + '=true' ) > - 1;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if ( __gtagTrackerIsOptedOut() ) {
+					window[disableStr] = true;
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = true;
+				}
+
+				if ( 'undefined' === typeof gaOptout ) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+				if ( em_track_user ) {
+					function __gtagTracker() {dataLayer.push( arguments );}
+					__gtagTracker( 'js', new Date() );
+					__gtagTracker( 'set', {
+						'developer_id.dNDMyYj' : true,
+						                    });
+					__gtagTracker( 'config', 'UA-89722449-1', {
+						forceSSL:true,					} );
+										window.gtag = __gtagTracker;										(
+						function () {
+							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+							/* ga and __gaTracker compatibility shim. */
+							var noopfn = function () {
+								return null;
+							};
+							var newtracker = function () {
+								return new Tracker();
+							};
+							var Tracker = function () {
+								return null;
+							};
+							var p = Tracker.prototype;
+							p.get = noopfn;
+							p.set = noopfn;
+							p.send = function (){
+								var args = Array.prototype.slice.call(arguments);
+								args.unshift( 'send' );
+								__gaTracker.apply(null, args);
+							};
+							var __gaTracker = function () {
+								var len = arguments.length;
+								if ( len === 0 ) {
+									return;
+								}
+								var f = arguments[len - 1];
+								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+									if ( 'send' === arguments[0] ) {
+										var hitConverted, hitObject = false, action;
+										if ( 'event' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[3] ) {
+												hitObject = {
+													'eventAction': arguments[3],
+													'eventCategory': arguments[2],
+													'eventLabel': arguments[4],
+													'value': arguments[5] ? arguments[5] : 1,
+												}
+											}
+										}
+										if ( typeof arguments[2] === 'object' ) {
+											hitObject = arguments[2];
+										}
+										if ( typeof arguments[5] === 'object' ) {
+											Object.assign( hitObject, arguments[5] );
+										}
+										if ( 'undefined' !== typeof (
+											arguments[1].hitType
+										) ) {
+											hitObject = arguments[1];
+										}
+										if ( hitObject ) {
+											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+											hitConverted = mapArgs( hitObject );
+											__gtagTracker( 'event', action, hitConverted );
+										}
+									}
+									return;
+								}
+
+								function mapArgs( args ) {
+									var gaKey, hit = {};
+									var gaMap = {
+										'eventCategory': 'event_category',
+										'eventAction': 'event_action',
+										'eventLabel': 'event_label',
+										'eventValue': 'event_value',
+										'nonInteraction': 'non_interaction',
+										'timingCategory': 'event_category',
+										'timingVar': 'name',
+										'timingValue': 'value',
+										'timingLabel': 'event_label',
+									};
+									for ( gaKey in gaMap ) {
+										if ( 'undefined' !== typeof args[gaKey] ) {
+											hit[gaMap[gaKey]] = args[gaKey];
+										}
+									}
+									return hit;
+								}
+
+								try {
+									f.hitCallback();
+								} catch ( ex ) {
+								}
+							};
+							__gaTracker.create = newtracker;
+							__gaTracker.getByName = newtracker;
+							__gaTracker.getAll = function () {
+								return [];
+							};
+							__gaTracker.remove = noopfn;
+							__gaTracker.loaded = true;
+							window['__gaTracker'] = __gaTracker;
+						}
+					)();
+									} else {
+										console.log( "" );
+					( function () {
+							function __gtagTracker() {
+								return null;
+							}
+							window['__gtagTracker'] = __gtagTracker;
+							window['gtag'] = __gtagTracker;
+					} )();
+									}
+			</script><style type="text/css" media="all">
+.wpautoterms-footer{background-color:#ffffff;text-align:center;}
+.wpautoterms-footer a{color:#000000;font-family:Arial, sans-serif;font-size:14px;}
+.wpautoterms-footer .separator{color:#cccccc;font-family:Arial, sans-serif;font-size:14px;}</style><link rel="stylesheet" id="wp-block-library-css" href="https://blog.kroy.io/wp-includes/css/dist/block-library/style.min.css" media="all"><style id="wp-block-library-inline-css">
+.has-text-align-justify{text-align:justify;}
+</style><style id="wp-block-library-theme-inline-css">
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style><link rel="stylesheet" id="wpautoterms_css-css" href="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/css/wpautoterms.css" media="all"><link rel="stylesheet" id="SFSImainCss-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/sfsi-style.css" media="all"><link rel="stylesheet" id="disable_sfsi-css" href="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/css/disable_sfsi.css" media="all"><link rel="stylesheet" id="sinatra-styles-css" href="https://blog.kroy.io/wp-content/themes/sinatra/assets/css/style.min.css" media="all"><link rel="stylesheet" id="sinatra-dynamic-styles-css" href="https://blog.kroy.io/wp-content/uploads/sinatra/dynamic-styles.css" media="all"><link rel="stylesheet" id="jetpack_css-css" href="https://blog.kroy.io/wp-content/plugins/jetpack/css/jetpack.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery.min.js" id="jquery-core-js"></script><script src="https://blog.kroy.io/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/regenerator-runtime.min.js" id="regenerator-runtime-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/vendor/wp-polyfill.min.js" id="wp-polyfill-js"></script><script src="https://blog.kroy.io/wp-includes/js/dist/dom-ready.min.js" id="wp-dom-ready-js"></script><script src="https://blog.kroy.io/wp-content/plugins/auto-terms-of-service-and-privacy-policy/js/base.js" id="wpautoterms_base-js"></script><script id="exactmetrics-frontend-script-js-extra">
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/PLACEHOLDER.wpsho","hash_tracking":"false","ua":"UA-89722449-1"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend-gtag.min.js" id="exactmetrics-frontend-script-js"></script><meta name="follow.it-verification-code-SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=" content="JYtCEsckN2zSqxbf9XAX"><script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script><style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style><style type="text/css">img#wpstats{display:none}</style><meta name="theme-color" content="#3857F1"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png" sizes="32x32"><link rel="icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-192x192.png" sizes="192x192"><link rel="apple-touch-icon" href="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-180x180.png"><meta name="msapplication-TileImage" content="https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-270x270.png"></head><body class="post-template-default single single-post postid-1104 single-format-standard wp-embed-responsive sinatra-topbar__separators-regular sinatra-layout__fw-contained sinatra-with-dropdown-indicators sinatra-header-layout-1 sinatra-menu-animation-underline sinatra-header__separators-none si-single-title-in-content narrow-content si-page-title-align-left si-has-sidebar sinatra-sidebar-style-3 sinatra-sidebar-position__right-sidebar si-sidebar-r__after-content entry-media-hover-style-1 sinatra-copyright-layout-1 si-input-supported validate-comment-form si-menu-accessibility">
+
+
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+	<header id="masthead" class="site-header" role="banner" itemtype="https://schema.org/WPHeader" itemscope="itemscope"><div id="sinatra-header">
+		<div id="sinatra-header-inner">
+	
+<div class="si-container si-header-container">
+
+	
+<div class="sinatra-logo si-header-element" itemtype="https://schema.org/Organization" itemscope="itemscope">
+	<div class="logo-inner"><span class="site-title" itemprop="name">
+						<a href="https://blog.kroy.io/" rel="home" itemprop="url">
+							blog.kroy.io
+						</a>
+					</span><p class="site-description" itemprop="description">
+						computers, tech, and whatever other random stuff crosses my mind.
+					</p></div></div>
+
+<nav class="site-navigation main-navigation sinatra-primary-nav sinatra-nav si-header-element" role="navigation" itemtype="https://schema.org/SiteNavigationElement" itemscope="itemscope" aria-label="Site Navigation"><ul class="sinatra-primary-nav"><li><a href="https://blog.kroy.io/"><span>Home</span></a></li></ul></nav><div class="si-header-widgets si-header-element sinatra-widget-location-right"><div class="si-header-widget__search si-header-widget sinatra-hide-mobile-tablet"><div class="si-widget-wrapper">
+<div aria-haspopup="true">
+	<a href="#" class="si-search">
+		<i class="si-icon si-search"></i>
+	</a>
+
+	<div class="si-search-simple si-search-container dropdown-item">
+		<form role="search" aria-label="Site Search" method="get" class="si-search-form" action="https://blog.kroy.io/">
+
+			<label class="si-form-label">
+				<span class="screen-reader-text">Search for:</span>
+				<input type="search" class="si-input-search" placeholder="Search" value="" name="s" autocomplete="off"></label>
+
+			
+			<button type="submit" class="sinatra-animate-arrow right-arrow" aria-hidden="true" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="18px" viewbox="0 0 30 18" enable-background="new 0 0 30 18" xml:space="preserve"><path class="arrow-handle" d="M2.511,9.007l7.185-7.221c0.407-0.409,0.407-1.071,0-1.48s-1.068-0.409-1.476,0L0.306,8.259 c-0.408,0.41-0.408,1.072,0,1.481l7.914,7.952c0.407,0.408,1.068,0.408,1.476,0s0.407-1.07,0-1.479L2.511,9.007z"></path><path class="arrow-bar" fill-rule="evenodd" clip-rule="evenodd" d="M1,8h28.001c0.551,0,1,0.448,1,1c0,0.553-0.449,1-1,1H1c-0.553,0-1-0.447-1-1
+					                            C0,8.448,0.447,8,1,8z"></path></svg></button>
+		</form>
+	</div>
+</div>
+</div></div></div>
+	<span class="si-header-element si-mobile-nav">
+				<button class="si-hamburger hamburger--spin si-hamburger-sinatra-primary-nav" aria-label="Menu" aria-controls="sinatra-primary-nav" type="button">
+
+			
+			<span class="hamburger-box">
+				<span class="hamburger-inner"></span>
+			</span>
+
+		</button>
+			</span>
+
+</div>
+	</div>
+	</div>
+		
+<div class="page-header si-has-breadcrumbs">
+
+	
+	
+	<div class="si-container si-breadcrumbs"><nav role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs" itemprop="breadcrumb"><ul class="trail-items" itemscope itemtype="http://schema.org/BreadcrumbList"><meta name="numberOfItems" content="5"><meta name="itemListOrder" content="Ascending"><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-begin"><a href="https://blog.kroy.io/" rel="home" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2021/" itemprop="item"><span itemprop="name">2021</span></a><meta itemprop="position" content="2"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2021/06/" itemprop="item"><span itemprop="name">June</span></a><meta itemprop="position" content="3"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item"><a href="https://blog.kroy.io/2021/06/23/" itemprop="item"><span itemprop="name">23</span></a><meta itemprop="position" content="4"></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-end"><span><span itemprop="name">VyOS from Scratch: Routing and VPS Edition</span></span><meta itemprop="position" content="5"></li></ul></nav></div>
+</div>
+	</header><div id="main" class="site-main">
+
+		
+<div class="si-container">
+
+	<div id="primary" class="content-area">
+
+		
+		<main id="content" class="site-content" role="main" itemscope itemtype="http://schema.org/Blog"><article id="post-1104" class="sinatra-article post-1104 post type-post status-publish format-standard has-post-thumbnail hentry category-routing category-vpn category-vyos tag-bgeeeeep tag-vyos tag-vyosfromscratch tag-wireguard" itemscope="" itemtype="https://schema.org/CreativeWork"><div class="post-category">
+
+	<span class="cat-links"><span class="screen-reader-text">Posted in</span><span><a href="https://blog.kroy.io/category/routing/" rel="category tag">Routing</a> <a href="https://blog.kroy.io/category/vpn/" rel="category tag">vpn</a> <a href="https://blog.kroy.io/category/vyos/" rel="category tag">VyOS</a></span></span>
+</div>
+
+<header class="entry-header"><h1 class="entry-title" itemprop="headline">
+		VyOS from Scratch: Routing and VPS Edition	</h1>
+
+</header><div class="entry-meta"><div class="entry-meta-elements">		<span class="post-author">
+			<span class="posted-by vcard author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">
+				<span class="screen-reader-text">Posted by</span>
+
+				
+				<span>
+										By 					<a class="url fn n" title="View all posts by Kroy" href="https://blog.kroy.io/author/kroy3348/" rel="author" itemprop="url">
+						<span class="author-name" itemprop="name">Kroy</span>
+					</a>
+				</span>
+			</span>
+		</span>
+		<span class="posted-on">June 23, 2021</span></div></div><div class="post-thumb entry-media thumbnail"><img width="801" height="990" alt="VyOS from Scratch: Routing and VPS Edition" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png" class="attachment-large size-large wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="801" height="990" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png" class="attachment-large size-large wp-post-image" alt="VyOS from Scratch: Routing and VPS Edition"></noscript></div>
+<div class="entry-content si-entry" itemprop="text">
+	
+<p>For a while now I’ve wanted to document a more complex routing setup with <a rel="noreferrer noopener" href="https://vyos.io/" target="_blank">VyOS</a>, and here it is.  Routing with BGP, WireGuard to a VPS, and Policy Based Routing?  </p>
+
+
+
+<p>This should be a fun one.</p>
+
+
+
+<hr class="wp-block-separator"><p>Routing has easily become one of my favorite lab tasks.  Especially since at one point, it was such an incredibly cryptic thing to me.</p>
+
+
+
+<p>So fair warning.  This will be long.  </p>
+
+
+
+<p>I’m going to:</p>
+
+
+
+<ul><li>Set up a VPS and an internal home router.</li><li>Use WireGuard to connect the VPS and internal home router</li><li>Set up multiple other internal routers and get the traffic flowing.</li><li>Route traffic from a basic desktop through the VPS, all via BGP.</li></ul><div class="lwptoc lwptoc-autoWidth lwptoc-baseItems lwptoc-light lwptoc-notInherit" data-smooth-scroll="1" data-smooth-scroll-offset="24"><div class="lwptoc_i">    <div class="lwptoc_header">
+        <b class="lwptoc_title">Contents</b>                    <span class="lwptoc_toggle">
+                <a href="#" class="lwptoc_toggle_label" data-label="show">hide</a>
+            </span>
+            </div>
+<div class="lwptoc_items lwptoc_items-visible">
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Routing">
+                    <span class="lwptoc_item_number">1</span>
+                <span class="lwptoc_item_label">Routing</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Lets_talk_about_CIDRs">
+                    <span class="lwptoc_item_number">1.1</span>
+                <span class="lwptoc_item_label">Let’s talk about CIDRs</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#Home_-_VPS_Setup">
+                    <span class="lwptoc_item_number">2</span>
+                <span class="lwptoc_item_label">Home -> VPS Setup</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Home_Setup">
+                    <span class="lwptoc_item_number">2.1</span>
+                <span class="lwptoc_item_label">Home Setup</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#VPS_Setup">
+                    <span class="lwptoc_item_number">2.2</span>
+                <span class="lwptoc_item_label">VPS Setup</span>
+    </a>
+    </div></div></div><div class="lwptoc_item">    <a href="#Tunnels_UP">
+                    <span class="lwptoc_item_number">3</span>
+                <span class="lwptoc_item_label">Tunnels UP!</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Route_That">
+                    <span class="lwptoc_item_number">3.1</span>
+                <span class="lwptoc_item_label">Route That!</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Static_Routing_The_Easy_Way_Out">
+                    <span class="lwptoc_item_number">3.1.1</span>
+                <span class="lwptoc_item_label">Static Routing, The Easy Way Out</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#BGP_The_Slightly_Less_Easy_Way_Out">
+                    <span class="lwptoc_item_number">3.1.2</span>
+                <span class="lwptoc_item_label">BGP, The Slightly Less Easy Way Out</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#Home_Setup1">
+                    <span class="lwptoc_item_number">3.1.2.1</span>
+                <span class="lwptoc_item_label">Home Setup</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#VPS_Setup1">
+                    <span class="lwptoc_item_number">3.1.2.2</span>
+                <span class="lwptoc_item_label">VPS Setup</span>
+    </a>
+    </div></div></div></div></div></div></div><div class="lwptoc_item">    <a href="#BGeeeeeP_All_The_Things">
+                    <span class="lwptoc_item_number">4</span>
+                <span class="lwptoc_item_label">BGeeeeeP All The Things</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#A_Pair_of_Internal-Internal_Routers">
+                    <span class="lwptoc_item_number">4.1</span>
+                <span class="lwptoc_item_label">A Pair of Internal-Internal Routers</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#LAB1">
+                    <span class="lwptoc_item_number">4.1.1</span>
+                <span class="lwptoc_item_label">LAB1</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#LAB2">
+                    <span class="lwptoc_item_number">4.1.2</span>
+                <span class="lwptoc_item_label">LAB2</span>
+    </a>
+    </div></div></div></div></div><div class="lwptoc_item">    <a href="#Playing_around_with_Clients">
+                    <span class="lwptoc_item_number">5</span>
+                <span class="lwptoc_item_label">Playing around with Clients</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#A_Policy_Route">
+                    <span class="lwptoc_item_number">5.1</span>
+                <span class="lwptoc_item_label">A Policy Route</span>
+    </a>
+    <div class="lwptoc_itemWrap"><div class="lwptoc_item">    <a href="#OOOPS">
+                    <span class="lwptoc_item_number">5.1.1</span>
+                <span class="lwptoc_item_label">OOOPS…</span>
+    </a>
+    </div></div></div></div></div><div class="lwptoc_item">    <a href="#Caveats">
+                    <span class="lwptoc_item_number">6</span>
+                <span class="lwptoc_item_label">Caveats</span>
+    </a>
+    </div><div class="lwptoc_item">    <a href="#Conclusion">
+                    <span class="lwptoc_item_number">7</span>
+                <span class="lwptoc_item_label">Conclusion</span>
+    </a>
+    </div></div></div>
+</div></div><hr class="wp-block-separator"><h2><span id="Routing">Routing</span></h2>
+
+
+
+<p>Routing, put most simply, is: “Where do I find this IP address I’m looking for”.  </p>
+
+
+
+<p>So if a host/server/device wants to get to an IP, it needs to know the path to get there.  And it can only talk to devices that it’s locally connected to, which means a device on a local interface/subnet with it.  </p>
+
+
+
+<figure class="wp-block-pullquote"><blockquote><p>There are two main types of routing I’ll be talking about. </p><p>Static, which is “hey, I know what subnets are where, and I’ll map everything manually”, and dynamic, which is “I’m going to set up relationships with other routers and learn stuff automatically”.</p></blockquote></figure><p>BGP, or Border Gateway Protocol, is the type of dynamic routing I’ll be using here.  </p>
+
+
+
+<hr class="wp-block-separator"><p>Let’s break down the main routing table on one of my primary routers (<code>show ip route</code> in VyOS):</p>
+
+
+
+<pre class="wp-block-code"><code>B>* 0.0.0.0/0 [20/0] via 10.245.245.9, eth0.508, weight 1, 00:00:08
+C * 10.0.11.0/24 is directly connected, eth0.11, 01w0d22h
+C>* 10.0.11.0/24 is directly connected, eth0.11, 01w0d22h
+C>* 10.0.35.0/30 is directly connected, eth0.35, 01w0d22h
+C * 10.3.1.0/24 is directly connected, eth0.3, 01w0d22h
+C>* 10.3.1.0/24 is directly connected, eth0.3, 01w0d22h
+C * 10.9.1.0/24 is directly connected, eth0.9, 01w0d22h
+C>* 10.9.1.0/24 is directly connected, eth0.9, 01w0d22h
+C * 10.10.8.0/24 is directly connected, eth0.8, 01w0d22h
+C>* 10.10.8.0/24 is directly connected, eth0.8, 01w0d22h
+C * 10.10.51.0/24 is directly connected, eth0.51, 01w0d22h
+C>* 10.10.51.0/24 is directly connected, eth0.51, 01w0d22h
+C * 10.20.20.0/24 is directly connected, eth0.20, 01w0d22h
+C>* 10.20.20.0/24 is directly connected, eth0.20, 01w0d22h
+C * 10.21.21.0/24 is directly connected, eth0.21, 01w0d22h
+C>* 10.21.21.0/24 is directly connected, eth0.21, 01w0d22h
+C * 10.22.22.0/24 is directly connected, eth0.22, 01w0d22h
+C>* 10.22.22.0/24 is directly connected, eth0.22, 01w0d22h
+B>* 10.53.53.53/32 [20/0] via 10.3.1.252, eth0.3, weight 1, 01w0d22h
+  *                       via 10.3.1.254, eth0.3, weight 1, 01w0d22h
+B>* 10.53.53.54/32 [20/0] via 10.3.1.252, eth0.3, weight 1, 01w0d22h
+  *                       via 10.3.1.254, eth0.3, weight 1, 01w0d22h
+C>* 10.245.245.8/30 is directly connected, eth0.508, 01w0d22h</code></pre>
+
+
+
+<p>There is lots going on here, but hopefully most of it is pretty straightforward:</p>
+
+
+
+<ul><li><code>B>* 0.0.0.0/0</code>: This route is learned from my main edge router via BGP.  This is a <a rel="noreferrer noopener" href="https://www.keycdn.com/support/what-is-cidr#:~:text=CIDR%2C%20which%20stands%20for%20Classless,the%20growth%20of%20routing%20tables." target="_blank">CIDR </a>that represents “Every address on the Internet”.  That means any IP or subnet that this server doesn’t know about, will be forwarded to the device at <code>10.245.245.9</code>.</li><li><code>C> * ...</code> and <code>C *</code> all represent “directly connected”.  This means these are all subnets that exist directly on this router.  There are multiple entries here because I’m using <a rel="noreferrer noopener" href="https://docs.vyos.io/en/equuleus/configuration/highavailability/index.html?highlight=vrrp" target="_blank">VRRP</a> and this router is currently holding the <em>MASTER</em> status for the redundant IP:</li></ul><div class="wp-block-image"><figure class="aligncenter size-large"><img width="567" height="129" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image.png 567w, https://blog.kroy.io/wp-content/uploads/2021/06/image-300x68.png 300w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image.png" data-sizes="(max-width: 567px) 100vw, 567px" class="wp-image-1105 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="567" height="129" src="https://blog.kroy.io/wp-content/uploads/2021/06/image.png" alt="" class="wp-image-1105" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image.png 567w,https://blog.kroy.io/wp-content/uploads/2021/06/image-300x68.png 300w" sizes="(max-width: 567px) 100vw, 567px"></noscript><figcaption>show interfaces</figcaption></figure></div>
+
+
+
+<ul><li>I have two special entries here, <code>10.53.53.53/32</code> and <code>10.53.53.54/32</code>.   These are both learned from my DNS servers via BGP, for a type of “anycast DNS”.  Meaning, if the 252 host is down, 10.53.53.53 and 10.53.53.54 will still both respond to DNS queries served from the 254 host.  Vice versa with the 254 host.  I can spin up extra DNS servers with zero effort and they would still respond to my custom DNS IPs.  At one point my DNS range was <code>10.3.1.248-254</code>, which means I had a LOT of DNS servers all responding to the same two IPs. This prevents weirdness in how different operating systems handle primary and backup DNS.</li><li>Finally, another directly connected route.  This is the <code>/30</code> that talks to my main edge router</li></ul><hr class="wp-block-separator"><h3><span id="Lets_talk_about_CIDRs">Let’s talk about CIDRs</span></h3>
+
+
+
+<p>CIDRs are a very important concept in routing.  They represent the <code>/24</code> after the network in the above descriptions.  The smaller the CIDR number, the more IP addresses that network represents.  </p>
+
+
+
+<p>Most subnets have a network address and a broadcast address, neither which can be used for hosts in that subnet.</p>
+
+
+
+<p>In my opinion, using a tool like <code>sipcalc</code> makes it super clear:</p>
+
+
+
+<ul><li>A normal <code>/24</code>.  This is what people normally use for LAN subnets.  A nice range of 254 usable. addresses.  Many people would put their router at <code>10.3.1.1</code> or <code>10.3.1.254</code>, and reserve a DHCP range for somewhere in the middle.  The .0 and .255 addresses are reserved for the network address and broadcast respectively.</li></ul><pre class="wp-block-code"><code>❯ sipcalc 10.3.1.0/24    
+-[ipv4 : 10.3.1.0/24] - 0
+
+[CIDR]
+Host address            - 10.3.1.0
+Host address (decimal)  - 167969024
+Host address (hex)      - A030100
+Network address         - 10.3.1.0
+Network mask            - 255.255.255.0
+Network mask (bits)     - 24
+Network mask (hex)      - FFFFFF00
+Broadcast address       - 10.3.1.255
+Cisco wildcard          - 0.0.0.255
+Addresses in network    - 256
+Network range           - 10.3.1.0 - 10.3.1.255
+Usable range            - 10.3.1.1 - 10.3.1.254
+</code></pre>
+
+
+
+<ul><li>A <code>/30</code>.  Often used for point-to-point links.  Four addresses are represented, but only the middle two are available, again due to the network/broadcast addresses.</li></ul><pre class="wp-block-code"><code>❯ sipcalc 10.245.245.8/30
+-[ipv4 : 10.245.245.8/30] - 0
+
+[CIDR]
+Host address            - 10.245.245.8
+Host address (decimal)  - 183891208
+Host address (hex)      - AF5F508
+Network address         - 10.245.245.8
+Network mask            - 255.255.255.252
+Network mask (bits)     - 30
+Network mask (hex)      - FFFFFFFC
+Broadcast address       - 10.245.245.11
+Cisco wildcard          - 0.0.0.3
+Addresses in network    - 4
+Network range           - 10.245.245.8 - 10.245.245.11
+Usable range            - 10.245.245.9 - 10.245.245.10
+</code></pre>
+
+
+
+<ul><li>Most people use the larger subnets as “summary networks”, such as with this <code>/8</code>.  It would include the <code>10.3.1.0/24</code> and <code>10.245.245.8/30</code> from above.  Meaning if you wanted to target both, and didn’t want to have two routing entries, you could just use a single route:</li></ul><pre class="wp-block-code"><code>❯ sipcalc 10.0.0.0/8     
+-[ipv4 : 10.0.0.0/8] - 0
+
+[CIDR]
+Host address            - 10.0.0.0
+Host address (decimal)  - 167772160
+Host address (hex)      - A000000
+Network address         - 10.0.0.0
+Network mask            - 255.0.0.0
+Network mask (bits)     - 8
+Network mask (hex)      - FF000000
+Broadcast address       - 10.255.255.255
+Cisco wildcard          - 0.255.255.255
+Addresses in network    - 16777216
+Network range           - 10.0.0.0 - 10.255.255.255
+Usable range            - 10.0.0.1 - 10.255.255.254
+</code></pre>
+
+
+
+<ul><li>Finally, a few “special” subnets/CIDRs.  We have a <code>/31</code>, which is used for point-to-point links and not waste two addresses, and <code>0.0.0.0/0</code>, which is default route to represent the whole Internet.  Note that the <code>.0</code> address in the <code>/31</code> is actually usable!  Meaning the two usable addresses are <code>10.42.42.0 / 10.42.42.1</code>. This is an oddity if you aren’t accustomed to it:</li></ul><pre class="wp-block-code"><code>❯ sipcalc 10.42.42.0/31
+-[ipv4 : 10.42.42.0/31] - 0
+
+[CIDR]
+Host address            - 10.42.42.0
+Host address (decimal)  - 170535424
+Host address (hex)      - A2A2A00
+Network address         - 10.42.42.0
+Network mask            - 255.255.255.254
+Network mask (bits)     - 31
+Network mask (hex)      - FFFFFFFE
+Broadcast address       - 10.42.42.1
+Cisco wildcard          - 0.0.0.1
+Addresses in network    - 2
+Network range           - 10.42.42.0 - 10.42.42.1
+</code></pre>
+
+
+
+<pre class="wp-block-code"><code>❯ sipcalc 0.0.0.0/0    
+-[ipv4 : 0.0.0.0/0] - 0
+
+[CIDR]
+Host address            - 0.0.0.0
+Host address (decimal)  - 0
+Host address (hex)      - 0
+Network address         - 0.0.0.0
+Network mask            - 0.0.0.0
+Network mask (bits)     - 0
+Network mask (hex)      - 0
+Broadcast address       - 255.255.255.255
+Cisco wildcard          - 255.255.255.255
+Addresses in network    - 4294967295
+Network range           - 0.0.0.0 - 255.255.255.255
+Usable range            - 0.0.0.1 - 255.255.255.254
+</code></pre>
+
+
+
+<p>So <code>10.53.53.0/24</code> encompasses <code>10.53.53.53/32</code>. And in the routing world, if you were to have routes for both in your routing table, the more specific, <code>/32</code>, would be the one chosen to get to the <code>10.53.53.53</code> host.</p>
+
+
+
+<p>I know all that was a bit of an information dump, but hopefully it illustrated a few things.  </p>
+
+
+
+<hr class="wp-block-separator"><h2><span id="Home_-_VPS_Setup">Home -> VPS Setup</span></h2>
+
+
+
+<p>I don’t want to get too bogged down with the details of how the Home and VPS routers are configured.  But I’m using a relatively recent<a rel="noreferrer noopener" href="https://downloads.vyos.io/?dir=rolling/current/amd64" target="_blank"> vyos-rolling </a>build, and have spun up a cheap VPS at Vultr for this blog.</p>
+
+
+
+<p>This diagram demonstrates what I am trying to achieve:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="801" height="990" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png 801w, https://blog.kroy.io/wp-content/uploads/2021/06/image-7-243x300.png 243w, https://blog.kroy.io/wp-content/uploads/2021/06/image-7-243x300@2x.png 486w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png" data-sizes="(max-width: 801px) 100vw, 801px" class="wp-image-1130 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="801" height="990" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png" alt="" class="wp-image-1130" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-7.png 801w,https://blog.kroy.io/wp-content/uploads/2021/06/image-7-243x300.png 243w,https://blog.kroy.io/wp-content/uploads/2021/06/image-7-243x300@2x.png 486w" sizes="(max-width: 801px) 100vw, 801px"></noscript><figcaption>the diagram</figcaption></figure><h3><span id="Home_Setup">Home Setup</span></h3>
+
+
+
+<p>At home, I’ve buried a brand new VyOS VM deep within my network.  So this is really going to represent the setup of someone that’s behind multiple layers of NAT, including carrier-grade, meaning they might not be able to port forward.</p>
+
+
+
+<p>This is our <code>edge</code> router for this setup. </p>
+
+
+
+<p>I’m assuming some familiarity with VyOS in general, but I’ll briefly touch over what’s in the attached config:</p>
+
+
+
+<ul><li>Run <code>generate wireguard named-keypairs Vultr</code> in op-mode.  This creates the private key for putting in the following config.</li><li>Run <code>show wireguard keypairs pubkey Vultr</code> to get the pubkey to put in the VPS config.</li><li>Set up the “WAN” connection. This is just some random static IP on an existing LAN.</li><li>Set up a pair interfaces that are going to talk to a few other routers.  These <code>10.42.0.0/16</code> or <code>10.42.0-255.0/24</code> addresses are the main subnets that we are going to be playing with. </li><li>Do a little bit of source NAT.  This will make anything behind this router on any subnet inside of <code>10.42.0.0/16</code> be able to get to the Internet.  </li><li>Set up a WireGuard connection to my VPS (this will be deleted before this blog is posted, which is why I’m keeping the IP).  <ul><li>Set the description and local IP for this tunnel.  I’m using a <code>/31</code> as mentioned in the above CIDR section.</li><li>Set the <code>allowed-ips</code>.  This is the traffic we want to allow the traverse this tunnel.  We are including both the tunnel <code>/31</code> subnet and the <code>/16</code> subnet.</li><li>Make sure we have the <code>persistent-keepalive 15</code> set here.  Since we aren’t doing a site-to-site, we need to make sure to have this, so the tunnel doesn’t timeout.  The tunnel can ONLY be brought up when traffic attempts to go from Home->VPS and not vice-versa because we are emulating CGNAT here. </li><li>The address and the port of the VPS that WireGuard is configured to listen on</li><li>The public key of the VPS.  From running <code>show wireguard keypairs pubkey Home</code> on the <strong>VPS</strong> after generating it with <code>generate wireguard named-keypairs Home</code></li></ul></li><li>Choosing the local private key to use for this connection.  It should match the “generate …” you ran above.</li><li>My default route for this router so I have Internet access</li><li>turning on SSH and naming this router</li></ul><pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="097f70667a497f70667a65686b246c6d6e6c">[email protected]</a>:~$ show configuration commands
+set interfaces ethernet eth0 address '10.21.21.10/24'
+set interfaces ethernet eth0 description 'WAN'
+set interfaces ethernet eth1 address '10.42.0.1/24'
+set interfaces ethernet eth1 description 'LAB1'
+set interfaces ethernet eth2 address '10.42.1.1/24'
+set interfaces ethernet eth2 description 'LAB2'
+set interfaces loopback lo
+set nat source rule 10 description 'Outgoing NAT'
+set nat source rule 10 outbound-interface 'eth0'
+set nat source rule 10 source address '10.42.0.0/16'
+set nat source rule 10 translation address 'masquerade'
+set interfaces wireguard wg0 address '172.24.32.1/31'
+set interfaces wireguard wg0 description 'lab-ptp-vps'
+set interfaces wireguard wg0 peer VPS-Lab address '144.202.75.103'
+set interfaces wireguard wg0 peer VPS-Lab allowed-ips '172.24.32.0/31'
+set interfaces wireguard wg0 peer VPS-Lab allowed-ips '10.42.0.0/16'
+set interfaces wireguard wg0 peer VPS-Lab persistent-keepalive '15'
+set interfaces wireguard wg0 peer VPS-Lab port '8765'
+set interfaces wireguard wg0 peer VPS-Lab pubkey '<strong>lQWPCw1f+B15Au441P2qwue8/YIZ3FLTTW+6N3EzhWM=</strong>'
+set interfaces wireguard wg0 private-key 'Vultr'
+set protocols static route 0.0.0.0/0 next-hop 10.21.21.1
+set service ssh port '22'
+set system host-name 'vyoslab-edge'
+</code></pre>
+
+
+
+<p></p>
+
+
+
+<p>Hopefully this should demonstrate where the pubkeys come from:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cabcb3a5b98abcb3a5b9a6aba8e7afaeadaf">[email protected]</a>:~$ show wireguard keypairs pubkey Vultr 
+<strong>vzJetiL/M5Ujkb5DiwaG1CMAMr1Ib6a4OGdvlIMNWXs=</strong></code></pre>
+
+
+
+<h3><span id="VPS_Setup">VPS Setup</span></h3>
+
+
+
+<p>At Vultr, I’ve set up a very simple VyOS config with just the basics to get it online, and the complementary WireGuard config.  </p>
+
+
+
+<ul><li>This VPS’s static IP and default route</li><li>Enable SSH</li><li>Set the hostname</li><li>Set up Wireguard<ul><li>Uses the opposite IP address, the .0, in the <code>/31</code> subnet</li><li>Uses the pubkey from above.</li></ul></li></ul><pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a2c2335291a2c233529363b38772c2a29">[email protected]</a># run show configuration commands 
+set interfaces ethernet eth0 address '144.202.75.103/23'
+set interfaces loopback lo
+set interfaces wireguard wg0 address '172.24.32.0/31'
+set interfaces wireguard wg0 description 'lab-ptp-home'
+set interfaces wireguard wg0 peer HomeLab allowed-ips '172.24.32.0/31'
+set interfaces wireguard wg0 peer HomeLab allowed-ips '10.42.0.0/16'
+set interfaces wireguard wg0 peer HomeLab pubkey '<strong>vzJetiL/M5Ujkb5DiwaG1CMAMr1Ib6a4OGdvlIMNWXs=</strong>'
+set interfaces wireguard wg0 port '8765'
+set interfaces wireguard wg0 private-key 'Home'
+set protocols static route 0.0.0.0/0 next-hop 144.202.74.1
+set service ssh port '22'
+set system host-name 'vyoslab-vps'
+</code></pre>
+
+
+
+<p>And the key, which will match the Home pubkey config:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="76000f190536000f19051a17145b000605">[email protected]</a>:~$ show wireguard keypairs pubkey  Home 
+<strong>lQWPCw1f+B15Au441P2qwue8/YIZ3FLTTW+6N3EzhWM=</strong></code></pre>
+
+
+
+<p>If you are paying attention, you’ll notice that there is no “endpoint” directive in the WireGuard config on the VPS side.  </p>
+
+
+
+<p>We are running WireGuard here as a server, instead of a site-to-site.</p>
+
+
+
+<p>Even though to WireGuard, it doesn’t care much, it’s worth noting because it has important implications, as hinted above.  </p>
+
+
+
+<p>In this setup, if you are on the VPS and try and bring up the tunnel, nothing will happen.  Because the VPS doesn’t know how to get to the other end.  So any traffic needs to originate from the home side, and that’s also why we have the <code>persistent-keepalive</code> on the home side to make sure the tunnel stays up.</p>
+
+
+
+<hr class="wp-block-separator"><figure class="wp-block-pullquote"><blockquote><p>So some people may have noticed… I haven’t touched ANYTHING security-wise here. </p><p>Honestly, it’s probably outside of the scope of what I’m doing. The local “edge” router is buried so far in my homelab it doesn’t matter. And for the VPS router, I’m sure some people are screaming WHY WHY WHY?</p><p>It’s because I’m using Vultr’s firewall to block all traffic from everywhere that’s not me. So calm down.</p></blockquote></figure><hr class="wp-block-separator"><h2><span id="Tunnels_UP">Tunnels UP!<br></span></h2>
+
+
+
+<p>Assuming you’ve made it this far, your tunnel should be up. A ping should work to the opposite end of the tunnel (home is .1, so ping .0):</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6117180e122117180e120d00034c04050604">[email protected]</a>:~$ ping 172.24.32.0 count 4
+PING 172.24.32.0 (172.24.32.0) 56(84) bytes of data.
+64 bytes from 172.24.32.0: icmp_seq=1 ttl=64 time=19.9 ms
+64 bytes from 172.24.32.0: icmp_seq=2 ttl=64 time=19.3 ms
+64 bytes from 172.24.32.0: icmp_seq=3 ttl=64 time=19.3 ms
+64 bytes from 172.24.32.0: icmp_seq=4 ttl=64 time=18.8 ms
+
+--- 172.24.32.0 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 8ms
+rtt min/avg/max/mdev = 18.768/19.333/19.887/0.419 ms</code></pre>
+
+
+
+<p>And a simple op-mode show command:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55232c3a2615232c3a263934377830313230">[email protected]</a>:~$ show interfaces wireguard wg0 
+interface: wg0
+  description: lab-ptp-vps
+  address: 172.24.32.1/31
+  public key: vzJetiL/M5Ujkb5DiwaG1CMAMr1Ib6a4OGdvlIMNWXs=
+  private key: (hidden)
+  listening port: 37175
+
+  peer: VPS-Lab
+    public key: lQWPCw1f+B15Au441P2qwue8/YIZ3FLTTW+6N3EzhWM=
+    latest handshake: 0:01:16
+    status: active
+    endpoint: 144.202.75.103:8765
+    allowed ips: 172.24.32.0/31, 10.42.0.0/16
+    transfer: 54 KB received, 251 KB sent
+    persistent keepalive: every 15 seconds
+
+    RX:   bytes  packets  errors  dropped  overrun       mcast
+          56008      599       0        0        0           0
+    TX:   bytes  packets  errors  dropped  carrier  collisions
+         257096     5728       0        1        0           0
+</code></pre>
+
+
+
+<hr class="wp-block-separator"><h3><span id="Route_That">Route That!</span></h3>
+
+
+
+<p>But the goal here isn’t just to set up a tunnel.  We actually want to get to <code>LAB1/2</code> on the home <code>edge</code> router from the VPS.</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afd9d6c0dcefd9d6c0dcc3cecd82cacbc8ca">[email protected]</a>:~$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             10.21.21.10/24                    u/u  WAN
+eth1             10.42.0.1/24                      u/u  LAB1
+eth2             10.42.1.1/24                      u/u  LAB2
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+wg0              172.24.32.1/31                    u/u  lab-ptp-vps
+</code></pre>
+
+
+
+<p>So let’s do that.  From the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9b94829ead9b94829e818c8fc09b9d9e">[email protected]</a>:~$ ping 10.42.0.1 count 4
+PING 10.42.0.1 (10.42.0.1) 56(84) bytes of data.
+^C
+--- 10.42.0.1 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 87ms</code></pre>
+
+
+
+<p>What’s the problem here?   Well look at the routing table:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="72040b1d0132040b1d011e13105f040201">[email protected]</a>:~$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S>* 0.0.0.0/0 [1/0] via 144.202.74.1, eth0, weight 1, 1d00h17m
+C>* 144.202.74.0/23 is directly connected, eth0, 1d00h17m
+C>* 172.24.32.0/31 is directly connected, wg0, 1d00h17m
+</code></pre>
+
+
+
+<p>Since <code>10.42.0.1</code> doesn’t match any subnets in the routing table, it will try to go out the default <code>0.0.0.0/0</code> route.  This won’t work because private IPs can’t be routed over the public Internet.  </p>
+
+
+
+<h4><span id="Static_Routing_The_Easy_Way_Out">Static Routing, The Easy Way Out</span></h4>
+
+
+
+<p>There are a few ways around this.  A simple static entry for each of the LAB subnets pointed at the home IP of the tunnel (VPS is .0, home is .1):</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="64121d0b1724121d0b1708050649121417">[email protected]</a># set protocols static route 10.42.0.0/24 next-hop 172.24.32.1
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1a7a8bea291a7a8bea2bdb0b3fca7a1a2">[email protected]</a># set protocols static route 10.42.1.0/24 next-hop 172.24.32.1
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c5a55435f6c5a55435f404d4e015a5c5f">[email protected]</a># commit
+Done
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9cfc0d6caf9cfc0d6cad5d8db94cfc9ca">[email protected]</a># run show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S>* 0.0.0.0/0 [1/0] via 144.202.74.1, eth0, weight 1, 1d00h25m
+S>* 10.42.0.0/24 [1/0] via 172.24.32.1, wg0, weight 1, 00:00:05
+S>* 10.42.1.0/24 [1/0] via 172.24.32.1, wg0, weight 1, 00:00:05
+C>* 144.202.74.0/23 is directly connected, eth0, 1d00h25m
+C>* 172.24.32.0/31 is directly connected, wg0, 1d00h25m
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="42343b2d3102343b2d312e23206f343231">[email protected]</a># 
+</code></pre>
+
+
+
+<p></p>
+
+
+
+<p>Of course, this is ugly, and since I deliberately designed the subnets I’m using here to be easily “summarizable”, there’s a VERY simple solution:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bec8c7d1cdfec8c7d1cdd2dfdc93c8cecd">[email protected]</a># delete protocols static route 10.42.0.0/24
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6b0bfa9b586b0bfa9b5aaa7a4ebb0b6b5">[email protected]</a># delete protocols static route 10.42.1.0/24
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="63151a0c1023151a0c100f02014e151310">[email protected]</a># set protocols static route 10.42.0.0/16 next-hop 172.24.32.1
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d0dfc9d5e6d0dfc9d5cac7c48bd0d6d5">[email protected]</a># commit
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85f3fceaf6c5f3fceaf6e9e4e7a8f3f5f6">[email protected]</a># save
+Saving configuration to '/config/config.boot'...
+Done
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfb9b6a0bc8fb9b6a0bca3aeade2b9bfbc">[email protected]</a># run show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S>* 0.0.0.0/0 [1/0] via 144.202.74.1, eth0, weight 1, 1d00h28m
+S>* 10.42.0.0/16 [1/0] via 172.24.32.1, wg0, weight 1, 00:00:09
+C>* 144.202.74.0/23 is directly connected, eth0, 1d00h28m
+C>* 172.24.32.0/31 is directly connected, wg0, 1d00h28m
+</code></pre>
+
+
+
+<p>In both cases, a simple ping to either the LAB1 or LAB2 address of <code>edge</code> should work from the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7107081e023107081e021d10135c070102">[email protected]</a># run ping 10.42.0.1 count 2
+PING 10.42.0.1 (10.42.0.1) 56(84) bytes of data.
+64 bytes from 10.42.0.1: icmp_seq=1 ttl=64 time=18.6 ms
+64 bytes from 10.42.0.1: icmp_seq=2 ttl=64 time=19.2 ms
+
+--- 10.42.0.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 3ms
+rtt min/avg/max/mdev = 18.624/18.908/19.193/0.315 ms
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e4929d8b97a4929d8b97888586c9929497">[email protected]</a># run ping 10.42.1.1 count 2
+PING 10.42.1.1 (10.42.1.1) 56(84) bytes of data.
+64 bytes from 10.42.1.1: icmp_seq=1 ttl=64 time=19.5 ms
+64 bytes from 10.42.1.1: icmp_seq=2 ttl=64 time=19.2 ms
+
+--- 10.42.1.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 3ms
+rtt min/avg/max/mdev = 19.164/19.338/19.512/0.174 ms
+[edit]</code></pre>
+
+
+
+<p>Now that it’s working, delete it and get back to a clean slate so we can proceed to the BGP:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c7a75637f4c7a75637f606d6e217a7c7f">[email protected]</a># delete protocols static route 10.42.0.0/16 
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ef9996809caf9996809c838e8dc2999f9c">[email protected]</a># commit
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aed8d7c1ddeed8d7c1ddc2cfcc83d8dedd">[email protected]</a># run show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S>* 0.0.0.0/0 [1/0] via 144.202.74.1, eth0, weight 1, 1d00h56m
+C>* 144.202.74.0/23 is directly connected, eth0, 1d00h56m
+C>* 172.24.32.0/31 is directly connected, wg0, 1d00h56m</code></pre>
+
+
+
+<hr class="wp-block-separator"><h4><span id="BGP_The_Slightly_Less_Easy_Way_Out">BGP, The Slightly Less Easy Way Out</span></h4>
+
+
+
+<p>So why not just static routing?  It works right?  Well it does…  but has a number of notable problems:</p>
+
+
+
+<ul><li>Requires planning.  Especially if you want to judiciously use summary routes</li><li>Could potentially require a lot of upkeep as your network grows and morphs.  </li><li>It’s not BGP, which is just cool.</li></ul><p>With the first one, who ever plans?  I know I don’t.  I’d rather adjust config on one or two routers than all of them.  </p>
+
+
+
+<p>Regardless, we are here to BGP, so let’s do it.</p>
+
+
+
+<p>If you don’t know what BGP is, you should Google it.  There are 1000 different resources that will explain it better than me. </p>
+
+
+
+<p>There are two main types, internal and external (eBGP), and we are going to be focusing on external, because it’s bit more plug-and-play.  </p>
+
+
+
+<p>An ASN, or Autonomous System Number, is an important concept when it comes to eBGP.  When you are announcing public subnets, you need an officially blessed ASN from a place like <a rel="noreferrer noopener" href="https://www.arin.net/resources/guide/asn/" data-type="URL" data-id="https://www.arin.net/resources/guide/asn/" target="_blank">ARIN</a>,  but for our uses, there are a number of for-private ranges we can use:</p>
+
+
+
+<ul><li>64512 to 65534 (16 bit)</li><li>4200000000 to 4294967294 (32 bit)</li></ul><p>The ASNs are used both for identification and routing decisions.  If I wanted to make a route take a shorter route sometimes and a longer one that others, I could have the ASN PATH in BGP set to “64512 64512 64512” on one peer versus just “64512” on a second.  This would give preference to the shorter path.  </p>
+
+
+
+<p>Does it really matter if you use a non-private one?  Probably not.  And for our cases it will hurt even less than wrongly using non<a rel="noreferrer noopener" href="https://datatracker.ietf.org/doc/html/rfc1918" target="_blank">-RFC1918</a> addresses that people sometimes do in homelabs.  But it’s still good practice to be a good netizen out of the gate.</p>
+
+
+
+<h5><span id="Home_Setup1">Home Setup</span></h5>
+
+
+
+<p>I’ll be starting with the Home setup, since that will be kind of the central hub here.  First, start with the basic peering:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="62141b0d1122141b0d110e03004f07060507">[email protected]</a>:~$ show configuration commands
+set protocols bgp local-as '4200000000'
+set protocols bgp neighbor 172.24.32.0 remote-as '4200000001'
+</code></pre>
+
+
+
+<p>I’ll be going with a very basic setup here, just setting up the initial tunnel.</p>
+
+
+
+<p>Let’s walk through here to see what’s going on:</p>
+
+
+
+<ul><li>Set our local ASN.  For <code>edge</code>, I’ll be using the bottom 32bit private ASN</li><li>Set up our neighbor, this is the <code>vps</code> IP over wireguard, the next available 32bit ASN</li></ul><p> </p>
+
+
+
+<h5><span id="VPS_Setup1">VPS Setup</span></h5>
+
+
+
+<p>On the VPS, a similarly simple config, with everything swapped. We use the <code>edge</code> side of the WireGuard tunnel, and swap the appropriate local and remote ASN. </p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0177786e724177786e726d60632c777172">[email protected]</a># run show configuration commands 
+set protocols bgp local-as '4200000001'
+set protocols bgp neighbor 172.24.32.1 remote-as '4200000000'</code></pre>
+
+
+
+<p>With that, the tunnel should be up.  In op-mode:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b4d4254487b4d425448575a59165e5f5c5e">[email protected]</a>:~$ show bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.1, local AS number 4200000000 vrf-id 0
+BGP table version 0
+RIB entries 0, using 0 bytes of memory
+Peers 1, using 21 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+172.24.32.0     4 4200000001        15        15        0    0    0 00:12:27            0        0
+
+Total number of neighbors 1
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bec8c7d1cdfec8c7d1cdd2dfdc93dbdad9db">[email protected]</a>:~$ 
+</code></pre>
+
+
+
+<p>and</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3a4c4355497a4c435549565b58174c4a49">[email protected]</a># run show bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.0, local AS number 4200000001 vrf-id 0
+BGP table version 0
+RIB entries 0, using 0 bytes of memory
+Peers 1, using 21 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+172.24.32.1     4 4200000000        16        16        0    0    0 00:14:00            0        0
+
+Total number of neighbors 1
+[edit]
+</code></pre>
+
+
+
+<p>The important things to note is that the ASN and neighbor IP get swapped on each host.</p>
+
+
+
+<hr class="wp-block-separator"><p>Of course, we need a few small modifications to actually get things advertising.</p>
+
+
+
+<p>First, we need to tell the home <code>edge</code> to advertise its connected routes. This means that we want to redistribute any routes from this router that are attached to interfaces:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87f1fee8f4c7f1fee8f4ebe6e5aae2e3e0e2">[email protected]</a>:~$ show configuration commands
+set protocols bgp address-family ipv4-unicast redistribute connected
+</code></pre>
+
+
+
+<p>and then on the VPS router to pull any updates instantly:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7b1bea8b487b1bea8b4aba6a5eab1b7b4">[email protected]</a># set protocols bgp neighbor 172.24.32.1 address-family ipv4-unicast soft-reconfiguration inbound 
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="05737c6a7645737c6a7669646728737576">[email protected]</a># commit
+</code></pre>
+
+
+
+<p>With that done, if you look on the <code>vps</code> router, you can see stuff happening:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e197988e92a197988e928d8083cc979192">[email protected]</a>:~$ show bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.0, local AS number 4200000001 vrf-id 0
+BGP table version 8
+RIB entries 9, using 1728 bytes of memory
+Peers 1, using 21 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+172.24.32.1     4 4200000000        51        40        0    0    0 00:33:36            5        5
+
+Total number of neighbors 1
+
+</code></pre>
+
+
+
+<p>So let’s look at our routing table on <code>vps</code>:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3d4b44524e7d4b44524e515c5f104b4d4e">[email protected]</a>:~$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S>* 0.0.0.0/0 [1/0] via 144.202.74.1, eth0, weight 1, 00:37:57
+B>* 10.21.21.0/24 [20/0] via 172.24.32.1, wg0, weight 1, 00:13:12
+B>* 10.42.0.0/24 [20/0] via 172.24.32.1, wg0, weight 1, 00:13:12
+B>* 10.42.1.0/24 [20/0] via 172.24.32.1, wg0, weight 1, 00:13:12
+C>* 144.202.74.0/23 is directly connected, eth0, 00:38:03
+B   172.24.32.0/31 [20/0] via 172.24.32.1 inactive, weight 1, 00:13:12
+C>* 172.24.32.0/31 is directly connected, wg0, 00:38:00
+</code></pre>
+
+
+
+<p>If everything is working, any route that exists on our <code>edge</code>‘s routing table as “directly connected”, should be found on our <code>vps</code>‘s routing table going over the WireGuard tunnel.</p>
+
+
+
+<p>You can test this by adding a new dummy interface on the <code>edge</code> router:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="66101f091526101f09150a07044b03020103">[email protected]</a># set interfaces dummy dum0 address 172.22.22.255/32
+[edit]
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36404f594576404f59455a57541b53525153">[email protected]</a># commit</code></pre>
+
+
+
+<p>Almost immediately, you should see it pop up in the routing table on the <code>vps</code>, but it won’t be pingable because it’s not part of the <code>allowed-ips</code> of the WireGuard tunnel:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed9b94829ead9b94829e818c8fc09b9d9e">[email protected]</a>:~$ show ip route 172.22.22.255/32
+Routing entry for 172.22.22.255/32
+  Known via "bgp", distance 20, metric 0, best
+  Last update 00:00:36 ago
+  * 172.24.32.1, via wg0, weight 1
+
+
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="53252a3c2013252a3c203f32317e252320">[email protected]</a>:~$ ping 172.22.22.255
+PING 172.22.22.255 (172.22.22.255) 56(84) bytes of data.
+From 172.24.32.0 icmp_seq=1 Destination Host Unreachable
+ping: sendmsg: Required key not available
+From 172.24.32.0 icmp_seq=2 Destination Host Unreachable
+ping: sendmsg: Required key not available
+^C
+--- 172.22.22.255 ping statistics ---
+2 packets transmitted, 0 received, +2 errors, 100% packet loss, time 54ms
+</code></pre>
+
+
+
+<p>Now the real fun can start….</p>
+
+
+
+<hr class="wp-block-separator"><h2><span id="BGeeeeeP_All_The_Things">BGeeeeeP All The Things</span></h2>
+
+
+
+<p>So if you’ve been following along, we’ve completed the top part of our diagram here:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="776" height="894" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-8.png 776w, https://blog.kroy.io/wp-content/uploads/2021/06/image-8-260x300.png 260w, https://blog.kroy.io/wp-content/uploads/2021/06/image-8-260x300@2x.png 520w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-8.png" data-sizes="(max-width: 776px) 100vw, 776px" class="wp-image-1131 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="776" height="894" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-8.png" alt="" class="wp-image-1131" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-8.png 776w,https://blog.kroy.io/wp-content/uploads/2021/06/image-8-260x300.png 260w,https://blog.kroy.io/wp-content/uploads/2021/06/image-8-260x300@2x.png 520w" sizes="(max-width: 776px) 100vw, 776px"></noscript></figure><p>It’s time to get our LAB1 and LAB2 routers up.  </p>
+
+
+
+<hr class="wp-block-separator"><h3><span id="A_Pair_of_Internal-Internal_Routers">A Pair of Internal-Internal Routers</span></h3>
+
+
+
+<p>The first thing I’ll be doing is preparing the <code>edge</code> router to connect to <code>lab1</code> and <code>lab2</code>:</p>
+
+
+
+<ul><li>Set up a neighbor pointing at <code>lab1</code>.</li><li><code>default-originate</code> tells this router to automatically set the default route for <code>lab1</code> to this router</li><li>As before, pull updates from <code>lab1</code> quickly</li><li>Set the next ASN in line</li><li>Rinse and repeat for <code>lab2</code></li></ul><pre class="wp-block-code"><code>set protocols bgp neighbor 10.42.0.2 address-family ipv4-unicast default-originate
+set protocols bgp neighbor 10.42.0.2 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.0.2 remote-as '4200000002'
+set protocols bgp neighbor 10.42.1.2 address-family ipv4-unicast default-originate
+set protocols bgp neighbor 10.42.1.2 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.1.2 remote-as '4200000003'</code></pre>
+
+
+
+<hr class="wp-block-separator"><p>The configs for these two are mostly identical.  Note the changes in IP addresses and ASNs</p>
+
+
+
+<ul><li>I’m using a slightly different method of advertising on <code>lab2</code>.  Instead of redistributing any connected network, I’m choosing the specific network to spit out.</li><li>I’ve set up some DHCP Servers.  This is so I can just plug in a client and go for testing</li><li>I’ve also ignored setting up any source NAT.  This is so I can directly access the 100/101 networks from the VPS.</li><li>Note that both of these are missing the <code>0.0.0.0/0</code> default route/gateway.  This is because they are learning it via BGP.</li></ul><p></p>
+
+
+
+<h4><span id="LAB1">LAB1</span></h4>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9dfd0c6dae9dfd0c6dac5c8cb84c5c8cb98">[email protected]</a>:~$ show configuration commands
+set interfaces ethernet eth0 address '10.42.0.2/24'
+set interfaces ethernet eth1 address '10.42.100.1/24'
+set interfaces loopback lo
+<strong>set protocols bgp address-family ipv4-unicast redistribute connected </strong>
+set protocols bgp local-as '4200000002'
+set protocols bgp neighbor 10.42.0.1 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.0.1 remote-as '4200000000'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 default-router '10.42.100.1'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 dns-server '1.1.1.1'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 dns-server '1.0.0.1'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 range 0 start '10.42.100.100'
+set service dhcp-server shared-network-name LAB1 subnet 10.42.100.0/24 range 0 stop '10.42.100.200'
+set service ssh port '22'
+set system host-name 'vyoslab-lab1'
+</code></pre>
+
+
+
+<h4><span id="LAB2">LAB2</span></h4>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5127283e221127283e223d30337c3d303363">[email protected]</a>:~$ show configuration commands
+set interfaces ethernet eth0 address '10.42.1.2/24'
+set interfaces ethernet eth1 address '10.42.101.1/24'
+set interfaces loopback lo
+<strong>set protocols bgp address-family ipv4-unicast network 10.42.101.0/24</strong>
+set protocols bgp local-as '4200000003'
+set protocols bgp neighbor 10.42.1.1 address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp neighbor 10.42.1.1 remote-as '4200000000'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 default-router '10.42.101.1'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 dns-server '1.1.1.1'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 dns-server '1.0.0.1'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 range 0 start '10.42.101.100'
+set service dhcp-server shared-network-name LAB2 subnet 10.42.101.0/24 range 0 stop '10.42.101.200'
+set service ssh port '22'
+set system host-name 'vyoslab-lab2'
+</code></pre>
+
+
+
+<p>Assuming everything is set up right, the BGP connections should pop up and be viewable from <code>edge</code>.  Note the different counts in <code>State/PfxRcd</code> between <code>lab1</code> and <code>lab2</code>.  This is due to how I chose to advertise as mentioned above.  </p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="24525d4b5764525d4b574845460941404341">[email protected]</a>:~$ show ip bgp summary 
+
+IPv4 Unicast Summary:
+BGP router identifier 172.24.32.1, local AS number 4200000000 vrf-id 0
+BGP table version 18
+RIB entries 11, using 2112 bytes of memory
+Peers 3, using 64 KiB of memory
+
+Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt
+10.42.0.2       4 4200000002       131       139        0    0    0 01:22:18            <strong>2</strong>        6
+10.42.1.2       4 4200000003       129       143        0    0    0 01:21:56            <strong>1</strong>        6
+172.24.32.0     4 4200000001       123       122        0    0    0 01:33:50            0        6</code></pre>
+
+
+
+<p>And the routing table all the way out on the <code>vps</code> should be populated and pingable with the two new subnets:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d5a3acbaa695a3acbaa6b9b4b7f8b0b1b2b0">[email protected]</a>:~$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+S>* 0.0.0.0/0 [1/0] via 10.21.21.1, eth0, weight 1, 01:37:31
+C>* 10.21.21.0/24 is directly connected, eth0, 01:37:33
+C>* 10.42.0.0/24 is directly connected, eth1, 01:37:34
+C>* 10.42.1.0/24 is directly connected, eth2, 01:37:33
+B>* 10.42.100.0/24 [20/0] via 10.42.0.2, eth1, weight 1, 00:04:04
+B>* 10.42.101.0/24 [20/0] via 10.42.1.2, eth2, weight 1, 01:25:05
+C>* 172.24.32.0/31 is directly connected, wg0, 01:37:32
+
+------------
+
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a7c7365794a7c736579666b68276f6e6d6f">[email protected]</a>:~$ ping 10.42.100.1 count 1
+PING 10.42.100.1 (10.42.100.1) 56(84) bytes of data.
+64 bytes from 10.42.100.1: icmp_seq=1 ttl=64 time=0.264 ms
+
+--- 10.42.100.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.264/0.264/0.264/0.000 ms
+
+--------------
+
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="66101f091526101f09150a07044b03020103">[email protected]</a>:~$ ping 10.42.101.1 count 1
+PING 10.42.101.1 (10.42.101.1) 56(84) bytes of data.
+64 bytes from 10.42.101.1: icmp_seq=1 ttl=64 time=10.7 ms
+
+--- 10.42.101.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 10.711/10.711/10.711/0.000 ms
+</code></pre>
+
+
+
+<hr class="wp-block-separator"><h2><span id="Playing_around_with_Clients">Playing around with Clients</span></h2>
+
+
+
+<p>Whew… We’ve made it this far.  So what can we do?</p>
+
+
+
+<p>First off, a pair of basic Ubuntu installs.  One behind <code>lab1</code> and one behind <code>lab2</code>:</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="1024" height="338" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1024x338.png 1024w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9-300x99.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1536x507.png 1536w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9.png 2009w, https://blog.kroy.io/wp-content/uploads/2021/06/image-9-300x99@2x.png 600w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1024x338.png" data-sizes="(max-width: 1024px) 100vw, 1024px" class="wp-image-1149 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="1024" height="338" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1024x338.png" alt="" class="wp-image-1149" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1024x338.png 1024w,https://blog.kroy.io/wp-content/uploads/2021/06/image-9-300x99.png 300w,https://blog.kroy.io/wp-content/uploads/2021/06/image-9-1536x507.png 1536w,https://blog.kroy.io/wp-content/uploads/2021/06/image-9.png 2009w,https://blog.kroy.io/wp-content/uploads/2021/06/image-9-300x99@2x.png 600w" sizes="(max-width: 1024px) 100vw, 1024px"></noscript><figcaption>two installs</figcaption></figure><p>If we traceroute from one to another:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="93f8e1fcead3e5eafce0fff2f1bef6fdf7e6e0f6e1a2">[email protected]</a>:~$ traceroute 10.42.101.100  <1st Ubuntu>
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.192 ms  0.168 ms  0.162 ms  <LAB1>
+ 2  10.42.0.1 (10.42.0.1)  0.719 ms  0.709 ms  0.704 ms  <EDGE>
+ 3  10.42.1.2 (10.42.1.2)  0.769 ms  0.763 ms  0.759 ms  <LAB2>
+ 4  10.42.101.100 (10.42.101.100)  1.188 ms  1.183 ms  1.177 ms  <2nd Ubuntu>
+</code></pre>
+
+
+
+<p>What about if we go from the <code>vps</code> to one of the Ubuntu installs:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d1a7a8bea291a7a8bea2bdb0b3fca7a1a2">[email protected]</a>:~$ traceroute 10.42.101.100
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  172.24.32.1 (172.24.32.1)  18.453 ms  18.367 ms  18.378 ms   <EDGE via WireGuard>
+ 2  10.42.1.2 (10.42.1.2)  18.343 ms  18.308 ms  18.275 ms   <LAB2>
+ 3  10.42.101.100 (10.42.101.100)  18.250 ms  18.211 ms  18.178 ms   <2nd Ubuntu>
+</code></pre>
+
+
+
+<p>To a well-known site:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="caa1b8a5b38abcb3a5b9a6aba8e7afa4aebfb9afb8fb">[email protected]</a>:~$ traceroute 1.1.1.1
+traceroute to 1.1.1.1 (1.1.1.1), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.220 ms  0.183 ms  0.176 ms   <LAB1>
+ 2  10.42.0.1 (10.42.0.1)  0.379 ms  0.372 ms  0.362 ms  <EDGE>
+ 3  10.21.21.3 (10.21.21.3)  1.206 ms  1.200 ms  1.193 ms  <An Internal Router>
+ 4  10.245.245.9 (10.245.245.9)  1.255 ms  1.249 ms  1.236 ms  <My Edge Router>
+ 5  xxxxxxxxxxxxxxxxxxxxxxxxxxx 2.658 ms  2.651 ms  2.639 ms
+ 6  xxxxxxxxxxxxxxxxxxxxxxxxxxx 5.195 ms  3.781 ms  4.081 ms
+ 7  xxxxxxxxxxxxxxxxxxxxxxxxxxx  4.069 ms  4.646 ms  4.626 ms
+ 8  xxxxxxxxxxxxxxxxxxxxxxxxxxx.191 ms  4.610 ms  4.600 ms
+ 9  100ge15-2.core1.mci3.he.net (184.105.65.165)  8.474 ms  9.064 ms  8.443 ms
+10  cloudflare.grand1.kcix.net (206.51.7.34)  9.040 ms  10.013 ms  9.385 ms
+11  one.one.one.one (1.1.1.1)  9.415 ms  8.984 ms  8.106 ms
+</code></pre>
+
+
+
+<hr class="wp-block-separator"><h3><span id="A_Policy_Route">A Policy Route</span></h3>
+
+
+
+<p>Of course, all we’ve really done here is set up basic communication between a number of subnets at multiple locations.  So let’s toss some PBR (Policy Based Routing) into the mix.  </p>
+
+
+
+<p>The first step is to make sure <code>vps</code> is set up to NAT out. This is:</p>
+
+
+
+<ul><li>Take all traffic from this subnet</li><li>Masquerade it to the public IP of the VPS</li><li><code>eth0</code> is the WAN interface of the VPS</li></ul><pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="394f40564a794f40564a55585b144f494a">[email protected]</a>:~$ show configuration commands 
+set nat source rule 10 source address '10.42.100.0/24'
+set nat source rule 10 translation address 'masquerade'
+set nat source rule 10 outbound-interface 'eth0'</code></pre>
+
+
+
+<p>Then, on <code>edge</code> is where all the magic happens.  The goal here is to put all traffic from/to the <code>10.42.100.0/24</code> subnet, into a separate routing table.  That way we can tell all the <code>0.0.0.0/0</code> traffic to leave this router via the WireGuard/VPS connection.</p>
+
+
+
+<ul><li>Set up a policy route.  This puts all traffic to and from in a separate routing table, <code>100</code></li><li>Tie a specific route for <code>0.0.0.0/0</code> to that table, and tell it to go out via the <code>vps</code> WireGuard IP</li><li>Allow all traffic through WireGuard on this end.  Otherwise WireGuard will deny traffic to everywhere</li><li>Attach the new policy to the interface the traffic will be coming in on.</li></ul><pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="56202f392516202f39253a37347b33323133">[email protected]</a>:~$ show configuration commands        
+set policy route OUTGOING-VPS rule 100 set table '100'
+set policy route OUTGOING-VPS rule 100 source address '10.42.100.0/24'
+set policy route OUTGOING-VPS rule 101 destination address '10.42.100.0/24'
+set policy route OUTGOING-VPS rule 101 set table '100'
+set protocols static table 100 route 0.0.0.0/0 next-hop 172.24.32.0
+set interfaces wireguard wg0 peer VPS-Lab allowed-ips '0.0.0.0/0'
+set interfaces ethernet eth1 policy route 'OUTGOING-VPS'
+</code></pre>
+
+
+
+<p>Once that is complete, you should be accessing the web through the VPS.  Note the VPS IP in the curl, and the dramatically different path than the one it took above.</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f2ebf6e0d9efe0f6eaf5f8fbb4fcf7fdeceafceba8">[email protected]</a>:~$ curl ifconfig.co
+144.202.75.103
+
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abc0d9c4d2ebddd2c4d8c7cac986cec5cfded8ced99a">[email protected]</a>:~$ traceroute 1.1.1.1
+traceroute to 1.1.1.1 (1.1.1.1), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.221 ms  0.195 ms  0.189 ms  <LAB1>
+ 2  10.42.0.1 (10.42.0.1)  0.421 ms  0.415 ms  0.406 ms    <EDGE>
+ 3  172.24.32.0 (172.24.32.0)  19.710 ms  20.094 ms  20.088 ms  <VPS WireGuard>
+ 4  * * *  <VPS Default Gateway>
+ 5  vl199-ds1-b5-02.05.dal4.constant.com (108.61.111.1)  23.403 ms  26.589 ms  29.625 ms
+ 6  * * *
+ 7  * * *
+ 8  ae-31.a01.dllstx09.us.bb.gin.ntt.net (128.241.219.53)  19.701 ms * 8-1-5.ear1.Dallas3.Level3.net (4.15.38.133)  19.719 ms
+ 9  ae-31.a01.dllstx09.us.bb.gin.ntt.net (128.241.219.53)  19.682 ms 8-1-5.ear1.Dallas3.Level3.net (4.15.38.133)  19.726 ms  19.721 ms
+10  ae11.cr8-dal3.ip4.gtt.net (213.200.115.30)  19.877 ms ip4.gtt.net (208.116.142.210)  19.950 ms ae-6.r10.dllstx09.us.bb.gin.ntt.net (129.250.5.4)  19.623 ms
+11  ip4.gtt.net (208.116.142.210)  20.130 ms  20.148 ms cloudflare-ic328260-dls-b23.ip.twelve99-cust.net (62.115.61.243)  20.989 ms
+12  one.one.one.one (1.1.1.1)  19.788 ms  20.716 ms  20.428 ms
+</code></pre>
+
+
+
+<p>Once this is working, you could set up a web server on this IP and access it via the VPS.</p>
+
+
+
+<hr class="wp-block-separator"><h4><span id="OOOPS">OOOPS…</span></h4>
+
+
+
+<p>Unfortunately, we’ve create a bit of a mistake.  Remember this from above?</p>
+
+
+
+<figure class="wp-block-image size-large"><img width="833" height="298" alt="" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-10.png 833w, https://blog.kroy.io/wp-content/uploads/2021/06/image-10-300x107.png 300w, https://blog.kroy.io/wp-content/uploads/2021/06/image-10-300x107@2x.png 600w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/image-10.png" data-sizes="(max-width: 833px) 100vw, 833px" class="wp-image-1152 lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="833" height="298" src="https://blog.kroy.io/wp-content/uploads/2021/06/image-10.png" alt="" class="wp-image-1152" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/image-10.png 833w,https://blog.kroy.io/wp-content/uploads/2021/06/image-10-300x107.png 300w,https://blog.kroy.io/wp-content/uploads/2021/06/image-10-300x107@2x.png 600w" sizes="(max-width: 833px) 100vw, 833px"></noscript><figcaption>original traceroute</figcaption></figure><p>The path looks waaaay different now:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3a514855437a4c435549565b58175f545e4f495f480b">[email protected]</a>:~$ traceroute 10.42.101.100   <1st Ubuntu>
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.215 ms  0.201 ms  0.196 ms   <LAB1>
+ 2  10.42.0.1 (10.42.0.1)  0.357 ms  0.700 ms  0.694 ms  <EDGE>
+ 3  172.24.32.0 (172.24.32.0)  19.082 ms  19.076 ms  19.142 ms   <VPS???>
+ 4  172.24.32.1 (172.24.32.1)  19.135 ms  19.129 ms  19.264 ms   <EDGE AGAIN WOT?>
+ 5  10.42.1.2 (10.42.1.2)  19.504 ms  19.494 ms  19.488 ms  <LAB2>
+ 6  10.42.101.100 (10.42.101.100)  19.717 ms  19.680 ms  19.654 ms <2nd Ubuntu>
+ </code></pre>
+
+
+
+<p>The policy based routing has created a bit of a weird path.  In fact, we are a bit lucky it can find a path at all.  </p>
+
+
+
+<p>Fortunately, this is easily fixable on <code>edge</code>:</p>
+
+
+
+<ul><li>When traffic from our “re-routed” network tries to hit anything in the <code>10.0.0.0/8</code> network (another summary route for the networks I use here and in the rest of my lab), put the traffic back in the <code>main</code> routing table.</li></ul><pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d0dfc9d5e6d0dfc9d5cac7c48bc3c2c1c3">[email protected]</a>:~$ show configuration commands  
+set policy route OUTGOING-VPS rule 90 destination address '10.0.0.0/8'
+set policy route OUTGOING-VPS rule 90 set table 'main'
+</code></pre>
+
+
+
+<p>And once more the traceroute looks normal AND the rest of the traffic is still being routed though the VPS:</p>
+
+
+
+<pre class="wp-block-code"><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9af1e8f5e3daece3f5e9f6fbf8b7fff4feefe9ffe8ab">[email protected]</a>:~$ traceroute 10.42.101.100
+traceroute to 10.42.101.100 (10.42.101.100), 30 hops max, 60 byte packets
+ 1  _gateway (10.42.100.1)  0.286 ms  0.233 ms  0.227 ms
+ 2  10.42.0.1 (10.42.0.1)  0.429 ms  0.423 ms  0.413 ms
+ 3  10.42.1.2 (10.42.1.2)  0.732 ms  0.726 ms  0.720 ms
+ 4  10.42.101.100 (10.42.101.100)  0.964 ms  0.949 ms  0.937 ms
+
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e8839a8791a89e91879b84898ac58d868c9d9b8d9ad9">[email protected]</a>:~$ curl ifconfig.co
+144.202.75.103
+</code></pre>
+
+
+
+<hr class="wp-block-separator"><h2><span id="Caveats">Caveats</span></h2>
+
+
+
+<p>Even though I’m at almost 5000 words on this post already, I fully acknowledge this will end with a LOT of basics missing:</p>
+
+
+
+<ul><li>At any point in this whole thing,”insert security”.  This is all very wide open and would be a bad idea to implement without some security controls in place.</li><li>You would need to set up access/as-path/communities/prefix -lists and route-maps to fine tune what you are announcing and accepting.  Right now, everything that was built is basically “Announce Everything and Accept Everything!”.   This is bad in so many ways, and on the public Internet, has actually broken big parts of the Internet because some network engineer announced or accepted a prefix they shouldn’t have.  </li><li>None of this even scratches the surface of what BGP can do.  You can build up failover and redundancy, make routing decisions based on tons of factors and more.   </li><li>I could write 20 more posts of equal or more length and still barely demonstrate beyond the basics, especially when it comes to best-practices (of which there weren’t many here), or capabilities of BGP.</li></ul><hr class="wp-block-separator"><h2><span id="Conclusion">Conclusion</span></h2>
+
+
+
+<p>Even with the caveats mentioned, hopefully this post will set some people on the path of learning and enjoying routing.   It’s been a long one, but I’ve enjoyed labbing it out.  </p>
+<div class="sfsi_Sicons" style="width: 100%; display: inline-block; vertical-align: middle; text-align:left"><div style="margin:0px 8px 0px 0px; line-height: 24px"><span>Please follow and like us:</span></div><div class="sfsi_socialwpr"><div class="sf_subscrbe sf_icon" style="text-align:left;vertical-align: middle;float:left;width:auto"><a href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" target="_blank"><img alt="error" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/follow_subscribe.png" alt="error"></noscript></a></div><div class="sf_fb sf_icon" style="text-align:left;vertical-align: middle;"><div class="fb-like" data-href="https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/" data-send="false" data-layout="button"></div></div><div class="sf_fb_share sf_icon" style="text-align:left;vertical-align: middle;"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2021%2F06%2F23%2Fvyos-from-scratch-routing-and-vps-edition%2F" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div><div class="sf_twiter sf_icon" style="display: inline-block;vertical-align: middle;width: auto;margin-left: 7px;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=VyOS+from+Scratch%3A+Routing+and+VPS+Edition+https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript></a>
+					</div><div class="sf_pinit sf_icon" style="text-align:left;vertical-align: middle;float:left;line-height: 33px;width:auto;margin: 0 -2px;"><a href="#" onclick='sfsi_pinterest_modal_images(event,"https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/","VyOS from Scratch: Routing and VPS Edition")' style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Pin Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/share_icons/Pinterest_Save/en_US_save.svg"></noscript></a></div></div></div></div>
+
+
+
+
+<div class="entry-footer">
+
+	<span class="screen-reader-text">Tags: </span><div class="post-tags"><span class="cat-links"><a href="https://blog.kroy.io/tag/bgeeeeep/" rel="tag">BGeeeeeP</a><a href="https://blog.kroy.io/tag/vyos/" rel="tag">vyos</a><a href="https://blog.kroy.io/tag/vyosfromscratch/" rel="tag">vyosfromscratch</a><a href="https://blog.kroy.io/tag/wireguard/" rel="tag">wireguard</a></span></div><span class="last-updated">Last updated on June 23, 2021</span>
+</div>
+
+
+<section class="author-box" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><div class="author-box-avatar">
+		<img alt="" data-srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" height="75" width="75" data-src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" class="avatar avatar-75 photo lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img alt="" src="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=75&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/347d9cf482cfe91444ae0d59550ad83c?s=150&d=mm&r=g 2x" class="avatar avatar-75 photo" height="75" width="75"></noscript>	</div>
+
+	<div class="author-box-meta">
+		<h4 class="author-box-title">
+							<a href="https://blog.kroy.io/author/kroy3348/" class="url fn n" rel="author" itemprop="url">
+				Kroy	
+				</a>
+						</h4>
+
+		
+		
+		<div class="author-box-content" itemprop="description">
+			sometimes hacker of things and other things...		</div>
+
+		
+<div class="more-posts-button">
+	<a href="https://blog.kroy.io/author/kroy3348/" class="si-btn btn-text-1" role="button"><span>View All Posts</span></a>
+</div>
+	</div>
+
+</section><section class="post-nav" role="navigation"><h2 class="screen-reader-text">Post navigation</h2>
+
+	<div class="nav-previous"><h6 class="nav-title">Previous Post</h6><a href="https://blog.kroy.io/2021/01/14/bbsing-in-retro-style-with-a-wimodem232-on-a-mac-se/" rel="prev"><div class="nav-content"><img width="75" height="75" alt="BBSing Retro-style with a Wimodem232 on a Mac SE" itemprop="image" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/01/header-150x150.png 150w, https://blog.kroy.io/wp-content/uploads/2021/01/header-150x150@2x.png 300w" data-src="https://blog.kroy.io/wp-content/uploads/2021/01/header-150x150.png" data-sizes="(max-width: 75px) 100vw, 75px" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2021/01/header-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="BBSing Retro-style with a Wimodem232 on a Mac SE" itemprop="image" srcset="https://blog.kroy.io/wp-content/uploads/2021/01/header-150x150.png 150w,https://blog.kroy.io/wp-content/uploads/2021/01/header-150x150@2x.png 300w" sizes="(max-width: 75px) 100vw, 75px"></noscript> <span>BBSing Retro-style with a Wimodem232 on a Mac SE</span></div></a></div><div class="nav-next"><h6 class="nav-title">Next Post</h6><a href="https://blog.kroy.io/2021/06/28/transylvania-a-retrospective-and-remake/" rel="next"><div class="nav-content"><span>Transylvania – A Retrospective and Remake</span> <img width="75" height="75" alt="Transylvania – A Retrospective and Remake" itemprop="image" data-srcset="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png 150w, https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150@2x.png 300w" data-src="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png" data-sizes="(max-width: 75px) 100vw, 75px" class="attachment-75x75 size-75x75 wp-post-image lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img width="75" height="75" src="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png" class="attachment-75x75 size-75x75 wp-post-image" alt="Transylvania – A Retrospective and Remake" itemprop="image" srcset="https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150.png 150w,https://blog.kroy.io/wp-content/uploads/2021/06/cover-150x150@2x.png 300w" sizes="(max-width: 75px) 100vw, 75px"></noscript></div></a></div>
+</section></article></main></div>
+
+	
+<aside id="secondary" class="widget-area si-sidebar-container" itemtype="http://schema.org/WPSideBar" itemscope="itemscope" role="complementary"><div class="si-sidebar-inner">
+		
+		
+		<div id="recent-posts-2" class="si-sidebar-widget si-widget si-entry widget widget_recent_entries">
+		<h4 class="widget-title">Recent Posts</h4>
+		<ul><li>
+					<a href="https://blog.kroy.io/2021/06/29/vyos-and-mikrotik-vlan-a-rama/">VyOS and Mikrotik – VLAN-a-rama</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2021/06/28/transylvania-a-retrospective-and-remake/">Transylvania – A Retrospective and Remake</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition/" aria-current="page">VyOS from Scratch: Routing and VPS Edition</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2021/01/14/bbsing-in-retro-style-with-a-wimodem232-on-a-mac-se/">BBSing Retro-style with a Wimodem232 on a Mac SE</a>
+									</li>
+											<li>
+					<a href="https://blog.kroy.io/2020/12/07/vyos-from-scratch-bgp-announcements/">VyOS from Scratch – BGP Announcement</a>
+									</li>
+					</ul></div><div id="archives-2" class="si-sidebar-widget si-widget si-entry widget widget_archive"><h4 class="widget-title">Archives</h4>
+			<ul><li><a href="https://blog.kroy.io/2021/06/">June 2021</a></li>
+	<li><a href="https://blog.kroy.io/2021/01/">January 2021</a></li>
+	<li><a href="https://blog.kroy.io/2020/12/">December 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/11/">November 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/05/">May 2020</a></li>
+	<li><a href="https://blog.kroy.io/2020/01/">January 2020</a></li>
+	<li><a href="https://blog.kroy.io/2019/12/">December 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/11/">November 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/10/">October 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/09/">September 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/08/">August 2019</a></li>
+	<li><a href="https://blog.kroy.io/2019/01/">January 2019</a></li>
+	<li><a href="https://blog.kroy.io/2018/11/">November 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/07/">July 2018</a></li>
+	<li><a href="https://blog.kroy.io/2018/05/">May 2018</a></li>
+	<li><a href="https://blog.kroy.io/2017/12/">December 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/08/">August 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/07/">July 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/06/">June 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/05/">May 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/04/">April 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/03/">March 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/02/">February 2017</a></li>
+	<li><a href="https://blog.kroy.io/2017/01/">January 2017</a></li>
+			</ul></div><div id="categories-2" class="si-sidebar-widget si-widget si-entry widget widget_categories"><h4 class="widget-title">Categories</h4>
+			<ul><li class="cat-item cat-item-39"><a href="https://blog.kroy.io/category/automation/">Automation</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://blog.kroy.io/category/ceph/">ceph</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="https://blog.kroy.io/category/debian/">Debian</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="https://blog.kroy.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="https://blog.kroy.io/category/virtualization/esxi/">ESXi</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://blog.kroy.io/category/freenas/">freenas</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="https://blog.kroy.io/category/gaming/">gaming</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="https://blog.kroy.io/category/hardware/">Hardware</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="https://blog.kroy.io/category/hardware-hacks/">Hardware Hacks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://blog.kroy.io/category/homelab/">HomeLab</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="https://blog.kroy.io/category/virtualization/kvm/">KVM</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://blog.kroy.io/category/mediaserver/">mediaserver</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://blog.kroy.io/category/mikrotik/">mikrotik</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="https://blog.kroy.io/category/networking/">Networking</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://blog.kroy.io/category/nucnucnuc/">nucnucnuc</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://blog.kroy.io/category/pfsense/">pfsense</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://blog.kroy.io/category/proxmox/">proxmox</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://blog.kroy.io/category/virtualization/proxmox-virtualization/">Proxmox</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://blog.kroy.io/category/qnap/">QNAP</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="https://blog.kroy.io/category/homelab/rack-migration/">Rack Migration</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://blog.kroy.io/category/retrolab/">Retrolab</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://blog.kroy.io/category/routeros/">RouterOS</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://blog.kroy.io/category/routing/" title="Stuff about routing">Routing</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="https://blog.kroy.io/category/rtlsdr/">RTLSDR</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="https://blog.kroy.io/category/storage/">Storage</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://blog.kroy.io/category/sysadmin/">SysAdmin</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="https://blog.kroy.io/category/automation/terraform/">Terraform</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="https://blog.kroy.io/category/ubuntu/">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="https://blog.kroy.io/category/virtualization/">Virtualization</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://blog.kroy.io/category/vpn/">vpn</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://blog.kroy.io/category/vyos/">VyOS</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://blog.kroy.io/category/zfs/">ZFS</a>
+</li>
+			</ul></div><div id="meta-2" class="si-sidebar-widget si-widget si-entry widget widget_meta"><h4 class="widget-title">Meta</h4>
+		<ul><li><a href="https://blog.kroy.io/wp-login.php">Log in</a></li>
+			<li><a href="https://blog.kroy.io/feed/">Entries feed</a></li>
+			<li><a href="https://blog.kroy.io/comments/feed/">Comments feed</a></li>
+
+			<li><a href="https://wordpress.org/">WordPress.org</a></li>
+		</ul></div>
+			</div>
+
+</aside></div>
+
+		
+	</div>
+	
+	
+			<footer id="colophon" class="site-footer" role="contentinfo" itemtype="http://schema.org/WPFooter" itemscope="itemscope"><div id="sinatra-copyright" class="contained-separator">
+	<div class="si-container">
+		<div class="si-flex-row">
+
+			<div class="col-xs-12 center-xs col-md flex-basis-auto start-md"><div class="si-copyright-widget__text si-copyright-widget sinatra-all"><span>Copyright 2021 — blog.kroy.io. All rights reserved. <a href="https://wordpress.org/themes/sinatra/" class="imprint" target="_blank" rel="noopener noreferrer">Sinatra WordPress Theme</a></span></div></div>
+			<div class="col-xs-12 center-xs col-md flex-basis-auto end-md"></div>
+
+		</div>
+	</div>
+</div>
+
+		</footer></div>
+
+<a href="#" id="si-scroll-top" class="si-smooth-scroll" title="Scroll to Top">
+	<span class="si-scroll-icon" aria-hidden="true">
+		<i class="si-icon si-chevron-up top-icon"></i>
+		<i class="si-icon si-chevron-up"></i>
+	</span>
+	<span class="screen-reader-text">Scroll to Top</span>
+</a>
+			
+			<div id="fb-root"></div>
+			<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			</script><script>
+window.addEventListener('sfsi_functions_loaded', function() {
+    if (typeof sfsi_responsive_toggle == 'function') {
+        sfsi_responsive_toggle(0);
+        // console.log('sfsi_responsive_toggle');
+
+    }
+})
+</script><style type="text/css">#sfsi_floater { margin-right:0px; }</style><div class="norm_row sfsi_wDiv" id="sfsi_floater" style="z-index: 9999;width:225px;text-align:left;position:absolute;position:absolute;right:30px;top:50%"><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://blog.kroy.io/feed/" id="sfsiid_rss" style="opacity:1"><img data-pin-nopin="true" alt="RSS" title="RSS" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="RSS" title="RSS" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_rss.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="https://api.follow.it/widgets/icon/SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=/OA==/" id="sfsiid_email" style="opacity:1"><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Follow by Email" title="Follow by Email" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_email.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_facebook" style="opacity:1"><img data-pin-nopin="true" alt="Facebook" title="Facebook" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Facebook" title="Facebook" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_facebook.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 fb_tool_bdr sfsiTlleft" style="width:62px ;opacity:0;z-index:-1;margin-left:-47.5px;" id="sfsiid_facebook"><span class="bot_arow bot_fb_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="fb-like" data-href="https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div></div><div class="icon3"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fblog.kroy.io%2F2021%2F06%2F23%2Fvyos-from-scratch-routing-and-vps-edition" style="display:inline-block;"> <img data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" width="auto" height="auto" alt="fb-share-icon" title="Facebook Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/fbshare_bck.png"></noscript></a></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_twitter" style="opacity:1"><img data-pin-nopin="true" alt="Twitter" title="Twitter" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="Twitter" title="Twitter" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_twitter.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 twt_tool_bdr sfsiTlleft" style="width:59px ;opacity:0;z-index:-1;margin-left:-46px;" id="sfsiid_twitter"><span class="bot_arow bot_twt_arow"></span><div class="sfsi_inside"><div class="icon2"><div class="sf_twiter" style="display: inline-block;vertical-align: middle;width: auto;">
+						<a target="_blank" href="https://twitter.com/intent/tweet?text=Hey%2C+check+out+this+cool+site+I+found%3A+www.yourname.com+%23Topic+via%40my_twitter_name+https://blog.kroy.io/2021/06/23/vyos-from-scratch-routing-and-vps-edition" style="display:inline-block">
+							<img data-pin-nopin="true" width="auto" alt="Tweet" title="Tweet" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" width="auto" class="sfsi_wicon" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/en_US_Tweet.svg" alt="Tweet" title="Tweet"></noscript>
+						</a>
+					</div></div></div></div></div></div><div style="width:40px; height:40px;margin-left:5px;margin-bottom:5px; " class="sfsi_wicons shuffeldiv "><div class="inerCnt"><a class=" sficn" data-effect="" target="_blank" href="" id="sfsiid_linkedin" style="opacity:1"><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" width="40" height="40" style="" data-effect="" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" class="sfcm sfsi_wicon  lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img data-pin-nopin="true" alt="LinkedIn" title="LinkedIn" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/icons_theme/default/default_linkedin.png" width="40" height="40" style="" class="sfcm sfsi_wicon " data-effect=""></noscript></a><div class="sfsi_tool_tip_2 linkedin_tool_bdr sfsiTlleft" style="width:85px ;opacity:0;z-index:-1;margin-left:-45px;" id="sfsiid_linkedin"><span class="bot_arow bot_linkedin_arow"></span><div class="sfsi_inside"><div class="icon2"><a target="_blank" href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fblog.kroy.io%2F2021%2F06%2F23%2Fvyos-from-scratch-routing-and-vps-edition"><img data-pin-nopin="true" alt="Share" title="Share" data-src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png" class="sfsi_wicon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><noscript><img class="sfsi_wicon" data-pin-nopin="true" alt="Share" title="Share" src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/images/visit_icons/lnkdin_share_bck.png"></noscript></a></div></div></div></div></div></div><input type="hidden" id="sfsi_floater_sec" value="center-right"><script>window.addEventListener("sfsi_functions_loaded", function() 
+			{
+				if (typeof sfsi_widget_set == "function") {
+					sfsi_widget_set();
+				}
+			}); window.addEventListener('sfsi_functions_loaded',function()
+					  {
+						var topalign = ( jQuery(window).height() - jQuery('#sfsi_floater').height() ) / 2;
+						jQuery('#sfsi_floater').css('top',topalign);
+					  	sfsi_float_widget('center');
+					  });</script><script>
+        window.addEventListener('sfsi_functions_loaded', function() {
+            if (typeof sfsi_plugin_version == 'function') {
+                sfsi_plugin_version(2.63);
+            }
+        });
+
+        function sfsi_processfurther(ref) {
+            var feed_id = 'SERxZVdXbkRiWE9LYThHK2pmY09ydUlMSkF3cm9ERmJpV2JlS3p0Z1locmlNWjBFeGZtaFBCMEF4Q1hRblVqN0JUbGFXRXg4Y25yUnpVcFN0TUVQeTdIVUtkT1JVRXg2SXJvYndWbEJhRi9ZenJWdk1XSlc1VWQwQVIvNVY3dWJ8YnBDU2RZbGZvSzFjVlBLVDRjWGYwellwelNqT2ZCQzFzbmp6V24vN0FQOD0=';
+            var feedtype = 8;
+            var email = jQuery(ref).find('input[name="email"]').val();
+            var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if ((email != "Enter your email") && (filter.test(email))) {
+                if (feedtype == "8") {
+                    var url = "https://api.follow.it/subscription-form/" + feed_id + "/" + feedtype;
+                    window.open(url, "popupwindow", "scrollbars=yes,width=1080,height=760");
+                    return true;
+                }
+            } else {
+                alert("Please enter email address");
+                jQuery(ref).find('input[name="email"]').focus();
+                return false;
+            }
+        }
+    </script><style type="text/css" aria-selected="true">
+        .sfsi_subscribe_Popinner {
+            width: 100% !important;
+
+            height: auto !important;
+
+            padding: 18px 0px !important;
+
+            background-color: #ffffff !important;
+
+        }
+
+        .sfsi_subscribe_Popinner form {
+
+            margin: 0 20px !important;
+
+        }
+
+        .sfsi_subscribe_Popinner h5 {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-weight: bold !important;
+
+            color: #000000 !important;
+
+            font-size: 16px !important;
+
+            text-align: center !important;
+
+            margin: 0 0 10px !important;
+
+            padding: 0 !important;
+
+        }
+
+        .sfsi_subscription_form_field {
+
+            margin: 5px 0 !important;
+
+            width: 100% !important;
+
+            display: inline-flex;
+
+            display: -webkit-inline-flex;
+
+        }
+
+        .sfsi_subscription_form_field input {
+
+            width: 100% !important;
+
+            padding: 10px 0px !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email] {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]::-webkit-input-placeholder {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]:-moz-placeholder {
+            /* Firefox 18- */
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]::-moz-placeholder {
+            /* Firefox 19+ */
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=email]:-ms-input-placeholder {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-style: normal !important;
+
+            color: #000000 !important;
+
+            font-size: 14px !important;
+
+            text-align: center !important;
+
+        }
+
+        .sfsi_subscribe_Popinner input[type=submit] {
+
+            font-family: Helvetica,Arial,sans-serif !important;
+
+            font-weight: bold !important;
+
+            color: #000000 !important;
+
+            font-size: 16px !important;
+
+            text-align: center !important;
+
+            background-color: #dedede !important;
+
+        }
+
+        .sfsi_shortcode_container {
+            float: left;
+        }
+
+        .sfsi_shortcode_container .norm_row .sfsi_wDiv {
+            position: relative !important;
+        }
+
+        .sfsi_shortcode_container .sfsi_holders {
+            display: none;
+        }
+
+            </style><link rel="stylesheet" id="lwptoc-main-css" href="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.css" media="all"><script src="https://blog.kroy.io/wp-includes/js/jquery/ui/core.min.js" id="jquery-ui-core-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/modernizr.custom.min.js" id="SFSIjqueryModernizr-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/jquery.shuffle.min.js" id="SFSIjqueryShuffle-js"></script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/shuffle/random-shuffle-min.js" id="SFSIjqueryrandom-shuffle-js"></script><script id="SFSICustomJs-js-extra">
+var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php"};
+var sfsi_icon_ajax_object = {"ajax_url":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","plugin_url":"https:\/\/blog.kroy.io\/wp-content\/plugins\/ultimate-social-media-icons\/"};
+</script><script src="https://blog.kroy.io/wp-content/plugins/ultimate-social-media-icons/js/custom.js" id="SFSICustomJs-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wplegalpages/admin/js/jquery.cookie.min.js" id="wp-legal-pages-jquery-cookie-js"></script><script src="https://blog.kroy.io/wp-content/plugins/wp-smushit/app/assets/js/smush-lazy-load.min.js" id="smush-lazy-load-js"></script><script id="sinatra-js-js-extra">
+var sinatra_vars = {"ajaxurl":"https:\/\/blog.kroy.io\/wp-admin\/admin-ajax.php","nonce":"0abd269183","responsive-breakpoint":"960","sticky-header":"","strings":{"comments_toggle_show":"Leave a Comment","comments_toggle_hide":"Hide Comments"}};
+</script><script src="https://blog.kroy.io/wp-content/themes/sinatra/assets/js/sinatra.min.js" id="sinatra-js-js"></script><script src="https://blog.kroy.io/wp-content/plugins/luckywp-table-of-contents/front/assets/main.min.js" id="lwptoc-main-js"></script><script>
+	!function(){var e=-1<navigator.userAgent.toLowerCase().indexOf("webkit"),t=-1<navigator.userAgent.toLowerCase().indexOf("opera"),n=-1<navigator.userAgent.toLowerCase().indexOf("msie");(e||t||n)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var e,t=location.hash.substring(1);/^[A-z0-9_-]+$/.test(t)&&(e=document.getElementById(t))&&(/^(?:a|select|input|button|textarea)$/i.test(e.tagName)||(e.tabIndex=-1),e.focus())},!1)}();
+	</script><script src="https://stats.wp.com/e-202130.js" defer></script><script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.8.1',blog:'166765678',post:'1104',tz:'-5',srv:'blog.kroy.io'} ]);
+	_stq.push([ 'clickTrackerInit', '166765678', '1104' ]);
+</script><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none"><symbol id="icon-chat" viewbox="0 0 576 512"><path d="M512 160h-96V64c0-35.3-28.7-64-64-64H64C28.7 0 0 28.7 0 64v160c0 35.3 28.7 64 64 64h32v52c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L224 288h128c35.3 0 64-28.7 64-64v-32h96c17.6 0 32 14.4 32 32v160c0 17.6-14.4 32-32 32h-64v49.6l-80.2-45.4-7.3-4.2H256c-17.6 0-32-14.4-32-32v-96l-32 18.1V384c0 35.3 28.7 64 64 64h96l108.9 61.6c2.2 1.6 4.7 2.4 7.1 2.4 6.2 0 12-4.9 12-12v-52h32c35.3 0 64-28.7 64-64V224c0-35.3-28.7-64-64-64zm-128 64c0 17.6-14.4 32-32 32H215.6l-7.3 4.2-80.3 45.4V256H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h288c17.6 0 32 14.4 32 32v160z"></path></symbol><symbol id="icon-quote" viewbox="0 0 123.961 123.961"><path d="M49.8 29.032c3.1-1.3 4.4-5 3-8l-4.9-10.3c-1.4-2.899-4.8-4.2-7.8-2.899-8.5 3.6-15.8 8.3-21.6 14C11.4 28.532 6.6 36.232 4 44.732c-2.6 8.601-4 20.3-4 35.2v30.7c0 3.3 2.7 6 6 6h39.3c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H26.5c.2-10.101 2.6-18.2 7-24.301 3.6-4.898 9-8.898 16.3-11.999zM120.4 29.032c3.1-1.3 4.399-5 3-8l-4.9-10.199c-1.4-2.9-4.8-4.2-7.8-2.9-8.4 3.6-15.601 8.3-21.5 13.9-7.101 6.8-12 14.5-14.601 23-2.6 8.399-3.899 20.1-3.899 35.1v30.7c0 3.3 2.7 6 6 6H116c3.3 0 6-2.7 6-6v-39.3c0-3.301-2.7-6-6-6H97.1c.2-10.101 2.601-18.2 7-24.301 3.6-4.899 9-8.899 16.3-12z"></path></symbol></svg><div class="wpautoterms-footer"><p>
+		<a href="https://blog.kroy.io/wpautoterms/privacy-policy/">Privacy Policy</a><span class="separator"> - </span><a href="https://blog.kroy.io/wpautoterms/terms-and-conditions/">Terms and Conditions</a></p>
+</div>
+</body></html>

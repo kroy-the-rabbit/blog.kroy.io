@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	
+	xmlns:georss="http://www.georss.org/georss"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	>
+
+<channel>
+	<title>proxmox &#8211; blog.kroy.io</title>
+	<atom:link href="https://blog.kroy.io/category/proxmox/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.kroy.io/</link>
+	<description>computers, tech, and whatever other random stuff crosses my mind.</description>
+	<lastBuildDate>Mon, 07 Dec 2020 15:37:37 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.8</generator>
+
+<image>
+	<url>https://blog.kroy.io/wp-content/uploads/2020/04/cropped-android-chrome-512x512-3-32x32.png</url>
+	<title>proxmox &#8211; blog.kroy.io</title>
+	<link>https://blog.kroy.io/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">166765678</site>	<item>
+		<title>Proxmox and Ceph for the NucNucNuc</title>
+		<link>https://blog.kroy.io/2017/05/03/proxmox-and-ceph-for-the-nucnucnuc/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=proxmox-and-ceph-for-the-nucnucnuc</link>
+		
+		<dc:creator><![CDATA[Kroy]]></dc:creator>
+		<pubDate>Wed, 03 May 2017 07:30:42 +0000</pubDate>
+				<category><![CDATA[ceph]]></category>
+		<category><![CDATA[nucnucnuc]]></category>
+		<category><![CDATA[proxmox]]></category>
+		<guid isPermaLink="false">https://blog2.kroy.io/2017/05/03/proxmox-and-ceph-for-the-nucnucnuc/</guid>
+
+					<description><![CDATA[In the latest incarnation of the NucNucNuc, I get Proxmox and Ceph installed The idea of Ceph is very attractive. Distributed storage eliminates a huge concern of mine, which is&#8230;]]></description>
+										<content:encoded><![CDATA[
+<p>In the latest incarnation of the NucNucNuc, I get Proxmox and Ceph installed</p>
+
+
+
+<p>The idea of Ceph is very attractive. Distributed storage eliminates a huge concern of mine, which is being forced to replace a handful of very expensive Nimble storage units in the near future.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>The first step was to get Proxmox installed and get the three NucNucNuc nodes in a cluster.</p>
+
+
+
+<p><code>pvecm create NucNucNuc</code> -&gt; First node (192.168.202.10)</p>
+
+
+
+<p><code>pvecm add 192.168.202.10</code> -&gt; Second and third nodes</p>
+
+
+
+<pre class="wp-block-code"><code>root@pve1:~# pvecm status
+Quorum information
+------------------
+Date:             Wed Apr 26 09:57:39 2017
+Quorum provider:  corosync_votequorum
+Nodes:            3
+Node ID:          0x00000001
+Ring ID:          1/28
+Quorate:          Yes
+
+Votequorum information
+----------------------
+Expected votes:   3
+Highest expected: 3
+Total votes:      3
+Quorum:           2
+Flags:            Quorate
+
+Membership information
+----------------------
+Nodeid      Votes Name
+0x00000001          1 192.168.202.10 (local)
+0x00000002          1 192.168.202.11
+0x00000003          1 192.168.202.12
+root@pve1:~#</code></pre>
+
+
+
+<p>Next, a dedicated network interface for the Ceph traffic. I used a <a href="https://www.amazon.com/Plugable-Gigabit-Ethernet-Network-Adapter/dp/B011DDXGVC">USB-C to Gigabit Ethernet dongle</a> that&#8217;s well-known as having decent Linux support.</p>
+
+
+
+<figure class="wp-block-image alignfull"><img width="1024" height="271" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-1024x271.png" alt="" class="wp-image-170" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-1024x271.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-300x79.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-768x203.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM-1600x424.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.57-PM.png 1911w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>In a production deployment, as I discovered in my benchmarking, 10GbE is practically a must. You also wouldn&#8217;t bridge the devices; you would want a NIC (or more) dedicated to the Ceph traffic. For this testing, I figured I might want to use the separate NIC in my VMs.</p>
+
+
+
+<h3 id="installingceph">Installing Ceph</h3>
+
+
+
+<p>The next step was to get Ceph installed. Recent versions of Proxmox have made this a very simple task. I&#8217;m using the Proxmox 5.0 Beta1, so the version of Ceph that is available is <code>luminous</code></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="429" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-1024x429.png" alt="" class="wp-image-171" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-1024x429.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-300x126.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-768x322.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM-1600x670.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.30.07-PM.png 1914w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Initializing Ceph and setting up monitors is next.</p>
+
+
+
+<p>This is where I ended up making the first mistake. I figured I would be clever, and paste my commands into three terminals at once. This caused some sort of weird deadlock, which forced me to have to uninstall and reinstall Ceph.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="547" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-1024x547.png" alt="" class="wp-image-172" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-1024x547.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-300x160.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-768x410.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3-1600x854.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.36.36-PM-3.png 1939w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>A quick <code>ceph quorom_status</code>, <code>ceph health</code>, and a <code>ceph mon_status</code> tells me everything is properly set up.</p>
+
+
+
+<h4 id="initializingandconfiguringthedisks">Initializing and Configuring the Disks</h4>
+
+
+
+<p>Once I had Ceph up and rolling, it was time to set up the disk. For now, this is just going to be a single disk setup, where the disk used in each NUC is a 500GB M2 SATA SSD. In a more extensive setup, you would want more disks, and 10 GbE for the Ceph network.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="217" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-1024x217.png" alt="" class="wp-image-173" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-1024x217.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-300x64.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-768x163.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM-1600x339.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.37.33-PM.png 1937w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="547" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-1024x547.png" alt="" class="wp-image-174" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-1024x547.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-300x160.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-768x410.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM-1600x854.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.44.32-PM.png 1913w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>Once the osds are configured and the disks are set up, the Proxmox GUI should be showing everything.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="415" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-1024x415.png" alt="" class="wp-image-175" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-1024x415.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-300x122.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-768x311.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1-1600x649.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.45.08-PM-1.png 1907w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="435" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-1024x435.png" alt="" class="wp-image-176" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-1024x435.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-300x127.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-768x326.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM-1600x679.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.31-PM.png 1915w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="415" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-1024x415.png" alt="" class="wp-image-177" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-1024x415.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-300x122.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-768x311.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM-1600x649.png 1600w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-04-25-at-1.47.43-PM.png 1912w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 id="addingthestoragetothecluster">Adding the Storage to the Cluster</h3>
+
+
+
+<p>Once it&#8217;s been confirmed that Ceph is running, and everything appears to be working, it&#8217;s time to add the storage to Proxmox. At this point, Proxmox just sees the storage as remote, sort of like NFS or iSCSI, so it&#8217;s a simple handful clicks to add.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="572" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-1024x572.png" alt="" class="wp-image-178" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-1024x572.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-300x168.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-768x429.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.33.13-PM-1-1600x894.png 1600w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>The storage type is &#8220;RDB&#8221;. In this case, I&#8217;ve added the IPs for my three monitor IPs, 192.168.203.10/11/12.</p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="459" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-1024x459.png" alt="" class="wp-image-179" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-1024x459.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-300x135.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1-768x344.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.56-PM-1.png 1360w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p>I&#8217;ve set this up twice now, and both time the hassle has been remembering this step.</p>
+
+
+
+<p>Permission must be granted to access the storage &#8220;remotely&#8221;, even if remote in this case are the Proxmox nodes themselves. This must be done from the command line on one of the hosts.</p>
+
+
+
+<p>In this case, my storage is named &#8220;ssd_ceph&#8221;.</p>
+
+
+
+<p><code>mkdir /etc/pve/priv/ceph &amp;&amp; cp /etc/ceph/ceph.client.admin.keyring /etc/pve/priv/ceph/ssd_ceph.keyring</code></p>
+
+
+
+<figure class="wp-block-image"><img width="1024" height="706" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-1024x706.png" alt="" class="wp-image-180" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-1024x706.png 1024w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-300x207.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1-768x529.png 768w, https://blog.kroy.io/wp-content/uploads/2019/08/Screen-Shot-2017-05-02-at-9.32.17-PM-1.png 1410w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h3 id="somebenchmarks">Some Benchmarks</h3>
+
+
+
+<p>After it was all set up, I installed Ubuntu in a VM on the storage to do some benchmarks.</p>
+
+
+
+<p>It&#8217;s very obvious why 10GbE is recommended for the Ceph storage network. As I am writing files to the VM that was running on the first node, it is transferring data out to both of the other nodes.</p>
+
+
+
+<p>This is just the <code>iftop</code> results of some minor benchmarking. On these relatively slow NUCs with slow SSDs in them, it was coming close to saturating the USB-C gigabit connection.</p>
+
+
+
+<figure class="wp-block-image"><img width="732" height="186" src="https://blog2.kroy.io/wp-content/uploads/2019/08/Untitled-1.png" alt="" class="wp-image-181" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-1.png 732w, https://blog.kroy.io/wp-content/uploads/2019/08/Untitled-1-300x76.png 300w" sizes="(max-width: 732px) 100vw, 732px" /></figure>
+
+
+
+<p>A simple <code>rsync</code> inside of the VM tells a similar story.</p>
+
+
+
+<figure class="wp-block-image"><img width="916" height="170" src="https://blog2.kroy.io/wp-content/uploads/2019/08/pHgKD.png" alt="" class="wp-image-182" srcset="https://blog.kroy.io/wp-content/uploads/2019/08/pHgKD.png 916w, https://blog.kroy.io/wp-content/uploads/2019/08/pHgKD-300x56.png 300w, https://blog.kroy.io/wp-content/uploads/2019/08/pHgKD-768x143.png 768w" sizes="(max-width: 916px) 100vw, 916px" /></figure>
+
+
+
+<h3 id="finalthoughts">Final thoughts</h3>
+
+
+
+<p>Sure, it&#8217;s not monster speeds, but on these slow NUCs with a gigabit Ceph network and a single Ceph OSD per drive, it&#8217;s definitely acceptable. With a 10GbE backplane and array of SSDs as the <a href="https://pve.proxmox.com/wiki/Ceph_Server">recommended</a>, I think this would perform admirably.</p>
+
+
+
+<p>See more <a href="/category/nucnucnuc/">Nucnucnuc</a> stuff <a href="/tag/nucnucnuc/">here</a>.</p>
+]]></content:encoded>
+					
+		
+		
+		<post-id xmlns="com-wordpress:feed-additions:1">22</post-id>	</item>
+	</channel>
+</rss>
